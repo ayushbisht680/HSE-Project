@@ -1,0 +1,1320 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Calendar with Highlighted Date Range</title>
+      <style>
+         table {
+         border-collapse: collapse;
+         width: 100px;
+         }
+         th, td {
+         border: 1px solid #ddd;
+         text-align: center;
+         color: white;
+         }
+         th{
+         color: darkgrey;
+         font-size: 13px;
+         font-weight: 500;
+         text-align: center !important;
+         }
+         tr{
+         font-size: 13px;
+         }
+         .today, .highlight-start, .highlight-end {
+         background-color: #3498db; 
+         color: #fff; 
+         }
+         /* Remove underline and change color of anchor tags */
+         a {
+         text-decoration: none !important;
+         color: white !important;
+         font-size: 15px;
+         font-weight: 500;
+         }
+         #calendar{
+         display: inline-block;
+         }
+         .mainDiv{
+         display: inline-block;
+         background-color: black;
+         width:100%
+         }
+         .date-range{
+         color: white;
+         font-size: 14px;
+         font-weight: 500;
+         }
+         .menu{
+         color: white;
+         margin-top: 27px;
+         margin-left: 20px;
+         }
+         .mb-3{
+         height: 88px;
+         margin-left: 18px;
+         }
+         .myNavi{
+         height: 38px;
+         margin-left: 20px;
+         margin-top: 20px;
+         margin-bottom:0px !important;
+         }
+         .myTable {
+         width: 278px;
+         }
+         .my-cont{
+         padding-right: 0px !important;
+         position:fixed !important;
+         background-color:black;
+         top:0px;
+         bottom:0px;
+         }
+         .navbar{
+         background-color: white;
+         padding: 10px 0;
+         height: 57px;
+         }
+         .myNavbar{
+         width: 100%;
+         }
+         .big_container{
+         display: flex;
+         }
+         .cont {
+         text-align: left;
+         margin-top: 4px;
+         background-color: #ebf8ff;
+         margin-left: 14px;
+         margin-right: 14px;
+         boder: 1px solid #ebf8ff;
+         border: 1px solid #ebf8ff;
+         border-radius: 7px;
+         height: 11vw;
+         }
+         .date-cont {
+         display: flex;
+         align-items: center;
+         justify-content: left;
+         font-size: 18px;
+         padding: 10px;
+         }
+         .viewDate {
+         margin: 0 10px;
+         color: #3E9FFE;
+         font-size: 13px;
+         font-weight: 600;
+         margin-top: 11px;
+         }
+         .arrow-cont {
+         display: flex;
+         align-items: center;
+         }
+         .theDate1{
+         color: grey;
+         font-size: 13px;
+         }
+         .arrow {
+         font-size: 24px;
+         cursor: pointer;
+         margin: 0 5px;
+         margin-top: 14px;
+         }
+         .hello{
+         margin-left: 13px;
+         font-weight: 700;
+         margin-top:15px;
+         }
+         .outer-container {
+         text-align: left;
+         display: flex;
+         flex-direction: row;
+         border: 1px solid #3E9FFE;
+         border-radius: 4px;
+         margin-top: 9px;
+         margin-right: 10px;
+         height: 34px; 
+         }
+         .showWeek {
+         font-size: 13px;
+         margin-top: 8px;
+         color: white;
+         }
+         .showDate {
+         font-size: 13px;
+         margin-top: 7px;
+         margin-right: 14px;
+         margin-bottom: 0px;
+         font-weight: 500;
+         }
+         /* Style the div outer-containers */
+         .display-outer-container2 {
+         margin: initial;
+         }
+         .display-outer-container1 {
+         margin-right: 9px;
+         background-color: #3E9FFE;
+         width: 71px;
+         justify-content: center;
+         display: flex;
+         }
+         .sideView{
+         display: flex;
+         justify-content: space-between;
+         argin-top: 8px;
+         }
+         .toggle-container {
+         display: none; /* Initially hide the container */
+         padding: 29px;
+         margin-top: 10px;
+         }
+         .toggle-button {
+         cursor: pointer;
+         float: right; /* Place the button on the right */
+         }
+         /* Style for labels */
+         label {
+         display: block;
+         margin-bottom: 5px;
+         }
+         /* Style for the file input group */
+         .input-group {
+         margin-top: 5px;
+         width: 80% !important;
+         }
+         /* Style for the "Upload File" label */
+         .input-group-text {
+         cursor: pointer;
+         margin:15px
+         } 
+         /* Style for the file input (hidden) */
+         .form-control-file {
+         display: none;
+         margin:15px;
+         }
+         /* Style for the container with spacing */
+         .section-container {
+         border: 1px solid #cfc8c8;
+         padding: 20px;
+         margin-top: 20px;
+         border-radius: 5px;
+         }
+         .form-control{
+         font-size: 12px !important
+         color: lightgrey !important
+         width: 83% !important;
+         }
+         .form-control::placeholder{
+         font-size:13px;
+         color:lightgrey
+         }
+         .maincontainer{
+         margin-left: 14px;
+         margin-right: 14px;
+         }
+         .changeInput{
+         height: 39px !important ;
+         margin-right:auto;
+         }
+         .changeLabel{
+         margin-top: 14px !important;
+         }
+         .input-group-text{
+         margin: 0px !important;
+         }
+         .btn{
+         float:right
+         }
+         .form-label{
+         margin-top: 13px;
+         font-weight: 600;
+         font-size:14px;
+         }
+         .uploadColor{
+         border:1px solid #2c8ff1 !important;
+         color: #2c8ff1 !important;
+         }
+         .colorH6{
+         color: #7a7676;
+         }
+         .round-image {
+         width: 51px;
+         height: 43px;
+         border-radius: 48%;
+         margin-right: 9px;
+         overflow: hidden;
+         }
+         /* Style the image to fill the round container */
+         .round-image img {
+         width: 100%;
+         height: 100%;
+         object-fit: cover; /* Maintain aspect ratio and cover the round container */
+         }
+         .horizontal-line {
+         height: 1px; 
+         background-color: white; 
+         width: 100%; 
+         margin: 20px auto;
+         margin-bottom: 0px;
+         }
+         .imageAlign{
+         display:flex;
+         }
+         .hamburger{
+         margin-right: 10px;
+         }
+         .amplusLogo{
+         margin-left: 10px;
+         }
+         .valueButton{
+         width:65px;
+         }
+         .btnMargin{
+         border: 1px solid lightgrey;
+         margin-right: 35px;
+         }
+         .changeWidth{
+         width:67%
+         }
+         .changingWidth {
+         width: 75%;
+         margin-left: 18px;
+         }
+         .inputAndButton{
+         display:flex;
+         }
+         .addingBtn{
+         display: flex;
+         justify-content: center;
+         width: 136px;
+         height: 38px;
+         align-items: center;
+         margin-top: 45px;
+         border: 1px solid lightgrey;
+         }
+         .plusIcon{
+         width: 39px;
+         height: 25px;
+         }
+         #adjustWidth{
+         width:93% !important;
+         }
+         .saveBtn{
+         height: 3vw !important
+         }
+         .centerDates{
+         display: flex;
+         justify-content: center;
+         }
+         .btn-success{
+         margin-right:54px;
+         font-size:13px !important;
+         }
+         .accordion-item {
+         margin-top: 20px; /* Adjust the value as needed */
+         border:1px solid lightgrey !important;
+         }
+         .accordion-button:not(.collapsed) {
+         background-color: white !important;
+         box-shadow: none !important;
+         color: grey !important;
+         font-size: 16px;
+         font-weight: 500;
+         }
+         .accordion-header{
+         border: 1px solid #fbf7f7;
+         }
+         .accordion-button{
+         font-size: 16px !important;
+         color: grey !important;
+         font-weight: 500 !important;
+         }
+         .date-cont1{
+         margin-left: 15px;
+         font-size: 14px;
+         }
+         .decBtn{
+         padding-bottom: 10px !important;
+         }
+         input[type="number"]::-webkit-inner-spin-button,
+         input[type="number"]::-webkit-outer-spin-button {
+         -webkit-appearance: none;
+         appearance: none;
+         margin: 0;
+         }
+         .error-message {
+         color: red;
+         display: block;
+         font-size: 12px;
+         margin-left: 26px;
+         margin-top: 4px;
+         display:none;
+         }
+         .error-border {
+         border: 1px solid red !important;
+         }
+         .alertspan{
+         margin-left: 17px !important;
+         }
+         .small-popup {
+         max-width: 400px;   
+         }
+         .messageDisplay{
+         color: #3E9FFE;
+         font-size: 14px;
+         font-weight: 490;
+         margin-top: 11px;
+         }
+      
+      </style>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+   </head>
+   <body>
+      
+      <div class="container-fluid">
+         <div class="row">
+            <div class="col-md-3 ">
+               <div class="mainDiv">
+                  <div class="my-cont ">
+                     <div class="centerDates">
+                        <p><span class="date-range"></span></p>
+                     </div>
+                     <div id="calendar"></div>
+                     <div class="horizontal-line"></div>
+                     <h5 class="menu">Menu</h5>
+                     <div class="myNavi">
+                        <a href="#" for="name" id="toggle-accordion1">General HSE</a>
+                     </div>
+                     <div class="myNavi">
+                        <a href="#" for="age" id="toggle-accordion2">HSE Trainings</a>
+                     </div>
+                     <div class="myNavi">
+                        <a href="#" for="class" id="toggle-accordion3">HSE Observations</a>
+                     </div>
+                     <div class="myNavi">
+                        <a href="#" for="sec" id="toggle-accordion4">Management Visits</a>
+                     </div>
+                     <div class="myNavi">
+                        <a href="#" for="sec" id="toggle-accordion5">Incidents</a>
+                     </div>
+                     <div class="myNavi">
+                        <a href="#" for="sec">Mock Drills</a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-md-9">
+               <div class="alert alert-warning alert-dismissible fade show" role="alert" id="alert"  style="display: none;">
+                  <strong>Please Fill all the above forms</strong> 
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+               <div class='myNavbar'>
+                  <nav class="navbar">
+                     <div class="imageAlign">
+                        <div class="hamburger">
+                           <img src="{% static 'images/hamburger.svg' %}" alt="Description of the image" width="20px" height="20px">
+                        </div>
+                        <div class="amplusLogo">
+                           <img src="{% static 'images/amplus_logo.svg' %}" alt="Description of the image" width="30px" height="30px">
+                        </div>
+                     </div>
+                     <div class="round-image">
+                        <img src=" {% static 'images/photo-jpeg-example.jpg' %}" alt="Description of the image">
+                     </div>
+                  </nav>
+                  <div class="cont">
+                     <div class="sideView">
+                        <h5 class="hello">Hello Ayush ,</h5>
+                        <div class="outer-container">
+                           <!-- Week Display Container -->
+                           <div class="display-outer-container1">
+                              <p class="showWeek" id="weekDisplay"></p>
+                           </div>
+                           <!-- Date Display Container -->
+                           <div class="display-outer-container2">
+                              <p class="showDate" id="dateDisplay"></p>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="date-cont1">
+                        <div class="theDate1">17th September - Today - Sunday</div>
+                     </div>
+                     <div class="date-cont">
+                        <div class="messageDisplay">The form is filled for :</div>
+                        <div class="viewDate">17th September - Today - Sunday</div>
+                        <img src=" {% static 'images/left_date.svg' %} " class="arrow" onclick="changeDate(-1)"> </img>
+                        <img src=" {% static 'images/right_date.svg' %}" class="arrow" onclick="changeDate(1)"> </img>
+                     </div>
+                  </div>
+                  <div class="maincontainer">
+                     <div class="accordion"id="accordionExample" >
+                        <div class="accordion-item">
+                           <h2 class="accordion-header">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                              General HSE
+                              </button>
+                           </h2>
+                           <div id="collapseOne" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
+                              <div class="accordion-body">
+                                 <form method="POST" action="{% url 'General HSE' %}" enctype="multipart/form-data" id="form1" >
+                                    {% csrf_token %}
+                                    <input type="hidden" name="week_number" id="week_number1" value="">
+                                    <input type="hidden" name="year" id="year1" value="">
+                                    <input type="hidden" name="toBeUpdatedId1" id="toBeUpdatedId1" value="">
+                                    <div class="mb-3">
+                                       <label for="input1" class="form-label ">Total man days worked</label>
+                                       <div class="input-group" id="adjustWidth">
+                                          <input type="number" class="form-control disableIt" id="input1" placeholder="Total man days worked"name="total_man_days_worked">
+                                          <div class=" btnMargin">
+                                             <button class="btn  valueButton disableBtn" type="button" id="increment1"><img src="{% static 'images/plusIcon.png' %}" class="plusIcon"></button>
+                                             <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement1"><img src="{% static 'images/minusButton.svg' %}"></button>
+                                          </div>
+                                          <div class="uploadBtn">
+                                             <input type="file" class="form-control-file disableIt" id="fileInput1" style="display: none" name="today_day_worked_file" >
+                                             <label class="input-group-text uploadColor" for="fileInput1" id="fileInputLabel1">Upload File</label>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div class="mb-3 changingWidth">
+                                       <label for="input2" class="form-label  ">Total safe man hours worked</label>
+                                       <input type="number" class="form-control disableIt" id="input2" placeholder="Total safe man hours worked" name="total_safe_man_hours" >
+                                    </div>
+                                    <div class="mb-3 ">
+                                       <label for="input3" class="form-label ">Number of persons inducted in the site</label>
+                                       <div class="input-group">
+                                          <input type="number" class="form-control disableIt" id="input3" placeholder="Number of persons inducted in the site" name="no_of_person_inducted_site" >
+                                          <div class=" btnMargin">
+                                             <button class="btn  valueButton disableBtn" type="button" id="increment3"><img src="{% static 'images/plusIcon.png' %}" class="plusIcon"></button>
+                                             <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement3"><img src="{% static 'images/minusButton.svg' %}"></button>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div class="mb-3 ">
+                                       <label for="input4" class="form-label ">Total number of toolbox talk attendees</label>
+                                       <div class="input-group">
+                                          <input type="number" class="form-control disableIt" id="input4" placeholder="Total number of toolbox talk attendees" name="no_of_toolbox_attendees" >
+                                          <div class=" btnMargin">
+                                             <button class="btn  valueButton disableBtn" type="button" id="increment4"><img src="{% static 'images/plusIcon.png' %}" class="plusIcon"></button>
+                                             <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement4"><img src="{% static 'images/minusButton.svg' %}"></button>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div class="saveBtn">
+                                       <button type="submit" class="btn btn-success disableIt" onclick="calculateWeekAndYear1()" >Save & Next</button>
+                                    </div>
+                                 </form>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="accordion-item">
+                           <h2 class="accordion-header" id="headingTwo2">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                              HSE Trainings
+                              </button>
+                           </h2>
+                           <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                              <div class="accordion-body">
+                                 <form method="POST" action="{% url 'HSE Trainings' %}" enctype="multipart/form-data" id="form2">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="week_number" id="week_number2" value="">
+                                    <input type="hidden" name="year" id="year2" value="">
+                                    <input type="hidden" name="toBeUpdatedId2" id="toBeUpdatedId2" value="">
+                                    <div class="mb-3">
+                                       <label for="input5" class="form-label ">HSE Trainings (no. of attendees from Amplus)</label>
+                                       <div class="input-group" id="adjustWidth">
+                                          <input type="number" class="form-control disableIt" id="input5" placeholder="HSE Trainings (no. of attendees from Amplus)" name="hse_training_attendees">
+                                          <div class=" btnMargin">
+                                             <button class="btn  valueButton disableBtn  " type="button" id="increment5"><img src="{% static 'images/plusIcon.png' %}" class="plusIcon"></button>
+                                             <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement5"><img src="{% static 'images/minusButton.svg' %}"></button>
+                                          </div>
+                                          <div class="uploadBtn">
+                                             <input type="file" class="form-control-file disableIt" id="fileInput2" style="display: none" name="no_of_attendees_amplus" >
+                                             <label class="input-group-text uploadColor" for="fileInput2" id="fileInputLabel2">Upload File</label>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div class=" changingWidth">
+                                       <label for="input6" class="form-label ">Duration of training session</label>
+                                       <input type="number" class="form-control disableIt" id="input6" placeholder="Duration of training session" name="duration_of_trainee" min="1">
+                                    </div>
+                                    <span class="error-message" id="number-error1">Fill duration above 1hr</span>
+                                    <div class="mb-3">
+                                       <label for="input7" class="form-label ">HSE Trainings (no. of attendees from Contractor)</label>
+                                       <div class="input-group" id="adjustWidth">
+                                          <input type="number" class="form-control disableIt" id="input7" placeholder="HSE Trainings (no. of attendees from Contractor)" name="hse_training_contractor">
+                                          <div class=" btnMargin">
+                                             <button class="btn  valueButton disableBtn" type="button" id="increment7"><img src="{% static 'images/plusIcon.png' %}" class="plusIcon"></button>
+                                             <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement7"><img src="{% static 'images/minusButton.svg' %}"></button>
+                                          </div>
+                                          <div class="uploadBtn">
+                                             <input type="file" class="form-control-file disableIt" id="fileInput3" style="display: none" name='no_of_attendees_contractor'>
+                                             <label class="input-group-text uploadColor" for="fileInput3" id="fileInputLabel3" >Upload File</label>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div class="changingWidth">
+                                       <label for="input8" class="form-label">Duration of training session</label>
+                                       <input type="number" class="form-control disableIt" id="input8" placeholder="Duration of training session" name="duration_of_contractor" min="1">
+                                    </div>
+                                    <span class="error-message" id="number-error2">Fill duration above 1hr</span>
+                                    <div class="saveBtn">
+                                       <button type="submit" class="btn btn-success disableIt" onclick="calculateWeekAndYear2()" >Save & Next</button>
+                                    </div>
+                                 </form>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="accordion-item">
+                           <h2 class="accordion-header">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                              HSE Observations
+                              </button>
+                           </h2>
+                           <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                              <div class="accordion-body">
+                                 <form method="POST" action="{% url 'HSE Observations' %}" enctype="multipart/form-data"  id="form3">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="week_number" id="week_number3" value="">
+                                    <input type="hidden" name="year" id="year3" value="">
+                                    <input type="hidden" name="toBeUpdatedId3" id="toBeUpdatedId3" value="">
+                                    <div class="mb-3">
+                                       <label for="input9" class="form-label ">Number of daily HSE observations</label>
+                                       <div class="input-group" id="adjustWidth">
+                                          <input type="number" class="form-control disableIt" id="input9" placeholder="Number of daily HSE observations" name="daily_hse_observation">
+                                          <div class=" btnMargin">
+                                             <button class="btn  valueButton disableBtn" type="button" id="increment9"><img src="{% static 'images/plusIcon.png' %}" class="plusIcon"></button>
+                                             <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement9"><img src="{% static 'images/minusButton.svg' %}"></button>
+                                          </div>
+                                          <div class="uploadBtn">
+                                             <input type="file" class="form-control-file disableIt" id="fileInput4" style="display: none" name="hse_observation">
+                                             <label class="input-group-text uploadColor" for="fileInput4" id="fileInputLabel4">Upload File</label>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div class="mb-3 ">
+                                       <label for="input10" class="form-label ">Number of STOP Work notice issued</label>
+                                       <div class="input-group">
+                                          <input type="number" class="form-control disableIt" id="input10" placeholder="Number of STOP Work notice issued" name="stop_work_notice">
+                                          <div class=" btnMargin">
+                                             <button class="btn  valueButton disableBtn" type="button" id="increment10"><img src="{% static 'images/plusIcon.png' %}" class="plusIcon"></button>
+                                             <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement10"><img src="{% static 'images/minusButton.svg' %}"</button>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div class="mb-3 ">
+                                       <label for="input11" class="form-label ">Number of Violation Memo issued</label>
+                                       <div class="input-group">
+                                          <input type="number" class="form-control disableIt" id="input11" placeholder="Number of Violation Memo issued" name="violation_memo_issued">
+                                          <div class=" btnMargin">
+                                             <button class="btn  valueButton disableBtn " type="button" id="increment11"><img src="{% static 'images/plusIcon.png' %}" class="plusIcon"></button>
+                                             <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement11"><img src="{% static 'images/minusButton.svg' %}"</button>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div class="mb-3 ">
+                                       <label for="input11" class="form-label ">Number of complaints from customers</label>
+                                       <div class="input-group">
+                                          <input type="number" class="form-control disableIt" id="input12" placeholder="Number of complaints from customers" name="complaint_from_customer">
+                                          <div class=" btnMargin">
+                                             <button class="btn  valueButton disableBtn " type="button" id="increment12"><img src="{% static 'images/plusIcon.png' %}" class="plusIcon"></button>
+                                             <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement12"><img src="{% static 'images/minusButton.svg' %}"</button>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div class="saveBtn">
+                                       <button type="submit" class="btn btn-success disableIt" onclick="calculateWeekAndYear3()">Save & Next</button>
+                                    </div>
+                                 </form>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="accordion-item">
+                           <h2 class="accordion-header">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+                              Management Visits
+                              </button>
+                           </h2>
+                           <div id="collapseFour" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
+                              <div class="accordion-body">
+                                 <form method="POST" action="{% url 'Management Visits' %}" enctype="multipart/form-data" id="form4">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="week_number" id="week_number4" value="">
+                                    <input type="hidden" name="year" id="year4" value="">
+                                    <input type="hidden" name="toBeUpdatedId4" id="toBeUpdatedId4" value="">
+                                    <div class="mb-3">
+                                       <label for="input13" class="form-label ">Number of Management HSE Visits</label>
+                                       <div class="input-group" id="adjustWidth">
+                                          <input type="number" class="form-control disableIt" id="input13" placeholder="Number of Management HSE Visits" name="no_of_management_visits">
+                                          <div class=" btnMargin">
+                                             <button class="btn  valueButton disableBtn " type="button" id="increment13"><img src="{% static 'images/plusIcon.png' %}" class="plusIcon"></button>
+                                             <button class="btn  valueButton decBtn disableBtn"  type="button" id="decrement13"><img src="{% static 'images/minusButton.svg' %}"></button>
+                                          </div>
+                                          <div class="uploadBtn">
+                                             <input type="file" class="form-control-file disableIt" id="fileInput5" style="display: none" name="no_of_management_visits_file">
+                                             <label class="input-group-text uploadColor" for="fileInput5" id="fileInputLabel5">Upload File</label>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div class="mb-3">
+                                       <label for="input14" class="form-label ">Total Findings</label>
+                                       <div class="input-group" id="adjustWidth">
+                                          <input type="number" class="form-control disableIt" id="input14" placeholder="Total Findings" name="total_findings">
+                                          <div class=" btnMargin">
+                                             <button class="btn  valueButton disableBtn " type="button" id="increment14"><img src="{% static 'images/plusIcon.png' %}" class="plusIcon"></button>
+                                             <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement14"><img src="{% static 'images/minusButton.svg' %}"></button>
+                                          </div>
+                                          <div class="uploadBtn">
+                                             <input type="file" class="form-control-file disableIt" id="fileInput6" style="display: none" name="total_findings_file">
+                                             <label class="input-group-text uploadColor" for="fileInput6" id="fileInputLabel6">Upload File</label>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div class="mb-3">
+                                       <label for="input15" class="form-label ">Number of compilance done</label>
+                                       <div class="input-group" id="adjustWidth">
+                                          <input type="number" class="form-control disableIt" id="input15" placeholder="Number of compilance done" name="no_of_compilance_done">
+                                          <div class=" btnMargin">
+                                             <button class="btn  valueButton disableBtn" type="button" id="increment15"><img src="{% static 'images/plusIcon.png' %}" class="plusIcon"></button>
+                                             <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement15"><img src="{% static 'images/minusButton.svg' %}"></button>
+                                          </div>
+                                          <div class="uploadBtn">
+                                             <input type="file" class="form-control-file disableIt" id="fileInput7" style="display: none" name="no_of_compilance_done_file">
+                                             <label class="input-group-text uploadColor" for="fileInput7" id="fileInputLabel7">Upload File</label>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div class="mb-3 changingWidth">
+                                       <label for="input16" class="form-label">Number of observation pending (to be compiled)</label>
+                                       <input type="number" class="form-control disableIt" id="input16" placeholder="Number of observation pending (to be compiled)" name="observation_pending">
+                                    </div>
+                                    <div class="saveBtn">
+                                       <button type="submit" class="btn btn-success disableIt" onclick="calculateWeekAndYear4()">Save & Next</button>
+                                    </div>
+                                 </form>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="accordion-item">
+                           <h2 class="accordion-header">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
+                              Incidents
+                              </button>
+                           </h2>
+                           <div id="collapseFive" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
+                              <div class="accordion-body">
+                                 <form method="POST" action="{% url 'Incidents' %}" enctype="multipart/form-data" id="final-form">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="week_number" id="week_number5" value="">
+                                    <input type="hidden" name="year" id="year5" value="">
+                                    <input type="hidden" name="toBeUpdatedId5" id="toBeUpdatedId5" value="">
+                                    <div class="mb-3">
+                                       <label for="input17" class="form-label ">Number of Incidents</label>
+                                       <div class="input-group" id="adjustWidth">
+                                          <input type="number" class="form-control disableIt" id="input17" placeholder="Number of Incidents" name="no_of_incidents">
+                                          <div class=" btnMargin">
+                                             <button class="btn  valueButton disableBtn " type="button" id="increment17"><img src="{% static 'images/plusIcon.png' %}" class="plusIcon"></button>
+                                             <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement17"><img src="{% static 'images/minusButton.svg' %}"></button>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div class="mb-3">
+                                       <label for="input18" class="form-label ">Number of occupational illness</label>
+                                       <div class="input-group" id="adjustWidth">
+                                          <input type="number" class="form-control disableIt" id="input18" placeholder="Number of occupational illness" name="no_of_occupation_illness">
+                                          <div class=" btnMargin">
+                                             <button class="btn  valueButton disableBtn" type="button" id="increment18"><img src="{% static 'images/plusIcon.png' %}" class="plusIcon"></button>
+                                             <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement18"><img src="{% static 'images/minusButton.svg' %}"></button>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div class="mb-3">
+                                       <label for="input19" class="form-label ">Number of environmental illness</label>
+                                       <div class="input-group" id="adjustWidth">
+                                          <input type="number" class="form-control disableIt" id="input19" placeholder="Number of environmental illness" name="no_of_environment_illness">
+                                          <div class=" btnMargin">
+                                             <button class="btn  valueButton disableBtn" type="button" id="increment19"><img src="{% static 'images/plusIcon.png' %}" class="plusIcon"></button>
+                                             <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement19"><img src="{% static 'images/minusButton.svg' %}"></button>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div class="saveBtn">
+                                       <button type="submit" class="btn btn-success disableIt" onclick="calculateWeekAndYear5();">Save</button>
+                                    </div>
+                                 </form>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <!--main Acc-->
+         </div>
+         <!--main container-->
+      </div>
+      <!--mynavbar-->
+      </div>
+      <!--col-->
+      <!--row-->
+      </div>
+      <!--container fluid-->   
+      
+       
+   </body>
+   <script >
+      const message = "{{ message }}";
+      const alertElement = document.getElementById('alert');
+
+      if (message) {
+         // Display the alert
+         alertElement.style.display = "block";
+      }
+      
+   </script>
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+   <script>
+      // JavaScript code to generate the calendar with the highlighted date range
+      let GeneralHSEID;
+      
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = today.getMonth();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      
+      let calendarHTML = '<table class="myTable"><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr><tr>';
+      
+      for (let i = 1; i <= daysInMonth; i++) {
+          const dayOfWeek = new Date(year, month, i).getDay();
+          if (i === 1) {
+              // Add empty cells for the days before the 1st of the month
+              for (let j = 0; j < dayOfWeek; j++) {
+                  calendarHTML += '<td></td>';
+              }
+          }
+      
+          const isToday = year === today.getFullYear() && month === today.getMonth() && i === today.getDate();
+          const isHighlightStart = isToday;
+          const isHighlightEnd = i === today.getDate() + 6;
+      
+          let cellClass = '';
+      
+          if (isHighlightStart) {
+              cellClass = 'highlight-start';
+          } else if (isHighlightEnd) {
+              cellClass = 'highlight-end';
+          } else if (isToday || (i > today.getDate() && i < today.getDate() + 7)) {
+              cellClass = 'today';
+          }
+      
+          calendarHTML += `<td class="${cellClass}">${i}</td>`;
+      
+          if (dayOfWeek === 6) {
+              calendarHTML += '</tr><tr>';
+          }
+      }
+      
+      calendarHTML += '</tr></table>';
+      document.getElementById("calendar").innerHTML = calendarHTML;
+      
+      // Display the date range at the top
+      const dateRangeElement = document.querySelector('.date-range');
+      
+      const startDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      const endDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 6);
+      
+      const startDateFormatted = startDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      const endDateFormatted = endDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      
+      dateRangeElement.textContent = `${startDateFormatted} - ${endDateFormatted}`;
+      
+      
+      const itsDateElement = document.querySelector(".viewDate");
+      const itsDateElement1 = document.querySelector(".theDate1");
+      
+      // Function to format the date as "17th September - Today - Sunday"
+      function formatDate(date) {
+         const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+         const months = ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
+      
+         const dayOfWeek = daysOfWeek[date.getDay()];
+         const dayOfMonth = date.getDate();
+         const month = months[date.getMonth()];
+      
+         const daySuffix = getDaySuffix(dayOfMonth);
+      
+         return `${dayOfWeek}, ${dayOfMonth}${daySuffix}, ${month}`;
+      }
+      
+      function formatDate1(date) {
+          const day = date.getDate();
+          const month = date.toLocaleString('default', { month: 'long' });
+          const daySuffix = getDaySuffix(day);
+          const dayOfWeek = date.toLocaleString('default', { weekday: 'long' });
+      
+          return `${day}${daySuffix} ${month} - Today- ${dayOfWeek} `;
+      }
+      
+      // Function to get the day suffix (e.g., 1st, 2nd, 3rd, 4th)
+      function getDaySuffix(day) {
+          if (day >= 11 && day <= 13) {
+              return "th";
+          }
+          switch (day % 10) {
+              case 1:
+                  return "st";
+              case 2:
+                  return "nd";
+              case 3:
+                  return "rd";
+              default:
+                  return "th";
+          }
+      }
+      
+      // Get the current date
+      let TodaysDate = new Date();
+      itsDateElement.textContent = formatDate(TodaysDate); // Initial value
+      itsDateElement1.textContent = formatDate1(TodaysDate); // Initial value
+      
+      // Function to change the date by a specified number of days
+      function changeDate(days) {
+          TodaysDate.setDate(TodaysDate.getDate() + days);
+          itsDateElement.textContent = formatDate(TodaysDate);
+      }
+      
+      // second JS 
+      function myDate(date) {
+      const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+      const month = monthNames[date.getMonth()];
+      const day = String(date.getDate()).padStart(2, '0');
+      const year = date.getFullYear();
+      return `${month} ${day}, ${year}`;
+      }
+      
+      // Get the current date
+      const currDate = new Date();
+      
+      // Calculate the date after 7 days
+      const myNextWeekDate = new Date(currDate);
+      myNextWeekDate.setDate(myNextWeekDate.getDate() + 6);
+      
+      // Update the HTML elements with today's date and the date after 7 days
+      
+      function getWeekNumberInMonth(date) {
+         var dayOfMonth = date.getDate();
+         var weekNumber = Math.ceil(dayOfMonth / 7);
+          return weekNumber;
+       }
+       
+       const getTodayWeek = new Date();
+       const weekNumberInMonth = getWeekNumberInMonth(today);
+      const myWeek = document.getElementById('weekDisplay');
+      const itsDate = document.getElementById('dateDisplay');
+      
+      myWeek.textContent = `Week ${weekNumberInMonth}`; 
+      itsDate.textContent = `${myDate(currDate)} - ${myDate(myNextWeekDate)}`;
+      
+      
+      function setupIncrementDecrementButtons(decrementButtonId,incrementButtonId, inputFieldId) {
+      const decrementButton = document.getElementById(decrementButtonId);
+      const incrementButton = document.getElementById(incrementButtonId);
+      const inputField = document.getElementById(inputFieldId);
+      
+      decrementButton.addEventListener("click", () => {
+          const currentValue = parseInt(inputField.value, 10);
+          if (!isNaN(currentValue) && currentValue > 1) {
+              inputField.value = (currentValue - 1).toString();
+          }
+      });
+      
+      incrementButton.addEventListener("click", () => {
+          const currentValue = parseInt(inputField.value, 10);
+          if (!isNaN(currentValue)) {
+              inputField.value = (currentValue + 1).toString();
+          }
+      });
+      }
+      
+      // Example usage:
+      setupIncrementDecrementButtons("decrement1", "increment1", "input1");
+      setupIncrementDecrementButtons("decrement3", "increment3", "input3");
+      setupIncrementDecrementButtons("decrement4", "increment4", "input4");
+      setupIncrementDecrementButtons("decrement5", "increment5", "input5");
+      setupIncrementDecrementButtons("decrement7", "increment7", "input7");
+      setupIncrementDecrementButtons("decrement9", "increment9", "input9");
+      setupIncrementDecrementButtons("decrement10", "increment10", "input10");
+      setupIncrementDecrementButtons("decrement11", "increment11", "input11");
+      setupIncrementDecrementButtons("decrement12", "increment12", "input12");
+      setupIncrementDecrementButtons("decrement13", "increment13", "input13");
+      setupIncrementDecrementButtons("decrement14", "increment14", "input14");
+      setupIncrementDecrementButtons("decrement15", "increment15", "input15");
+      setupIncrementDecrementButtons("decrement17", "increment17", "input17");
+      setupIncrementDecrementButtons("decrement18", "increment18", "input18");
+      setupIncrementDecrementButtons("decrement19", "increment19", "input19");
+      
+      const numberInput1 = document.getElementById("input6");
+      const numberInput2 = document.getElementById("input8");
+      const numberError1 = document.getElementById("number-error1");
+      const numberError2 = document.getElementById("number-error2");
+      
+      
+      numberInput1.addEventListener("input", function () {
+          if (parseInt(numberInput1.value) <= 1) {
+              numberError1.style.display = "block";
+              numberInput1.classList.add("error-border");
+          } else {
+              numberError1.style.display = "none";
+              numberInput1.classList.remove("error-border");
+          }
+      });
+      
+      
+      numberInput2.addEventListener("input", function () {
+         if (parseInt(numberInput2.value) <= 1) {
+             numberError2.style.display = "block";
+             numberInput2.classList.add("error-border");
+         } else {
+             numberError2.style.display = "none";
+             numberInput2.classList.remove("error-border");
+         }
+      });
+      
+      
+      
+         function calculateWeekAndYear1() {
+             const currentDate = new Date();
+             const weekNumber = getWeekNumber(currentDate);
+             const year = currentDate.getFullYear();
+             
+             // Set the calculated values in the hidden input fields
+             document.getElementById("week_number1").value = weekNumber;
+             document.getElementById("year1").value = year;
+         }
+         function calculateWeekAndYear2() {
+            const currentDate = new Date();
+            const weekNumber = getWeekNumber(currentDate);
+            const year = currentDate.getFullYear();
+            
+            // Set the calculated values in the hidden input fields
+            document.getElementById("week_number2").value = weekNumber;
+            document.getElementById("year2").value = year;
+        }
+      
+        function calculateWeekAndYear3() {
+         const currentDate = new Date();
+         const weekNumber = getWeekNumber(currentDate);
+         const year = currentDate.getFullYear();
+         
+         // Set the calculated values in the hidden input fields
+         document.getElementById("week_number3").value = weekNumber;
+         document.getElementById("year3").value = year;
+       }
+      
+       function calculateWeekAndYear4() {
+         const currentDate = new Date();
+         const weekNumber = getWeekNumber(currentDate);
+         const year = currentDate.getFullYear();
+         
+         // Set the calculated values in the hidden input fields
+         document.getElementById("week_number4").value = weekNumber;
+         document.getElementById("year4").value = year;
+      }
+      function calculateWeekAndYear5() {
+      const currentDate = new Date();
+      const weekNumber = getWeekNumber(currentDate);
+      const year = currentDate.getFullYear();
+      
+      // Set the calculated values in the hidden input fields
+      document.getElementById("week_number5").value = weekNumber;
+      document.getElementById("year5").value = year;
+      }
+         function getWeekNumber(date) {
+             // Copy date so don't modify original
+             date = new Date(date);
+             date.setHours(0, 0, 0, 0);
+             // Set to nearest Thursday: current date + 4 - current day number
+             // Make Sunday's day number 7
+             date.setDate(date.getDate() + 4 - (date.getDay() || 7));
+             // Get first day of year
+             var yearStart = new Date(date.getFullYear(), 0, 1);
+             // Calculate full weeks to nearest Thursday
+             var weekNumber = Math.ceil(((date - yearStart) / 86400000 + 1) / 7);
+             return weekNumber;
+         }
+      
+         function populateInputField1(id, dataKey) {
+            const today = new Date();
+            const weekNumber = getWeekNumber(today);
+            const year = today.getFullYear()
+      
+      
+            fetch(`/api/child-models/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
+                .then(response => response.json())
+                .then(data => {
+                    const fieldData = data['General HSE'][data['General HSE'].length - 1][dataKey];
+                    GeneralHSEID=data['General HSE'][data['General HSE'].length - 1]['id']
+                    document.getElementById(id).value = fieldData;
+                    document.getElementById('toBeUpdatedId1').value = GeneralHSEID;
+      
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+         }
+         
+      
+        function populateInputField2(id, dataKey) {
+         const today = new Date();
+         const weekNumber = getWeekNumber(today);
+         const year = today.getFullYear()
+      
+      
+         fetch(`/api/child-models/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
+             .then(response => response.json())
+             .then(data => {
+                 const fieldData = data['HSE Training'][data['HSE Training'].length - 1][dataKey];
+                 HSETrainingID=data['HSE Training'][data['HSE Training'].length - 1]['id']
+                 document.getElementById(id).value = fieldData;
+                 document.getElementById('toBeUpdatedId2').value = HSETrainingID;
+      
+             })
+             .catch(error => {
+                 console.error('Error:', error);
+             });
+      }
+      
+      function populateInputField3(id, dataKey) {
+      const today = new Date();
+      const weekNumber = getWeekNumber(today);
+      const year = today.getFullYear()
+      
+      
+      fetch(`/api/child-models/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
+          .then(response => response.json())
+          .then(data => {
+              const fieldData = data['HSE Observation'][data['HSE Observation'].length - 1][dataKey];
+              HSEObservationID=data['HSE Observation'][data['HSE Observation'].length - 1]['id']
+      
+              document.getElementById(id).value = fieldData;
+              document.getElementById('toBeUpdatedId3').value = HSEObservationID;
+      
+          })
+          .catch(error => {
+              console.error('Error:', error);
+          });
+      }
+      
+      function populateInputField4(id, dataKey) {
+      const today = new Date();
+      const weekNumber = getWeekNumber(today);
+      const year = today.getFullYear()
+      
+      
+      fetch(`/api/child-models/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
+       .then(response => response.json())
+       .then(data => {
+           const fieldData = data['Management Visits'][data['Management Visits'].length - 1][dataKey];
+           ManagementID=data['Management Visits'][data['Management Visits'].length - 1]['id']
+      
+           document.getElementById(id).value = fieldData;
+           document.getElementById('toBeUpdatedId4').value = ManagementID;
+      
+       })
+       .catch(error => {
+           console.error('Error:', error);
+       });
+      }
+      
+      function populateInputField5(id, dataKey) {
+      const today = new Date();
+      const weekNumber = getWeekNumber(today);
+      const year = today.getFullYear()
+      
+      
+      fetch(`/api/child-models/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
+       .then(response => response.json())
+       .then(data => {
+           const fieldData = data['Incidents'][data['Incidents'].length - 1][dataKey];
+           IncidentsID=data['Incidents'][data['Incidents'].length - 1]['id']
+      
+           document.getElementById(id).value = fieldData;
+           document.getElementById('toBeUpdatedId5').value = IncidentsID;
+           
+      
+           
+       })
+       .catch(error => {
+           console.error('Error:', error);
+       });
+      }
+        
+        populateInputField1('input1', 'total_man_days_worked');
+        populateInputField1('input2', 'total_safe_man_hours');
+        populateInputField1('input3', 'no_of_person_inducted_site');
+        populateInputField1('input4', 'no_of_toolbox_attendees');
+        populateInputField2('input5', 'hse_training_attendees');
+        populateInputField2('input6', 'duration_of_trainee');
+        populateInputField2('input7', 'hse_training_contractor');
+        populateInputField2('input8', 'duration_of_contractor');
+        populateInputField3('input9', 'daily_hse_observation');
+        populateInputField3('input10', 'stop_work_notice');
+        populateInputField3('input11', 'violation_memo_issued');
+        populateInputField3('input12', 'complaint_from_customer');
+        populateInputField4('input13', 'no_of_management_visits');
+        populateInputField4('input14', 'total_findings');
+        populateInputField4('input15', 'no_of_compilance_done');
+        populateInputField4('input16', 'observation_pending');
+        populateInputField5('input17', 'no_of_incidents');
+        populateInputField5('input18', 'no_of_occupation_illness');
+        populateInputField5('input19', 'no_of_environment_illness');
+      
+      
+        $.ajax({
+         type: "GET",
+         url: "/api/parent/",
+         success: function (data) {
+             console.log(data);
+             const fieldData = data[0].form_status;
+             if (fieldData == 1) {
+                 disableInputFields("disableIt");
+                 disableButtonFields("disableBtn");
+      
+                 Swal.fire({
+                     icon: 'warning',
+                     title: 'Form for this is week submitted',
+                     text: 'You can now view the form',
+                     confirmButtonColor: '#3085d6',
+                     confirmButtonText: 'OK',
+                     customClass: {
+                         popup: 'small-popup' // Apply your custom CSS class
+                     }
+                 });
+             }
+      
+             console.log(`form Status is ${fieldData}`);
+         },
+         error: function (xhr, status, error) {
+             console.error("Error:", status, error);
+         }
+      });
+      
+      
+      function disableInputFields(className) {
+      const elements = document.getElementsByClassName(className);
+      for (let i = 0; i < elements.length; i++) {
+          elements[i].disabled = true;
+      }
+      }
+      
+      function disableButtonFields(className) {
+      const elements = document.getElementsByClassName(className);
+      for (let i = 0; i < elements.length; i++) {
+       elements[i].disabled = true;
+       elements[i].style.border = '1px solid white'; // Change the border color to red
+      
+      
+      }
+      }
+      
+      document.addEventListener('DOMContentLoaded', function() {
+      const toggleAccordionLink = document.getElementById('toggle-accordion1');
+      const accordionContent = document.getElementById('collapseOne');
+      
+      toggleAccordionLink.addEventListener('click', function(e) {
+          e.preventDefault();
+          if (accordionContent.classList.contains('show')) {
+              accordionContent.classList.remove('show');
+          } else {
+              accordionContent.classList.add('show');
+          }
+      });
+      });
+      
+      document.addEventListener('DOMContentLoaded', function() {
+      const toggleAccordionLink = document.getElementById('toggle-accordion2');
+      const accordionContent = document.getElementById('collapseTwo');
+      
+      toggleAccordionLink.addEventListener('click', function(e) {
+       e.preventDefault();
+       if (accordionContent.classList.contains('show')) {
+           accordionContent.classList.remove('show');
+       } else {
+           accordionContent.classList.add('show');
+       }
+      });
+      });
+      
+      document.addEventListener('DOMContentLoaded', function() {
+      const toggleAccordionLink = document.getElementById('toggle-accordion3');
+      const accordionContent = document.getElementById('collapseThree');
+      
+      toggleAccordionLink.addEventListener('click', function(e) {
+       e.preventDefault();
+       if (accordionContent.classList.contains('show')) {
+           accordionContent.classList.remove('show');
+       } else {
+           accordionContent.classList.add('show');
+       }
+      });
+      });
+      
+      document.addEventListener('DOMContentLoaded', function() {
+      const toggleAccordionLink = document.getElementById('toggle-accordion4');
+      const accordionContent = document.getElementById('collapseFour');
+      
+      toggleAccordionLink.addEventListener('click', function(e) {
+       e.preventDefault();
+       if (accordionContent.classList.contains('show')) {
+           accordionContent.classList.remove('show');
+       } else {
+           accordionContent.classList.add('show');
+       }
+      });
+      });
+      
+      document.addEventListener('DOMContentLoaded', function() {
+      const toggleAccordionLink = document.getElementById('toggle-accordion5');
+      const accordionContent = document.getElementById('collapseFive');
+      
+      toggleAccordionLink.addEventListener('click', function(e) {
+       e.preventDefault();
+       if (accordionContent.classList.contains('show')) {
+           accordionContent.classList.remove('show');
+       } else {
+           accordionContent.classList.add('show');
+       }
+      });
+      });
+      
+      
+      
+      function setupFileUpload(inputId, labelId) {
+      const fileInput = document.getElementById(inputId);
+      const fileInputLabel = document.getElementById(labelId);
+      
+      fileInput.addEventListener('change', function () {
+       if (fileInput.files.length > 0) {
+           fileInputLabel.textContent = 'File Added!';
+       }
+      });
+      }
+      setupFileUpload('fileInput1', 'fileInputLabel1');
+      setupFileUpload('fileInput2', 'fileInputLabel2');
+      setupFileUpload('fileInput3', 'fileInputLabel3');
+      setupFileUpload('fileInput4', 'fileInputLabel4');
+      setupFileUpload('fileInput5', 'fileInputLabel5');
+      setupFileUpload('fileInput6', 'fileInputLabel6');
+      setupFileUpload('fileInput7', 'fileInputLabel7');
+      
+      
+      
+   
+      
+   </script>
+</html>
