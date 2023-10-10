@@ -4,7 +4,7 @@
    <head>
       <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <title>Violation Form Memo</title>
+      <title>Violation Memo Form</title>
       <meta name="description" content="">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="stylesheet" href="">
@@ -14,7 +14,7 @@
       .mainTable{
       display:flex;
       width:3058px;
-      height:65px;
+      height: 65px;
       border-top: 1px solid black;
       border-bottom: 1px solid black;
       align-items: center;
@@ -23,24 +23,25 @@
       display: flex;
       align-items: center;
       width:127px;
-      height:65px;
+      height: 60px;;
       }
       .commonWidth{
       display: flex;
       align-items: center;
       width:251px;
-      height:65px;
+      height: 60px;;
       }
       .chnWidth{
       display: flex;
       align-items: center;
       width:339px;
-      height:65px;
+      height: 60px;;
       }
       p{
       margin-left: 15px;
       color: gray;
       font-weight: 600;
+      margin-bottom: 0px;
       }
       .valueInput{
       height:43px;
@@ -51,37 +52,32 @@
       font-size: 15px;
       font-weight: 600;
       }
-      .valueInput2{
-      height:43px;
-      margin-left: 15px;
-      border: none;
-      outline: none;
-      font-size: 15px;
-      font-weight: 600;
-      }
+     
       .CLassdropdown{
          width: 110px;
-         height: 33px;
-         font-size: 14px;
-         padding: 4px;
+         height: 28px;
+         font-size: 13px;
+         padding: 0px;
          margin-left: 15px;
-      border: 1.5px solid #2c8ff1 !important;
-      color: #2c8ff1 !important;
-      border-radius: 6px;
+         border: 1.5px solid #2c8ff1 !important;
+         color: #2c8ff1 !important;
+         border-radius: 6px;
+      
       }
       .btn{
          margin-left: 15px;
-         font-size: 14px;
-         height: 34px;
-         width: 100px;
+         font-size: 11px;
+         height: 31px;
+         width: 87px;
          border: 1.5px solid #2c8ff1 !important;
          color: #2c8ff1 !important;
+         font-weight: 500;
       }
-     
+      
       .rowTable1{
       display:flex;
       width:3058px;
-      height:65px;
+      height: 65px;
       align-items: center;
       background-color: #d5e9f1;;
       }
@@ -92,17 +88,30 @@
       display:flex;
       align-items: center;
       width:3058px;
-      height:60px;
+      height: 65px;
       }
-      .rowTable2{
-      display:flex;
-      width:3058px;
-      height:65px;
-      align-items: center;
-      }
+     
       .extraspace{
       width:339px;
       }
+
+      
+      #formContainer > div:nth-child(even) {
+         background-color: #d5e9f1;
+     }
+
+     #formContainer > div:nth-child(odd) {
+         background-color: white;
+     }
+     #formContainer > div:nth-child(odd) .valueInput {
+      background-color: white;
+  }
+  .submitBUtton{
+   background-color:#2c8ff1 !important;
+   color:white !important;
+   font-size: 12px !important;
+
+  }
    </style>
    <body>
       <div class="heading">
@@ -150,144 +159,141 @@
          </div>
         
       </div>
-      <div class="rowData" id="rowData1">
-         <form method="POST" action="{% url 'violation_form' %}" enctype="multipart/form-data" id="">
-            {% csrf_token %}
-            <div class="rowTable1">
-               <input type="hidden" name="week_number" id="week_number_Form" value="">
-               <input type="hidden" name="year" id="year_form" value="">
-               <div class="Srno"><input type="text" class="srWidth valueInput" placeholder="Sr.No" name="SrNo"></div>
-               <div class="commonWidth"><input type="date" class="valueInput" placeholder="Date" name="Date"></div>
-               <div class="commonWidth"><input type="text" class="valueInput" placeholder="Project Name" name="ProjectName"></div>
-               <div class="commonWidth"><input type="text" class="valueInput" placeholder="Project Code" name="ProjectCode"></div>
-               <div class="commonWidth"><input type="text" class="valueInput" placeholder="Business Segment" name="BusinessSegment"></div>
-               <div class="commonWidth"><input type="text" class="valueInput" placeholder="Memo No." name="MemoNo"></div>
-               <div class="commonWidth"><input type="text" class="valueInput" placeholder="Description" name="Description"></div>
-               <div class="commonWidth"><input type="text" class="valueInput" placeholder="Action Taken" name="ActionTaken"></div>
-               <div class="commonWidth"><input type="text" class="valueInput" placeholder="Issued By" name="IssuedBy"></div>
-               <div class="chnWidth"><input type="text" class=" extraspace valueInput" placeholder="Issued To" name="IssuedTo"></div>
-               <div class="commonWidth">
-                  <select class="CLassdropdown" name="PenaltyImposed">
-                     <option value="Yes">Yes</option>
-                     <option value="No">No</option>
-                     <option value="NA">NA</option>
-                  </select>
-               </div>
-               <div class="commonWidth"><input type="text" class="valueInput" placeholder="Amount" name="Amount"></div>
-               <div class="Srno">
-                  <button type="submit" class="btn" onclick="calculateWeekAndYearForm()">Submit</button>
-               </div>
-               
-              
-            </div>
-         </form>
-      </div>
-
-      <div class="rowData" id="rowData2">
-        <form method="POST" action="{% url 'violation_form' %}" enctype="multipart/form-data" id="">
-           {% csrf_token %}
-           <div class="rowTable2">
-              <input type="hidden" name="week_number" id="week_number_Form" value="">
-              <input type="hidden" name="year" id="year_form" value="">
-              <div class="Srno"><input type="text" class="srWidth valueInput2" placeholder="Sr.No" name="SrNo"></div>
-              <div class="commonWidth"><input type="date" class="valueInput2" placeholder="Date" name="Date"></div>
-              <div class="commonWidth"><input type="text" class="valueInput2" placeholder="Project Name" name="ProjectName"></div>
-              <div class="commonWidth"><input type="text" class="valueInput2" placeholder="Project Code" name="ProjectCode"></div>
-              <div class="commonWidth"><input type="text" class="valueInput2" placeholder="Business Segment" name="BusinessSegment"></div>
-              <div class="commonWidth"><input type="text" class="valueInput2" placeholder="Memo No." name="MemoNo"></div>
-              <div class="commonWidth"><input type="text" class="valueInput2" placeholder="Description" name="Description"></div>
-              <div class="commonWidth"><input type="text" class="valueInput2" placeholder="Action Taken" name="ActionTaken"></div>
-              <div class="commonWidth"><input type="text" class="valueInput2" placeholder="Issued By" name="IssuedBy"></div>
-              <div class="chnWidth"><input type="text" class=" extraspace valueInput2" placeholder="Issued To" name="IssuedTo"></div>
-              <div class="commonWidth">
-                 <select class="CLassdropdown" name="PenaltyImposed">
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
-                    <option value="NA">NA</option>
-                 </select>
-              </div>
-              <div class="commonWidth"><input type="text" class="valueInput2" placeholder="Amount" name="Amount"></div>
-              
-              <div class="Srno">
-               <button type="submit" class="btn" onclick="calculateWeekAndYearForm()">Submit</button>
-            </div>
-             
-           </div>
-        </form>
-     </div>
-
-     <div class="rowData" id="">
-        <form method="POST" action="{% url 'violation_form' %}" enctype="multipart/form-data" id="">
-           {% csrf_token %}
-           <div class="rowTable1">
-              <input type="hidden" name="week_number" id="week_number_Form" value="">
-              <input type="hidden" name="year" id="year_form" value="">
-              <div class="Srno"><input type="text" class="srWidth valueInput" placeholder="Sr.No" name="SrNo"></div>
-              <div class="commonWidth"><input type="date" class="valueInput" placeholder="Date" name="Date"></div>
-              <div class="commonWidth"><input type="text" class="valueInput" placeholder="Project Name" name="ProjectName"></div>
-              <div class="commonWidth"><input type="text" class="valueInput" placeholder="Project Code" name="ProjectCode"></div>
-              <div class="commonWidth"><input type="text" class="valueInput" placeholder="Business Segment" name="BusinessSegment"></div>
-              <div class="commonWidth"><input type="text" class="valueInput" placeholder="Memo No." name="MemoNo"></div>
-              <div class="commonWidth"><input type="text" class="valueInput" placeholder="Description" name="Description"></div>
-              <div class="commonWidth"><input type="text" class="valueInput" placeholder="Action Taken" name="ActionTaken"></div>
-              <div class="commonWidth"><input type="text" class="valueInput" placeholder="Issued By" name="IssuedBy"></div>
-              <div class="chnWidth"><input type="text" class=" extraspace valueInput" placeholder="Issued To" name="IssuedTo"></div>
-              <div class="commonWidth">
-                 <select class="CLassdropdown" name="PenaltyImposed">
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
-                    <option value="NA">NA</option>
-                 </select>
-              </div>
-              <div class="commonWidth"><input type="text" class="valueInput" placeholder="Amount" name="Amount"></div>
-              <div class="Srno">
-               <button type="submit" class="btn" onclick="calculateWeekAndYearForm()">Submit</button>
-            </div>
-              
-             
-           </div>
-        </form>
-     </div>
       
-      
+      <form method="POST" action="{% url 'violation_form' %}" enctype="multipart/form-data" id="">
+         {% csrf_token %}
+         <div class="rowTable1">
+            <input type="hidden" name="week_number" id="week_number_Form1" value="">
+            <input type="hidden" name="year" id="year_form1" value="">
+            <div class="Srno"><input type="text" class="srWidth valueInput" placeholder="Sr.No" name="SrNo"></div>
+            <div class="commonWidth"><input type="date" class="valueInput" placeholder="Date" name="Date"></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Project Name" name="ProjectName"></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Project Code" name="ProjectCode"></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Business Segment" name="BusinessSegment"></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Memo No." name="MemoNo"></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Description" name="Description"></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Action Taken" name="ActionTaken"></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Issued By" name="IssuedBy"></div>
+            <div class="chnWidth"><input type="text" class=" extraspace valueInput" placeholder="Issued To" name="IssuedTo"></div>
+            <div class="commonWidth">
+               <select class="CLassdropdown" name="PenaltyImposed">
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                  <option value="NA">NA</option>
+               </select>
+            </div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Amount" name="Amount"></div>
+            <div class="Srno">
+               <button type="submit" class="btn submitBUtton" onclick="calculateWeekAndYearForm1();">Submit</button>
+            </div>
+            
+           
+         </div>
+      </form>
+     
+      <div id="formContainer"></div>
+
+      <template id="formRowTemplate">
+        <div class="rowTable1">
+            <input type="hidden" name="week_number" id="week_number_Form1" value="">
+            <input type="hidden" name="year" id="year_form1" value="">
+            <div class="Srno"><input type="text" class="srWidth valueInput" placeholder="Sr.No" name="SrNo"></div>
+            <div class="commonWidth"><input type="date" class="valueInput" placeholder="Date" name="Date"></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Project Name" name="ProjectName"></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Project Code" name="ProjectCode"></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Business Segment" name="BusinessSegment"></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Memo No." name="MemoNo"></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Description" name="Description"></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Action Taken" name="ActionTaken"></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Issued By" name="IssuedBy"></div>
+            <div class="chnWidth"><input type="text" class=" extraspace valueInput" placeholder="Issued To" name="IssuedTo"></div>
+            <div class="commonWidth">
+               <select class="CLassdropdown" name="PenaltyImposed">
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                  <option value="NA">NA</option>
+               </select>
+            </div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Amount" name="Amount"></div>
+            <div class="Srno">
+            </div>
+            
+           
+         </div>
+      </template>      
       
       <!-- Button to duplicate rowData div -->
       {% comment %} <button class="btn btn-secondary" onclick="duplicateRow()">Add Row</button> {% endcomment %}
    </body>
+
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+   
    <script>
-      let rowCount = 1; // Initialize row count
-      
-      {% comment %} function duplicateRow() {
-          rowCount++; // Increment row count
-          const originalRow = document.getElementById('rowData1');
-          const clonedRow = originalRow.cloneNode(true);
-          clonedRow.id = 'rowData' + rowCount; // Update ID
-          clonedRow.querySelectorAll('input, select').forEach(inputElement => {
-              inputElement.value = ''; // Clear input values
-          });
-          document.body.appendChild(clonedRow);
-      } {% endcomment %}
-      
+      populateInputField()
+
+
+      function populateInputField() {
+         const today = new Date();
+         const weekNumber = getWeekNumber(today);
+         const year = today.getFullYear()         
+         
+      fetch(`/api/child-models/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
+      .then(response => response.json())
+      .then(data => {
+         console.log(data)
+        data=data['Violation Memo From']
+        createAndPopulateFormRows(data);
+      })
+      .catch(error => {
+          console.error('Error:', error);
+      });
+         }
+
+     
+     
+
+function createAndPopulateFormRow(dataItem) {
+   const template = document.getElementById('formRowTemplate');
+   const newRow = document.importNode(template.content, true);
+   
+
+   const inputFields = newRow.querySelectorAll('.valueInput');
+   for (const field of inputFields) {
+       const fieldName = field.getAttribute('name');
+       field.value = dataItem[fieldName] || '';
+   }
+
+   const formContainer = document.getElementById('formContainer');
+   formContainer.appendChild(newRow);
+  
+
+ 
+}
+
+function createAndPopulateFormRows(data) {
+   for (const dataItem of data) {      
+     createAndPopulateFormRow(dataItem);
+   }
+}
+
       function getWeekNumber(date) {
-        date = new Date(date);
-        date.setHours(0, 0, 0, 0);
-        date.setDate(date.getDate() + 4 - (date.getDay() || 7));
-        var yearStart = new Date(date.getFullYear(), 0, 1);
-        var weekNumber = Math.ceil(((date - yearStart) / 86400000 + 1) / 7);
-        return weekNumber;
-      }
-      
-      function calculateWeekAndYearForm() {
-        const currentDate = new Date();
-        const weekNumber = getWeekNumber(currentDate);
-        const year = currentDate.getFullYear();
-        console.log(weekNumber)
-        console.log(year)
-        
-        // Set the calculated values in the hidden input fields
-        document.getElementById("week_number_Form").value = weekNumber;
-        document.getElementById("year_form").value = year;
-      }
-   </script>
+         date = new Date(date);
+         date.setHours(0, 0, 0, 0);
+         date.setDate(date.getDate() + 4 - (date.getDay() || 7));
+         var yearStart = new Date(date.getFullYear(), 0, 1);
+         var weekNumber = Math.ceil(((date - yearStart) / 86400000 + 1) / 7);
+         return weekNumber;
+       }
+       
+       function calculateWeekAndYearForm1() {
+         const currentDate = new Date();
+         const weekNumber = getWeekNumber(currentDate);
+         const year = currentDate.getFullYear();
+         
+         // Set the calculated values in the hidden input fields
+         document.getElementById("week_number_Form1").value = weekNumber;
+         document.getElementById("year_form1").value = year;
+       }
+
+  </script>
 </html>

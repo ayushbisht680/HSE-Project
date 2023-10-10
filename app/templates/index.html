@@ -1247,8 +1247,6 @@
              // Copy date so don't modify original
              date = new Date(date);
              date.setHours(0, 0, 0, 0);
-             // Set to nearest Thursday: current date + 4 - current day number
-             // Make Sunday's day number 7
              date.setDate(date.getDate() + 4 - (date.getDay() || 7));
              // Get first day of year
              var yearStart = new Date(date.getFullYear(), 0, 1);
@@ -1362,6 +1360,7 @@
            console.error('Error:', error);
        });
       }
+      
         
         populateInputField1('input1', 'total_man_days_worked');
         populateInputField1('input2', 'total_safe_man_hours');
