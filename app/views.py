@@ -12,7 +12,22 @@ from django.shortcuts import render
 class MyTemplateView(APIView):
     def get(self, request):
         return TemplateResponse(request, "index.html")
+    
+class MyFormView(APIView):
+    def get(self, request):
+        return TemplateResponse(request, "observation.html")
+    
+class MyStopWork(APIView):
+    def get(self, request):
+        return TemplateResponse(request, "stopwork.html")
 
+class MyViolationMemo(APIView):
+    def get(self, request):
+        return TemplateResponse(request, "violationForm.html")
+
+class MyIncidentForm(APIView):
+    def get(self, request):
+        return TemplateResponse(request, "incidentForm.html")
 
 class GeneralHSEAPI(APIView):
     def get(self, request):
@@ -49,6 +64,7 @@ class GeneralHSEAPI(APIView):
             instance.save()
             # return Response(serializer.data, status=status.HTTP_201_CREATED)
             return render(request, "index.html")
+        
 
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -155,8 +171,6 @@ class HSEObservationAPI(APIView):
         week_number = data.get("week_number", None)
         year = data.get("year", None)
         entry_id = request.data.get("toBeUpdatedId3")
-        print(request.data)
-        print(entry_id)
         hse_observation_instance = None
 
         if entry_id:
@@ -333,7 +347,7 @@ class IncidentsAPI(APIView):
                 week_number=week_number,
                 year=year,
                 plant_code=10000,
-                defaults={"form_status": 1},
+                defaults={"form_status": 0},
             )
             incident_instance = Incidents(parent=parent_instance)
 
@@ -400,12 +414,20 @@ class AllModelsListView(generics.ListAPIView):
             child3_data = HSEObservation.objects.filter(parent=parent)
             child4_data = ManagementVisits.objects.filter(parent=parent)
             child5_data = Incidents.objects.filter(parent=parent)
+            child6_data = HSEObservationForm.objects.filter(parent=parent)
+            child7_data = StopWorkForm.objects.filter(parent=parent)
+            child8_data = ViolationMemoForm.objects.filter(parent=parent)
+            child9_data = IncidentForm.objects.filter(parent=parent)
 
             child1_serializer = GeneralHSESerializer(child1_data, many=True)
             child2_serializer = HSETrainingsSerializer(child2_data, many=True)
             child3_serializer = HSEObservationSerializer(child3_data, many=True)
             child4_serializer = ManagementSerializer(child4_data, many=True)
             child5_serializer = IncidentsSerializer(child5_data, many=True)
+            child6_serializer = HSEObservationFormSerializer(child6_data, many=True)
+            child7_serializer = StopWorkFormSerializer(child7_data, many=True)
+            child8_serializer = ViolationFormSerializer(child8_data, many=True)
+            child9_serializer = IncidentFormSerializer(child9_data, many=True)
 
             response_data = {
                 "week_number": week_number,
@@ -416,8 +438,189 @@ class AllModelsListView(generics.ListAPIView):
                 "HSE Observation": child3_serializer.data,
                 "Management Visits": child4_serializer.data,
                 "Incidents": child5_serializer.data,
+                "Observation Form":child6_serializer.data,
+                "Stop Work Form":child7_serializer.data,
+                "Violation Memo From":child8_serializer.data,
+                "Incident Form":child9_serializer.data,
+
             }
 
             return Response(response_data)
         else:
             return Response({"detail": "Parent data not found"}, status=404)
+
+
+class UpdateFormStatus(APIView):
+    
+    def get(self, request):
+        obj = FinalSubmit.objects.all()
+        serializer = FinalSubmitSerializer(obj, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        data = request.data
+        week_number = data.get("week_number", None)
+        year = data.get("year", None)
+        final_submit = None
+
+
+        parent_instance, created = ParentModel.objects.update_or_create(
+            week_number=week_number,
+            year=year,
+            plant_code=10000,
+            defaults={"form_status": 1},
+        )
+        print(parent_instance)
+        final_submit = FinalSubmit(parent=parent_instance)
+
+        serializer = FinalSubmitSerializer(final_submit, data=data)
+        print(serializer)
+
+        if serializer.is_valid():
+            serializer.save()
+            # return Response({"message": "Form status updated to 2"}, status=status.HTTP_200_OK)
+            return render(request, "index.html")
+
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+       
+class HSEObservationFormAPI(APIView):
+    def get(self,request):
+        obj = HSEObservationForm.objects.all()
+        serializer = HSEObservationFormSerializer(obj, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    def post(self, request):
+        data = request.data
+        week_number = data.get("week_number", None)
+        print(week_number)
+        year = data.get("year", None)
+        print(year)
+        # entry_id = request.data.get("toBeUpdatedId1")
+        hse_observation_form = None
+
+
+        parent_instance, created = ParentModel.objects.get_or_create(
+                week_number=week_number,
+                year=year,
+                plant_code=10000,
+                defaults={"form_status": 0},
+            )
+        hse_observation_form = HSEObservationForm(parent=parent_instance)
+
+        serializer = HSEObservationFormSerializer(hse_observation_form, data=data)
+
+        if serializer.is_valid():
+            instance = serializer.save()
+            instance.save()
+            # return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return render(request, "observation.html")
+        
+
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class StopWorkFormAPI(APIView):
+    def get(self,request):
+        obj = StopWorkForm.objects.all()
+        serializer = StopWorkFormSerializer(obj, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    def post(self, request):
+        data = request.data
+        week_number = data.get("week_number", None)
+        print(week_number)
+        year = data.get("year", None)
+        print(year)
+        # entry_id = request.data.get("toBeUpdatedId1")
+        stop_Work_form = None
+
+
+        parent_instance, created = ParentModel.objects.get_or_create(
+                week_number=week_number,
+                year=year,
+                plant_code=10000,
+                defaults={"form_status": 0},
+            )
+        stop_Work_form = StopWorkForm(parent=parent_instance)
+
+        serializer = StopWorkFormSerializer(stop_Work_form, data=data)
+
+        if serializer.is_valid():
+            instance = serializer.save()
+            instance.save()
+            # return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return render(request, "stopwork.html")
+        
+
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class ViolationMemoAPI(APIView):
+    def get(self,request):
+        obj = ViolationMemoForm.objects.all()
+        serializer = ViolationFormSerializer(obj, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    def post(self, request):
+        data = request.data
+        week_number = data.get("week_number", None)
+        year = data.get("year", None)
+        violation_memo_form = None
+
+
+        parent_instance, created = ParentModel.objects.get_or_create(
+                week_number=week_number,
+                year=year,
+                plant_code=10000,
+                defaults={"form_status": 0},
+            )
+        violation_memo_form = ViolationMemoForm(parent=parent_instance)
+
+        serializer = ViolationFormSerializer(violation_memo_form, data=data)
+
+        if serializer.is_valid():
+            instance = serializer.save()
+            instance.save()
+            # return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return render(request, "violationForm.html")
+        
+
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class IncidentFormAPI(APIView):
+    def get(self,request):
+        obj = IncidentForm.objects.all()
+        serializer = IncidentFormSerializer(obj, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    def post(self, request):
+        data = request.data
+        week_number = data.get("week_number", None)
+        year = data.get("year", None)
+        incident_form = None
+
+
+        parent_instance, created = ParentModel.objects.get_or_create(
+                week_number=week_number,
+                year=year,
+                plant_code=10000,
+                defaults={"form_status": 0},
+            )
+        incident_form = IncidentForm(parent=parent_instance)
+
+        serializer = IncidentFormSerializer(incident_form, data=data)
+
+        if serializer.is_valid():
+            instance = serializer.save()
+            instance.save()
+            # return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return render(request, "incidentForm.html")
+        
+
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+

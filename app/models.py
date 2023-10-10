@@ -85,6 +85,95 @@ class Incidents(models.Model):
         verbose_name = "Incidents" 
         verbose_name_plural = "Incidents"
 
+class FinalSubmit(models.Model): 
+    parent = models.ForeignKey(ParentModel, on_delete=models.CASCADE,null=True)
+
+    class Meta:
+        verbose_name = "FinalSubmit" 
+        verbose_name_plural = "FinalSubmit"
+
+class HSEObservationForm(models.Model):
+    SrNo=models.IntegerField()
+    Date=models.TextField(max_length=100)
+    Time=models.TextField(max_length=100)
+    Location=models.TextField(max_length=100)
+    PlantSite=models.TextField(max_length=100)
+    Observation=models.TextField(max_length=100)
+    UnsafeCondition=models.TextField(max_length=100)
+    Cateogry=models.TextField(max_length=100)
+    CorrrectiveActionTAken=models.TextField(max_length=100)
+    ResponsiblePerson=models.TextField(max_length=100)
+    ClosureDate=models.TextField(max_length=100)
+    Status=models.TextField(max_length=100)
+    StopWork=models.TextField(max_length=100)
+    OpenEvidence=models.FileField(upload_to='formUploads',null=True)
+    ClosedEvidence=models.FileField(upload_to='formUploads',null=True)
+    Remark=models.TextField(max_length=200)
+    parent = models.ForeignKey(ParentModel, on_delete=models.CASCADE,null=True)
+
+class StopWorkForm(models.Model):
+    SrNo=models.IntegerField()
+    Date=models.TextField(max_length=100)
+    Time=models.TextField(max_length=100)
+    Location=models.TextField(max_length=100)
+    PlantSite=models.TextField(max_length=100)
+    DescriptionOfIssue=models.TextField(max_length=100)
+    UnsafeAct=models.TextField(max_length=100)
+    Cateogry=models.TextField(max_length=100)
+    CorrrectiveActionTAken=models.TextField(max_length=100)
+    RemainingHazard=models.TextField(max_length=100)
+    ResponsiblePerson=models.TextField(max_length=100)
+    ClosureDate=models.TextField(max_length=100)
+    Status=models.TextField(max_length=100)
+    OpenEvidence=models.FileField(upload_to='formUploads',null=True)
+    ClosedEvidence=models.FileField(upload_to='formUploads',null=True)
+    Remark=models.TextField(max_length=200)
+    parent = models.ForeignKey(ParentModel, on_delete=models.CASCADE,null=True)
+
+class ViolationMemoForm(models.Model):
+    SrNo=models.IntegerField()
+    Date=models.TextField(max_length=100)
+    ProjectName=models.TextField(max_length=100)
+    ProjectCode=models.TextField(max_length=100)
+    BusinessSegment=models.TextField(max_length=100)
+    MemoNo=models.TextField(max_length=100)
+    Description=models.TextField(max_length=100)
+    ActionTaken=models.TextField(max_length=100)
+    IssuedBy=models.TextField(max_length=100)
+    IssuedTo=models.TextField(max_length=100)
+    PenaltyImposed=models.TextField(max_length=100)
+    Amount=models.IntegerField()
+    parent = models.ForeignKey(ParentModel, on_delete=models.CASCADE,null=True)
+
+class IncidentForm(models.Model):
+    SrNo=models.IntegerField()
+    IncidentDate=models.TextField(max_length=100)
+    IncidentTime=models.TextField(max_length=100)
+    Location=models.TextField(max_length=100)
+    ExactLocation=models.TextField(max_length=100)
+    PlantSite=models.TextField(max_length=100)
+    ProjectCode=models.TextField(max_length=100)
+    DescriptionOfIncident=models.TextField(max_length=100)
+    RootCause=models.TextField(max_length=100)
+    TypeOfIncident=models.TextField(max_length=100)
+    HiPotentialIncident=models.TextField(max_length=100)
+    Cateogry=models.TextField(max_length=100)
+    ImmediateActionTaken=models.TextField(max_length=100)
+    CorrectiveAction=models.TextField(max_length=100)
+    PreventionAction=models.TextField(max_length=100)
+    ResponsiblePerson=models.TextField(max_length=100)
+    InvestigationStatus=models.TextField(max_length=100)
+    AttachReport=models.FileField(upload_to='formUploads',null=True)
+    parent = models.ForeignKey(ParentModel, on_delete=models.CASCADE,null=True)
+
+
+
+
+    
+
+
+
+
 
 
 

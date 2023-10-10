@@ -1,0 +1,422 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Incident Form</title>
+      <meta name="description" content="">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+   </head>
+   <style>
+      .mainTable{
+      display:flex;
+      width:4810px;
+      height:65px;
+      border-top: 1px solid black;
+      border-bottom: 1px solid black;
+      align-items: center;
+      }
+      .Srno{
+      display: flex;
+      align-items: center;
+      width:127px;
+      height:65px;
+      }
+      .commonWidth{
+      display: flex;
+      align-items: center;
+      width:251px;
+      height:65px;
+      }
+      .chnWidth{
+      display: flex;
+      align-items: center;
+      width:339px;
+      height:65px;
+      }
+      p{
+      margin-left: 15px;
+      color: gray;
+      font-weight: 600;
+      }
+      .valueInput{
+      height:43px;
+      margin-left: 15px;
+      background-color: #d5e9f1;;
+      border: none;
+      outline: none;
+      font-size: 15px;
+      font-weight: 600;
+      }
+      .valueInput2{
+      height:43px;
+      margin-left: 15px;
+      border: none;
+      outline: none;
+      font-size: 15px;
+      font-weight: 600;
+      }
+      
+      .btn{
+         margin-left: 15px;
+         font-size: 14px;
+         height: 34px;
+         width: 100px;
+         border: 1.5px solid #2c8ff1 !important;
+         color: #2c8ff1 !important;
+      }
+      .CLassdropdown{
+         width: 144px;
+         height: 33px;
+         font-size: 14px;
+         padding: 4px;
+         margin-left: 15px;
+         border: 1.5px solid #2c8ff1 !important;
+         color: #2c8ff1 !important;
+         border-radius: 6px;
+      
+      }
+      .rowTable1{
+      display:flex;
+      width:4810px;
+      height:65px;
+      align-items: center;
+      background-color: #d5e9f1;;
+      }
+      .srWidth{
+      width: 70px;
+      }
+      .heading{
+      display:flex;
+      align-items: center;
+      width:4810px;
+      height:60px;
+      }
+      .rowTable2{
+      display:flex;
+      width:4810px;
+      height:65px;
+      align-items: center;
+      }
+      .extraspace{
+      width:339px;
+      }
+   </style>
+   <body>
+      <div class="heading">
+         <h6>Incident Report Form Details</h6>
+      </div>
+      <div class='mainTable'>
+         <div class='Srno'>
+            <p>Sr.No</p>
+         </div>
+         <div class='commonWidth'>
+            <p>Date</p>
+         </div>
+         <div class='commonWidth'>
+            <p>Incident Time</p>
+         </div>
+         <div class='commonWidth'>
+            <p>Location</p>
+         </div>
+         <div class='commonWidth'>
+            <p>Exact Location</p>
+         </div>
+         <div class='commonWidth'>
+            <p>Plant Site</p>
+         </div>
+         <div class='commonWidth'>
+            <p>Project Code</p>
+         </div>
+         <div class='chnWidth'>
+            <p>Description of Incident</p>
+         </div>
+         <div class='commonWidth'>
+            <p>Root Cause</p>
+         </div>
+         <div class='commonWidth'>
+            <p>Type of Incident</p>
+         </div>
+         <div class='commonWidth'>
+            <p>Hi-Potential Event</p>
+         </div>
+         <div class='commonWidth'>
+            <p>Cateogry</p>
+         </div>
+         <div class='chnWidth'>
+            <p>Immediate Action Taken</p>
+         </div>
+         <div class='commonWidth'>
+            <p>Corrective Action</p>
+         </div>
+         <div class='commonWidth'>
+            <p>Preventive Action</p>
+         </div>
+         <div class='commonWidth'>
+            <p>Responsible Person</p>
+         </div>
+         <div class='commonWidth'>
+            <p>Investigation Status</p>
+         </div>
+         <div class='commonWidth'>
+            <p>Attach Report</p>
+         </div>
+         <div class='Srno'>
+            <p></p>
+         </div>
+
+      </div>
+      <div class="rowData" id="rowData1">
+         <form method="POST" action="{% url 'incident_form' %}" enctype="multipart/form-data" id="">
+            {% csrf_token %}
+            <div class="rowTable1">
+               <input type="hidden" name="week_number" id="week_number_Form" value="">
+               <input type="hidden" name="year" id="year_form" value="">
+               <div class="Srno"><input type="text" class="srWidth valueInput" placeholder="Sr.No" name="SrNo"></div>
+               <div class="commonWidth"><input type="date" class="valueInput" placeholder="Incident Date" name="IncidentDate"></div>
+               <div class="commonWidth"><input type="text" class="valueInput" placeholder="Incident Time" name="IncidentTime"></div>
+               <div class="commonWidth"><input type="text" class="valueInput" placeholder="Location" name="Location"></div>
+               <div class="commonWidth"><input type="text" class="valueInput" placeholder="Exact Location" name="ExactLocation"></div>
+               <div class="commonWidth"><input type="text" class="valueInput" placeholder="Plant Site" name="PlantSite"></div>
+               <div class="commonWidth"><input type="text" class="valueInput" placeholder="Project Code" name="ProjectCode"></div>
+               <div class="chnWidth"><input type="text" class=" extraspace valueInput" placeholder="Description of Incident" name="DescriptionOfIncident"></div>
+               <div class="commonWidth"><input type="text" class="valueInput" placeholder="Root Cause" name="RootCause"></div>
+
+               <div class="commonWidth">
+                <select class="CLassdropdown" name="TypeOfIncident">
+                   <option value="Near Miss">Near Miss</option>
+                   <option value="LTI">LTI</option>
+                   <option value="MTI">MTI</option>
+                   <option value="Fatal">Fatal</option>
+                   <option value="Property Damage">Property Damage</option>
+                   <option value="Flash Over">Flash Over</option>
+                   <option value="Arc Flash">Arc Flash</option>
+                   <option value="Fire">Fire</option>
+                </select>
+             </div>
+             
+             <div class="commonWidth">
+                <select class="CLassdropdown" name="HiPotentialIncident">
+                   <option value="Yes">Yes</option>
+                   <option value="No">No</option>
+                   <option value="NA">NA</option>
+                </select>
+             </div>
+
+             <div class="commonWidth">
+                <select class="CLassdropdown" name="Cateogry">
+                   <option value="Recordable">Recordable</option>
+                   <option value="Non Recordable">Non Recordable</option>
+                </select>
+             </div>
+
+               
+               <div class="chnWidth"><input type="text" class=" extraspace valueInput" placeholder="Immediate Action Taken" name="ImmediateActionTaken"></div>
+               <div class="commonWidth"><input type="text" class="valueInput" placeholder="Corrective Action" name="CorrectiveAction"></div>
+               <div class="commonWidth"><input type="text" class="valueInput" placeholder="Preventive Action" name="PreventionAction"></div>
+               <div class="commonWidth"><input type="text" class="valueInput" placeholder="Responsible Person" name="ResponsiblePerson"></div>
+               <div class="commonWidth"><input type="text" class="valueInput" placeholder="Investigation Status" name="InvestigationStatus"></div>
+               <div class="commonWidth">
+                <div class="input-group">
+                   <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="AttachReport" name="AttachReport" aria-describedby="openEvidenceAddon" style="display: none;">
+                      <label class="custom-file-label" for="openEvidenceInput"></label>
+                   </div>
+                   <div class="input-group-append">
+                      <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('AttachReport').click()">Upload File</button>
+                   </div>
+                </div>
+             </div> 
+             <div class="Srno">
+               <button type="submit" class="btn" onclick="calculateWeekAndYearForm()">Submit</button>
+            </div>
+              
+              
+            </div>
+         </form>
+      </div>
+
+      <div class="rowData" id="rowData2">
+        <form method="POST" action="{% url 'incident_form' %}" enctype="multipart/form-data" id="">
+           {% csrf_token %}
+           <div class="rowTable2">
+              <input type="hidden" name="week_number" id="week_number_Form" value="">
+              <input type="hidden" name="year" id="year_form" value="">
+              <div class="Srno"><input type="text" class="srWidth valueInput2" placeholder="Sr.No" name="SrNo"></div>
+              <div class="commonWidth"><input type="date" class="valueInput2" placeholder="Incident Date" name="IncidentDate"></div>
+              <div class="commonWidth"><input type="text" class="valueInput2" placeholder="Incident Time" name="IncidentTime"></div>
+              <div class="commonWidth"><input type="text" class="valueInput2" placeholder="Location" name="Location"></div>
+              <div class="commonWidth"><input type="text" class="valueInput2" placeholder="Exact Location" name="ExactLocation"></div>
+              <div class="commonWidth"><input type="text" class="valueInput2" placeholder="Plant Site" name="PlantSite"></div>
+              <div class="commonWidth"><input type="text" class="valueInput2" placeholder="Project Code" name="ProjectCode"></div>
+              <div class="chnWidth"><input type="text" class=" extraspace valueInput2" placeholder="Description of Incident" name="DescriptionOfIncident"></div>
+              <div class="commonWidth"><input type="text" class="valueInput2" placeholder="Root Cause" name="RootCause"></div>
+
+              <div class="commonWidth">
+                <select class="CLassdropdown" name="TypeOfIncident">
+                    <option value="Near Miss">Near Miss</option>
+                    <option value="LTI">LTI</option>
+                    <option value="MTI">MTI</option>
+                    <option value="Fatal">Fatal</option>
+                    <option value="Property Damage">Property Damage</option>
+                    <option value="Flash Over">Flash Over</option>
+                    <option value="Arc Flash">Arc Flash</option>
+                    <option value="Fire">Fire</option>
+                 </select>
+            </div>
+            
+            <div class="commonWidth">
+                <select class="CLassdropdown" name="HiPotentialIncident">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                    <option value="NA">NA</option>
+                 </select>
+            </div>
+
+            <div class="commonWidth">
+                <select class="CLassdropdown" name="Cateogry">
+                    <option value="Recordable">Recordable</option>
+                    <option value="Non Recordable">Non Recordable</option>
+                 </select>
+            </div>
+
+              
+              <div class="chnWidth"><input type="text" class=" extraspace valueInput2" placeholder="Immediate Action Taken" name="ImmediateActionTaken"></div>
+              <div class="commonWidth"><input type="text" class="valueInput2" placeholder="Corrective Action" name="CorrectiveAction"></div>
+              <div class="commonWidth"><input type="text" class="valueInput2" placeholder="Preventive Action" name="PreventionAction"></div>
+              <div class="commonWidth"><input type="text" class="valueInput2" placeholder="Responsible Person" name="ResponsiblePerson"></div>
+              <div class="commonWidth"><input type="text" class="valueInput2" placeholder="Investigation Status" name="InvestigationStatus"></div>
+              <div class="commonWidth">
+               <div class="input-group">
+                  <div class="custom-file">
+                     <input type="file" class="custom-file-input" id="AttachReport" name="AttachReport" aria-describedby="openEvidenceAddon" style="display: none;">
+                     <label class="custom-file-label" for="openEvidenceInput"></label>
+                  </div>
+                  <div class="input-group-append">
+                     <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('AttachReport').click()">Upload File</button>
+                  </div>
+               </div>
+            </div> 
+            <div class="Srno">
+               <button type="submit" class="btn" onclick="calculateWeekAndYearForm()">Submit</button>
+            </div>
+             
+             
+           </div>
+        </form>
+     </div>
+
+     <div class="rowData" id="rowData3">
+        <form method="POST" action="{% url 'incident_form' %}" enctype="multipart/form-data" id="">
+           {% csrf_token %}
+           <div class="rowTable1">
+              <input type="hidden" name="week_number" id="week_number_Form" value="">
+              <input type="hidden" name="year" id="year_form" value="">
+              <div class="Srno"><input type="text" class="srWidth valueInput" placeholder="Sr.No" name="SrNo"></div>
+              <div class="commonWidth"><input type="date" class="valueInput" placeholder="Incident Date" name="IncidentDate"></div>
+              <div class="commonWidth"><input type="text" class="valueInput" placeholder="Incident Time" name="IncidentTime"></div>
+              <div class="commonWidth"><input type="text" class="valueInput" placeholder="Location" name="Location"></div>
+              <div class="commonWidth"><input type="text" class="valueInput" placeholder="Exact Location" name="ExactLocation"></div>
+              <div class="commonWidth"><input type="text" class="valueInput" placeholder="Plant Site" name="PlantSite"></div>
+              <div class="commonWidth"><input type="text" class="valueInput" placeholder="Project Code" name="ProjectCode"></div>
+              <div class="chnWidth"><input type="text" class=" extraspace valueInput" placeholder="Description of Incident" name="DescriptionOfIncident"></div>
+              <div class="commonWidth"><input type="text" class="valueInput" placeholder="Root Cause" name="RootCause"></div>
+
+              <div class="commonWidth">
+               <select class="CLassdropdown" name="TypeOfIncident">
+                  <option value="Near Miss">Near Miss</option>
+                  <option value="LTI">LTI</option>
+                  <option value="MTI">MTI</option>
+                  <option value="Fatal">Fatal</option>
+                  <option value="Property Damage">Property Damage</option>
+                  <option value="Flash Over">Flash Over</option>
+                  <option value="Arc Flash">Arc Flash</option>
+                  <option value="Fire">Fire</option>
+               </select>
+            </div>
+            
+            <div class="commonWidth">
+               <select class="CLassdropdown" name="HiPotentialIncident">
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                  <option value="NA">NA</option>
+               </select>
+            </div>
+
+            <div class="commonWidth">
+               <select class="CLassdropdown" name="Cateogry">
+                  <option value="Recordable">Recordable</option>
+                  <option value="Non Recordable">Non Recordable</option>
+               </select>
+            </div>
+
+              
+              <div class="chnWidth"><input type="text" class=" extraspace valueInput" placeholder="Immediate Action Taken" name="ImmediateActionTaken"></div>
+              <div class="commonWidth"><input type="text" class="valueInput" placeholder="Corrective Action" name="CorrectiveAction"></div>
+              <div class="commonWidth"><input type="text" class="valueInput" placeholder="Preventive Action" name="PreventionAction"></div>
+              <div class="commonWidth"><input type="text" class="valueInput" placeholder="Responsible Person" name="ResponsiblePerson"></div>
+              <div class="commonWidth"><input type="text" class="valueInput" placeholder="Investigation Status" name="InvestigationStatus"></div>
+              <div class="commonWidth">
+               <div class="input-group">
+                  <div class="custom-file">
+                     <input type="file" class="custom-file-input" id="AttachReport" name="AttachReport" aria-describedby="openEvidenceAddon" style="display: none;">
+                     <label class="custom-file-label" for="openEvidenceInput"></label>
+                  </div>
+                  <div class="input-group-append">
+                     <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('AttachReport').click()">Upload File</button>
+                  </div>
+               </div>
+            </div> 
+            <div class="Srno">
+               <button type="submit" class="btn" onclick="calculateWeekAndYearForm()">Submit</button>
+            </div>
+             
+           </div>
+        </form>
+     </div>
+
+     
+      
+      <!-- Button to duplicate rowData div -->
+      {% comment %} <button class="btn btn-secondary" onclick="duplicateRow()">Add Row</button> {% endcomment %}
+   </body>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+   <script>
+      let rowCount = 1; // Initialize row count
+      
+      {% comment %} function duplicateRow() {
+          rowCount++; // Increment row count
+          const originalRow = document.getElementById('rowData1');
+          const clonedRow = originalRow.cloneNode(true);
+          clonedRow.id = 'rowData' + rowCount; // Update ID
+          clonedRow.querySelectorAll('input, select').forEach(inputElement => {
+              inputElement.value = ''; // Clear input values
+          });
+          document.body.appendChild(clonedRow);
+      } {% endcomment %}
+      
+      function getWeekNumber(date) {
+        date = new Date(date);
+        date.setHours(0, 0, 0, 0);
+        date.setDate(date.getDate() + 4 - (date.getDay() || 7));
+        var yearStart = new Date(date.getFullYear(), 0, 1);
+        var weekNumber = Math.ceil(((date - yearStart) / 86400000 + 1) / 7);
+        return weekNumber;
+      }
+      
+      function calculateWeekAndYearForm() {
+        const currentDate = new Date();
+        const weekNumber = getWeekNumber(currentDate);
+        const year = currentDate.getFullYear();
+        console.log(weekNumber)
+        console.log(year)
+        
+        // Set the calculated values in the hidden input fields
+        document.getElementById("week_number_Form").value = weekNumber;
+        document.getElementById("year_form").value = year;
+      }
+   </script>
+</html>

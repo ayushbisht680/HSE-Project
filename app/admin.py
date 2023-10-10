@@ -8,6 +8,11 @@ from .models import *
 # admin.site.register(ManagementVisits)
 # admin.site.register(Incidents)
 admin.site.register(ParentModel)
+admin.site.register(FinalSubmit)
+admin.site.register(HSEObservationForm)
+admin.site.register(StopWorkForm)
+admin.site.register(ViolationMemoForm)
+admin.site.register(IncidentForm)
 
 
 @admin.register(GeneralHse)

@@ -1,0 +1,488 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Observation Form</title>
+      <meta name="description" content="">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+   </head>
+   <style>
+      .mainTable{
+      display:flex;
+      width:4200px;
+      height: 65px;
+      border-top: 1px solid black;
+      border-bottom: 1px solid black;
+      align-items: center;
+      }
+      .Srno{
+      display: flex;
+      align-items: center;
+      width:127px;
+      height: 60px;;
+      }
+      .commonWidth{
+      display: flex;
+      align-items: center;
+      width:251px;
+      height: 60px;;
+      }
+      .chnWidth{
+      display: flex;
+      align-items: center;
+      width:339px;
+      height: 60px;;
+      }
+      p{
+      margin-left: 15px;
+      color: gray;
+      font-weight: 600;
+      }
+      .valueInput{
+      height:43px;
+      margin-left: 15px;
+      background-color: #d5e9f1;;
+      border: none;
+      outline: none;
+      font-size: 15px;
+      font-weight: 600;
+      }
+      .valueInput2{
+      height:43px;
+      margin-left: 15px;
+      border: none;
+      outline: none;
+      font-size: 15px;
+      font-weight: 600;
+      }
+      .CLassdropdown{
+         width: 110px;
+         height: 33px;
+         font-size: 14px;
+         padding: 4px;
+         margin-left: 15px;
+      border: 1.5px solid #2c8ff1 !important;
+      color: #2c8ff1 !important;
+      border-radius: 6px;
+      
+      }
+      .btn{
+      margin-left: 15px;
+      font-size: 14px;
+      height: 34px;
+      width: 100px;
+      border: 1.5px solid #2c8ff1 !important;
+      color: #2c8ff1 !important;
+      }
+      
+      .rowTable1{
+      display:flex;
+      width:4200px;
+      height: 65px;
+      align-items: center;
+      background-color: #d5e9f1;;
+      }
+      .srWidth{
+      width: 70px;
+      }
+      .heading{
+      display:flex;
+      align-items: center;
+      width:4200px;
+      height: 65px;
+      }
+      .rowTable2{
+      display:flex;
+      width:4200px;
+      height: 65px;;
+      align-items: center;
+      }
+      .extraspace{
+      width:339px;
+      }
+     
+   </style>
+   <body>
+      <div class="heading">
+         <h6>Daily HSE Observation Form Details</h6>
+      </div>
+      <div class='mainTable'>
+         <div class='Srno'>
+            <p>Sr.No</p>
+         </div>
+         <div class='commonWidth'>
+            <p>Date</p>
+         </div>
+         <div class='commonWidth'>
+            <p>Time</p>
+         </div>
+         <div class='commonWidth'>
+            <p>Location</p>
+         </div>
+         <div class='commonWidth'>
+            <p>Plant/Site</p>
+         </div>
+         <div class='commonWidth'>
+            <p>Observation</p>
+         </div>
+         <div class='commonWidth'>
+            <p>Unsafe Condition</p>
+         </div>
+         <div class='commonWidth'>
+            <p>Cateogry</p>
+         </div>
+         <div class='chnWidth'>
+            <p>Corrective Action Taken</p>
+         </div>
+         <div class='commonWidth'>
+            <p>Remaining Person</p>
+         </div>
+         <div class='commonWidth'>
+            <p>Closure Date</p>
+         </div>
+         <div class='commonWidth'>
+            <p>Status</p>
+         </div>
+         <div class='commonWidth'>
+            <p>Stop Work</p>
+         </div>
+         <div class='commonWidth'>
+            <p>Open Evidence</p>
+         </div>
+         <div class='commonWidth'>
+            <p>Closed Evidence</p>
+         </div>
+         <div class='chnWidth'>
+            <p>Remark</p>
+         </div>
+         <div class='Srno'>
+            <p></p>
+         </div> 
+      </div>
+      <div class="rowData" id="rowData1">
+         <form method="POST" action="{% url 'observation_form' %}" enctype="multipart/form-data" id="">
+            {% csrf_token %}
+            <div class="rowTable1">
+               <input type="hidden" name="week_number" id="week_number_Form1" value="">
+               <input type="hidden" name="year" id="year_form1" value="">
+               <div class="Srno"><input type="text" class="srWidth valueInput" placeholder="Sr.No" name="SrNo" id='SrNo'></div>
+               <div class="commonWidth"><input type="date" class="valueInput" placeholder="Date" name="Date" id='Date'></div>
+               <div class="commonWidth"><input type="text" class="valueInput" placeholder="Time" name="Time" id='Time'></div>
+               <div class="commonWidth"><input type="text" class="valueInput" placeholder="Location" name="Location" id="Location"  ></div>
+               <div class="commonWidth"><input type="text" class="valueInput" placeholder="Plant/Site" name="PlantSite" id="PlantSite" ></div>
+               <div class="commonWidth"><input type="text" class="valueInput" placeholder="Observation" name="Observation" id="Observation"></div>
+               <div class="commonWidth"><input type="text" class="valueInput" placeholder="Unsafe Condition" name="UnsafeCondition" id="UnsafeCondition" ></div>
+               <div class="commonWidth">
+                  <select class="CLassdropdown" name="Cateogry" id="Cateogry">
+                     <option value="Yes">Yes</option>
+                     <option value="No">No</option>
+                     <option value="NA">NA</option>
+                  </select>
+               </div>
+               <div class="chnWidth"><input type="text" class="valueInput" placeholder="Corrective Action Taken" name="CorrrectiveActionTAken" id="CorrrectiveActionTAken"></div>
+               <div class="commonWidth"><input type="text" class="valueInput" placeholder="Responsible Person" name="ResponsiblePerson" id="ResponsiblePerson"></div>
+               <div class="commonWidth"><input type="text" class="valueInput" placeholder="Closure Date" name="ClosureDate" id="ClosureDate"></div>
+               <div class="commonWidth">
+                  <select class="CLassdropdown" name="Status" id="Status">
+                     <option value="Yes">Yes</option>
+                     <option value="No">No</option>
+                     <option value="NA">NA</option>
+                  </select>
+               </div>
+               <div class="commonWidth">
+                  <select class="CLassdropdown" name="StopWork" id="StopWork">
+                     <option value="Yes">Yes</option>
+                     <option value="No">No</option>
+                     <option value="NA">NA</option>
+                  </select>
+               </div>
+               <div class="commonWidth">
+                  <div class="input-group">
+                     <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="openEvidenceInput" name="OpenEvidence" id="OpenEvidence" aria-describedby="openEvidenceAddon" style="display: none;">
+                        <label class="custom-file-label" for="openEvidenceInput"></label>
+                     </div>
+                     <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('openEvidenceInput').click()">Upload File</button>
+                     </div>
+                  </div>
+               </div>
+               <div class="commonWidth">
+                  <div class="input-group">
+                     <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="openEvidenceInput" name="ClosedEvidence" id="ClosedEvidence" aria-describedby="openEvidenceAddon" style="display: none;">
+                        <label class="custom-file-label" for="openEvidenceInput"></label>
+                     </div>
+                     <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('openEvidenceInput').click()">Upload File</button>
+                     </div>
+                  </div>
+               </div>
+               <div class="chnWidth">
+                  <input type="text" placeholder="Remark" class=" extraspace valueInput" name="Remark" id="Remark">
+               </div>
+               <div class="Srno">
+                  <button type="submit" class="btn" onclick="calculateWeekAndYearForm1()">Submit</button>
+               </div>
+            </div>
+            
+         </form>
+      </div>
+      <div class="rowData" id="rowData2">
+         <form method="POST" action="{% url 'observation_form' %}" enctype="multipart/form-data" id="">
+            {% csrf_token %}
+            <div class="rowTable2">
+               <input type="hidden" name="week_number" id="week_number_Form2" value="">
+               <input type="hidden" name="year" id="year_form2" value="">
+               <div class="Srno"><input type="text" class="srWidth valueInput2" placeholder="Sr.No" name="SrNo" id="SrNo2"></div>
+               <div class="commonWidth"><input type="date" class="valueInput2" placeholder="Date" name="Date" id="Date2"></div>
+               <div class="commonWidth"><input type="text" class="valueInput2" placeholder="Time" name="Time" id="Time2" ></div>
+               <div class="commonWidth"><input type="text" class="valueInput2" placeholder="Location" name="Location" id="Location2" ></div>
+               <div class="commonWidth"><input type="text" class="valueInput2" placeholder="Plant/Site" name="PlantSite" id="PlantSite2" ></div>
+               <div class="commonWidth"><input type="text" class="valueInput2" placeholder="Observation" name="Observation" id="Observation2" ></div>
+               <div class="commonWidth"><input type="text" class="valueInput2" placeholder="Unsafe Condition" name="UnsafeCondition" id="UnsafeCondition2"></div>
+               <div class="commonWidth">
+                  <select class="CLassdropdown" name="Cateogry" id="Cateogry2">
+                     <option value="Yes">Yes</option>
+                     <option value="No">No</option>
+                     <option value="NA">NA</option>
+                  </select>
+               </div>
+               <div class="chnWidth"><input type="text" class="valueInput2" placeholder="Corrective Action Taken" name="CorrrectiveActionTAken" id="CorrrectiveActionTAken2" ></div>
+               <div class="commonWidth"><input type="text" class="valueInput2" placeholder="Responsible Person" name="ResponsiblePerson" id="ResponsiblePerson2"></div>
+               <div class="commonWidth"><input type="text" class="valueInput2" placeholder="Closure Date" name="ClosureDate" id="ClosureDate2" ></div>
+               <div class="commonWidth">
+                  <select class="CLassdropdown" name="Status" id="Status2">
+                     <option value="Yes">Yes</option>
+                     <option value="No">No</option>
+                     <option value="NA">NA</option>
+                  </select>
+               </div>
+               <div class="commonWidth">
+                  <select class="CLassdropdown" name="StopWork" id="StopWork2">
+                     <option value="Yes">Yes</option>
+                     <option value="No">No</option>
+                     <option value="NA">NA</option>
+                  </select>
+               </div>
+               <div class="commonWidth">
+                  <div class="input-group">
+                     <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="openEvidenceInput" name="OpenEvidence" aria-describedby="openEvidenceAddon" style="display: none;">
+                        <label class="custom-file-label" for="openEvidenceInput"></label>
+                     </div>
+                     <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('openEvidenceInput').click()">Upload File</button>
+                     </div>
+                  </div>
+               </div>
+               <div class="commonWidth">
+                  <div class="input-group">
+                     <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="closedEvidenceInput" name="ClosedEvidence" aria-describedby="openEvidenceAddon" style="display: none;">
+                        <label class="custom-file-label" for="openEvidenceInput"></label>
+                     </div>
+                     <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('closedEvidenceInput').click()">Upload File</button>
+                     </div>
+                  </div>
+               </div>
+               <div class="chnWidth">
+                  <input type="text" placeholder="Remark" class="extraspace valueInput2" name="Remark" id="Remark2">
+               </div>
+               <div class="Srno">
+                  <button type="submit" class="btn" onclick="calculateWeekAndYearForm2()">Submit</button>
+               </div>
+            </div>
+         </form>
+      </div>
+
+      <div class="rowData" id="rowData3">
+         <form method="POST" action="{% url 'observation_form' %}" enctype="multipart/form-data" id="">
+            {% csrf_token %}
+            <div class="rowTable1">
+               <input type="hidden" name="week_number" id="week_number_Form1" value="">
+               <input type="hidden" name="year" id="year_form1" value="">
+               <div class="Srno"><input type="text" class="srWidth valueInput" placeholder="Sr.No" name="SrNo" ></div>
+               <div class="commonWidth"><input type="date" class="valueInput" placeholder="Date" name="Date"></div>
+               <div class="commonWidth"><input type="text" class="valueInput" placeholder="Time" name="Time"></div>
+               <div class="commonWidth"><input type="text" class="valueInput" placeholder="Location" name="Location"></div>
+               <div class="commonWidth"><input type="text" class="valueInput" placeholder="Plant/Site" name="PlantSite"></div>
+               <div class="commonWidth"><input type="text" class="valueInput" placeholder="Observation" name="Observation"></div>
+               <div class="commonWidth"><input type="text" class="valueInput" placeholder="Unsafe Condition" name="UnsafeCondition"></div>
+               <div class="commonWidth">
+                  <select class="CLassdropdown" name="Cateogry">
+                     <option value="Yes">Yes</option>
+                     <option value="No">No</option>
+                     <option value="NA">NA</option>
+                  </select>
+               </div>
+               <div class="chnWidth"><input type="text" class="valueInput" placeholder="Corrective Action Taken" name="CorrrectiveActionTAken"></div>
+               <div class="commonWidth"><input type="text" class="valueInput" placeholder="Responsible Person" name="ResponsiblePerson"></div>
+               <div class="commonWidth"><input type="text" class="valueInput" placeholder="Closure Date" name="ClosureDate"></div>
+               <div class="commonWidth">
+                  <select class="CLassdropdown" name="Status">
+                     <option value="Yes">Yes</option>
+                     <option value="No">No</option>
+                     <option value="NA">NA</option>
+                  </select>
+               </div>
+               <div class="commonWidth">
+                  <select class="CLassdropdown" name="StopWork">
+                     <option value="Yes">Yes</option>
+                     <option value="No">No</option>
+                     <option value="NA">NA</option>
+                  </select>
+               </div>
+               <div class="commonWidth">
+                  <div class="input-group">
+                     <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="openEvidenceInput" name="OpenEvidence" aria-describedby="openEvidenceAddon" style="display: none;">
+                        <label class="custom-file-label" for="openEvidenceInput"></label>
+                     </div>
+                     <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('openEvidenceInput').click()">Upload File</button>
+                     </div>
+                  </div>
+               </div>
+               <div class="commonWidth">
+                  <div class="input-group">
+                     <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="openEvidenceInput" name="ClosedEvidence" aria-describedby="openEvidenceAddon" style="display: none;">
+                        <label class="custom-file-label" for="openEvidenceInput"></label>
+                     </div>
+                     <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('openEvidenceInput').click()">Upload File</button>
+                     </div>
+                  </div>
+               </div>
+               <div class="chnWidth">
+                  <input type="text" placeholder="Remark" class=" extraspace valueInput" name="Remark">
+               </div>
+               <div class="Srno">
+                  <button type="submit" class="btn" onclick="calculateWeekAndYearForm1()">Submit</button>
+               </div>
+            </div>
+         </form>
+      </div>
+      
+      <!-- Button to duplicate rowData div -->
+      {% comment %} <button class="btn btn-secondary" onclick="duplicateRow()">Add Row</button> {% endcomment %}
+   </body>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+   <script>
+      let rowCount = 1; // Initialize row count
+      
+      {% comment %} function duplicateRow() {
+          rowCount++; // Increment row count
+          const originalRow = document.getElementById('rowData1');
+          const clonedRow = originalRow.cloneNode(true);
+          clonedRow.id = 'rowData' + rowCount; // Update ID
+          clonedRow.querySelectorAll('input, select').forEach(inputElement => {
+              inputElement.value = ''; // Clear input values
+          });
+          document.body.appendChild(clonedRow);
+      } {% endcomment %}
+      
+      function getWeekNumber(date) {
+        date = new Date(date);
+        date.setHours(0, 0, 0, 0);
+        date.setDate(date.getDate() + 4 - (date.getDay() || 7));
+        var yearStart = new Date(date.getFullYear(), 0, 1);
+        var weekNumber = Math.ceil(((date - yearStart) / 86400000 + 1) / 7);
+        return weekNumber;
+      }
+      
+      function calculateWeekAndYearForm1() {
+        const currentDate = new Date();
+        const weekNumber = getWeekNumber(currentDate);
+        const year = currentDate.getFullYear();
+        
+        // Set the calculated values in the hidden input fields
+        document.getElementById("week_number_Form1").value = weekNumber;
+        document.getElementById("year_form1").value = year;
+      }
+      function calculateWeekAndYearForm2() {
+         const currentDate = new Date();
+         const weekNumber = getWeekNumber(currentDate);
+         const year = currentDate.getFullYear();
+         
+         
+         // Set the calculated values in the hidden input fields
+         document.getElementById("week_number_Form2").value = weekNumber;
+         document.getElementById("year_form2").value = year;
+       }
+
+
+                function populateInputField1(id,dataKey) {
+                  const today = new Date();
+                  const weekNumber = getWeekNumber(today);
+                  const year = today.getFullYear()
+            
+            
+                  fetch(`/api/child-models/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
+                      .then(response => response.json())
+                      .then(data => {
+                        const fieldData = data['Observation Form'][0][dataKey];
+                          document.getElementById(id).value = fieldData;
+
+            
+                      })
+                      .catch(error => {
+                          console.error('Error:', error);
+                      });
+               }
+               populateInputField1('SrNo','SrNo')
+               populateInputField1('Date','Date')
+               populateInputField1('Time','Time')
+               populateInputField1('Location','Location')
+               populateInputField1('PlantSite','PlantSite')
+               populateInputField1('Observation','Observation')
+               populateInputField1('UnsafeCondition','UnsafeCondition')
+               populateInputField1('Cateogry','Cateogry')
+               populateInputField1('CorrrectiveActionTAken','CorrrectiveActionTAken')
+               populateInputField1('ResponsiblePerson','ResponsiblePerson')
+               populateInputField1('ClosureDate','ClosureDate')
+               populateInputField1('Status','Status')
+               populateInputField1('StopWork','StopWork')
+               populateInputField1('Remark','Remark')
+
+                 function populateInputField2(id,dataKey) {
+                  const today = new Date();
+                  const weekNumber = getWeekNumber(today);
+                  const year = today.getFullYear()
+            
+            
+                  fetch(`/api/child-models/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
+                      .then(response => response.json())
+                      .then(data => {
+                        const fieldData = data['Observation Form'][1][dataKey];
+                          document.getElementById(id).value = fieldData;
+
+            
+                      })
+                      .catch(error => {
+                          console.error('Error:', error);
+                      });
+               }
+
+               populateInputField2('SrNo2','SrNo')
+               populateInputField2('Date2','Date')
+               populateInputField2('Time2','Time')
+               populateInputField2('Location2','Location')
+               populateInputField2('PlantSite2','PlantSite')
+               populateInputField2('Observation2','Observation')
+               populateInputField2('UnsafeCondition2','UnsafeCondition')
+               populateInputField2('Cateogry2','Cateogry')
+               populateInputField2('CorrrectiveActionTAken2','CorrrectiveActionTAken')
+               populateInputField2('ResponsiblePerson2','ResponsiblePerson')
+               populateInputField2('ClosureDate2','ClosureDate')
+               populateInputField2('Status2','Status')
+               populateInputField2('StopWork2','StopWork')
+               populateInputField2('Remark2','Remark')
+   </script>
+</html>
