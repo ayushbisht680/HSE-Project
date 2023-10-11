@@ -7,6 +7,8 @@ from django.template.response import TemplateResponse
 from django.http import HttpResponse
 from rest_framework import generics
 from django.shortcuts import render
+from django.http import HttpResponseRedirect
+
 
 
 class MyTemplateView(APIView):
@@ -63,7 +65,9 @@ class GeneralHSEAPI(APIView):
             instance = serializer.save()
             instance.save()
             # return Response(serializer.data, status=status.HTTP_201_CREATED)
-            return render(request, "index.html")
+            # return render(request, "index.html")
+            return HttpResponseRedirect('/api/my_html')  
+
         
 
         else:
@@ -129,7 +133,9 @@ class HSETrainingsAPI(APIView):
             instance = serializer.save()
             instance.save()
             # return Response(serializer.data, status=status.HTTP_201_CREATED)
-            return render(request, "index.html")
+            # return render(request, "index.html")
+            return HttpResponseRedirect('/api/my_html')  
+
 
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -194,7 +200,9 @@ class HSEObservationAPI(APIView):
             instance = serializer.save()
             instance.save()
             # return Response(serializer.data, status=status.HTTP_201_CREATED)
-            return render(request, "index.html")
+            # return render(request, "index.html")
+            return HttpResponseRedirect('/api/my_html')  
+
 
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -260,7 +268,9 @@ class ManagementAPI(APIView):
             instance = serializer.save()
             instance.save()
             # return Response(serializer.data, status=status.HTTP_201_CREATED)
-            return render(request, "index.html")
+            # return render(request, "index.html")
+            return HttpResponseRedirect('/api/my_html')  
+
 
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -307,7 +317,7 @@ class IncidentsAPI(APIView):
         parent = ParentModel.objects.filter(
             week_number=week_number, year=year, plant_code=10000
         ).first()
-        print(parent)
+        # print(parent)
 
         if parent:
             generalHse = GeneralHse.objects.filter(parent_id=parent.id).first()
@@ -316,10 +326,10 @@ class IncidentsAPI(APIView):
             managementvisits = ManagementVisits.objects.filter(
                 parent_id=parent.id
             ).first()
-            print(generalHse)
-            print(HseObservation)
-            print(HseTraining)
-            print(managementvisits)
+            # print(generalHse)
+            # print(HseObservation)
+            # print(HseTraining)
+            # print(managementvisits)
 
         if (
             not generalHse
@@ -358,7 +368,9 @@ class IncidentsAPI(APIView):
             instance.save()
 
             # return Response(serializer.data, status=status.HTTP_201_CREATED)
-            return render(request, "index.html")
+            # return render(request, "index.html")
+            return HttpResponseRedirect('/api/my_html')  
+
 
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -479,7 +491,9 @@ class UpdateFormStatus(APIView):
         if serializer.is_valid():
             serializer.save()
             # return Response({"message": "Form status updated to 2"}, status=status.HTTP_200_OK)
-            return render(request, "index.html")
+            # return render(request, "index.html")
+            return HttpResponseRedirect('/api/my_html')  
+
 
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

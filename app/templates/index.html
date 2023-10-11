@@ -4,38 +4,35 @@
    <head>
       <title>HSE Project</title>
       <style>
-         table {
-         border-collapse: collapse;
-         width: 100px;
-         }
+        
          th, td {
          border: 1px solid #ddd;
          text-align: center;
          color: white;
          }
+
          th{
          color: darkgrey;
+         width:35px;
          font-size: 13px;
          font-weight: 500;
          text-align: center !important;
          }
+
          tr{
          font-size: 13px;
          }
-         .today, .highlight-start, .highlight-end {
-         background-color: #3498db; 
-         color: #fff; 
-         }
-         /* Remove underline and change color of anchor tags */
+        
          a {
          text-decoration: none !important;
          color: white !important;
          font-size: 15px;
          font-weight: 500;
          }
-         #calendar{
-         display: inline-block;
-         }
+        
+         .highlight {
+            background-color: #3E9FFE;
+        }
          .mainDiv{
          display: inline-block;
          background-color: black;
@@ -373,6 +370,19 @@
          font-weight: 400;
          border-bottom: 1.5px solid #3E9FFE; 
          }
+         .lastButton{
+         margin-right: 12px;
+         margin-top: 15px;
+         }
+         .lastPreview{
+         margin-top: 15px;
+         margin-right: 12px;
+         }
+         .clickArrow{
+            display: flex;
+            justify-content: center;
+            margin-left: 3px;
+         }
       </style>
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -461,19 +471,28 @@
                      <div class="date-cont">
                         <div class="messageDisplay">The form is filled for :</div>
                         <div class="viewDate">17th September - Today - Sunday</div>
-                        <img src=" {% static 'images/left_date.svg' %} " class="arrow" onclick="changeDate(-1)"> </img>
-                        <img src=" {% static 'images/right_date.svg' %}" class="arrow" onclick="changeDate(1)"> </img>
+                        <div class='clickArrow'>
+                           <div onclick="changeDate(-1)"  style="display: flex;">
+                              <img src=" {% static 'images/left_date.svg' %} " class="arrow" > </img>
+
+                           </div>
+                           <div onclick="changeDate(1)"  style="display: flex;">
+                              <img src=" {% static 'images/right_date.svg' %}" class="arrow" > </img>
+
+                           </div>
+
+                        </div>
                      </div>
                   </div>
                   <div class="maincontainer">
                      <div class="accordion"id="accordionExample" >
                         <div class="accordion-item">
                            <h2 class="accordion-header">
-                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
                               General HSE
                               </button>
                            </h2>
-                           <div id="collapseOne" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
+                           <div id="collapse1" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
                               <div class="accordion-body">
                                  <form method="POST" action="{% url 'General HSE' %}" enctype="multipart/form-data" id="form1" >
                                     {% csrf_token %}
@@ -519,7 +538,7 @@
                                        </div>
                                     </div>
                                     <div class="saveBtn">
-                                       <button type="submit" class="btn btn-success disableIt" onclick="calculateWeekAndYear1()" >Save & Next</button>
+                                       <button type="submit" class="btn btn-success disableIt" onclick="calculateWeekAndYear(week_number1, year1)">Save & Next</button>
                                     </div>
                                  </form>
                               </div>
@@ -527,11 +546,11 @@
                         </div>
                         <div class="accordion-item">
                            <h2 class="accordion-header" id="headingTwo2">
-                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
                               HSE Trainings
                               </button>
                            </h2>
-                           <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                           <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                               <div class="accordion-body">
                                  <form method="POST" action="{% url 'HSE Trainings' %}" enctype="multipart/form-data" id="form2">
                                     {% csrf_token %}
@@ -577,7 +596,7 @@
                                     </div>
                                     <span class="error-message" id="number-error2">Fill duration above 1hr</span>
                                     <div class="saveBtn">
-                                       <button type="submit" class="btn btn-success disableIt" onclick="calculateWeekAndYear2()" >Save & Next</button>
+                                       <button type="submit" class="btn btn-success disableIt" onclick="calculateWeekAndYear(week_number2, year2)" >Save & Next</button>
                                     </div>
                                  </form>
                               </div>
@@ -585,11 +604,11 @@
                         </div>
                         <div class="accordion-item">
                            <h2 class="accordion-header">
-                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
                               HSE Observations
                               </button>
                            </h2>
-                           <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                           <div id="collapse3" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                               <div class="accordion-body">
                                  <form method="POST" action="{% url 'HSE Observations' %}" enctype="multipart/form-data"  id="form3">
                                     {% csrf_token %}
@@ -651,13 +670,15 @@
                                              <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement12"><img src="{% static 'images/minusButton.svg' %}"</button>
                                           </div>
                                        </div>
-                                       {% comment %} <div>
+                                       {% comment %} 
+                                       <div>
                                           <img src="{% static 'images/Frame.png' %}">
                                           <a href="#" class="linkForm">Fill the data</a>
-                                       </div> {% endcomment %}
+                                       </div>
+                                       {% endcomment %}
                                     </div>
                                     <div class="saveBtn">
-                                       <button type="submit" class="btn btn-success disableIt" onclick="calculateWeekAndYear3()">Save & Next</button>
+                                       <button type="submit" class="btn btn-success disableIt" id="observationBtn" onclick="calculateWeekAndYear('week_number3', 'year3')">Save & Next</button>
                                     </div>
                                  </form>
                               </div>
@@ -665,11 +686,11 @@
                         </div>
                         <div class="accordion-item">
                            <h2 class="accordion-header">
-                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4" aria-expanded="true" aria-controls="collapse4">
                               Management Visits
                               </button>
                            </h2>
-                           <div id="collapseFour" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
+                           <div id="collapse4" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
                               <div class="accordion-body">
                                  <form method="POST" action="{% url 'Management Visits' %}" enctype="multipart/form-data" id="form4">
                                     {% csrf_token %}
@@ -723,7 +744,7 @@
                                        <input type="number" class="form-control disableIt" id="input16" placeholder="Number of observation pending (to be compiled)" name="observation_pending" required>
                                     </div>
                                     <div class="saveBtn">
-                                       <button type="submit" class="btn btn-success disableIt" onclick="calculateWeekAndYear4()">Save & Next</button>
+                                       <button type="submit" class="btn btn-success disableIt" onclick="calculateWeekAndYear('week_number4', 'year4')">Save & Next</button>
                                     </div>
                                  </form>
                               </div>
@@ -731,11 +752,11 @@
                         </div>
                         <div class="accordion-item">
                            <h2 class="accordion-header">
-                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="true" aria-controls="collapse5">
                               Incidents
                               </button>
                            </h2>
-                           <div id="collapseFive" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
+                           <div id="collapse5" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
                               <div class="accordion-body">
                                  <form method="POST" action="{% url 'Incidents' %}" enctype="multipart/form-data" id="final-form">
                                     {% csrf_token %}
@@ -765,10 +786,12 @@
                                              <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement18"><img src="{% static 'images/minusButton.svg' %}"></button>
                                           </div>
                                        </div>
-                                       {% comment %} <div>
+                                       {% comment %} 
+                                       <div>
                                           <img src="{% static 'images/Frame.png' %}">
                                           <a href="#" class="linkForm">Fill the data</a>
-                                       </div> {% endcomment %}
+                                       </div>
+                                       {% endcomment %}
                                     </div>
                                     <div class="mb-3">
                                        <label for="input19" class="form-label ">Number of environmental illness</label>
@@ -779,26 +802,28 @@
                                              <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement19"><img src="{% static 'images/minusButton.svg' %}"></button>
                                           </div>
                                        </div>
-                                       {% comment %} <div>
+                                       {% comment %} 
+                                       <div>
                                           <img src="{% static 'images/Frame.png' %}">
                                           <a href="#" class="linkForm">Fill the data</a>
-                                       </div> {% endcomment %}
+                                       </div>
+                                       {% endcomment %}
                                     </div>
                                     <div class="saveBtn">
-                                       <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Preview </button>
-                                       <button type="submit" class="btn btn-success disableIt" onclick="calculateWeekAndYear5();">Save</button>
+                                       <button type="button" class="btn btn-success lastPreview" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Preview </button>
+                                       <button type="submit" class="btn btn-success disableIt lastButton" id="incidentBtn" onclick="calculateWeekAndYear('week_number5', 'year5')">Save</button>
                                     </div>
                                  </form>
                               </div>
                            </div>
                         </div>
-                     </div>
+                      </div>
                      <!-- Modal -->
                      <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                            <div class="modal-content">
                               <div class="modal-header">
-                                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Preview Your Data</h1>
                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                               </div>
                               <div class="modal-body">
@@ -808,128 +833,128 @@
                                        {% csrf_token %}
                                        <h6>General HSE</h6>
                                        <div class="mb-4">
-                                          <input type="hidden" name="week_number" id="week_number6" value="">
+                                          <input type="hidden" name="week_number" id="week_number6" value="" >
                                           <input type="hidden" name="year" id="year6" value="">
                                           <label for="input1" class="form-label ">Total man days worked</label>
                                           <div class="input-group" >
-                                             <input type="number" class="form-control" id="preview1"  placeholder="Total man days worked"name="total_man_days_worked" required>
+                                             <input type="number" class="form-control" id="preview1"  placeholder="Total man days worked"name="total_man_days_worked" required disabled>
                                           </div>
                                        </div>
                                        <div class="mb-4">
                                           <label for="input2" class="form-label  ">Total safe man hours worked</label>
                                           <div class="input-group" >
-                                             <input type="number" class="form-control" id="preview2"  placeholder="Total safe man hours worked" name="total_safe_man_hours" required>
+                                             <input type="number" class="form-control" id="preview2"  placeholder="Total safe man hours worked" name="total_safe_man_hours" required disabled>
                                           </div>
                                        </div>
                                        <div class="mb-4 ">
                                           <label for="input3" class="form-label ">Number of persons inducted in the site</label>
                                           <div class="input-group">
-                                             <input type="number" class="form-control" id="preview3"  placeholder="Number of persons inducted in the site" name="no_of_person_inducted_site" required >
+                                             <input type="number" class="form-control" id="preview3"  placeholder="Number of persons inducted in the site" name="no_of_person_inducted_site" required disabled >
                                           </div>
                                        </div>
                                        <div class="mb-4 ">
                                           <label for="input4" class="form-label ">Total number of toolbox talk attendees</label>
                                           <div class="input-group">
-                                             <input type="number" class="form-control " id="preview4" placeholder="Total number of toolbox talk attendees" name="no_of_toolbox_attendees" required >
+                                             <input type="number" class="form-control " id="preview4" placeholder="Total number of toolbox talk attendees" name="no_of_toolbox_attendees" required disabled >
                                           </div>
                                        </div>
                                        <h6>HSE Trainings</h6>
                                        <div class="mb-4">
                                           <label for="input5" class="form-label ">HSE Trainings (no. of attendees from Amplus)</label>
                                           <div class="input-group" >
-                                             <input type="number" class="form-control" id="preview5" placeholder="HSE Trainings (no. of attendees from Amplus)" name="hse_training_attendees" required>
+                                             <input type="number" class="form-control" id="preview5" placeholder="HSE Trainings (no. of attendees from Amplus)" name="hse_training_attendees" required disabled>
                                           </div>
                                        </div>
                                        <div class="mb-4">
                                           <label for="input6" class="form-label ">Duration of training session</label>
                                           <div class="input-group" >
-                                             <input type="number" class="form-control" id="preview6"  placeholder="Duration of training session" name="duration_of_trainee" min="1" required>
+                                             <input type="number" class="form-control" id="preview6"  placeholder="Duration of training session" name="duration_of_trainee" min="1" required disabled>
                                           </div>
                                        </div>
                                        <div class="mb-4">
                                           <label for="input7" class="form-label ">HSE Trainings (no. of attendees from Contractor)</label>
                                           <div class="input-group" >
-                                             <input type="number" class="form-control" id="preview7" placeholder="HSE Trainings (no. of attendees from Contractor)" name="hse_training_contractor" required>
+                                             <input type="number" class="form-control" id="preview7" placeholder="HSE Trainings (no. of attendees from Contractor)" name="hse_training_contractor" required disabled>
                                           </div>
                                        </div>
                                        <div class="mb-4">
                                           <label for="input8" class="form-label">Duration of training session</label>
                                           <div class="input-group" >
-                                             <input type="number" class="form-control" id="preview8" placeholder="Duration of training session" name="duration_of_contractor" min="1" required>
+                                             <input type="number" class="form-control" id="preview8" placeholder="Duration of training session" name="duration_of_contractor" min="1" required disabled>
                                           </div>
                                        </div>
                                        <h6>HSE Observations</h6>
                                        <div class="mb-4">
                                           <label for="input9" class="form-label ">Number of daily HSE observations</label>
                                           <div class="input-group" >
-                                             <input type="number" class="form-control" id="preview9"  placeholder="Number of daily HSE observations" name="daily_hse_observation" required>
+                                             <input type="number" class="form-control" id="preview9"  placeholder="Number of daily HSE observations" name="daily_hse_observation" required disabled>
                                           </div>
                                        </div>
                                        <div class="mb-4 ">
                                           <label for="input10" class="form-label ">Number of STOP Work notice issued</label>
                                           <div class="input-group">
-                                             <input type="number" class="form-control" id="preview10" placeholder="Number of STOP Work notice issued" name="stop_work_notice" required>
+                                             <input type="number" class="form-control" id="preview10" placeholder="Number of STOP Work notice issued" name="stop_work_notice" required disabled>
                                           </div>
                                        </div>
                                        <div class="mb-4 ">
                                           <label for="input11" class="form-label ">Number of Violation Memo issued</label>
                                           <div class="input-group">
-                                             <input type="number" class="form-control" id="preview11"  placeholder="Number of Violation Memo issued" name="violation_memo_issued" required>
+                                             <input type="number" class="form-control" id="preview11"  placeholder="Number of Violation Memo issued" name="violation_memo_issued" required disabled>
                                           </div>
                                        </div>
                                        <div class="mb-4 ">
                                           <label for="input11" class="form-label ">Number of complaints from customers</label>
                                           <div class="input-group">
-                                             <input type="number" class="form-control" id="preview12"  placeholder="Number of complaints from customers" name="complaint_from_customer" required>
+                                             <input type="number" class="form-control" id="preview12"  placeholder="Number of complaints from customers" name="complaint_from_customer" required disabled>
                                           </div>
                                        </div>
                                        <h6>Management Visits</h6>
                                        <div class="mb-4">
                                           <label for="input13" class="form-label ">Number of Management HSE Visits</label>
                                           <div class="input-group" >
-                                             <input type="number" class="form-control" id="preview13"  placeholder="Number of Management HSE Visits" name="no_of_management_visits" required>
+                                             <input type="number" class="form-control" id="preview13"  placeholder="Number of Management HSE Visits" name="no_of_management_visits" required disabled>
                                           </div>
                                        </div>
                                        <div class="mb-4">
                                           <label for="input14" class="form-label ">Total Findings</label>
                                           <div class="input-group" >
-                                             <input type="number" class="form-control" id="preview14"  placeholder="Total Findings" name="total_findings" required>
+                                             <input type="number" class="form-control" id="preview14"  placeholder="Total Findings" name="total_findings" required disabled>
                                           </div>
                                        </div>
                                        <div class="mb-4">
                                           <label for="input15" class="form-label ">Number of compilance done</label>
                                           <div class="input-group" >
-                                             <input type="number" class="form-control" id="preview15"  placeholder="Number of compilance done" name="no_of_compilance_done" required>
+                                             <input type="number" class="form-control" id="preview15"  placeholder="Number of compilance done" name="no_of_compilance_done" required disabled>
                                           </div>
                                        </div>
                                        <div class="mb-4 ">
                                           <label for="input16" class="form-label">Number of observation pending (to be compiled)</label>
                                           <div class="input-group" >
-                                             <input type="number" class="form-control" id="preview16"  placeholder="Number of observation pending (to be compiled)" name="observation_pending" required>
+                                             <input type="number" class="form-control" id="preview16"  placeholder="Number of observation pending (to be compiled)" name="observation_pending" required disabled>
                                           </div>
                                        </div>
                                        <h6>Incidents</h6>
                                        <div class="mb-4">
                                           <label for="input17" class="form-label ">Number of Incidents</label>
                                           <div class="input-group" >
-                                             <input type="number" class="form-control" id="preview17"  placeholder="Number of Incidents" name="no_of_incidents" required>
+                                             <input type="number" class="form-control" id="preview17"  placeholder="Number of Incidents" name="no_of_incidents" required disabled>
                                           </div>
                                        </div>
                                        <div class="mb-4">
                                           <label for="input18" class="form-label ">Number of occupational illness</label>
                                           <div class="input-group" >
-                                             <input type="number" class="form-control" id="preview18"  placeholder="Number of occupational illness" name="no_of_occupation_illness" required>
+                                             <input type="number" class="form-control" id="preview18"  placeholder="Number of occupational illness" name="no_of_occupation_illness" required disabled>
                                           </div>
                                        </div>
                                        <div class="mb-4">
                                           <label for="input19" class="form-label ">Number of environmental illness</label>
                                           <div class="input-group" >
-                                             <input type="number" class="form-control" id="preview19"  placeholder="Number of environmental illness" name="no_of_environment_illness" required>
+                                             <input type="number" class="form-control" id="preview19"  placeholder="Number of environmental illness" name="no_of_environment_illness" required disabled>
                                           </div>
                                        </div>
                                        <div class="modal-footer">
                                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                          <button type="submit" class="btn btn-primary" id="finalSubmit" onclick="calculateWeekAndYear6();">Final Save</button>
+                                          <button type="submit" class="btn btn-primary" id="finalSubmit" onclick="calculateWeekAndYear('week_number6', 'year6')">Final Save</button>
                                        </div>
                                     </form>
                                  </div>
@@ -975,61 +1000,89 @@
       const firstDayOfMonth = new Date(year, month, 1);
       const lastDayOfMonth = new Date(year, month + 1, 0);
       
-      // Calculate the number of days from the previous month
-      const daysFromPrevMonth = firstDayOfMonth.getDay();
-      const daysInMonth = lastDayOfMonth.getDate();
-      
-      let calendarHTML = '<table class="myTable"><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr><tr>';
-      
-      let day = 1;
-      
-      for (let i = 0; i < 6; i++) {
-      for (let j = 0; j < 7; j++) {
-        if (i === 0 && j < daysFromPrevMonth) {
-            // Days from the previous month
-            const prevMonthDay = new Date(year, month, 0).getDate() - daysFromPrevMonth + j + 1;
-            calendarHTML += `<td class="other-month">${prevMonthDay}</td>`;
-        } else if (day <= daysInMonth) {
-            // Days from the current month
-            const isToday = year === today.getFullYear() && month === today.getMonth() && day === today.getDate();
-            const isHighlightStart = isToday;
-            const isHighlightEnd = day >= today.getDate() && day <= today.getDate() + 6;
-      
-            let cellClass = '';
-      
-            if (isHighlightStart) {
-                cellClass = 'highlight-start';
-            } else if (isHighlightEnd) {
-                cellClass = 'highlight-end';
-            } else if (isToday) {
-                cellClass = 'today';
+    {% comment %}  For Calendar {% endcomment %}
+
+     // Define global variables to store week start and end dates
+let weekStartDate;
+let weekEndDate;
+
+const updateCalendar = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth();
+    const firstDayOfMonth = new Date(year, month, 1);
+    const lastDayOfMonth = new Date(year, month + 1, 0);
+
+    // Calculate the number of days from the previous month
+    const daysFromPrevMonth = firstDayOfMonth.getDay();
+    const daysInMonth = lastDayOfMonth.getDate();
+
+    // Function to get the start and end dates of the current week
+    const getCurrentWeekRange = () => {
+        const startDate = new Date(today);
+        startDate.setDate(today.getDate() - today.getDay()); // Start of the current week
+
+        const endDate = new Date(startDate);
+        endDate.setDate(startDate.getDate() + 6); // End of the current week
+
+        return [startDate, endDate];
+    };
+
+    // Set the global week start and end dates
+    [weekStartDate, weekEndDate] = getCurrentWeekRange();
+
+    let calendarHTML = '<table class="myTable"><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr><tr>';
+
+    let day = 1;
+
+    for (let i = 0; i < 6; i++) {
+        for (let j = 0; j < 7; j++) {
+            if (i === 0 && j < daysFromPrevMonth) {
+                // Days from the previous month
+                const prevMonthDay = new Date(year, month, 0).getDate() - daysFromPrevMonth + j + 1;
+                calendarHTML += `<td class="other-month">${prevMonthDay}</td>`;
+            } else if (day <= daysInMonth) {
+                // Days from the current month
+                const isToday = year === today.getFullYear() && month === today.getMonth() && day === today.getDate();
+                const isHighlight = day >= weekStartDate.getDate() && day <= weekEndDate.getDate();
+
+                let cellClass = '';
+
+                if (isHighlight) {
+                    cellClass = 'highlight';
+                } else if (isToday) {
+                    cellClass = 'today';
+                }
+
+                calendarHTML += `<td class="${cellClass}">${day}</td>`;
+                day++;
+            } else {
+                // Days from the next month
+                calendarHTML += `<td class="other-month">${day - daysInMonth}</td>`;
+                day++;
             }
-      
-            calendarHTML += `<td class="${cellClass}">${day}</td>`;
-            day++;
-        } else {
-            // Days from the next month
-            calendarHTML += `<td class="other-month">${day - daysInMonth}</td>`;
-            day++;
         }
-      }
-      calendarHTML += '</tr><tr>';
-      }
-      
-      calendarHTML += '</table>';
-      document.getElementById("calendar").innerHTML = calendarHTML;
-      
-      
-      
+        calendarHTML += '</tr><tr>';
+    }
+
+    calendarHTML += '</table>';
+    document.getElementById("calendar").innerHTML = calendarHTML;
+};
+
+updateCalendar(); // Initial call to set up the calendar
+
+// Periodically update the calendar to reflect the current week
+setInterval(updateCalendar, 1000 * 60 * 60); // Update every hour (adjust as needed)
+
+console.log(weekStartDate)
+console.log(weekEndDate)
+
+
       
       // Display the date range at the top
       const dateRangeElement = document.querySelector('.date-range');
-      
-      const startDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-      const endDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 6);
-      
-      const startDateFormatted = startDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-      const endDateFormatted = endDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      const startDateFormatted = weekStartDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      const endDateFormatted = weekEndDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
       
       dateRangeElement.textContent = `${startDateFormatted} - ${endDateFormatted}`;
       
@@ -1084,9 +1137,16 @@
       
       // Function to change the date by a specified number of days
       function changeDate(days) {
-          TodaysDate.setDate(TodaysDate.getDate() + days);
-          itsDateElement.textContent = formatDate(TodaysDate);
-      }
+         TodaysDate.setDate(TodaysDate.getDate() + days);
+         console.log(weekEndDate)
+       
+         if (TodaysDate >= weekStartDate && TodaysDate <= weekEndDate) {
+           itsDateElement.textContent = formatDate(TodaysDate);
+         }
+       }
+       
+       
+       
       
       // second JS 
       function myDate(date) {
@@ -1118,7 +1178,8 @@
       const itsDate = document.getElementById('dateDisplay');
       
       myWeek.textContent = `Week ${weekNumberInMonth}`; 
-      itsDate.textContent = `${myDate(currDate)} - ${myDate(myNextWeekDate)}`;
+      itsDate.textContent = `${startDateFormatted}- ${endDateFormatted}`;
+      
       
       
       function setupIncrementDecrementButtons(decrementButtonId,incrementButtonId, inputFieldId) {
@@ -1186,236 +1247,117 @@
       });
       
       
-      
-         function calculateWeekAndYear1() {
-             const currentDate = new Date();
-             const weekNumber = getWeekNumber(currentDate);
-             const year = currentDate.getFullYear();
-             
-             // Set the calculated values in the hidden input fields
-             document.getElementById("week_number1").value = weekNumber;
-             document.getElementById("year1").value = year;
-         }
-         function calculateWeekAndYear2() {
-            const currentDate = new Date();
-            const weekNumber = getWeekNumber(currentDate);
-            const year = currentDate.getFullYear();
-            
-            // Set the calculated values in the hidden input fields
-            document.getElementById("week_number2").value = weekNumber;
-            document.getElementById("year2").value = year;
-        }
-      
-        function calculateWeekAndYear3() {
+        function calculateWeekAndYear(weekNumberField, yearField) {
          const currentDate = new Date();
          const weekNumber = getWeekNumber(currentDate);
          const year = currentDate.getFullYear();
          
-         // Set the calculated values in the hidden input fields
-         document.getElementById("week_number3").value = weekNumber;
-         document.getElementById("year3").value = year;
-       }
-      
-       function calculateWeekAndYear4() {
-         const currentDate = new Date();
-         const weekNumber = getWeekNumber(currentDate);
-         const year = currentDate.getFullYear();
-         
-         // Set the calculated values in the hidden input fields
-         document.getElementById("week_number4").value = weekNumber;
-         document.getElementById("year4").value = year;
+         document.getElementById(weekNumberField).value = weekNumber
+         document.getElementById(yearField).value = year
       }
-      function calculateWeekAndYear5() {
-      const currentDate = new Date();
-      const weekNumber = getWeekNumber(currentDate);
-      const year = currentDate.getFullYear();
-      
-      // Set the calculated values in the hidden input fields
-      document.getElementById("week_number5").value = weekNumber;
-      document.getElementById("year5").value = year;
-      }
-      function calculateWeekAndYear6() {
-         const currentDate = new Date();
-         const weekNumber = getWeekNumber(currentDate);
-         const year = currentDate.getFullYear();
-         
-         // Set the calculated values in the hidden input fields
-         document.getElementById("week_number6").value = weekNumber;
-         document.getElementById("year6").value = year;
-         }
+       
+        
          function getWeekNumber(date) {
-             // Copy date so don't modify original
              date = new Date(date);
              date.setHours(0, 0, 0, 0);
              date.setDate(date.getDate() + 4 - (date.getDay() || 7));
-             // Get first day of year
              var yearStart = new Date(date.getFullYear(), 0, 1);
-             // Calculate full weeks to nearest Thursday
              var weekNumber = Math.ceil(((date - yearStart) / 86400000 + 1) / 7);
              return weekNumber;
          }
       
-         function populateInputField1(id, dataKey) {
-            const today = new Date();
-            const weekNumber = getWeekNumber(today);
-            const year = today.getFullYear()
       
-      
-            fetch(`/api/child-models/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
-                .then(response => response.json())
-                .then(data => {
-                    const fieldData = data['General HSE'][data['General HSE'].length - 1][dataKey];
-                    GeneralHSEID=data['General HSE'][data['General HSE'].length - 1]['id']
-                    document.getElementById(id).value = fieldData;
-                    document.getElementById('toBeUpdatedId1').value = GeneralHSEID;
-      
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-         }
-         
-      
-        function populateInputField2(id, dataKey) {
+        function populateInputFields(category, fieldIds, fieldNames,oldId) {
          const today = new Date();
          const weekNumber = getWeekNumber(today);
-         const year = today.getFullYear()
-      
+         const year = today.getFullYear();
       
          fetch(`/api/child-models/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
              .then(response => response.json())
              .then(data => {
-                 const fieldData = data['HSE Training'][data['HSE Training'].length - 1][dataKey];
-                 HSETrainingID=data['HSE Training'][data['HSE Training'].length - 1]['id']
-                 document.getElementById(id).value = fieldData;
-                 document.getElementById('toBeUpdatedId2').value = HSETrainingID;
+                 const categoryData = data[category][data[category].length - 1];
+                 const categoryId = categoryData['id'];
+                 document.getElementById(`toBeUpdatedId${oldId}`).value = categoryId
       
+                 
+                 fieldIds.forEach((fieldId, index) => {
+                     const fieldName = fieldNames[index];
+                     const fieldData = categoryData[fieldName];
+                    document.getElementById(fieldId).value = fieldData;
+      
+                 });
              })
              .catch(error => {
                  console.error('Error:', error);
              });
       }
       
-      function populateInputField3(id, dataKey) {
-      const today = new Date();
-      const weekNumber = getWeekNumber(today);
-      const year = today.getFullYear()
+      const generalHSEFieldsID = ['input1', 'input2', 'input3', 'input4'];
+      const generalHSEFields = ['total_man_days_worked', 'total_safe_man_hours', 'no_of_person_inducted_site', 'no_of_toolbox_attendees'];
+      const hseTrainingFieldsID = ['input5', 'input6', 'input7', 'input8'];
+      const hseTrainingFields = ['hse_training_attendees', 'duration_of_trainee', 'hse_training_contractor', 'duration_of_contractor'];
+      const hseObservationFieldsID = ['input9', 'input10', 'input11', 'input12'];
+      const hseObservationFields = ['daily_hse_observation', 'stop_work_notice', 'violation_memo_issued', 'complaint_from_customer'];
+      const managementVisitsFieldsID = ['input13', 'input14', 'input15', 'input16'];
+      const managementVisitsFields = ['no_of_management_visits', 'total_findings', 'no_of_compilance_done', 'observation_pending'];
+      const incidentsFieldsID = ['input17', 'input18', 'input19'];
+      const incidentsFields = ['no_of_incidents', 'no_of_occupation_illness', 'no_of_environment_illness'];
       
       
-      fetch(`/api/child-models/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
-          .then(response => response.json())
-          .then(data => {
-              const fieldData = data['HSE Observation'][data['HSE Observation'].length - 1][dataKey];
-              HSEObservationID=data['HSE Observation'][data['HSE Observation'].length - 1]['id']
-      
-              document.getElementById(id).value = fieldData;
-              document.getElementById('toBeUpdatedId3').value = HSEObservationID;
-      
-          })
-          .catch(error => {
-              console.error('Error:', error);
-          });
-      }
-      
-      function populateInputField4(id, dataKey) {
-      const today = new Date();
-      const weekNumber = getWeekNumber(today);
-      const year = today.getFullYear()
       
       
-      fetch(`/api/child-models/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
-       .then(response => response.json())
-       .then(data => {
-           const fieldData = data['Management Visits'][data['Management Visits'].length - 1][dataKey];
-           ManagementID=data['Management Visits'][data['Management Visits'].length - 1]['id']
-      
-           document.getElementById(id).value = fieldData;
-           document.getElementById('toBeUpdatedId4').value = ManagementID;
-      
-       })
-       .catch(error => {
-           console.error('Error:', error);
-       });
-      }
-      
-      function populateInputField5(id, dataKey) {
-      const today = new Date();
-      const weekNumber = getWeekNumber(today);
-      const year = today.getFullYear()
-      
-      
-      fetch(`/api/child-models/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
-       .then(response => response.json())
-       .then(data => {
-           const fieldData = data['Incidents'][data['Incidents'].length - 1][dataKey];
-           IncidentsID=data['Incidents'][data['Incidents'].length - 1]['id']
-      
-           document.getElementById(id).value = fieldData;
-           document.getElementById('toBeUpdatedId5').value = IncidentsID;
-           
-      
-           
-       })
-       .catch(error => {
-           console.error('Error:', error);
-       });
-      }
-      
-        
-        populateInputField1('input1', 'total_man_days_worked');
-        populateInputField1('input2', 'total_safe_man_hours');
-        populateInputField1('input3', 'no_of_person_inducted_site');
-        populateInputField1('input4', 'no_of_toolbox_attendees');
-      
-        populateInputField2('input5', 'hse_training_attendees');
-        populateInputField2('input6', 'duration_of_trainee');
-        populateInputField2('input7', 'hse_training_contractor');
-        populateInputField2('input8', 'duration_of_contractor');
-      
-        populateInputField3('input9', 'daily_hse_observation');
-        populateInputField3('input10', 'stop_work_notice');
-        populateInputField3('input11', 'violation_memo_issued');
-        populateInputField3('input12', 'complaint_from_customer');
-      
-        populateInputField4('input13', 'no_of_management_visits');
-        populateInputField4('input14', 'total_findings');
-        populateInputField4('input15', 'no_of_compilance_done');
-        populateInputField4('input16', 'observation_pending');
-      
-        populateInputField5('input17', 'no_of_incidents');
-        populateInputField5('input18', 'no_of_occupation_illness');
-        populateInputField5('input19', 'no_of_environment_illness');
-      
-      
-         $.ajax({
-         type: "GET",
-         url: "/api/parent/",
-         success: function (data) {
-             const fieldData = data[data.length-1].form_status;
-             if (fieldData == 1) {
-                 disableInputFields("disableIt");
-                 disableButtonFields("disableBtn");
-      
-                 Swal.fire({
-                     icon: 'warning',
-                     title: 'Form for this is week submitted',
-                     text: 'You can now view the form',
-                     confirmButtonColor: '#3085d6',
-                     confirmButtonText: 'OK',
-                     customClass: {
-                         popup: 'small-popup'
-                     }
-                 });
-             }
-      
-             console.log(`form Status is ${fieldData}`);
-         },
-         error: function (xhr, status, error) {
-             console.error("Error:", status, error);
-         }
-      }); 
-      
-      
+      populateInputFields('General HSE', generalHSEFieldsID, generalHSEFields,1);
+      populateInputFields('HSE Training', hseTrainingFieldsID,hseTrainingFields,2);
+      populateInputFields('HSE Observation', hseObservationFieldsID,hseObservationFields,3);
+      populateInputFields('Management Visits', managementVisitsFieldsID,managementVisitsFields,4);
+      populateInputFields('Incidents', incidentsFieldsID,incidentsFields,5);  
+
+
+      function populateInputFields2() {
+         const today = new Date();
+         const weekNumber = getWeekNumber(today);
+         const year = today.getFullYear();
+     
+         fetch(`/api/child-models/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
+             .then(response => response.json())
+             .then(data => {
+                 console.log(data);
+                 const categoryData1 = data['Observation Form'];
+                 const categoryData2 = data['Stop Work Form'];
+                 const categoryData3 = data['Violation Memo From'];
+                 const categoryData4 = data['Incident Form'];
+     
+                 if (categoryData1.length <= 0) {
+                     document.getElementById("input10").disabled = true;
+                     document.getElementById("observationBtn").disabled = true;
+                     
+                 }
+                 if (categoryData2.length <= 0) {
+                  document.getElementById("input11").disabled = true;
+                  document.getElementById("observationBtn").disabled = true;
+
+                }
+                if (categoryData3.length <= 0) {
+                  document.getElementById("input12").disabled = true;
+                  document.getElementById("observationBtn").disabled = true;
+
+                }
+                if (categoryData4.length <= 0) {
+                  document.getElementById("input18").disabled = true;
+                  document.getElementById("input19").disabled = true;
+                  document.getElementById("incidentBtn").disabled = true;
+
+                }
+     
+             })
+             .catch(error => {
+                 console.error('Error:', error);
+             });
+     }
+     
+     populateInputFields2();
+     
+
       function disableInputFields(className) {
       const elements = document.getElementsByClassName(className);
       for (let i = 0; i < elements.length; i++) {
@@ -1432,126 +1374,62 @@
       
       }
       }
-      document.addEventListener('DOMContentLoaded', function() {
-         const toggleAccordionLink = document.getElementById('toggle-accordion1');
-         const accordionContent = document.getElementById('collapseOne');
-         const backcolorDiv = document.getElementById('backcolorDiv1'); // Get the div
+
+      $.ajax({
+         type: "GET",
+         url: "/api/parent/",
+         success: function (data) {
+             const fieldData = data[0].form_status;
+             if (fieldData == 1) {
+                 disableInputFields("disableIt");
+                 disableButtonFields("disableBtn");
       
-         let isAccordionOpen = false;
-      
-         toggleAccordionLink.addEventListener('click', function(e) {
-             e.preventDefault();
-             if (isAccordionOpen) {
-                 accordionContent.classList.remove('show');
-                 toggleAccordionLink.style.removeProperty('color');
-                 backcolorDiv.style.removeProperty('background-color'); // Remove background color
-             } else {
-                 accordionContent.classList.add('show');
-                 toggleAccordionLink.style.setProperty('color', '#3E9FFE', 'important');
-                 backcolorDiv.style.setProperty('background-color', 'rgba(62, 159, 254, 0.3)', 'important'); // Set background color
+                 Swal.fire({
+                     icon: 'warning',
+                     title: 'Form for this is week is now submitted',
+                     text: 'You can now view the form',
+                     confirmButtonColor: '#3085d6',
+                     confirmButtonText: 'OK',
+                     customClass: {
+                         popup: 'small-popup'
+                     }
+                 });
              }
       
-             isAccordionOpen = !isAccordionOpen;
-         });
+         },
+         error: function (xhr, status, error) {
+             console.error("Error:", status, error);
+         }
+      }); 
+      
+      
+       document.addEventListener('DOMContentLoaded', function() {
+         function setupAccordion(accordionNumber) {
+             const toggleAccordionLink = document.getElementById(`toggle-accordion${accordionNumber}`);
+             const accordionContent = document.getElementById(`collapse${accordionNumber}`);
+             const backcolorDiv = document.getElementById(`backcolorDiv${accordionNumber}`);
+      
+             let isAccordionOpen = false;
+      
+             toggleAccordionLink.addEventListener('click', function(e) {
+                 e.preventDefault();
+                 isAccordionOpen = !isAccordionOpen;
+                 accordionContent.classList.toggle('show', isAccordionOpen);
+      
+                 if (isAccordionOpen) {
+                     toggleAccordionLink.style.setProperty('color', '#3E9FFE', 'important');
+                     backcolorDiv.style.setProperty('background-color', 'rgba(62, 159, 254, 0.3)', 'important');
+                 } else {
+                     toggleAccordionLink.style.removeProperty('color');
+                     backcolorDiv.style.removeProperty('background-color');
+                 }
+             });
+         }
+      
+         for (let i = 1; i <= 5; i++) {
+             setupAccordion(i);
+         }
       });
-      
-      
-      
-      document.addEventListener('DOMContentLoaded', function() {
-      const toggleAccordionLink = document.getElementById('toggle-accordion2');
-      const accordionContent = document.getElementById('collapseTwo');
-      const backcolorDiv = document.getElementById('backcolorDiv2'); // Get the div
-      
-      let isAccordionOpen = false;
-      
-      toggleAccordionLink.addEventListener('click', function(e) {
-          e.preventDefault();
-          if (isAccordionOpen) {
-              accordionContent.classList.remove('show');
-              toggleAccordionLink.style.removeProperty('color');
-              backcolorDiv.style.removeProperty('background-color'); // Remove background color
-          } else {
-              accordionContent.classList.add('show');
-              toggleAccordionLink.style.setProperty('color', '#3E9FFE', 'important');
-              backcolorDiv.style.setProperty('background-color', 'rgba(62, 159, 254, 0.3)', 'important'); // Set background color
-          }
-      
-          isAccordionOpen = !isAccordionOpen;
-      });
-      });
-      
-      document.addEventListener('DOMContentLoaded', function() {
-      const toggleAccordionLink = document.getElementById('toggle-accordion3');
-      const accordionContent = document.getElementById('collapseThree');
-      const backcolorDiv = document.getElementById('backcolorDiv3'); // Get the div
-      
-      let isAccordionOpen = false;
-      
-      toggleAccordionLink.addEventListener('click', function(e) {
-       e.preventDefault();
-       if (isAccordionOpen) {
-           accordionContent.classList.remove('show');
-           toggleAccordionLink.style.removeProperty('color');
-           backcolorDiv.style.removeProperty('background-color'); // Remove background color
-       } else {
-           accordionContent.classList.add('show');
-           toggleAccordionLink.style.setProperty('color', '#3E9FFE', 'important');
-           backcolorDiv.style.setProperty('background-color', 'rgba(62, 159, 254, 0.3)', 'important'); // Set background color
-       }
-      
-       isAccordionOpen = !isAccordionOpen;
-      });
-      });
-      
-      
-      document.addEventListener('DOMContentLoaded', function() {
-      const toggleAccordionLink = document.getElementById('toggle-accordion4');
-      const accordionContent = document.getElementById('collapseFour');
-      const backcolorDiv = document.getElementById('backcolorDiv4'); // Get the div
-      
-      let isAccordionOpen = false;
-      
-      toggleAccordionLink.addEventListener('click', function(e) {
-       e.preventDefault();
-       if (isAccordionOpen) {
-           accordionContent.classList.remove('show');
-           toggleAccordionLink.style.removeProperty('color');
-           backcolorDiv.style.removeProperty('background-color'); // Remove background color
-       } else {
-           accordionContent.classList.add('show');
-           toggleAccordionLink.style.setProperty('color', '#3E9FFE', 'important');
-           backcolorDiv.style.setProperty('background-color', 'rgba(62, 159, 254, 0.3)', 'important'); // Set background color
-       }
-      
-       isAccordionOpen = !isAccordionOpen;
-      });
-      });
-      
-      
-      document.addEventListener('DOMContentLoaded', function() {
-      const toggleAccordionLink = document.getElementById('toggle-accordion5');
-      const accordionContent = document.getElementById('collapseFive');
-      const backcolorDiv = document.getElementById('backcolorDiv5'); // Get the div
-      
-      let isAccordionOpen = false;
-      
-      toggleAccordionLink.addEventListener('click', function(e) {
-       e.preventDefault();
-       if (isAccordionOpen) {
-           accordionContent.classList.remove('show');
-           toggleAccordionLink.style.removeProperty('color');
-           backcolorDiv.style.removeProperty('background-color'); // Remove background color
-       } else {
-           accordionContent.classList.add('show');
-           toggleAccordionLink.style.setProperty('color', '#3E9FFE', 'important');
-           backcolorDiv.style.setProperty('background-color', 'rgba(62, 159, 254, 0.3)', 'important'); // Set background color
-       }
-      
-       isAccordionOpen = !isAccordionOpen;
-      });
-      });
-      
-      
       
       
       function setupFileUpload(inputId, labelId) {
@@ -1573,138 +1451,51 @@
       setupFileUpload('fileInput7', 'fileInputLabel7');
       
       
-      function populatePreview1(id, dataKey) {
-         const today = new Date();
-         const weekNumber = getWeekNumber(today);
-         const year = today.getFullYear()
-      
-      
-         fetch(`/api/child-models/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
-             .then(response => response.json())
-             .then(data => {
-                 const fieldData = data['General HSE'][data['General HSE'].length - 1][dataKey];
-                 GeneralHSEID=data['General HSE'][data['General HSE'].length - 1]['id']
-                 document.getElementById(id).value = fieldData;
-                 document.getElementById('toBeUpdatedId1').value = GeneralHSEID;
-      
-             })
-             .catch(error => {
-                 console.error('Error:', error);
-             });
-      }
-      
-      function populatePreview2(id, dataKey) {
-         const today = new Date();
-         const weekNumber = getWeekNumber(today);
-         const year = today.getFullYear()
-      
-      
-         fetch(`/api/child-models/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
-             .then(response => response.json())
-             .then(data => {
-                 const fieldData = data['HSE Training'][data['HSE Training'].length - 1][dataKey];
-                 HSETrainingID=data['HSE Training'][data['HSE Training'].length - 1]['id']
-                 document.getElementById(id).value = fieldData;
-                 document.getElementById('toBeUpdatedId2').value = HSETrainingID;
-      
-             })
-             .catch(error => {
-                 console.error('Error:', error);
-             });
-      }
-      
-      function populatePreview3(id, dataKey) {
-         const today = new Date();
-         const weekNumber = getWeekNumber(today);
-         const year = today.getFullYear()
+         function populateInputFieldsPreview(category, fieldIds, fieldNames) {
+                  const today = new Date();
+                  const weekNumber = getWeekNumber(today);
+                  const year = today.getFullYear();
+              
+                  fetch(`/api/child-models/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
+                      .then(response => response.json())
+                      .then(data => {
+                          const categoryData = data[category][data[category].length - 1];
+                          const categoryId = categoryData['id'];
+              
+                          fieldIds.forEach((fieldId, index) => {
+                              const fieldName = fieldNames[index];
+                              const fieldData = categoryData[fieldName];
+              
+                              document.getElementById(fieldId).value = fieldData;
+         
+                          });
+                      })
+                      .catch(error => {
+                          console.error('Error:', error);
+                      });
+              }
+              
+              const generalHSEPreviewFieldsID = ['preview1', 'preview2', 'preview3', 'preview4'];
+              const generalHSEPreviewFields = ['total_man_days_worked', 'total_safe_man_hours', 'no_of_person_inducted_site', 'no_of_toolbox_attendees'];
+              const hseTrainingPreviewFieldsID = ['preview5', 'preview6', 'preview7', 'preview8'];
+              const hseTrainingPreviewFields = ['hse_training_attendees', 'duration_of_trainee', 'hse_training_contractor', 'duration_of_contractor'];
+              const hseObservationPreviewFieldsID = ['preview9', 'preview10', 'preview11', 'preview12'];
+              const hseObservationPreviewFields = ['daily_hse_observation', 'stop_work_notice', 'violation_memo_issued', 'complaint_from_customer'];
+              const managementVisitsPreviewFieldsID = ['preview13', 'preview14', 'preview15', 'preview16'];
+              const managementVisitsPreviewFields = ['no_of_management_visits', 'total_findings', 'no_of_compilance_done', 'observation_pending'];
+              const incidentsFieldsPreviewID = ['preview17', 'preview18', 'preview19'];
+              const incidentsPreviewFields = ['no_of_incidents', 'no_of_occupation_illness', 'no_of_environment_illness'];
          
          
-         fetch(`/api/child-models/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
-             .then(response => response.json())
-             .then(data => {
-                 const fieldData = data['HSE Observation'][data['HSE Observation'].length - 1][dataKey];
-                 HSEObservationID=data['HSE Observation'][data['HSE Observation'].length - 1]['id']
          
-                 document.getElementById(id).value = fieldData;
-                 document.getElementById('toBeUpdatedId3').value = HSEObservationID;
-         
-             })
-             .catch(error => {
-                 console.error('Error:', error);
-             });
-         }
-      
-         function populatePreview4(id, dataKey) {
-            const today = new Date();
-            const weekNumber = getWeekNumber(today);
-            const year = today.getFullYear()
-            
-            
-            fetch(`/api/child-models/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
-             .then(response => response.json())
-             .then(data => {
-                 const fieldData = data['Management Visits'][data['Management Visits'].length - 1][dataKey];
-                 ManagementID=data['Management Visits'][data['Management Visits'].length - 1]['id']
-            
-                 document.getElementById(id).value = fieldData;
-                 document.getElementById('toBeUpdatedId4').value = ManagementID;
-            
-             })
-             .catch(error => {
-                 console.error('Error:', error);
-             });
-            }
-      
-            function populatePreview5(id, dataKey) {
-               const today = new Date();
-               const weekNumber = getWeekNumber(today);
-               const year = today.getFullYear()
-               
-               
-               fetch(`/api/child-models/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
-                .then(response => response.json())
-                .then(data => {
-                    const fieldData = data['Incidents'][data['Incidents'].length - 1][dataKey];
-                    IncidentsID=data['Incidents'][data['Incidents'].length - 1]['id']
-               
-                    document.getElementById(id).value = fieldData;
-                    document.getElementById('toBeUpdatedId5').value = IncidentsID;
-                    
-               
-                    
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-               }
+              populateInputFieldsPreview('General HSE', generalHSEPreviewFieldsID, generalHSEPreviewFields);
+              populateInputFieldsPreview('HSE Training', hseTrainingPreviewFieldsID,hseTrainingPreviewFields);
+              populateInputFieldsPreview('HSE Observation', hseObservationPreviewFieldsID,hseObservationPreviewFields);
+              populateInputFieldsPreview('Management Visits', managementVisitsPreviewFieldsID,managementVisitsPreviewFields);
+              populateInputFieldsPreview('Incidents', incidentsFieldsPreviewID,incidentsPreviewFields); 
       
       
-      
-      populatePreview1('preview1','total_man_days_worked')
-      populatePreview1('preview2','total_safe_man_hours')
-      populatePreview1('preview3','no_of_person_inducted_site')
-      populatePreview1('preview4','no_of_toolbox_attendees')
-      
-      populatePreview2('preview5', 'hse_training_attendees');
-      populatePreview2('preview6', 'duration_of_trainee');
-      populatePreview2('preview7', 'hse_training_contractor');
-      populatePreview2('preview8', 'duration_of_contractor');
-      
-      populatePreview3('preview9', 'daily_hse_observation');
-      populatePreview3('preview10', 'stop_work_notice');
-      populatePreview3('preview11', 'violation_memo_issued');
-      populatePreview3('preview12', 'complaint_from_customer');
-      
-      populatePreview4('preview13', 'no_of_management_visits');
-      populatePreview4('preview14', 'total_findings');
-      populatePreview4('preview15', 'no_of_compilance_done');
-      populatePreview4('preview16', 'observation_pending');
-      
-      populatePreview5('preview17', 'no_of_incidents');
-      populatePreview5('preview18', 'no_of_occupation_illness');
-      populatePreview5('preview19', 'no_of_environment_illness');
-      
-      
+{% comment %}       
       $(document).ready(function() {
       function handleButtonClick() {
           $.ajax({
@@ -1719,7 +1510,7 @@
       
                       Swal.fire({
                           icon: 'warning',
-                          title: 'Form for this week is already submitted',
+                          title: 'Form for this week is now submitted',
                           text: 'You can now view the form',
                           confirmButtonColor: '#3085d6',
                           confirmButtonText: 'OK',
@@ -1741,7 +1532,7 @@
       $('#finalSubmit').on('click', function() {
           handleButtonClick();
       });
-      });
+      }); {% endcomment %}
        
    </script>
 </html>

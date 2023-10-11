@@ -183,18 +183,18 @@
          <div class="rowTable1">
             <input type="hidden" name="week_number" id="week_number_Form1" value="">
             <input type="hidden" name="year" id="year_form1" value="">
-            <div class="Srno"><input type="text" class="srWidth valueInput" placeholder="Sr.No" name="SrNo"></div>
-            <div class="commonWidth"><input type="date" class="valueInput" placeholder="Incident Date" name="IncidentDate"></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Incident Time" name="IncidentTime"></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Location" name="Location"></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Exact Location" name="ExactLocation"></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Plant Site" name="PlantSite"></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Project Code" name="ProjectCode"></div>
-            <div class="chnWidth"><input type="text" class=" extraspace valueInput" placeholder="Description of Incident" name="DescriptionOfIncident"></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Root Cause" name="RootCause"></div>
+            <div class="Srno"><input type="text" class="srWidth valueInput" placeholder="Sr.No" name="SrNo" required></div>
+            <div class="commonWidth"><input type="date" class="valueInput" placeholder="Incident Date" name="IncidentDate" required></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Incident Time" name="IncidentTime" required></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Location" name="Location" required></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Exact Location" name="ExactLocation" required></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Plant Site" name="PlantSite" required></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Project Code" name="ProjectCode" required></div>
+            <div class="chnWidth"><input type="text" class=" extraspace valueInput" placeholder="Description of Incident" name="DescriptionOfIncident" required></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Root Cause" name="RootCause" required></div>
 
             <div class="commonWidth">
-             <select class="CLassdropdown" name="TypeOfIncident">
+             <select class="CLassdropdown" name="TypeOfIncident" required>
                 <option value="Near Miss">Near Miss</option>
                 <option value="LTI">LTI</option>
                 <option value="MTI">MTI</option>
@@ -207,7 +207,7 @@
           </div>
           
           <div class="commonWidth">
-             <select class="CLassdropdown" name="HiPotentialIncident">
+             <select class="CLassdropdown" name="HiPotentialIncident" required>
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
                 <option value="NA">NA</option>
@@ -215,18 +215,18 @@
           </div>
 
           <div class="commonWidth">
-             <select class="CLassdropdown" name="Cateogry">
+             <select class="CLassdropdown" name="Cateogry" required>
                 <option value="Recordable">Recordable</option>
                 <option value="Non Recordable">Non Recordable</option>
              </select>
           </div>
 
             
-            <div class="chnWidth"><input type="text" class=" extraspace valueInput" placeholder="Immediate Action Taken" name="ImmediateActionTaken"></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Corrective Action" name="CorrectiveAction"></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Preventive Action" name="PreventionAction"></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Responsible Person" name="ResponsiblePerson"></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Investigation Status" name="InvestigationStatus"></div>
+            <div class="chnWidth"><input type="text" class=" extraspace valueInput" placeholder="Immediate Action Taken" name="ImmediateActionTaken" required></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Corrective Action" name="CorrectiveAction" required></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Preventive Action" name="PreventionAction" required></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Responsible Person" name="ResponsiblePerson" required></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Investigation Status" name="InvestigationStatus" required></div>
             <div class="commonWidth">
              <div class="input-group">
                 <div class="custom-file">
@@ -252,18 +252,18 @@
          <div class="rowTable1">
             <input type="hidden" name="week_number" id="week_number_Form" value="">
             <input type="hidden" name="year" id="year_form" value="">
-            <div class="Srno"><input type="text" class="srWidth valueInput" placeholder="Sr.No" name="SrNo"></div>
-            <div class="commonWidth"><input type="date" class="valueInput" placeholder="Incident Date" name="IncidentDate"></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Incident Time" name="IncidentTime"></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Location" name="Location"></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Exact Location" name="ExactLocation"></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Plant Site" name="PlantSite"></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Project Code" name="ProjectCode"></div>
-            <div class="chnWidth"><input type="text" class=" extraspace valueInput" placeholder="Description of Incident" name="DescriptionOfIncident"></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Root Cause" name="RootCause"></div>
+            <div class="Srno"><input type="text" class="srWidth valueInput" placeholder="Sr.No" name="SrNo" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Incident Date" name="IncidentDate" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Incident Time" name="IncidentTime" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Location" name="Location" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Exact Location" name="ExactLocation" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Plant Site" name="PlantSite" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Project Code" name="ProjectCode" disabled></div>
+            <div class="chnWidth"><input type="text" class=" extraspace valueInput" placeholder="Description of Incident" name="DescriptionOfIncident" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Root Cause" name="RootCause" disabled></div>
 
             <div class="commonWidth">
-             <select class="CLassdropdown" name="TypeOfIncident">
+             <select class="CLassdropdown" name="TypeOfIncident" disabled>
                 <option value="Near Miss">Near Miss</option>
                 <option value="LTI">LTI</option>
                 <option value="MTI">MTI</option>
@@ -276,7 +276,7 @@
           </div>
           
           <div class="commonWidth">
-             <select class="CLassdropdown" name="HiPotentialIncident">
+             <select class="CLassdropdown" name="HiPotentialIncident" disabled>
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
                 <option value="NA">NA</option>
@@ -284,34 +284,32 @@
           </div>
 
           <div class="commonWidth">
-             <select class="CLassdropdown" name="Cateogry">
+             <select class="CLassdropdown" name="Cateogry" disabled>
                 <option value="Recordable">Recordable</option>
                 <option value="Non Recordable">Non Recordable</option>
              </select>
           </div>
 
             
-            <div class="chnWidth"><input type="text" class=" extraspace valueInput" placeholder="Immediate Action Taken" name="ImmediateActionTaken"></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Corrective Action" name="CorrectiveAction"></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Preventive Action" name="PreventionAction"></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Responsible Person" name="ResponsiblePerson"></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Investigation Status" name="InvestigationStatus"></div>
+            <div class="chnWidth"><input type="text" class=" extraspace valueInput" placeholder="Immediate Action Taken" name="ImmediateActionTaken" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Corrective Action" name="CorrectiveAction" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Preventive Action" name="PreventionAction" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Responsible Person" name="ResponsiblePerson" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Investigation Status" name="InvestigationStatus" disabled></div>
             <div class="commonWidth">
              <div class="input-group">
                 <div class="custom-file">
-                   <input type="file" class="custom-file-input" id="AttachReport" name="AttachReport" aria-describedby="openEvidenceAddon" style="display: none;">
+                   <input type="file" class="custom-file-input" id="AttachReport" name="AttachReport" aria-describedby="openEvidenceAddon" style="display: none;" disabled>
                    <label class="custom-file-label" for="openEvidenceInput"></label>
                 </div>
                 <div class="input-group-append">
-                   <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('AttachReport').click()">Upload File</button>
+                   <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('AttachReport').click()" disabled>Upload File</button>
                 </div>
              </div>
           </div> 
           
       </template>      
       
-      <!-- Button to duplicate rowData div -->
-      {% comment %} <button class="btn btn-secondary" onclick="duplicateRow()">Add Row</button> {% endcomment %}
    </body>
 
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
@@ -379,7 +377,6 @@ function createAndPopulateFormRows(data) {
          const weekNumber = getWeekNumber(currentDate);
          const year = currentDate.getFullYear();
          
-         // Set the calculated values in the hidden input fields
          document.getElementById("week_number_Form1").value = weekNumber;
          document.getElementById("year_form1").value = year;
        }
