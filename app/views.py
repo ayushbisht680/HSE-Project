@@ -8,6 +8,8 @@ from django.http import HttpResponse
 from rest_framework import generics
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
+from django.contrib import messages
+
 
 
 
@@ -528,11 +530,17 @@ class HSEObservationFormAPI(APIView):
         if serializer.is_valid():
             instance = serializer.save()
             instance.save()
+            messages.success(request, 'Data saved successfully.')
+
             # return Response(serializer.data, status=status.HTTP_201_CREATED)
-            return render(request, "observation.html")
+            # return render(request, "observation.html")
+            return HttpResponseRedirect('/api/my_form')  
+
         
 
         else:
+            messages.error(request, 'Error saving data. Please check the form.')
+
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class StopWorkFormAPI(APIView):
@@ -565,7 +573,9 @@ class StopWorkFormAPI(APIView):
             instance = serializer.save()
             instance.save()
             # return Response(serializer.data, status=status.HTTP_201_CREATED)
-            return render(request, "stopwork.html")
+            # return render(request, "stopwork.html")
+            return HttpResponseRedirect('/api/my_stopwork')  
+
         
 
         else:
@@ -598,7 +608,9 @@ class ViolationMemoAPI(APIView):
             instance = serializer.save()
             instance.save()
             # return Response(serializer.data, status=status.HTTP_201_CREATED)
-            return render(request, "violationForm.html")
+            # return render(request, "violationForm.html")
+            return HttpResponseRedirect('/api/violation_memo')  
+
         
 
         else:
@@ -631,7 +643,9 @@ class IncidentFormAPI(APIView):
             instance = serializer.save()
             instance.save()
             # return Response(serializer.data, status=status.HTTP_201_CREATED)
-            return render(request, "incidentForm.html")
+            # return render(request, "incidentForm.html")
+            return HttpResponseRedirect('/api/my_incident_form')  
+
         
 
         else:

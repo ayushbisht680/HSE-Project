@@ -13,35 +13,38 @@
    <style>
       .mainTable{
       display:flex;
-      width:4200px;
-      height: 65px;
+      width:3338px;
+      height: 60px;
       border-top: 1px solid black;
       border-bottom: 1px solid black;
       align-items: center;
+      margin-top:60px;
       }
       .Srno{
       display: flex;
       align-items: center;
-      width:127px;
+      width:85px;
       height: 60px;;
       }
       .commonWidth{
       display: flex;
       align-items: center;
-      width:251px;
-      height: 60px;;
+      width:203px;
+      height: 60px;
       }
       .chnWidth{
       display: flex;
       align-items: center;
-      width:339px;
-      height: 60px;;
+      width:250px;
+      height: 60px;
       }
       p{
       margin-left: 15px;
       color: gray;
       font-weight: 600;
       margin-bottom: 0px;
+      font-size:13px;
+
       }
       .valueInput{
       height:43px;
@@ -49,37 +52,47 @@
       background-color: #d5e9f1;;
       border: none;
       outline: none;
-      font-size: 15px;
+      font-size: 13px;
       font-weight: 600;
       }
-   
-      .CLassdropdown{
-         width: 110px;
-         height: 28px;
-         font-size: 13px;
-         padding: 0px;
-         margin-left: 15px;
-         border: 1.5px solid #2c8ff1 !important;
-         color: #2c8ff1 !important;
-         border-radius: 6px;
       
+      .valueInput1{
+         height:43px;
+         margin-left: 15px;
+         background-color: #d1d3d3;
+   
+         border: none;
+         outline: none;
+         font-size: 15px;
+         font-weight: 600;
+         font-size: 13px;
+         }
+
+      .CLassdropdown{
+      width: 110px;
+      height: 28px;
+      font-size: 13px;
+      padding: 0px;
+      margin-left: 15px;
+      border: 1.5px solid #2c8ff1 !important;
+      color: #2c8ff1 !important;
+      border-radius: 6px;
       }
       .btn{
-         margin-left: 15px;
-         font-size: 11px;
-         height: 31px;
-         width: 87px;
-         border: 1.5px solid #2c8ff1 !important;
-         color: #2c8ff1 !important;
-         font-weight: 500;
+      margin-left: 15px;
+      font-size: 11px;
+      height: 31px;
+      width: 87px;
+      border: 1.5px solid #2c8ff1 !important;
+      color: #2c8ff1 !important;
+      font-weight: 500;
       }
-      
       .rowTable1{
       display:flex;
-      width:4200px;
-      height: 65px;
+      width:3338px;
+      height: 60px;
       align-items: center;
-      background-color: #d5e9f1;;
+      background-color: #d1d3d3;
       }
       .srWidth{
       width: 70px;
@@ -87,36 +100,61 @@
       .heading{
       display:flex;
       align-items: center;
-      width:4200px;
-      height: 65px;
+      width:3338px;
+      height: 60px;
+      position:fixed;
+      top:0px;
+      background-color: #d5e9f1;
+
+
       }
-     
       .extraspace{
       width:339px;
       }
-
-      
-      #formContainer > div:nth-child(even) {
+      #formContainer > div:nth-child(odd) {
          background-color: #d5e9f1;
      }
 
-     #formContainer > div:nth-child(odd) {
+     #formContainer > div:nth-child(even) {
          background-color: white;
      }
-     #formContainer > div:nth-child(odd) .valueInput {
+     #formContainer > div:nth-child(even) .valueInput {
       background-color: white;
   }
-  .submitBUtton{
-   background-color:#2c8ff1 !important;
-   color:white !important;
-   font-size: 12px !important;
-
-  }
+      .submitBUtton{
+      background-color:#2c8ff1 !important;
+      color:white !important;
+      font-size: 12px !important;
+      }
+      .dateWidth{
+         width: 80px !important;
+      }
+      
    </style>
    <body>
-      <div class="heading">
-         <h6>Stop Work Form Details</h6>
+      <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+         <div class="modal-dialog" role="document">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="successModalLabel">Success!</h5>
+               </div>
+               <div class="modal-body">
+                  Data saved successfully.
+               </div>
+            </div>
+         </div>
       </div>
+      
+      <div class="heading">
+         <div style="margin-left: 12px">
+            <h6 style="font-size: 15px">Stop Work Form Details</h6>
+         </div>
+         <div style='margin-left: 12px' class='fixed'>
+            <button type="button" class="btn " id="addRowButton">Add Row</button>
+   
+         </div>
+      </div>
+
       <div class='mainTable'>
          <div class='Srno'>
             <p>Sr.No</p>
@@ -166,115 +204,49 @@
          <div class='chnWidth'>
             <p>Remark</p>
          </div>
-         <div class='Srno'>
+         <div >
             <p></p>
-         </div> 
+         </div>
       </div>
-      
-      <form method="POST" action="{% url 'stopWork_form' %}" enctype="multipart/form-data" id="">
-        {% csrf_token %}
-        <div class="rowTable1">
-           <input type="hidden" name="week_number" id="week_number_Form1" value="">
-           <input type="hidden" name="year" id="year_form1" value="">
-           <div class="Srno"><input type="text" class="srWidth valueInput" placeholder="Sr.No" name="SrNo" required></div>
-           <div class="commonWidth"><input type="date" class="valueInput" placeholder="Date" name="Date" required></div>
-           <div class="commonWidth"><input type="text" class="valueInput" placeholder="Time" name="Time" required></div>
-           <div class="commonWidth"><input type="text" class="valueInput" placeholder="Location" name="Location" required></div>
-           <div class="commonWidth"><input type="text" class="valueInput" placeholder="Plant/Site" name="PlantSite" required></div>
-           <div class="commonWidth"><input type="text" class="valueInput" placeholder="Description" name="DescriptionOfIssue" required></div>
-           <div class="commonWidth"><input type="text" class="valueInput" placeholder="Unsafe Act" name="UnsafeAct" required></div>
-           <div class="commonWidth">
-              <select class="CLassdropdown" name="Cateogry" required>
-                 <option value="Yes">Yes</option>
-                 <option value="No">No</option>
-                 <option value="NA">NA</option>
-              </select>
-           </div>
-           <div class="chnWidth"><input type="text" class="extraspace valueInput" placeholder="Corrective Action Taken" name="CorrrectiveActionTAken" required></div>
-           <div class="commonWidth"><input type="text" class="valueInput" placeholder="Remaining Hazard" name="RemainingHazard" required></div>
-           <div class="commonWidth"><input type="text" class="valueInput" placeholder="Responsible Person" name="ResponsiblePerson" required></div>
-           <div class="commonWidth"><input type="text" class="valueInput" placeholder="Closure Date" name="ClosureDate" required></div>
-           
-           <div class="commonWidth">
-              <select class="CLassdropdown" name="Status" required>
-                 <option value="Yes">Yes</option>
-                 <option value="No">No</option>
-                 <option value="NA">NA</option>
-              </select>
-           </div>
-          
-           <div class="commonWidth">
-              <div class="input-group">
-                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="openEvidenceInput" name="OpenEvidence" aria-describedby="openEvidenceAddon" style="display: none;">
-                    <label class="custom-file-label" for="openEvidenceInput"></label>
-                 </div>
-                 <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('openEvidenceInput').click()">Upload File</button>
-                 </div>
-              </div>
-           </div>
-           <div class="commonWidth">
-              <div class="input-group">
-                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="openEvidenceInput" name="ClosedEvidence" aria-describedby="openEvidenceAddon" style="display: none;">
-                    <label class="custom-file-label" for="openEvidenceInput"></label>
-                 </div>
-                 <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('openEvidenceInput').click()">Upload File</button>
-                 </div>
-              </div>
-           </div>
-           <div class="chnWidth">
-              <input type="text" placeholder="Remark" class=" extraspace valueInput" name="Remark" required>
-           </div>
-           <div class="Srno">
-              <button type="submit" class="btn submitBUtton" onclick="calculateWeekAndYearForm1();">Submit</button>
-           </div>
-        </div>
-     </form>
-     
-      <div id="formContainer"></div>
 
-      <template id="formRowTemplate">
-        <div class="rowTable1">
+      <form method="POST" action="{% url 'stopWork_form' %}" enctype="multipart/form-data" id="form" autocomplete="off" style="display: none;">
+         {% csrf_token %}
+         <div class="rowTable1">
             <input type="hidden" name="week_number" id="week_number_Form1" value="">
             <input type="hidden" name="year" id="year_form1" value="">
-            <div class="Srno"><input type="text" class="srWidth valueInput" placeholder="Sr.No" name="SrNo" disabled></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Date" name="Date" disabled></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Time" name="Time" disabled></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Location" name="Location" disabled></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Plant/Site" name="PlantSite" disabled></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Description" name="DescriptionOfIssue" disabled></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Unsafe Act" name="UnsafeAct" disabled></div>
+            <div class="Srno"><input type="text" class="srWidth valueInput1" placeholder="Sr.No" name="SrNo" id='Srno'></div>
+            <div class="commonWidth"><input type="date" class="valueInput1" placeholder="Date" name="Date" required></div>
+            <div class="commonWidth "><input type="text" class="valueInput1" placeholder="Time" name="Time" required></div>
+            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Location" name="Location" required></div>
+            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Plant/Site" name="PlantSite" required></div>
+            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Description" name="DescriptionOfIssue" required></div>
+            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Unsafe Act" name="UnsafeAct" required></div>
             <div class="commonWidth">
-               <select class="CLassdropdown" name="Cateogry" disabled>
+               <select class="CLassdropdown" name="Cateogry" required>
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
                   <option value="NA">NA</option>
                </select>
             </div>
-            <div class="chnWidth"><input type="text" class="extraspace valueInput" placeholder="Corrective Action Taken" name="CorrrectiveActionTAken" disabled></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Remaining Hazard" name="RemainingHazard" disabled></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Responsible Person" name="ResponsiblePerson" disabled></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Closure Date" name="ClosureDate" disabled></div>
-            
+            <div class="chnWidth"><input type="text" class="extraspace valueInput1" placeholder="Corrective Action Taken" name="CorrrectiveActionTAken" required></div>
+            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Remaining Hazard" name="RemainingHazard" required></div>
+            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Responsible Person" name="ResponsiblePerson" required></div>
+            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Closure Date" name="ClosureDate" required></div>
             <div class="commonWidth">
-               <select class="CLassdropdown" name="Status" disabled>
+               <select class="CLassdropdown" name="Status" required>
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
                   <option value="NA">NA</option>
                </select>
             </div>
-           
             <div class="commonWidth">
                <div class="input-group">
                   <div class="custom-file">
-                     <input type="file" class="custom-file-input" id="openEvidenceInput" name="OpenEvidence" aria-describedby="openEvidenceAddon" disabled style="display: none;">
+                     <input type="file" class="custom-file-input" id="openEvidenceInput" name="OpenEvidence" aria-describedby="openEvidenceAddon" style="display: none;">
                      <label class="custom-file-label" for="openEvidenceInput"></label>
                   </div>
                   <div class="input-group-append">
-                     <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('openEvidenceInput').click()" disabled>Upload File</button>
+                     <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('openEvidenceInput').click()">Upload File</button>
                   </div>
                </div>
             </div>
@@ -285,21 +257,54 @@
                      <label class="custom-file-label" for="openEvidenceInput"></label>
                   </div>
                   <div class="input-group-append">
-                     <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('openEvidenceInput').click()" disabled>Upload File</button>
+                     <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('openEvidenceInput').click()">Upload File</button>
                   </div>
                </div>
             </div>
             <div class="chnWidth">
+               <input type="text" placeholder="Remark" class=" extraspace valueInput1" name="Remark" required>
+            </div>
+            <div class="" >
+               <button type="submit" class="btn submitBUtton" id="submitButton">Submit</button>
+            </div>
+           
+         </div>
+       
+      </form>
+      
+      <div id="formContainer"></div>
+      
+      <template id="formRowTemplate">
+         <div class="rowTable1">
+            <input type="hidden" name="week_number" id="week_number_Form1" value="">
+            <input type="hidden" name="year" id="year_form1" value="">
+            <div class="Srno"><input type="text" class="srWidth valueInput" placeholder="Sr.No" name="SrNo" disabled></div>
+            <div class="commonWidth "><input type="text" class="valueInput" placeholder="Date" name="Date" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Time" name="Time" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Location" name="Location" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Plant/Site" name="PlantSite" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Description" name="DescriptionOfIssue" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Unsafe Act" name="UnsafeAct" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Cateogry" name="Cateogry" disabled></div>
+           
+            <div class="chnWidth"><input type="text" class="extraspace valueInput" placeholder="Corrective Action Taken" name="CorrrectiveActionTAken" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Remaining Hazard" name="RemainingHazard" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Responsible Person" name="ResponsiblePerson" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Closure Date" name="ClosureDate" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Status" name="Status" disabled></div>
+             
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="OpenEvidence" name="OpenEvidence" id="OpenEvidence" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="ClosedEvidence" name="ClosedEvidence" id="ClosedEvidence" disabled></div>
+            <div class="chnWidth">
                <input type="text" placeholder="Remark" class=" extraspace valueInput" name="Remark" disabled>
             </div>
-            
          </div>
-      </template>      
+      </template>
       
    </body>
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-   
    <script>
       populateInputField()
 
@@ -312,41 +317,61 @@
       fetch(`/api/child-models/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
       .then(response => response.json())
       .then(data => {
-        data=data['Stop Work Form']
-        createAndPopulateFormRows(data);
+         console.log(data)
+         const categoryData = data['Stop Work Form'][data['Stop Work Form'].length - 1];
+
+         if(data['Stop Work Form'].length==0){
+            document.getElementById('Srno').value=1;
+
+         }
+         else{
+
+            document.getElementById('Srno').value=categoryData['SrNo']+1 
+
+         }
+         
+        newdata=data['Stop Work Form']
+        createAndPopulateFormRows(newdata); 
       })
       .catch(error => {
           console.error('Error:', error);
       });
-         }
+      }
+      
+      document.getElementById("addRowButton").addEventListener("click", function() {
+         // Hide the button
+         this.style.display = "none";
 
-     
-     
-
-function createAndPopulateFormRow(dataItem) {
-   const template = document.getElementById('formRowTemplate');
-   const newRow = document.importNode(template.content, true);
-   
-
-   const inputFields = newRow.querySelectorAll('.valueInput');
-   for (const field of inputFields) {
+         // Show the form
+         document.getElementById("form").style.display = "block";
+   }); 
+      
+      
+      
+      function createAndPopulateFormRow(dataItem) {
+      const template = document.getElementById('formRowTemplate');
+      const newRow = document.importNode(template.content, true);
+      
+      
+      const inputFields = newRow.querySelectorAll('.valueInput');
+      for (const field of inputFields) {
        const fieldName = field.getAttribute('name');
        field.value = dataItem[fieldName] || '';
-   }
-
-   const formContainer = document.getElementById('formContainer');
-   formContainer.appendChild(newRow);
-  
-
- 
-}
-
-function createAndPopulateFormRows(data) {
-   for (const dataItem of data) {      
-     createAndPopulateFormRow(dataItem);
-   }
-}
-
+      }
+      
+      const formContainer = document.getElementById('formContainer');
+      formContainer.appendChild(newRow);
+      
+      
+      
+      }
+      
+      function createAndPopulateFormRows(data) {
+      for (const dataItem of data) {      
+      createAndPopulateFormRow(dataItem);
+      }
+      }
+      
       function getWeekNumber(date) {
          date = new Date(date);
          date.setHours(0, 0, 0, 0);
@@ -360,11 +385,35 @@ function createAndPopulateFormRows(data) {
          const currentDate = new Date();
          const weekNumber = getWeekNumber(currentDate);
          const year = currentDate.getFullYear();
+         console.log(weekNumber)
+         console.log(year)
          
          // Set the calculated values in the hidden input fields
          document.getElementById("week_number_Form1").value = weekNumber;
          document.getElementById("year_form1").value = year;
        }
-
-  </script>
+      
+       $(document).ready(function() {
+         let submitted = false; 
+       
+         $('#submitButton').click(function(event) {
+           event.preventDefault(); 
+       
+           calculateWeekAndYearForm1();
+       
+           $('#successModal').modal('show');
+       
+           setTimeout(function() {
+             $('#successModal').modal('hide'); 
+             if (!submitted) {
+               submitted = true;
+               $('form').submit(); 
+             }
+           }, 1000);
+         });
+       
+       });
+       
+      
+   </script>
 </html>

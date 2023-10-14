@@ -13,28 +13,30 @@
    <style>
       .mainTable{
       display:flex;
-      width:3058px;
-      height: 65px;
+      width:2448px;
+      height: 60px;
       border-top: 1px solid black;
       border-bottom: 1px solid black;
       align-items: center;
+      
+      
       }
       .Srno{
       display: flex;
       align-items: center;
-      width:127px;
+      width:85px;
       height: 60px;;
       }
       .commonWidth{
       display: flex;
       align-items: center;
-      width:251px;
+      width:203px;
       height: 60px;;
       }
       .chnWidth{
       display: flex;
       align-items: center;
-      width:339px;
+      width:250px;
       height: 60px;;
       }
       p{
@@ -42,16 +44,28 @@
       color: gray;
       font-weight: 600;
       margin-bottom: 0px;
+      font-size:13px;
       }
       .valueInput{
       height:43px;
       margin-left: 15px;
-      background-color: #d5e9f1;;
+      background-color: #d5e9f1;
       border: none;
       outline: none;
-      font-size: 15px;
+      font-size: 13px;
       font-weight: 600;
       }
+      .valueInput1{
+         height:43px;
+         margin-left: 15px;
+         background-color: #d1d3d3;
+   
+         border: none;
+         outline: none;
+         font-size: 15px;
+         font-weight: 600;
+         font-size: 13px;
+         }
      
       .CLassdropdown{
          width: 110px;
@@ -64,7 +78,7 @@
          border-radius: 6px;
       
       }
-      .btn{
+      btn{
          margin-left: 15px;
          font-size: 11px;
          height: 31px;
@@ -72,14 +86,15 @@
          border: 1.5px solid #2c8ff1 !important;
          color: #2c8ff1 !important;
          font-weight: 500;
-      }
+      } 
       
       .rowTable1{
       display:flex;
-      width:3058px;
-      height: 65px;
+      width:2448px;
+      height: 60px;
       align-items: center;
-      background-color: #d5e9f1;;
+      background-color: #d1d3d3;
+      {% comment %} background-color: #d5e9f1;; {% endcomment %}
       }
       .srWidth{
       width: 70px;
@@ -87,8 +102,14 @@
       .heading{
       display:flex;
       align-items: center;
-      width:3058px;
-      height: 65px;
+      width:2448px;
+      height: 60px;
+      position:fixed;
+      top:0px;
+      z-index: 1; 
+      background-color: #d5e9f1;
+
+      
       }
      
       .extraspace{
@@ -96,29 +117,71 @@
       }
 
       
-      #formContainer > div:nth-child(even) {
+      #formContainer > div:nth-child(odd) {
          background-color: #d5e9f1;
      }
 
-     #formContainer > div:nth-child(odd) {
+     #formContainer > div:nth-child(even) {
          background-color: white;
      }
-     #formContainer > div:nth-child(odd) .valueInput {
+     #formContainer > div:nth-child(even) .valueInput {
       background-color: white;
   }
+
   .submitBUtton{
    background-color:#2c8ff1 !important;
    color:white !important;
    font-size: 12px !important;
 
   }
+  .btn-secondary{
+   font-size: 12px;
+  }
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+  }
+  .allInOne{
+   margin-top: 60px; 
+
+  }
+
+ 
+ 
+  
    </style>
    <body>
-      <div class="heading">
-         <h6>Violation Memo Form Details</h6>
+         <!-- Success Modal -->
+      <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+         <div class="modal-dialog" role="document">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="successModalLabel">Success!</h5>
+               </div>
+               <div class="modal-body">
+                  Data saved successfully.
+               </div>
+            </div>
+         </div>
       </div>
+
+      <div class="heading">
+         <div style='margin-left: 12px'>
+            <h6 style="font-size: 15px">Violation Memo Form Details</h6>
+         </div>
+         <div style='margin-left: 12px' class='fixed'>
+            <button type="button" class="btn btn-secondary" id="addRowButton">Add Row</button>
+   
+         </div>
+      </div>
+
+    
+   <div class='allInOne'>
       <div class='mainTable'>
-         <div class='Srno'>
+         <div class='Srno' id="sortSrNo">
             <p>Sr.No</p>
          </div>
          <div class='commonWidth'>
@@ -159,22 +222,23 @@
          </div>
         
       </div>
+       
       
-      <form method="POST" action="{% url 'violation_form' %}" enctype="multipart/form-data" id="">
+      <form method="POST" action="{% url 'violation_form' %}" enctype="multipart/form-data" id="form" autocomplete="off" style="display: none;" >
          {% csrf_token %}
          <div class="rowTable1">
             <input type="hidden" name="week_number" id="week_number_Form1" value="">
             <input type="hidden" name="year" id="year_form1" value="">
-            <div class="Srno"><input type="text" class="srWidth valueInput" placeholder="Sr.No" name="SrNo" required></div>
-            <div class="commonWidth"><input type="date" class="valueInput" placeholder="Date" name="Date" required></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Project Name" name="ProjectName" required></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Project Code" name="ProjectCode" required></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Business Segment" name="BusinessSegment" required></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Memo No." name="MemoNo" required></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Description" name="Description" required></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Action Taken" name="ActionTaken" required></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Issued By" name="IssuedBy" required></div>
-            <div class="chnWidth"><input type="text" class=" extraspace valueInput" placeholder="Issued To" name="IssuedTo" required></div>
+            <div class="Srno"><input type="text" class="srWidth valueInput1" placeholder="Enter Here" name="SrNo" id="Srno" ></div>
+            <div class="commonWidth"><input type="date" class="valueInput1" placeholder="Enter Here" name="Date" required></div>
+            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Enter Here" name="ProjectName" required></div>
+            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Enter Here" name="ProjectCode" required></div>
+            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Enter Here" name="BusinessSegment" required></div>
+            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Enter Here" name="MemoNo" required></div>
+            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Enter Here" name="Description" required></div>
+            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Enter Here" name="ActionTaken" required></div>
+            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Enter Here " name="IssuedBy" required></div>
+            <div class="chnWidth"><input type="text" class=" extraspace valueInput1" placeholder="Enter Here" name="IssuedTo" required></div>
             <div class="commonWidth">
                <select class="CLassdropdown" name="PenaltyImposed" required>
                   <option value="Yes">Yes</option>
@@ -182,22 +246,25 @@
                   <option value="NA">NA</option>
                </select>
             </div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Amount" name="Amount" required></div>
-            <div class="Srno">
-               <button type="submit" class="btn submitBUtton" onclick="calculateWeekAndYearForm1();">Submit</button>
+            <div class="commonWidth"><input type="number" class="valueInput1" placeholder="Enter Here" name="Amount" required ></div>
+            <div >
+               <button type="submit" class="btn submitBUtton" id="submitButton" onclick="calculateWeekAndYearForm1()">Submit</button>
             </div>
             
            
          </div>
-      </form>
+      </form> 
      
+      
       <div id="formContainer"></div>
+
+   </div>
 
       <template id="formRowTemplate">
         <div class="rowTable1">
             <input type="hidden" name="week_number" id="week_number_Form1" value="">
             <input type="hidden" name="year" id="year_form1" value="">
-            <div class="Srno"><input type="text" class="srWidth valueInput" placeholder="Sr.No" name="SrNo" disabled></div>
+            <div class="Srno"><input type="text" class="srWidth valueInput" placeholder="Sr.No" name="SrNo" ></div>
             <div class="commonWidth"><input type="text" class="valueInput" placeholder="Date" name="Date" disabled></div>
             <div class="commonWidth"><input type="text" class="valueInput" placeholder="Project Name" name="ProjectName" disabled></div>
             <div class="commonWidth"><input type="text" class="valueInput" placeholder="Project Code" name="ProjectCode" disabled></div>
@@ -207,26 +274,48 @@
             <div class="commonWidth"><input type="text" class="valueInput" placeholder="Action Taken" name="ActionTaken" disabled></div>
             <div class="commonWidth"><input type="text" class="valueInput" placeholder="Issued By" name="IssuedBy" disabled></div>
             <div class="chnWidth"><input type="text" class=" extraspace valueInput" placeholder="Issued To" name="IssuedTo" disabled></div>
-            <div class="commonWidth">
-               <select class="CLassdropdown" name="PenaltyImposed" disabled>
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
-                  <option value="NA">NA</option>
-               </select>
-            </div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Issued By" name="PenaltyImposed" disabled></div>
             <div class="commonWidth"><input type="text" class="valueInput" placeholder="Amount" name="Amount" disabled></div>
             <div class="Srno">
             </div>
             
            
          </div>
-      </template>      
-      
+      </template>   
+       
+    
+
+
    </body>
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
    
    <script>
+
+      function getWeekNumber(date) {
+         date = new Date(date);
+         date.setHours(0, 0, 0, 0);
+         date.setDate(date.getDate() + 4 - (date.getDay() || 7));
+         var yearStart = new Date(date.getFullYear(), 0, 1);
+         var weekNumber = Math.ceil(((date - yearStart) / 86400000 + 1) / 7);
+         return weekNumber;
+       }
+
+      function calculateWeekAndYearForm1() {
+         const currentDate = new Date();
+         const weekNumber = getWeekNumber(currentDate);
+         const year = currentDate.getFullYear();
+        
+         
+         // Set the calculated values in the hidden input fields
+         document.getElementById("week_number_Form1").value = weekNumber;
+         document.getElementById("year_form1").value = year;
+
+         console.log(weekNumber)
+         console.log(year)
+      }
+
       populateInputField()
 
 
@@ -239,13 +328,33 @@
       .then(response => response.json())
       .then(data => {
          console.log(data)
-        data=data['Violation Memo From']
-        createAndPopulateFormRows(data);
+         const categoryData = data['Violation Memo From'][data['Violation Memo From'].length - 1];
+
+         if(data['Violation Memo From'].length==0){
+            document.getElementById('Srno').value=1;
+
+         }
+         else{
+
+            document.getElementById('Srno').value=categoryData['SrNo']+1 
+
+         }
+         
+        newdata=data['Violation Memo From']
+        createAndPopulateFormRows(newdata); 
       })
       .catch(error => {
           console.error('Error:', error);
       });
-         }
+      }
+
+     document.getElementById("addRowButton").addEventListener("click", function() {
+            // Hide the button
+            this.style.display = "none";
+
+            // Show the form
+            document.getElementById("form").style.display = "block";
+      });  
 
      
      
@@ -274,24 +383,29 @@ function createAndPopulateFormRows(data) {
    }
 }
 
-      function getWeekNumber(date) {
-         date = new Date(date);
-         date.setHours(0, 0, 0, 0);
-         date.setDate(date.getDate() + 4 - (date.getDay() || 7));
-         var yearStart = new Date(date.getFullYear(), 0, 1);
-         var weekNumber = Math.ceil(((date - yearStart) / 86400000 + 1) / 7);
-         return weekNumber;
-       }
+     
        
-       function calculateWeekAndYearForm1() {
-         const currentDate = new Date();
-         const weekNumber = getWeekNumber(currentDate);
-         const year = currentDate.getFullYear();
-         
-         // Set the calculated values in the hidden input fields
-         document.getElementById("week_number_Form1").value = weekNumber;
-         document.getElementById("year_form1").value = year;
+$(document).ready(function() {
+   let submitted = false; 
+ 
+   $('#submitButton').click(function(event) {
+     event.preventDefault(); 
+ 
+     calculateWeekAndYearForm1();
+ 
+     $('#successModal').modal('show');
+ 
+     setTimeout(function() {
+       $('#successModal').modal('hide'); 
+       if (!submitted) {
+         submitted = true;
+         $('form').submit(); 
        }
+     }, 1000);
+   });
+ 
+ });
+
 
   </script>
 </html>
