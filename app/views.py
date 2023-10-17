@@ -665,7 +665,7 @@ class ViolationMemoAPI(APIView):
                 if serializer.is_valid():
                     violation_memo_form = serializer.save()
 
-                    violation_memo_form.hse_observation = hse_observation
+                    violation_memo_form.incident_instance = hse_observation
                     violation_memo_form.save()
 
                     # return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -679,39 +679,60 @@ class ViolationMemoAPI(APIView):
         
 
 class IncidentFormAPI(APIView):
-    def get(self,request):
-        obj = IncidentForm.objects.all()
-        serializer = IncidentFormSerializer(obj, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def get(self, request):
+        week_number = self.request.query_params.get("week_number")
+        year = self.request.query_params.get("year")
+        plant_code = self.request.query_params.get("plant_code")
+
+        parent = HSE.objects.filter(week_number=week_number, year=year,plant_code=plant_code).first()
+    
+        if parent:
+            incident = Incidents.objects.filter(parent=parent).first()
+            
+            if incident:
+                incident_form = IncidentForm.objects.filter(incident_instance=incident)
+
+                if incident_form:
+                    serializer = IncidentFormSerializer(incident_form, many=True)
+
+                    return Response(serializer.data)
+                else:
+                    return Response({"detail": "HSEObservationForm not found"}, status=status.HTTP_404_NOT_FOUND)
+            else:
+                return Response({"detail": "HSEObservation not found"}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            return Response({"detail": "Parent data not found"}, status=status.HTTP_404_NOT_FOUND)
     
     def post(self, request):
         data = request.data
         week_number = data.get("week_number", None)
         year = data.get("year", None)
-        incident_form = None
 
-
-        parent_instance, created = HSE.objects.get_or_create(
-                week_number=week_number,
-                year=year,
-                plant_code=10000,
-                defaults={"form_status": 0},
-            )
-        incident_form = IncidentForm(parent=parent_instance)
-
-        serializer = IncidentFormSerializer(incident_form, data=data)
-
-        if serializer.is_valid():
-            instance = serializer.save()
-            instance.save()
-            # return Response(serializer.data, status=status.HTTP_201_CREATED)
-            # return render(request, "incidentForm.html")
-            return HttpResponseRedirect('/api/my_incident_form')  
-
+        incident= HSE.objects.filter(week_number=week_number, year=year).first()
         
+        
+        if incident:
+            hse_incident = Incidents.objects.filter(parent=incident).first()
+            print(hse_incident)
 
+            if hse_incident:
+                serializer = IncidentFormSerializer(data=data)
+
+                if serializer.is_valid():
+                    incident_form = serializer.save()
+
+                    incident_form.incident_instance = hse_incident
+                    incident_form.save()
+
+                    # return Response(serializer.data, status=status.HTTP_201_CREATED)
+                    return HttpResponseRedirect('/api/my_incident_form/')
+                  
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                return Response({'error': 'HSEObservation object not found for the specified HSE object.'}, status=status.HTTP_404_NOT_FOUND)
         else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'HSE object not found for the specified week_number and year.'}, status=status.HTTP_404_NOT_FOUND)
 
 
 class ListOfObserversForm(APIView):

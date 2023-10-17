@@ -20,6 +20,10 @@ class HSE(models.Model):
     plant_code=models.ForeignKey(Plant, on_delete=models.CASCADE,null=True)
     form_status=models.IntegerField()
 
+    class Meta:
+        verbose_name = "HSE" 
+        verbose_name_plural = "HSE"
+
    
 class GeneralHse(models.Model):
     today_day_worked_file = models.FileField(upload_to='uploads/', null=True)
@@ -122,6 +126,10 @@ class HSEObservationForm(models.Model):
     ClosedEvidence=models.FileField(upload_to='formUploads',null=True)
     Remark=models.TextField(max_length=200)
     hse_observation = models.ForeignKey(HSEObservation, on_delete=models.CASCADE,null=True)
+
+    class Meta:
+        verbose_name = "Observation Form" 
+        verbose_name_plural = "Observation Form"
     
 
 class StopWorkForm(models.Model):
@@ -143,6 +151,10 @@ class StopWorkForm(models.Model):
     Remark=models.TextField(max_length=200)
     hse_observation = models.ForeignKey(HSEObservation, on_delete=models.CASCADE,null=True)
 
+    class Meta:
+        verbose_name = "Stop Work Form" 
+        verbose_name_plural = "Stop Work Form"
+
 
 class ViolationMemoForm(models.Model):
     SrNo=models.IntegerField()
@@ -158,6 +170,10 @@ class ViolationMemoForm(models.Model):
     PenaltyImposed=models.TextField(max_length=100)
     Amount=models.IntegerField()
     hse_observation = models.ForeignKey(HSEObservation, on_delete=models.CASCADE,null=True)
+
+    class Meta:
+        verbose_name = "Violation Memo Form" 
+        verbose_name_plural = "Violation Memo Form"
 
 
 class IncidentForm(models.Model):
@@ -179,7 +195,11 @@ class IncidentForm(models.Model):
     ResponsiblePerson=models.TextField(max_length=100)
     InvestigationStatus=models.TextField(max_length=100)
     AttachReport=models.FileField(upload_to='formUploads',null=True)
-    parent = models.ForeignKey(HSE, on_delete=models.CASCADE,null=True)
+    incident_instance = models.ForeignKey(Incidents, on_delete=models.CASCADE,null=True)
+
+    class Meta:
+        verbose_name = "Incident Form" 
+        verbose_name_plural = "Incident Form"
 
 
 

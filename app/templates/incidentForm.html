@@ -328,24 +328,12 @@
          const weekNumber = getWeekNumber(today);
          const year = today.getFullYear()         
          
-      fetch(`/api/child-models/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
+      fetch(`/api/incident_form/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
       .then(response => response.json())
       .then(data => {
          console.log(data)
-         const categoryData = data['Incident Form'][data['Incident Form'].length - 1];
-
-         if(data['Incident Form'].length==0){
-            document.getElementById('Srno').value=1;
-
-         }
-         else{
-
-            document.getElementById('Srno').value=categoryData['SrNo']+1 
-
-         }
          
-        newdata=data['Incident Form']
-        createAndPopulateFormRows(newdata); 
+        createAndPopulateFormRows(data); 
       })
       .catch(error => {
           console.error('Error:', error);
