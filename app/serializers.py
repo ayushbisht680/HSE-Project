@@ -38,9 +38,9 @@ class IncidentsSerializer(serializers.ModelSerializer):
     
     
 
-class ParentModelSerializer(serializers.ModelSerializer):
+class HSESerializer(serializers.ModelSerializer):
     class Meta:
-        model = ParentModel
+        model = HSE
         fields = '__all__'
         
 
@@ -67,6 +67,11 @@ class ViolationFormSerializer(serializers.ModelSerializer):
 class IncidentFormSerializer(serializers.ModelSerializer):
     class Meta:
         model=IncidentForm
+        fields='__all__'
+
+class ListOfObserversSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=ListOfObservers
         fields='__all__'
 
 

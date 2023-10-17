@@ -49,7 +49,7 @@
       .valueInput{
       height:43px;
       margin-left: 15px;
-      background-color: #d5e9f1;;
+      background-color: rgba(62, 159, 254, 0);
       border: none;
       outline: none;
       font-size: 13px;
@@ -58,7 +58,6 @@
       .valueInput1{
          height:43px;
          margin-left: 15px;
-         background-color: #d1d3d3;
    
          border: none;
          outline: none;
@@ -91,11 +90,11 @@
       width:3340px;
       height: 60px;
       align-items: center;
-      background-color: #d1d3d3;
       }
       .srWidth{
       width: 70px;
       }
+
       .heading{
       display:flex;
       align-items: center;
@@ -104,14 +103,15 @@
       position:fixed;
       top:0px;
       z-index: 1; 
-      background-color: #d5e9f1;
+      background-color: rgba(62, 159, 254, 0.2);
       }
+
       .extraspace{
       width:339px;
       }
       #formContainer > div:nth-child(odd) {
-         background-color: #d5e9f1;
-     }
+         background-color: rgba(62, 159, 254, 0.2);
+        }
 
      #formContainer > div:nth-child(even) {
          background-color: white;
@@ -324,24 +324,13 @@
          const weekNumber = getWeekNumber(today);
          const year = today.getFullYear()         
          
-      fetch(`/api/child-models/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
+      fetch(`/api/observation_form/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
       .then(response => response.json())
       .then(data => {
          console.log(data)
-         const categoryData = data['Observation Form'][data['Observation Form'].length - 1];
-
-         if(data['Observation Form'].length==0){
-            document.getElementById('Srno').value=1;
-
-         }
-         else{
-
-            document.getElementById('Srno').value=categoryData['SrNo']+1 
-
-         }
-         
-        newdata=data['Observation Form']
-        createAndPopulateFormRows(newdata); 
+         console.log(data.length)
+        
+         createAndPopulateFormRows(data); 
       })
       .catch(error => {
           console.error('Error:', error);
@@ -362,6 +351,7 @@
       
       
       const inputFields = newRow.querySelectorAll('.valueInput');
+      console.log
       for (const field of inputFields) {
        const fieldName = field.getAttribute('name');
        field.value = dataItem[fieldName] || '';

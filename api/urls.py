@@ -15,6 +15,7 @@ urlpatterns = [
     path('my_stopwork/', MyStopWork.as_view(),name='StopWork'),
     path('violation_memo/', MyViolationMemo.as_view(),name='ViolationMemo'),
     path('my_incident_form/', MyIncidentForm.as_view(),name='my_incident_form'),
+    path('my_observers_form/', MyListObservers.as_view(),name='my_observers_form'),
     path('parent/', ParentAPI.as_view(),name='Parent'),
     path('child-models/', AllModelsListView.as_view(), name='child-model-list'),
     path('update_status/', UpdateFormStatus.as_view(), name='update_status'),
@@ -22,6 +23,7 @@ urlpatterns = [
     path('stopWork_form/', StopWorkFormAPI.as_view(), name='stopWork_form'),
     path('violation_form/', ViolationMemoAPI.as_view(), name='violation_form'),
     path('incident_form/', IncidentFormAPI.as_view(), name='incident_form'),
+    path('listObservers/', ListOfObserversForm.as_view(), name='listOfObservers_form'),
     
     
     ]

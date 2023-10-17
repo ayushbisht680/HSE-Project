@@ -2,10 +2,22 @@ from django.db import models
 from django.utils import timezone
 
 
-class ParentModel(models.Model):
+
+class Plant(models.Model):
+    id = models.IntegerField(primary_key=True, verbose_name='Plant code')
+    name = models.CharField(max_length=200)
+    latitude = models.FloatField(null=True, blank=True)
+    longitude = models.FloatField(null=True, blank=True)
+    pincode = models.IntegerField(null=True, blank=True)
+    city = models.CharField(max_length=200, null=True, blank=True)
+    state = models.CharField(max_length=200,  null=True, blank=True)
+    country = models.CharField(max_length=200,null=True, blank=True)
+    address = models.TextField(null=True, blank=True)
+
+class HSE(models.Model):
     week_number = models.IntegerField()
     year = models.IntegerField()
-    plant_code=models.IntegerField()
+    plant_code=models.ForeignKey(Plant, on_delete=models.CASCADE,null=True)
     form_status=models.IntegerField()
 
    
@@ -16,7 +28,7 @@ class GeneralHse(models.Model):
     no_of_person_inducted_site = models.IntegerField()
     no_of_toolbox_attendees = models.IntegerField()
     created_at = models.DateTimeField(default=timezone.now, editable=False)
-    parent = models.ForeignKey(ParentModel, on_delete=models.CASCADE,null=True)
+    parent = models.ForeignKey(HSE, on_delete=models.CASCADE,null=True)
 
 
     class Meta:
@@ -32,7 +44,7 @@ class HSETrainingsModel(models.Model):
     no_of_attendees_contractor=models.FileField(upload_to='uploads/',null=True)
     duration_of_contractor=models.IntegerField()
     created_at = models.DateTimeField(default=timezone.now, editable=False)
-    parent = models.ForeignKey(ParentModel, on_delete=models.CASCADE,null=True)
+    parent = models.ForeignKey(HSE, on_delete=models.CASCADE,null=True)
 
    
 
@@ -48,7 +60,7 @@ class HSEObservation(models.Model):
     violation_memo_issued=models.IntegerField()
     complaint_from_customer=models.IntegerField()
     created_at = models.DateTimeField(default=timezone.now, editable=False)
-    parent = models.ForeignKey(ParentModel, on_delete=models.CASCADE,null=True)
+    parent = models.ForeignKey(HSE, on_delete=models.CASCADE,null=True)
      
 
     class Meta:
@@ -64,7 +76,7 @@ class ManagementVisits(models.Model):
     no_of_compilance_done_file=models.FileField(upload_to='uploads/',null=True)
     observation_pending=models.IntegerField()
     created_at = models.DateTimeField(default=timezone.now, editable=False)
-    parent = models.ForeignKey(ParentModel, on_delete=models.CASCADE,null=True)
+    parent = models.ForeignKey(HSE, on_delete=models.CASCADE,null=True)
 
 
     class Meta:
@@ -77,7 +89,7 @@ class Incidents(models.Model):
     no_of_occupation_illness=models.IntegerField()
     no_of_environment_illness=models.IntegerField()
     created_at = models.DateTimeField(default=timezone.now, editable=False)
-    parent = models.ForeignKey(ParentModel, on_delete=models.CASCADE,null=True)
+    parent = models.ForeignKey(HSE, on_delete=models.CASCADE,null=True)
 
 
 
@@ -86,7 +98,7 @@ class Incidents(models.Model):
         verbose_name_plural = "Incidents"
 
 class FinalSubmit(models.Model): 
-    parent = models.ForeignKey(ParentModel, on_delete=models.CASCADE,null=True)
+    parent = models.ForeignKey(HSE, on_delete=models.CASCADE,null=True)
 
     class Meta:
         verbose_name = "FinalSubmit" 
@@ -109,7 +121,8 @@ class HSEObservationForm(models.Model):
     OpenEvidence=models.FileField(upload_to='formUploads',null=True)
     ClosedEvidence=models.FileField(upload_to='formUploads',null=True)
     Remark=models.TextField(max_length=200)
-    parent = models.ForeignKey(ParentModel, on_delete=models.CASCADE,null=True)
+    hse_observation = models.ForeignKey(HSEObservation, on_delete=models.CASCADE,null=True)
+    
 
 class StopWorkForm(models.Model):
     SrNo=models.IntegerField()
@@ -128,7 +141,8 @@ class StopWorkForm(models.Model):
     OpenEvidence=models.FileField(upload_to='formUploads',null=True)
     ClosedEvidence=models.FileField(upload_to='formUploads',null=True)
     Remark=models.TextField(max_length=200)
-    parent = models.ForeignKey(ParentModel, on_delete=models.CASCADE,null=True)
+    hse_observation = models.ForeignKey(HSEObservation, on_delete=models.CASCADE,null=True)
+
 
 class ViolationMemoForm(models.Model):
     SrNo=models.IntegerField()
@@ -143,7 +157,8 @@ class ViolationMemoForm(models.Model):
     IssuedTo=models.TextField(max_length=100)
     PenaltyImposed=models.TextField(max_length=100)
     Amount=models.IntegerField()
-    parent = models.ForeignKey(ParentModel, on_delete=models.CASCADE,null=True)
+    hse_observation = models.ForeignKey(HSEObservation, on_delete=models.CASCADE,null=True)
+
 
 class IncidentForm(models.Model):
     SrNo=models.IntegerField()
@@ -164,11 +179,17 @@ class IncidentForm(models.Model):
     ResponsiblePerson=models.TextField(max_length=100)
     InvestigationStatus=models.TextField(max_length=100)
     AttachReport=models.FileField(upload_to='formUploads',null=True)
-    parent = models.ForeignKey(ParentModel, on_delete=models.CASCADE,null=True)
+    parent = models.ForeignKey(HSE, on_delete=models.CASCADE,null=True)
 
 
 
+class ListOfObservers(models.Model):
+    SrNo=models.IntegerField()
+    nameOfPerson=models.TextField(max_length=50)
+    designation=models.TextField(max_length=50)
+    exactLocation=models.TextField(max_length=50)
 
+   
     
 
 

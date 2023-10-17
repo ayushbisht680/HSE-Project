@@ -7,12 +7,14 @@ from .models import *
 # admin.site.register(HSEObservation)
 # admin.site.register(ManagementVisits)
 # admin.site.register(Incidents)
-admin.site.register(ParentModel)
+admin.site.register(HSE)
 admin.site.register(FinalSubmit)
 admin.site.register(HSEObservationForm)
 admin.site.register(StopWorkForm)
 admin.site.register(ViolationMemoForm)
 admin.site.register(IncidentForm)
+admin.site.register(ListOfObservers)
+admin.site.register(Plant)
 
 
 @admin.register(GeneralHse)

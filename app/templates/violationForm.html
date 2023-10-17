@@ -49,7 +49,7 @@
       .valueInput{
       height:43px;
       margin-left: 15px;
-      background-color: #d5e9f1;
+      background-color: rgba(62, 159, 254, 0);
       border: none;
       outline: none;
       font-size: 13px;
@@ -58,11 +58,9 @@
       .valueInput1{
          height:43px;
          margin-left: 15px;
-         background-color: #d1d3d3;
    
          border: none;
          outline: none;
-         font-size: 15px;
          font-weight: 600;
          font-size: 13px;
          }
@@ -93,8 +91,6 @@
       width:2448px;
       height: 60px;
       align-items: center;
-      background-color: #d1d3d3;
-      {% comment %} background-color: #d5e9f1;; {% endcomment %}
       }
       .srWidth{
       width: 70px;
@@ -107,7 +103,7 @@
       position:fixed;
       top:0px;
       z-index: 1; 
-      background-color: #d5e9f1;
+      background-color: rgba(62, 159, 254, 0.2);
 
       
       }
@@ -118,7 +114,7 @@
 
       
       #formContainer > div:nth-child(odd) {
-         background-color: #d5e9f1;
+         background-color: rgba(62, 159, 254, 0.2);
      }
 
      #formContainer > div:nth-child(even) {
@@ -324,24 +320,13 @@
          const weekNumber = getWeekNumber(today);
          const year = today.getFullYear()         
          
-      fetch(`/api/child-models/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
+      fetch(`/api/violation_form/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
       .then(response => response.json())
       .then(data => {
          console.log(data)
-         const categoryData = data['Violation Memo From'][data['Violation Memo From'].length - 1];
+         createAndPopulateFormRows(data); 
 
-         if(data['Violation Memo From'].length==0){
-            document.getElementById('Srno').value=1;
-
-         }
-         else{
-
-            document.getElementById('Srno').value=categoryData['SrNo']+1 
-
-         }
          
-        newdata=data['Violation Memo From']
-        createAndPopulateFormRows(newdata); 
       })
       .catch(error => {
           console.error('Error:', error);
