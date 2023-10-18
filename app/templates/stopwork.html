@@ -71,7 +71,7 @@
       width: 110px;
       height: 28px;
       font-size: 13px;
-      padding: 0px;
+      padding: 2px;
       margin-left: 15px;
       border: 1.5px solid #2c8ff1 !important;
       color: #2c8ff1 !important;
@@ -127,6 +127,17 @@
       .dateWidth{
          width: 80px !important;
       }
+      .addrowImage {
+         width: 10px;
+         height: 10px;
+         margin-right: 1px;
+         margin-bottom: 2px;
+      }
+      #addRowButton{
+         color: #3E9FFE;
+         background-color: rgba(62, 159, 254, 0.1);
+         font-size: 11px;
+      }
       
    </style>
    <body>
@@ -147,10 +158,13 @@
          <div style="margin-left: 12px">
             <h6 style="font-size: 15px">Stop Work Form Details</h6>
          </div>
-         <div style='margin-left: 12px' class='fixed'>
-            <button type="button" class="btn " id="addRowButton">Add Row</button>
-   
-         </div>
+         
+         <div class='addrowBtn'>
+            <button type="button" class="btn" id="addRowButton">
+                <img src="{% static 'images/buttonImage.png' %}" alt="Image Description" class='addrowImage'>
+                Add Row
+              </button>
+        </div>
       </div>
 
       <div class='mainTable'>
@@ -212,7 +226,7 @@
          <div class="rowTable1">
             <input type="hidden" name="week_number" id="week_number_Form1" value="">
             <input type="hidden" name="year" id="year_form1" value="">
-            <div class="Srno"><input type="text" class="srWidth valueInput1" placeholder="Sr.No" name="SrNo" id='Srno'></div>
+            <div class="Srno"><input type="text" class="srWidth valueInput1" placeholder="Sr.No" name="SrNo" id='Srno' value='1'></div>
             <div class="commonWidth"><input type="date" class="valueInput1" placeholder="Date" name="Date" required></div>
             <div class="commonWidth "><input type="text" class="valueInput1" placeholder="Time" name="Time" required></div>
             <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Location" name="Location" required></div>
@@ -315,7 +329,8 @@
       fetch(`/api/stopWork_form/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
       .then(response => response.json())
       .then(data => {
-         console.log(data)
+         document.getElementById('Srno').value=data[data.length-1].SrNo+1
+
          createAndPopulateFormRows(data); 
 
          

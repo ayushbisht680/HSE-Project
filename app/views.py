@@ -324,26 +324,18 @@ class IncidentsAPI(APIView):
         parent = HSE.objects.filter(
             week_number=week_number, year=year, plant_code=10000
         ).first()
-        # print(parent)
 
         if parent:
             generalHse = GeneralHse.objects.filter(parent_id=parent.id).first()
             HseObservation = HSEObservation.objects.filter(parent_id=parent.id).first()
             HseTraining = HSETrainingsModel.objects.filter(parent_id=parent.id).first()
-            managementvisits = ManagementVisits.objects.filter(
-                parent_id=parent.id
-            ).first()
+            managementvisits = ManagementVisits.objects.filter(parent_id=parent.id).first()
             # print(generalHse)
             # print(HseObservation)
             # print(HseTraining)
             # print(managementvisits)
 
-        if (
-            not generalHse
-            or not HseObservation
-            or not HseTraining
-            or not managementvisits
-        ):
+        if (not generalHse or not HseObservation or not HseTraining or not managementvisits):
             # return Response(
             #     {"error": "Please fill all the intial form."},
             #     status=status.HTTP_400_BAD_REQUEST,
@@ -527,36 +519,82 @@ class HSEObservationFormAPI(APIView):
 
 
 
+    # def post(self, request):
+    #     data = request.data
+    #     week_number = data.get("week_number", None)
+    #     year = data.get("year", None)
+
+    #     hse = HSE.objects.filter(week_number=week_number, year=year).first()
+        
+        
+    #     if hse:
+    #         hse_observation = HSEObservation.objects.filter(parent=hse).first()
+    #         print('hse observation is')
+    #         print(hse_observation)
+
+    #         if hse_observation:
+    #             serializer = HSEObservationFormSerializer(data=data)
+
+    #             if serializer.is_valid():
+    #                 hse_observation_form = serializer.save()
+
+    #                 hse_observation_form.hse_observation = hse_observation
+    #                 hse_observation_form.save()
+
+    #                 # return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #                 return HttpResponseRedirect('/api/my_form/')
+                  
+    #             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    #         else:
+    #             # create an instance of HSEObservation setting all values to null
+    #             return Response({'error': 'HSEObservation object not found for the specified HSE object.'}, status=status.HTTP_404_NOT_FOUND)
+    #     else:
+    #         return Response({'error': 'HSE object not found for the specified week_number and year.'}, status=status.HTTP_404_NOT_FOUND)
+
+
     def post(self, request):
         data = request.data
         week_number = data.get("week_number", None)
         year = data.get("year", None)
 
         hse = HSE.objects.filter(week_number=week_number, year=year).first()
-        
-        
+
         if hse:
             hse_observation = HSEObservation.objects.filter(parent=hse).first()
-            print('hse observation is')
-            print(hse_observation)
 
             if hse_observation:
                 serializer = HSEObservationFormSerializer(data=data)
 
                 if serializer.is_valid():
                     hse_observation_form = serializer.save()
-
                     hse_observation_form.hse_observation = hse_observation
                     hse_observation_form.save()
 
                     # return Response(serializer.data, status=status.HTTP_201_CREATED)
                     return HttpResponseRedirect('/api/my_form/')
-                  
+                
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             else:
-                return Response({'error': 'HSEObservation object not found for the specified HSE object.'}, status=status.HTTP_404_NOT_FOUND)
+                # Create a new instance of HSEObservation with null values
+                hse_observation = HSEObservation(parent=hse)
+                hse_observation.save()
+
+                # Continue with the code for saving HSEObservationForm
+                serializer = HSEObservationFormSerializer(data=data)
+
+                if serializer.is_valid():
+                    hse_observation_form = serializer.save()
+                    hse_observation_form.hse_observation = hse_observation
+                    hse_observation_form.save()
+
+                    # return Response(serializer.data, status=status.HTTP_201_CREATED)
+                    return HttpResponseRedirect('/api/my_form/')
+                else:
+                    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
         else:
             return Response({'error': 'HSE object not found for the specified week_number and year.'}, status=status.HTTP_404_NOT_FOUND)
+
 
 
 
@@ -594,12 +632,9 @@ class StopWorkFormAPI(APIView):
         year = data.get("year", None)
 
         hse = HSE.objects.filter(week_number=week_number, year=year).first()
-        
-        
+
         if hse:
             hse_observation = HSEObservation.objects.filter(parent=hse).first()
-            print('hse observation is')
-            print(hse_observation)
 
             if hse_observation:
                 serializer = StopWorkFormSerializer(data=data)
@@ -612,12 +647,28 @@ class StopWorkFormAPI(APIView):
 
                     # return Response(serializer.data, status=status.HTTP_201_CREATED)
                     return HttpResponseRedirect('/api/my_stopwork/')
-                  
+
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             else:
-                return Response({'error': 'HSEObservation object not found for the specified HSE object.'}, status=status.HTTP_404_NOT_FOUND)
+                # Create a new instance of HSEObservation with null values
+                hse_observation = HSEObservation(parent=hse)
+                hse_observation.save()
+
+                # Continue with the code for saving StopWorkForm
+                serializer = StopWorkFormSerializer(data=data)
+
+                if serializer.is_valid():
+                    stop_work_form = serializer.save()
+                    stop_work_form.hse_observation = hse_observation
+                    stop_work_form.save()
+
+                    # return Response(serializer.data, status=status.HTTP_201_CREATED)
+                    return HttpResponseRedirect('/api/my_stopwork/')
+                else:
+                    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response({'error': 'HSE object not found for the specified week_number and year.'}, status=status.HTTP_404_NOT_FOUND)
+
         
     
 class ViolationMemoAPI(APIView):
@@ -653,11 +704,8 @@ class ViolationMemoAPI(APIView):
 
         hse = HSE.objects.filter(week_number=week_number, year=year).first()
         
-        
         if hse:
             hse_observation = HSEObservation.objects.filter(parent=hse).first()
-            print('hse observation is')
-            print(hse_observation)
 
             if hse_observation:
                 serializer = ViolationFormSerializer(data=data)
@@ -665,17 +713,33 @@ class ViolationMemoAPI(APIView):
                 if serializer.is_valid():
                     violation_memo_form = serializer.save()
 
-                    violation_memo_form.incident_instance = hse_observation
+                    violation_memo_form.hse_observation = hse_observation
                     violation_memo_form.save()
 
                     # return Response(serializer.data, status=status.HTTP_201_CREATED)
                     return HttpResponseRedirect('/api/violation_memo/')
-                  
+                
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             else:
-                return Response({'error': 'HSEObservation object not found for the specified HSE object.'}, status=status.HTTP_404_NOT_FOUND)
+                # Create a new instance of HSEObservation with null values
+                hse_observation = HSEObservation(parent=hse)
+                hse_observation.save()
+
+                # Continue with the code for saving ViolationForm
+                serializer = ViolationFormSerializer(data=data)
+
+                if serializer.is_valid():
+                    violation_memo_form = serializer.save()
+                    violation_memo_form.hse_observation = hse_observation
+                    violation_memo_form.save()
+
+                    # return Response(serializer.data, status=status.HTTP_201_CREATED)
+                    return HttpResponseRedirect('/api/violation_memo/')
+                else:
+                    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response({'error': 'HSE object not found for the specified week_number and year.'}, status=status.HTTP_404_NOT_FOUND)
+
         
 
 class IncidentFormAPI(APIView):
@@ -698,11 +762,11 @@ class IncidentFormAPI(APIView):
 
                     return Response(serializer.data)
                 else:
-                    return Response({"detail": "HSEObservationForm not found"}, status=status.HTTP_404_NOT_FOUND)
+                    return Response({"detail": "Incidet Form not found"}, status=status.HTTP_404_NOT_FOUND)
             else:
-                return Response({"detail": "HSEObservation not found"}, status=status.HTTP_404_NOT_FOUND)
+                return Response({"detail": "Incident  not found"}, status=status.HTTP_404_NOT_FOUND)
         else:
-            return Response({"detail": "Parent data not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"detail": "HSE data not found"}, status=status.HTTP_404_NOT_FOUND)
     
     def post(self, request):
         data = request.data
@@ -730,7 +794,21 @@ class IncidentFormAPI(APIView):
                   
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             else:
-                return Response({'error': 'HSEObservation object not found for the specified HSE object.'}, status=status.HTTP_404_NOT_FOUND)
+                hse_incident = Incidents(parent=incident)
+                hse_incident.save()
+
+                # Continue with the code for saving ViolationForm
+                serializer = IncidentFormSerializer(data=data)
+
+                if serializer.is_valid():
+                    incident_form = serializer.save()
+                    incident_form.incident_instance = hse_incident
+                    incident_form.save()
+
+                    # return Response(serializer.data, status=status.HTTP_201_CREATED)
+                    return HttpResponseRedirect('/api/my_incident_form/')
+                else:
+                    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response({'error': 'HSE object not found for the specified week_number and year.'}, status=status.HTTP_404_NOT_FOUND)
 
@@ -751,3 +829,6 @@ class ListOfObserversForm(APIView):
 
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+

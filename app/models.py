@@ -58,13 +58,13 @@ class HSETrainingsModel(models.Model):
 
     
 class HSEObservation(models.Model):
-    hse_observation=models.FileField(upload_to='uploads/',null=True)
-    daily_hse_observation=models.IntegerField()
-    stop_work_notice=models.IntegerField()
-    violation_memo_issued=models.IntegerField()
-    complaint_from_customer=models.IntegerField()
-    created_at = models.DateTimeField(default=timezone.now, editable=False)
-    parent = models.ForeignKey(HSE, on_delete=models.CASCADE,null=True)
+    hse_observation=models.FileField(upload_to='uploads/',null=True,blank=True)
+    daily_hse_observation=models.IntegerField(null=True,blank=True)
+    stop_work_notice=models.IntegerField(null=True,blank=True)
+    violation_memo_issued=models.IntegerField(null=True,blank=True)
+    complaint_from_customer=models.IntegerField(null=True,blank=True)
+    created_at = models.DateTimeField(default=timezone.now, editable=False,null=True,blank=True)
+    parent = models.ForeignKey(HSE, on_delete=models.CASCADE,null=True,blank=True)
      
 
     class Meta:
@@ -89,11 +89,11 @@ class ManagementVisits(models.Model):
         
 
 class Incidents(models.Model):
-    no_of_incidents=models.IntegerField()
-    no_of_occupation_illness=models.IntegerField()
-    no_of_environment_illness=models.IntegerField()
-    created_at = models.DateTimeField(default=timezone.now, editable=False)
-    parent = models.ForeignKey(HSE, on_delete=models.CASCADE,null=True)
+    no_of_incidents=models.IntegerField(null=True,blank=True)
+    no_of_occupation_illness=models.IntegerField(null=True,blank=True)
+    no_of_environment_illness=models.IntegerField(null=True,blank=True)
+    created_at = models.DateTimeField(default=timezone.now, editable=False,null=True,blank=True)
+    parent = models.ForeignKey(HSE, on_delete=models.CASCADE,null=True,blank=True)
 
 
 

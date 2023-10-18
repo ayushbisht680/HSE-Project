@@ -69,7 +69,7 @@
          width: 110px;
          height: 28px;
          font-size: 13px;
-         padding: 0px;
+         padding: 2px;
          margin-left: 15px;
          border: 1.5px solid #2c8ff1 !important;
          color: #2c8ff1 !important;
@@ -128,8 +128,26 @@
    background-color:#2c8ff1 !important;
    color:white !important;
    font-size: 12px !important;
+   font-size: 11px;
+   height: 31px;
+   width: 74px;
+   font-weight: 500;
+   border: 1.5px solid #2c8ff1 !important;
+   border-radius: 6px;
+
+
 
   }
+  .btn{
+   margin-left: 15px;
+   font-size: 11px;
+   height: 31px;
+   width: 87px;
+   border: 1.5px solid #2c8ff1 !important;
+   color: #2c8ff1 !important;
+   font-weight: 500;
+   }
+   
   .btn-secondary{
    font-size: 12px;
   }
@@ -144,6 +162,17 @@
    margin-top: 60px; 
 
   }
+  .addrowImage {
+   width: 10px;
+   height: 10px;
+   margin-right: 1px;
+   margin-bottom: 2px;
+}
+   #addRowButton{
+   color: #3E9FFE;
+   background-color: rgba(62, 159, 254, 0.1);
+   font-size: 11px;
+}
 
  
  
@@ -168,10 +197,12 @@
          <div style='margin-left: 12px'>
             <h6 style="font-size: 15px">Violation Memo Form Details</h6>
          </div>
-         <div style='margin-left: 12px' class='fixed'>
-            <button type="button" class="btn btn-secondary" id="addRowButton">Add Row</button>
-   
-         </div>
+         <div class='addrowBtn'>
+            <button type="button" class="btn" id="addRowButton">
+                <img src="{% static 'images/buttonImage.png' %}" alt="Image Description" class='addrowImage'>
+                Add Row
+              </button>
+        </div>
       </div>
 
     
@@ -225,7 +256,7 @@
          <div class="rowTable1">
             <input type="hidden" name="week_number" id="week_number_Form1" value="">
             <input type="hidden" name="year" id="year_form1" value="">
-            <div class="Srno"><input type="text" class="srWidth valueInput1" placeholder="Enter Here" name="SrNo" id="Srno" ></div>
+            <div class="Srno"><input type="text" class="srWidth valueInput1" placeholder="Enter Here" name="SrNo" id="Srno" value='1'></div>
             <div class="commonWidth"><input type="date" class="valueInput1" placeholder="Enter Here" name="Date" required></div>
             <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Enter Here" name="ProjectName" required></div>
             <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Enter Here" name="ProjectCode" required></div>
@@ -244,7 +275,7 @@
             </div>
             <div class="commonWidth"><input type="number" class="valueInput1" placeholder="Enter Here" name="Amount" required ></div>
             <div >
-               <button type="submit" class="btn submitBUtton" id="submitButton" onclick="calculateWeekAndYearForm1()">Submit</button>
+               <button type="submit" class="submitBUtton" id="submitButton" onclick="calculateWeekAndYearForm1()">Submit</button>
             </div>
             
            
@@ -308,8 +339,7 @@
          document.getElementById("week_number_Form1").value = weekNumber;
          document.getElementById("year_form1").value = year;
 
-         console.log(weekNumber)
-         console.log(year)
+         
       }
 
       populateInputField()
@@ -323,7 +353,8 @@
       fetch(`/api/violation_form/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
       .then(response => response.json())
       .then(data => {
-         console.log(data)
+         document.getElementById('Srno').value=data[data.length-1].SrNo+1
+
          createAndPopulateFormRows(data); 
 
          
