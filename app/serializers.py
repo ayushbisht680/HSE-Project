@@ -44,10 +44,7 @@ class HSESerializer(serializers.ModelSerializer):
         fields = '__all__'
         
 
-class FinalSubmitSerializer(serializers.ModelSerializer):
-     class Meta:
-        model = FinalSubmit
-        fields = '__all__'
+
 
 class HSEObservationFormSerializer(serializers.ModelSerializer):
     class Meta:
@@ -69,10 +66,7 @@ class IncidentFormSerializer(serializers.ModelSerializer):
         model=IncidentForm
         fields='__all__'
 
-class ListOfObserversSerializer(serializers.ModelSerializer):
-    class Meta:
-        model=ListOfObservers
-        fields='__all__'
+
 
 
 

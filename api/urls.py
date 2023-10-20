@@ -18,12 +18,11 @@ urlpatterns = [
     path('my_observers_form/', MyListObservers.as_view(),name='my_observers_form'),
     path('parent/', ParentAPI.as_view(),name='Parent'),
     path('child-models/', AllModelsListView.as_view(), name='child-model-list'),
-    path('update_status/', UpdateFormStatus.as_view(), name='update_status'),
     path('observation_form/', HSEObservationFormAPI.as_view(), name='observation_form'),
     path('stopWork_form/', StopWorkFormAPI.as_view(), name='stopWork_form'),
     path('violation_form/', ViolationMemoAPI.as_view(), name='violation_form'),
     path('incident_form/', IncidentFormAPI.as_view(), name='incident_form'),
-    path('listObservers/', ListOfObserversForm.as_view(), name='listOfObservers_form'),
+    path('dataTable/', DataTable.as_view(), name='dataTable'),
     
     
     ]

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interactive Calendar</title>
+    <style>
+        /* Custom CSS for styling */
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        .myTable {
+            border-collapse: collapse;
+        }
+        .myTable th, .myTable td {
+            border: 1px solid black;
+        }
+        .highlight {
+            background-color: yellow; /* Customize the highlight color as needed */
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <button id="prevMonth">Previous Month</button>
+        <button id="nextMonth">Next Month</button>
+    </div>
+    <div id="calendar"></div>
+
+    <script>
+        let calendarStartDate;
+
+        const updateCalendar = (startDate) => {
+            calendarStartDate = new Date(startDate);
+            year = calendarStartDate.getFullYear();
+            month = calendarStartDate.getMonth();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            let calendarHTML = '<table class="myTable"><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr><tr>';
+
+            let day = 1;
+
+            for (let i = 0; i < 6; i++) {
+                for (let j = 0; j < 7; j++) {
+                    if (i === 0 && j < calendarStartDate.getDay()) {
+                        // Days from the previous week
+                        const prevWeekDay = calendarStartDate.getDate() - calendarStartDate.getDay() + j;
+                        calendarHTML += `<td class="other-month">${prevWeekDay}</td>`;
+                    } else if (day <= daysInMonth) {
+                        // Days from the current month
+                        const isToday = year === new Date().getFullYear() && month === new Date().getMonth() && day === new Date().getDate();
+                        const isHighlight = day >= calendarStartDate.getDate() && day < calendarStartDate.getDate() + 7;
+
+                        let cellClass = '';
+
+                        if (isHighlight) {
+                            cellClass = 'highlight';
+                        } else if (isToday) {
+                            cellClass = 'today';
+                        }
+
+                        calendarHTML += `<td class="${cellClass}" data-week-start="${day}">${day}</td>`;
+                        day++;
+                    } else {
+                        // Days from the next month
+                        calendarHTML += `<td class="other-month">${day - daysInMonth}</td>`;
+                        day++;
+                    }
+                }
+                calendarHTML += '</tr><tr>';
+            }
+
+            calendarHTML += '</table>';
+            document.getElementById("calendar").innerHTML = calendarHTML;
+
+            // Add event listeners to each calendar cell
+            const calendarCells = document.querySelectorAll('.myTable td');
+            calendarCells.forEach((cell) => {
+                cell.addEventListener('click', () => {
+                    // Clear existing highlights
+                    calendarCells.forEach((cell) => {
+                        cell.classList.remove('highlight');
+                    });
+
+                    // Highlight the entire week for the clicked date
+                    const weekStart = cell.getAttribute('data-week-start');
+                    const weekEnd = parseInt(weekStart, 10) + 6;
+                    for (let i = weekStart; i <= weekEnd; i++) {
+                        calendarCells[i - 1].classList.add('highlight');
+                    }
+                });
+            });
+        };
+
+        // Event listener for "Previous Month" button
+        document.getElementById("prevMonth").addEventListener("click", () => {
+            calendarStartDate.setMonth(calendarStartDate.getMonth() - 1);
+            updateCalendar(calendarStartDate);
+        });
+
+        // Event listener for "Next Month" button
+        document.getElementById("nextMonth").addEventListener("click", () => {
+            calendarStartDate.setMonth(calendarStartDate.getMonth() + 1);
+            updateCalendar(calendarStartDate);
+        });
+
+        // Initialize the calendar starting from the current date
+        const currentDate = new Date();
+        currentDate.setDate(currentDate.getDate() - currentDate.getDay()); // Start from the current week's Sunday
+        updateCalendar(currentDate);
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

@@ -31,6 +31,12 @@ class GeneralHse(models.Model):
     total_safe_man_hours = models.IntegerField()
     no_of_person_inducted_site = models.IntegerField()
     no_of_toolbox_attendees = models.IntegerField()
+    toolbox_talk_manhours=models.IntegerField()
+    toolbox_talk_manhours_file=models.FileField(upload_to='uploads/', null=True)
+    promotional_activities=models.IntegerField()
+    promotional_activities_file=models.FileField(upload_to='uploads/', null=True)
+    committe_meetings=models.IntegerField()
+    
     created_at = models.DateTimeField(default=timezone.now, editable=False)
     parent = models.ForeignKey(HSE, on_delete=models.CASCADE,null=True)
 
@@ -47,6 +53,8 @@ class HSETrainingsModel(models.Model):
     hse_training_contractor=models.IntegerField()
     no_of_attendees_contractor=models.FileField(upload_to='uploads/',null=True)
     duration_of_contractor=models.IntegerField()
+    amplus_hse_trainings=models.IntegerField()
+    contractor_hse_trainings=models.IntegerField()
     created_at = models.DateTimeField(default=timezone.now, editable=False)
     parent = models.ForeignKey(HSE, on_delete=models.CASCADE,null=True)
 
@@ -101,12 +109,6 @@ class Incidents(models.Model):
         verbose_name = "Incidents" 
         verbose_name_plural = "Incidents"
 
-class FinalSubmit(models.Model): 
-    parent = models.ForeignKey(HSE, on_delete=models.CASCADE,null=True)
-
-    class Meta:
-        verbose_name = "FinalSubmit" 
-        verbose_name_plural = "FinalSubmit"
 
 class HSEObservationForm(models.Model):
     SrNo=models.IntegerField()
@@ -203,11 +205,7 @@ class IncidentForm(models.Model):
 
 
 
-class ListOfObservers(models.Model):
-    SrNo=models.IntegerField()
-    nameOfPerson=models.TextField(max_length=50)
-    designation=models.TextField(max_length=50)
-    exactLocation=models.TextField(max_length=50)
+
 
    
     
