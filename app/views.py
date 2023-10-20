@@ -49,11 +49,64 @@ class GeneralHSEAPI(APIView):
         serializer = GeneralHSESerializer(obj, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
+    # def post(self, request):
+    #     data = request.data
+    #     week_number = data.get("week_number", None)
+    #     year = data.get("year", None)
+    #     entry_id = request.data.get("toBeUpdatedId1")
+    #     general_hse_instance = None
+
+    #     plant = Plant.objects.filter(id=10000).first()
+    #     hse = HSE.objects.filter(week_number=week_number, year=year).first()
+
+    #     if hse:
+    #         if hse.form_status == 1:
+    #             return Response('Form already submitted', status=status.HTTP_400_BAD_REQUEST)
+
+    #         if entry_id:
+    #             try:
+    #                 general_hse_instance = GeneralHse.objects.get(id=entry_id)
+    #             except GeneralHse.DoesNotExist:
+    #                 general_hse_instance = None
+
+    #         if not general_hse_instance:
+    #             parent_instance, created = HSE.objects.update_or_create(
+    #                 week_number=week_number,
+    #                 year=year,
+    #                 plant_code=plant,
+    #                 defaults={"form_status": 0},
+    #             )
+    #             general_hse_instance = GeneralHse(parent=parent_instance)
+
+    #         serializer = GeneralHSESerializer(general_hse_instance, data=data)
+    #         if serializer.is_valid():
+    #             instance = serializer.save()
+    #             instance.save()
+    #             return HttpResponseRedirect('/api/my_html')
+
+    #     else:
+    #         parent_instance, created = HSE.objects.get_or_create(
+    #             week_number=week_number,
+    #             year=year,
+    #             plant_code=plant,
+    #             defaults={"form_status": 0},
+    #         )
+    #         general_hse_instance = GeneralHse(parent=parent_instance)
+
+    #     serializer = GeneralHSESerializer(general_hse_instance, data=data)
+
+    #     if serializer.is_valid():
+    #         instance = serializer.save()
+    #         instance.save()
+    #         return HttpResponseRedirect('/api/my_html')
+
+
+    #     return Response('HSE object does not exist', status=status.HTTP_400_BAD_REQUEST)
+
     def post(self, request):
         data = request.data
         week_number = data.get("week_number", None)
         year = data.get("year", None)
-        entry_id = request.data.get("toBeUpdatedId1")
         general_hse_instance = None
 
         plant = Plant.objects.filter(id=10000).first()
@@ -63,13 +116,15 @@ class GeneralHSEAPI(APIView):
             if hse.form_status == 1:
                 return Response('Form already submitted', status=status.HTTP_400_BAD_REQUEST)
 
-            if entry_id:
-                try:
-                    general_hse_instance = GeneralHse.objects.get(id=entry_id)
-                except GeneralHse.DoesNotExist:
-                    general_hse_instance = None
+            existing_instance = GeneralHse.objects.filter(parent=hse).first()
 
-            if not general_hse_instance:
+            if existing_instance:
+                existing__id = existing_instance.id
+                print(' ID:', existing__id)
+
+                serializer = GeneralHSESerializer(existing_instance, data=data)
+
+            else:
                 parent_instance, created = HSE.objects.update_or_create(
                     week_number=week_number,
                     year=year,
@@ -77,15 +132,17 @@ class GeneralHSEAPI(APIView):
                     defaults={"form_status": 0},
                 )
                 general_hse_instance = GeneralHse(parent=parent_instance)
+                print('Creating a new  instance:', general_hse_instance)
 
-            serializer = GeneralHSESerializer(general_hse_instance, data=data)
+                serializer = GeneralHSESerializer(general_hse_instance, data=data)
+
             if serializer.is_valid():
                 instance = serializer.save()
                 instance.save()
                 return HttpResponseRedirect('/api/my_html')
 
         else:
-            parent_instance, created = HSE.objects.get_or_create(
+            parent_instance, created = HSE.objects.update_or_create(
                 week_number=week_number,
                 year=year,
                 plant_code=plant,
@@ -93,13 +150,12 @@ class GeneralHSEAPI(APIView):
             )
             general_hse_instance = GeneralHse(parent=parent_instance)
 
-        serializer = GeneralHSESerializer(general_hse_instance, data=data)
+            serializer = GeneralHSESerializer(general_hse_instance, data=data)
 
-        if serializer.is_valid():
-            instance = serializer.save()
-            instance.save()
-            return HttpResponseRedirect('/api/my_html')
-
+            if serializer.is_valid():
+                instance = serializer.save()
+                instance.save()
+                return HttpResponseRedirect('/api/my_html')
 
         return Response('HSE object does not exist', status=status.HTTP_400_BAD_REQUEST)
 
@@ -135,11 +191,64 @@ class HSETrainingsAPI(APIView):
         serializer = HSETrainingsSerializer(obj, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+    # def post(self, request):
+    #     data = request.data
+    #     week_number = data.get("week_number", None)
+    #     year = data.get("year", None)
+    #     entry_id = request.data.get("toBeUpdatedId2")
+    #     hse_training_instance = None
+
+    #     plant = Plant.objects.filter(id=10000).first()
+    #     hse = HSE.objects.filter(week_number=week_number, year=year).first()
+
+    #     if hse:
+    #         if hse.form_status == 1:
+    #             return Response('Form already submitted', status=status.HTTP_400_BAD_REQUEST)
+
+    #         if entry_id:
+    #             try:
+    #                 hse_training_instance = HSETrainingsModel.objects.get(id=entry_id)
+    #             except HSETrainingsModel.DoesNotExist:
+    #                 hse_training_instance = None
+
+    #         if not hse_training_instance:
+    #             parent_instance, created = HSE.objects.update_or_create(
+    #                 week_number=week_number,
+    #                 year=year,
+    #                 plant_code=plant,
+    #                 defaults={"form_status": 0},
+    #             )
+    #             hse_training_instance = HSETrainingsModel(parent=parent_instance)
+
+    #         serializer = HSETrainingsSerializer(hse_training_instance, data=data)
+    #         if serializer.is_valid():
+    #             instance = serializer.save()
+    #             instance.save()
+    #             return HttpResponseRedirect('/api/my_html')
+
+    #     else:
+    #         parent_instance, created = HSE.objects.get_or_create(
+    #             week_number=week_number,
+    #             year=year,
+    #             plant_code=plant,
+    #             defaults={"form_status": 0},
+    #         )
+    #         hse_training_instance = HSETrainingsModel(parent=parent_instance)
+
+    #     serializer = HSETrainingsSerializer(hse_training_instance, data=data)
+        
+    #     if serializer.is_valid():
+    #         instance = serializer.save()
+    #         instance.save()
+    #         return HttpResponseRedirect('/api/my_html')
+
+
+    #     return Response('HSE object does not exist', status=status.HTTP_400_BAD_REQUEST)
+
     def post(self, request):
         data = request.data
         week_number = data.get("week_number", None)
         year = data.get("year", None)
-        entry_id = request.data.get("toBeUpdatedId2")
         hse_training_instance = None
 
         plant = Plant.objects.filter(id=10000).first()
@@ -149,13 +258,15 @@ class HSETrainingsAPI(APIView):
             if hse.form_status == 1:
                 return Response('Form already submitted', status=status.HTTP_400_BAD_REQUEST)
 
-            if entry_id:
-                try:
-                    hse_training_instance = HSETrainingsModel.objects.get(id=entry_id)
-                except HSETrainingsModel.DoesNotExist:
-                    hse_training_instance = None
+            existing_instance = HSETrainingsModel.objects.filter(parent=hse).first()
 
-            if not hse_training_instance:
+            if existing_instance:
+                existing__id = existing_instance.id
+                print(' ID:', existing__id)
+
+                serializer = HSETrainingsSerializer(existing_instance, data=data)
+
+            else:
                 parent_instance, created = HSE.objects.update_or_create(
                     week_number=week_number,
                     year=year,
@@ -163,15 +274,17 @@ class HSETrainingsAPI(APIView):
                     defaults={"form_status": 0},
                 )
                 hse_training_instance = HSETrainingsModel(parent=parent_instance)
+                print('Creating a new  instance:', hse_training_instance)
 
-            serializer = HSETrainingsSerializer(hse_training_instance, data=data)
+                serializer = HSETrainingsSerializer(hse_training_instance, data=data)
+
             if serializer.is_valid():
                 instance = serializer.save()
                 instance.save()
                 return HttpResponseRedirect('/api/my_html')
 
         else:
-            parent_instance, created = HSE.objects.get_or_create(
+            parent_instance, created = HSE.objects.update_or_create(
                 week_number=week_number,
                 year=year,
                 plant_code=plant,
@@ -179,13 +292,12 @@ class HSETrainingsAPI(APIView):
             )
             hse_training_instance = HSETrainingsModel(parent=parent_instance)
 
-        serializer = HSETrainingsSerializer(hse_training_instance, data=data)
-        
-        if serializer.is_valid():
-            instance = serializer.save()
-            instance.save()
-            return HttpResponseRedirect('/api/my_html')
+            serializer = HSETrainingsSerializer(hse_training_instance, data=data)
 
+            if serializer.is_valid():
+                instance = serializer.save()
+                instance.save()
+                return HttpResponseRedirect('/api/my_html')
 
         return Response('HSE object does not exist', status=status.HTTP_400_BAD_REQUEST)
 
@@ -367,12 +479,65 @@ class ManagementAPI(APIView):
         serializer = ManagementSerializer(obj, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+    # def post(self, request):
+    #     data = request.data
+    #     week_number = data.get("week_number", None)
+    #     year = data.get("year", None)
+    #     entry_id = request.data.get("toBeUpdatedId4")
+    #     management_visits_instance = None
+
+    #     plant = Plant.objects.filter(id=10000).first()
+    #     hse = HSE.objects.filter(week_number=week_number, year=year).first()
+
+    #     if hse:
+    #         if hse.form_status == 1:
+    #             return Response('Form already submitted', status=status.HTTP_400_BAD_REQUEST)
+
+    #         if entry_id:
+    #             try:
+    #                 management_visits_instance = ManagementVisits.objects.get(id=entry_id)
+    #             except ManagementVisits.DoesNotExist:
+    #                 management_visits_instance = None
+
+    #         if not management_visits_instance:
+    #             parent_instance, created = HSE.objects.update_or_create(
+    #                 week_number=week_number,
+    #                 year=year,
+    #                 plant_code=plant,
+    #                 defaults={"form_status": 0},
+    #             )
+    #             management_visits_instance = ManagementVisits(parent=parent_instance)
+
+    #         serializer = ManagementSerializer(management_visits_instance, data=data)
+    #         if serializer.is_valid():
+    #             instance = serializer.save()
+    #             instance.save()
+    #             return HttpResponseRedirect('/api/my_html')
+
+    #     else:
+    #         parent_instance, created = HSE.objects.get_or_create(
+    #             week_number=week_number,
+    #             year=year,
+    #             plant_code=plant,
+    #             defaults={"form_status": 0},
+    #         )
+    #         management_visits_instance = ManagementVisits(parent=parent_instance)
+
+    #     serializer = ManagementSerializer(management_visits_instance, data=data)
+        
+    #     if serializer.is_valid():
+    #         instance = serializer.save()
+    #         instance.save()
+    #         return HttpResponseRedirect('/api/my_html')
+
+
+    #     return Response('HSE object does not exist', status=status.HTTP_400_BAD_REQUEST)
+
     def post(self, request):
         data = request.data
         week_number = data.get("week_number", None)
         year = data.get("year", None)
-        entry_id = request.data.get("toBeUpdatedId4")
-        management_visits_instance = None
+        management_instance = None
 
         plant = Plant.objects.filter(id=10000).first()
         hse = HSE.objects.filter(week_number=week_number, year=year).first()
@@ -381,43 +546,46 @@ class ManagementAPI(APIView):
             if hse.form_status == 1:
                 return Response('Form already submitted', status=status.HTTP_400_BAD_REQUEST)
 
-            if entry_id:
-                try:
-                    management_visits_instance = ManagementVisits.objects.get(id=entry_id)
-                except ManagementVisits.DoesNotExist:
-                    management_visits_instance = None
+            existing_instance = ManagementVisits.objects.filter(parent=hse).first()
 
-            if not management_visits_instance:
+            if existing_instance:
+                existing__id = existing_instance.id
+                print(' ID:', existing__id)
+
+                serializer = ManagementSerializer(existing_instance, data=data)
+
+            else:
                 parent_instance, created = HSE.objects.update_or_create(
                     week_number=week_number,
                     year=year,
                     plant_code=plant,
                     defaults={"form_status": 0},
                 )
-                management_visits_instance = ManagementVisits(parent=parent_instance)
+                management_instance = ManagementVisits(parent=parent_instance)
+                print('Creating a new  instance:', management_instance)
 
-            serializer = ManagementSerializer(management_visits_instance, data=data)
+                serializer = ManagementSerializer(management_instance, data=data)
+
             if serializer.is_valid():
                 instance = serializer.save()
                 instance.save()
                 return HttpResponseRedirect('/api/my_html')
 
         else:
-            parent_instance, created = HSE.objects.get_or_create(
+            parent_instance, created = HSE.objects.update_or_create(
                 week_number=week_number,
                 year=year,
                 plant_code=plant,
                 defaults={"form_status": 0},
             )
-            management_visits_instance = ManagementVisits(parent=parent_instance)
+            management_instance = ManagementVisits(parent=parent_instance)
 
-        serializer = ManagementSerializer(management_visits_instance, data=data)
-        
-        if serializer.is_valid():
-            instance = serializer.save()
-            instance.save()
-            return HttpResponseRedirect('/api/my_html')
+            serializer = ManagementSerializer(management_instance, data=data)
 
+            if serializer.is_valid():
+                instance = serializer.save()
+                instance.save()
+                return HttpResponseRedirect('/api/my_html')
 
         return Response('HSE object does not exist', status=status.HTTP_400_BAD_REQUEST)
 
