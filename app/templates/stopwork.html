@@ -375,14 +375,15 @@
          document.getElementById("week_number_Form1").value = weekNumber;
          document.getElementById("year_form1").value = year;
        }
+       calculateWeekAndYearForm1();
+
       
-       $(document).ready(function() {
+       {% comment %} $(document).ready(function() {
          let submitted = false; 
        
          $('#submitButton').click(function(event) {
            event.preventDefault(); 
        
-           calculateWeekAndYearForm1();
        
            $('#successModal').modal('show');
        
@@ -395,7 +396,7 @@
            }, 1000);
          });
        
-       });
+       }); {% endcomment %}
        
       
    </script>

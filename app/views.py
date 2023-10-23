@@ -70,13 +70,13 @@ class GeneralHSEAPI(APIView):
     #                 general_hse_instance = None
 
     #         if not general_hse_instance:
-    #             parent_instance, created = HSE.objects.update_or_create(
+    #             hse_instance, created = HSE.objects.update_or_create(
     #                 week_number=week_number,
     #                 year=year,
     #                 plant_code=plant,
     #                 defaults={"form_status": 0},
     #             )
-    #             general_hse_instance = GeneralHse(parent=parent_instance)
+    #             general_hse_instance = GeneralHse(hse=hse_instance)
 
     #         serializer = GeneralHSESerializer(general_hse_instance, data=data)
     #         if serializer.is_valid():
@@ -85,13 +85,13 @@ class GeneralHSEAPI(APIView):
     #             return HttpResponseRedirect('/api/my_html')
 
     #     else:
-    #         parent_instance, created = HSE.objects.get_or_create(
+    #         hse_instance, created = HSE.objects.get_or_create(
     #             week_number=week_number,
     #             year=year,
     #             plant_code=plant,
     #             defaults={"form_status": 0},
     #         )
-    #         general_hse_instance = GeneralHse(parent=parent_instance)
+    #         general_hse_instance = GeneralHse(hse=hse_instance)
 
     #     serializer = GeneralHSESerializer(general_hse_instance, data=data)
 
@@ -116,7 +116,7 @@ class GeneralHSEAPI(APIView):
             if hse.form_status == 1:
                 return Response('Form already submitted', status=status.HTTP_400_BAD_REQUEST)
 
-            existing_instance = GeneralHse.objects.filter(parent=hse).first()
+            existing_instance = GeneralHse.objects.filter(hse=hse).first()
 
             if existing_instance:
                 existing__id = existing_instance.id
@@ -125,13 +125,13 @@ class GeneralHSEAPI(APIView):
                 serializer = GeneralHSESerializer(existing_instance, data=data)
 
             else:
-                parent_instance, created = HSE.objects.update_or_create(
+                hse_instance, created = HSE.objects.update_or_create(
                     week_number=week_number,
                     year=year,
                     plant_code=plant,
                     defaults={"form_status": 0},
                 )
-                general_hse_instance = GeneralHse(parent=parent_instance)
+                general_hse_instance = GeneralHse(hse=hse_instance)
                 print('Creating a new  instance:', general_hse_instance)
 
                 serializer = GeneralHSESerializer(general_hse_instance, data=data)
@@ -142,13 +142,13 @@ class GeneralHSEAPI(APIView):
                 return HttpResponseRedirect('/api/my_html')
 
         else:
-            parent_instance, created = HSE.objects.update_or_create(
+            hse_instance, created = HSE.objects.update_or_create(
                 week_number=week_number,
                 year=year,
                 plant_code=plant,
                 defaults={"form_status": 0},
             )
-            general_hse_instance = GeneralHse(parent=parent_instance)
+            general_hse_instance = GeneralHse(hse=hse_instance)
 
             serializer = GeneralHSESerializer(general_hse_instance, data=data)
 
@@ -212,13 +212,13 @@ class HSETrainingsAPI(APIView):
     #                 hse_training_instance = None
 
     #         if not hse_training_instance:
-    #             parent_instance, created = HSE.objects.update_or_create(
+    #             hse_instance, created = HSE.objects.update_or_create(
     #                 week_number=week_number,
     #                 year=year,
     #                 plant_code=plant,
     #                 defaults={"form_status": 0},
     #             )
-    #             hse_training_instance = HSETrainingsModel(parent=parent_instance)
+    #             hse_training_instance = HSETrainingsModel(hse=hse_instance)
 
     #         serializer = HSETrainingsSerializer(hse_training_instance, data=data)
     #         if serializer.is_valid():
@@ -227,13 +227,13 @@ class HSETrainingsAPI(APIView):
     #             return HttpResponseRedirect('/api/my_html')
 
     #     else:
-    #         parent_instance, created = HSE.objects.get_or_create(
+    #         hse_instance, created = HSE.objects.get_or_create(
     #             week_number=week_number,
     #             year=year,
     #             plant_code=plant,
     #             defaults={"form_status": 0},
     #         )
-    #         hse_training_instance = HSETrainingsModel(parent=parent_instance)
+    #         hse_training_instance = HSETrainingsModel(hse=hse_instance)
 
     #     serializer = HSETrainingsSerializer(hse_training_instance, data=data)
         
@@ -258,7 +258,7 @@ class HSETrainingsAPI(APIView):
             if hse.form_status == 1:
                 return Response('Form already submitted', status=status.HTTP_400_BAD_REQUEST)
 
-            existing_instance = HSETrainingsModel.objects.filter(parent=hse).first()
+            existing_instance = HSETrainingsModel.objects.filter(hse=hse).first()
 
             if existing_instance:
                 existing__id = existing_instance.id
@@ -267,13 +267,13 @@ class HSETrainingsAPI(APIView):
                 serializer = HSETrainingsSerializer(existing_instance, data=data)
 
             else:
-                parent_instance, created = HSE.objects.update_or_create(
+                hse_instance, created = HSE.objects.update_or_create(
                     week_number=week_number,
                     year=year,
                     plant_code=plant,
                     defaults={"form_status": 0},
                 )
-                hse_training_instance = HSETrainingsModel(parent=parent_instance)
+                hse_training_instance = HSETrainingsModel(hse=hse_instance)
                 print('Creating a new  instance:', hse_training_instance)
 
                 serializer = HSETrainingsSerializer(hse_training_instance, data=data)
@@ -284,13 +284,13 @@ class HSETrainingsAPI(APIView):
                 return HttpResponseRedirect('/api/my_html')
 
         else:
-            parent_instance, created = HSE.objects.update_or_create(
+            hse_instance, created = HSE.objects.update_or_create(
                 week_number=week_number,
                 year=year,
                 plant_code=plant,
                 defaults={"form_status": 0},
             )
-            hse_training_instance = HSETrainingsModel(parent=parent_instance)
+            hse_training_instance = HSETrainingsModel(hse=hse_instance)
 
             serializer = HSETrainingsSerializer(hse_training_instance, data=data)
 
@@ -354,13 +354,13 @@ class HSEObservationAPI(APIView):
     #                 observation_instance = None
 
     #         if not observation_instance:
-    #             parent_instance, created = HSE.objects.update_or_create(
+    #             hse_instance, created = HSE.objects.update_or_create(
     #                 week_number=week_number,
     #                 year=year,
     #                 plant_code=plant,
     #                 defaults={"form_status": 0},
     #             )
-    #             observation_instance = HSEObservation(parent=parent_instance)
+    #             observation_instance = HSEObservation(hse=hse_instance)
 
     #         serializer = HSEObservationSerializer(observation_instance, data=data)
     #         if serializer.is_valid():
@@ -369,13 +369,13 @@ class HSEObservationAPI(APIView):
     #             return HttpResponseRedirect('/api/my_html')
 
     #     else:
-    #         parent_instance, created = HSE.objects.update_or_create(
+    #         hse_instance, created = HSE.objects.update_or_create(
     #             week_number=week_number,
     #             year=year,
     #             plant_code=plant,
     #             defaults={"form_status": 0},
     #         )
-    #         observation_instance = HSEObservation(parent=parent_instance)
+    #         observation_instance = HSEObservation(hse=hse_instance)
 
     #     serializer = HSEObservationSerializer(observation_instance, data=data)
         
@@ -401,7 +401,7 @@ class HSEObservationAPI(APIView):
                 return Response('Form already submitted', status=status.HTTP_400_BAD_REQUEST)
 
             # Check if an incident object already exists
-            existing_observation = HSEObservation.objects.filter(parent=hse).first()
+            existing_observation = HSEObservation.objects.filter(hse=hse).first()
 
             if existing_observation:
                 # An incident object already exists; you can get its ID
@@ -413,13 +413,13 @@ class HSEObservationAPI(APIView):
 
             else:
                 # No existing incident object, create a new one
-                parent_instance, created = HSE.objects.update_or_create(
+                hse_instance, created = HSE.objects.update_or_create(
                     week_number=week_number,
                     year=year,
                     plant_code=plant,
                     defaults={"form_status": 0},
                 )
-                hse_observation = HSEObservation(parent=parent_instance)
+                hse_observation = HSEObservation(hse=hse_instance)
                 print('Creating a new incident instance:', hse_observation)
 
                 serializer = IncidentsSerializer(hse_observation, data=data)
@@ -430,13 +430,13 @@ class HSEObservationAPI(APIView):
                 return HttpResponseRedirect('/api/my_html')
 
         else:
-            parent_instance, created = HSE.objects.update_or_create(
+            hse_instance, created = HSE.objects.update_or_create(
                 week_number=week_number,
                 year=year,
                 plant_code=plant,
                 defaults={"form_status": 0},
             )
-            hse_observation = HSEObservation(parent=parent_instance)
+            hse_observation = HSEObservation(hse=hse_instance)
 
             serializer = HSEObservationSerializer(hse_observation, data=data)
 
@@ -500,13 +500,13 @@ class ManagementAPI(APIView):
     #                 management_visits_instance = None
 
     #         if not management_visits_instance:
-    #             parent_instance, created = HSE.objects.update_or_create(
+    #             hse_instance, created = HSE.objects.update_or_create(
     #                 week_number=week_number,
     #                 year=year,
     #                 plant_code=plant,
     #                 defaults={"form_status": 0},
     #             )
-    #             management_visits_instance = ManagementVisits(parent=parent_instance)
+    #             management_visits_instance = ManagementVisits(hse=hse_instance)
 
     #         serializer = ManagementSerializer(management_visits_instance, data=data)
     #         if serializer.is_valid():
@@ -515,13 +515,13 @@ class ManagementAPI(APIView):
     #             return HttpResponseRedirect('/api/my_html')
 
     #     else:
-    #         parent_instance, created = HSE.objects.get_or_create(
+    #         hse_instance, created = HSE.objects.get_or_create(
     #             week_number=week_number,
     #             year=year,
     #             plant_code=plant,
     #             defaults={"form_status": 0},
     #         )
-    #         management_visits_instance = ManagementVisits(parent=parent_instance)
+    #         management_visits_instance = ManagementVisits(hse=hse_instance)
 
     #     serializer = ManagementSerializer(management_visits_instance, data=data)
         
@@ -546,7 +546,7 @@ class ManagementAPI(APIView):
             if hse.form_status == 1:
                 return Response('Form already submitted', status=status.HTTP_400_BAD_REQUEST)
 
-            existing_instance = ManagementVisits.objects.filter(parent=hse).first()
+            existing_instance = ManagementVisits.objects.filter(hse=hse).first()
 
             if existing_instance:
                 existing__id = existing_instance.id
@@ -555,13 +555,13 @@ class ManagementAPI(APIView):
                 serializer = ManagementSerializer(existing_instance, data=data)
 
             else:
-                parent_instance, created = HSE.objects.update_or_create(
+                hse_instance, created = HSE.objects.update_or_create(
                     week_number=week_number,
                     year=year,
                     plant_code=plant,
                     defaults={"form_status": 0},
                 )
-                management_instance = ManagementVisits(parent=parent_instance)
+                management_instance = ManagementVisits(hse=hse_instance)
                 print('Creating a new  instance:', management_instance)
 
                 serializer = ManagementSerializer(management_instance, data=data)
@@ -572,13 +572,13 @@ class ManagementAPI(APIView):
                 return HttpResponseRedirect('/api/my_html')
 
         else:
-            parent_instance, created = HSE.objects.update_or_create(
+            hse_instance, created = HSE.objects.update_or_create(
                 week_number=week_number,
                 year=year,
                 plant_code=plant,
                 defaults={"form_status": 0},
             )
-            management_instance = ManagementVisits(parent=parent_instance)
+            management_instance = ManagementVisits(hse=hse_instance)
 
             serializer = ManagementSerializer(management_instance, data=data)
 
@@ -646,13 +646,13 @@ class IncidentsAPI(APIView):
     #                 incident_instance = None
 
     #         if not incident_instance:
-    #             parent_instance, created = HSE.objects.update_or_create(
+    #             hse_instance, created = HSE.objects.update_or_create(
     #                 week_number=week_number,
     #                 year=year,
     #                 plant_code=plant,
     #                 defaults={"form_status": 0},
     #             )
-    #             incident_instance = Incidents(parent=parent_instance)
+    #             incident_instance = Incidents(hse=hse_instance)
     #             print('did not got id ')
     #             print(incident_instance)
 
@@ -663,13 +663,13 @@ class IncidentsAPI(APIView):
     #             return HttpResponseRedirect('/api/my_html')
 
     #     else:
-    #         parent_instance, created = HSE.objects.update_or_create(
+    #         hse_instance, created = HSE.objects.update_or_create(
     #             week_number=week_number,
     #             year=year,
     #             plant_code=plant,
     #             defaults={"form_status": 0},
     #         )
-    #         incident_instance = Incidents(parent=parent_instance)
+    #         incident_instance = Incidents(hse=hse_instance)
 
     #     serializer = IncidentsSerializer(incident_instance, data=data)
         
@@ -694,7 +694,7 @@ class IncidentsAPI(APIView):
             if hse.form_status == 1:
                 return Response('Form already submitted', status=status.HTTP_400_BAD_REQUEST)
 
-            existing_incident = Incidents.objects.filter(parent=hse).first()
+            existing_incident = Incidents.objects.filter(hse=hse).first()
 
             if existing_incident:
                 existing_incident_id = existing_incident.id
@@ -703,13 +703,13 @@ class IncidentsAPI(APIView):
                 serializer = IncidentsSerializer(existing_incident, data=data)
 
             else:
-                parent_instance, created = HSE.objects.update_or_create(
+                hse_instance, created = HSE.objects.update_or_create(
                     week_number=week_number,
                     year=year,
                     plant_code=plant,
                     defaults={"form_status": 0},
                 )
-                incident_instance = Incidents(parent=parent_instance)
+                incident_instance = Incidents(hse=hse_instance)
                 print('Creating a new incident instance:', incident_instance)
 
                 serializer = IncidentsSerializer(incident_instance, data=data)
@@ -720,13 +720,13 @@ class IncidentsAPI(APIView):
                 return HttpResponseRedirect('/api/my_html')
 
         else:
-            parent_instance, created = HSE.objects.update_or_create(
+            hse_instance, created = HSE.objects.update_or_create(
                 week_number=week_number,
                 year=year,
                 plant_code=plant,
                 defaults={"form_status": 0},
             )
-            incident_instance = Incidents(parent=parent_instance)
+            incident_instance = Incidents(hse=hse_instance)
 
             serializer = IncidentsSerializer(incident_instance, data=data)
 
@@ -797,17 +797,17 @@ class AllModelsListView(generics.ListAPIView):
         year = self.request.query_params.get("year")
         plant_code = self.request.query_params.get("plant_code")
         # form_status = self.request.query_params.get('form_status')
-        parent = HSE.objects.filter(
+        hse = HSE.objects.filter(
             week_number=week_number, year=year, plant_code=plant_code
         ).first()
         
        
-        if parent:
-            child1_data = GeneralHse.objects.filter(parent=parent)
-            child2_data = HSETrainingsModel.objects.filter(parent=parent)
-            child3_data = HSEObservation.objects.filter(parent=parent)
-            child4_data = ManagementVisits.objects.filter(parent=parent)
-            child5_data = Incidents.objects.filter(parent=parent)
+        if hse:
+            child1_data = GeneralHse.objects.filter(hse=hse)
+            child2_data = HSETrainingsModel.objects.filter(hse=hse)
+            child3_data = HSEObservation.objects.filter(hse=hse)
+            child4_data = ManagementVisits.objects.filter(hse=hse)
+            child5_data = Incidents.objects.filter(hse=hse)
             
 
             child1_serializer = GeneralHSESerializer(child1_data, many=True)
@@ -832,7 +832,7 @@ class AllModelsListView(generics.ListAPIView):
 
             return Response(response_data)
         else:
-            return Response({"detail": "Parent data not found"}, status=404)
+            return Response({"detail": "hse data not found"}, status=404)
 
 
 
@@ -844,10 +844,10 @@ class HSEObservationFormAPI(APIView):
         year = self.request.query_params.get("year")
         plant_code = self.request.query_params.get("plant_code")
 
-        parent = HSE.objects.filter(week_number=week_number, year=year,plant_code=plant_code).first()
+        hse = HSE.objects.filter(week_number=week_number, year=year,plant_code=plant_code).first()
     
-        if parent:
-            hse_observation = HSEObservation.objects.filter(parent=parent).first()
+        if hse:
+            hse_observation = HSEObservation.objects.filter(hse=hse).first()
             
             if hse_observation:
                 hse_observation_forms = HSEObservationForm.objects.filter(hse_observation=hse_observation)
@@ -861,7 +861,7 @@ class HSEObservationFormAPI(APIView):
             else:
                 return Response({"detail": "HSEObservation not found"}, status=status.HTTP_404_NOT_FOUND)
         else:
-            return Response({"detail": "Parent data not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"detail": "hse data not found"}, status=status.HTTP_404_NOT_FOUND)
 
 
 
@@ -874,7 +874,7 @@ class HSEObservationFormAPI(APIView):
         hse = HSE.objects.filter(week_number=week_number, year=year).first()
 
         if not hse:
-            parent_instance, created = HSE.objects.update_or_create(
+            hse_instance, created = HSE.objects.update_or_create(
                 week_number=week_number,
                 year=year,
                 plant_code=plant,
@@ -882,11 +882,11 @@ class HSEObservationFormAPI(APIView):
             )
 
         hse = HSE.objects.filter(week_number=week_number, year=year).first()
-        hse_observation = HSEObservation.objects.filter(parent=hse).first()
+        hse_observation = HSEObservation.objects.filter(hse=hse).first()
 
         if not hse_observation:
             # Create a new instance of HSEObservation with null values
-            hse_observation = HSEObservation(parent=hse)
+            hse_observation = HSEObservation(hse=hse)
             hse_observation.save()
 
         # Continue with the code for saving HSEObservationForm
@@ -911,10 +911,10 @@ class StopWorkFormAPI(APIView):
         year = self.request.query_params.get("year")
         plant_code = self.request.query_params.get("plant_code")
 
-        parent = HSE.objects.filter(week_number=week_number, year=year,plant_code=plant_code).first()
+        hse = HSE.objects.filter(week_number=week_number, year=year,plant_code=plant_code).first()
     
-        if parent:
-            hse_observation = HSEObservation.objects.filter(parent=parent).first()
+        if hse:
+            hse_observation = HSEObservation.objects.filter(hse=hse).first()
             
             if hse_observation:
                 stop_work_forms = StopWorkForm.objects.filter(hse_observation=hse_observation)
@@ -928,7 +928,7 @@ class StopWorkFormAPI(APIView):
             else:
                 return Response({"detail": "HSEObservation not found"}, status=status.HTTP_404_NOT_FOUND)
         else:
-            return Response({"detail": "Parent data not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"detail": "hse data not found"}, status=status.HTTP_404_NOT_FOUND)
     
     def post(self, request):
         data = request.data
@@ -938,7 +938,7 @@ class StopWorkFormAPI(APIView):
         hse = HSE.objects.filter(week_number=week_number, year=year).first()
 
         if hse:
-            hse_observation = HSEObservation.objects.filter(parent=hse).first()
+            hse_observation = HSEObservation.objects.filter(hse=hse).first()
 
             if hse_observation:
                 serializer = StopWorkFormSerializer(data=data)
@@ -955,7 +955,7 @@ class StopWorkFormAPI(APIView):
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             else:
                 # Create a new instance of HSEObservation with null values
-                hse_observation = HSEObservation(parent=hse)
+                hse_observation = HSEObservation(hse=hse)
                 hse_observation.save()
 
                 # Continue with the code for saving StopWorkForm
@@ -982,10 +982,10 @@ class ViolationMemoAPI(APIView):
         year = self.request.query_params.get("year")
         plant_code = self.request.query_params.get("plant_code")
 
-        parent = HSE.objects.filter(week_number=week_number, year=year,plant_code=plant_code).first()
+        hse = HSE.objects.filter(week_number=week_number, year=year,plant_code=plant_code).first()
     
-        if parent:
-            hse_observation = HSEObservation.objects.filter(parent=parent).first()
+        if hse:
+            hse_observation = HSEObservation.objects.filter(hse=hse).first()
             
             if hse_observation:
                 violation_memo_forms = ViolationMemoForm.objects.filter(hse_observation=hse_observation)
@@ -999,7 +999,7 @@ class ViolationMemoAPI(APIView):
             else:
                 return Response({"detail": "HSEObservation not found"}, status=status.HTTP_404_NOT_FOUND)
         else:
-            return Response({"detail": "Parent data not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"detail": "hse data not found"}, status=status.HTTP_404_NOT_FOUND)
     
     def post(self, request):
         data = request.data
@@ -1009,7 +1009,7 @@ class ViolationMemoAPI(APIView):
         hse = HSE.objects.filter(week_number=week_number, year=year).first()
         
         if hse:
-            hse_observation = HSEObservation.objects.filter(parent=hse).first()
+            hse_observation = HSEObservation.objects.filter(hse=hse).first()
 
             if hse_observation:
                 serializer = ViolationFormSerializer(data=data)
@@ -1026,7 +1026,7 @@ class ViolationMemoAPI(APIView):
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             else:
                 # Create a new instance of HSEObservation with null values
-                hse_observation = HSEObservation(parent=hse)
+                hse_observation = HSEObservation(hse=hse)
                 hse_observation.save()
 
                 # Continue with the code for saving ViolationForm
@@ -1053,10 +1053,10 @@ class IncidentFormAPI(APIView):
         year = self.request.query_params.get("year")
         plant_code = self.request.query_params.get("plant_code")
 
-        parent = HSE.objects.filter(week_number=week_number, year=year,plant_code=plant_code).first()
+        hse = HSE.objects.filter(week_number=week_number, year=year,plant_code=plant_code).first()
     
-        if parent:
-            incident = Incidents.objects.filter(parent=parent).first()
+        if hse:
+            incident = Incidents.objects.filter(hse=hse).first()
             
             if incident:
                 incident_form = IncidentForm.objects.filter(incident_instance=incident)
@@ -1081,7 +1081,7 @@ class IncidentFormAPI(APIView):
         
         
     #     if incident:
-    #         hse_incident = Incidents.objects.filter(parent=incident).first()
+    #         hse_incident = Incidents.objects.filter(hse=incident).first()
     #         print(hse_incident)
 
     #         if hse_incident:
@@ -1098,7 +1098,7 @@ class IncidentFormAPI(APIView):
                   
     #             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     #         else:
-    #             hse_incident = Incidents(parent=incident)
+    #             hse_incident = Incidents(hse=incident)
     #             hse_incident.save()
 
     #             # Continue with the code for saving ViolationForm
@@ -1125,7 +1125,7 @@ class IncidentFormAPI(APIView):
         hse = HSE.objects.filter(week_number=week_number, year=year).first()
 
         if not hse:
-            parent_instance, created = HSE.objects.update_or_create(
+            hse_instance, created = HSE.objects.update_or_create(
                 week_number=week_number,
                 year=year,
                 plant_code=plant,
@@ -1133,11 +1133,11 @@ class IncidentFormAPI(APIView):
             )
 
         hse = HSE.objects.filter(week_number=week_number, year=year).first()
-        hse_incident = Incidents.objects.filter(parent=hse).first()
+        hse_incident = Incidents.objects.filter(hse=hse).first()
 
         if not hse_incident:
             # Create a new instance of HSEObservation with null values
-            hse_incident = Incidents(parent=hse)
+            hse_incident = Incidents(hse=hse)
             hse_incident.save()
 
         # Continue with the code for saving HSEObservationForm

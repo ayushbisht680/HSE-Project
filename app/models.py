@@ -38,7 +38,7 @@ class GeneralHse(models.Model):
     committe_meetings=models.IntegerField()
     
     created_at = models.DateTimeField(default=timezone.now, editable=False)
-    parent = models.ForeignKey(HSE, on_delete=models.CASCADE,null=True)
+    hse = models.ForeignKey(HSE, on_delete=models.CASCADE,null=True)
 
 
     class Meta:
@@ -56,7 +56,7 @@ class HSETrainingsModel(models.Model):
     amplus_hse_trainings=models.IntegerField()
     contractor_hse_trainings=models.IntegerField()
     created_at = models.DateTimeField(default=timezone.now, editable=False)
-    parent = models.ForeignKey(HSE, on_delete=models.CASCADE,null=True)
+    hse = models.ForeignKey(HSE, on_delete=models.CASCADE,null=True)
 
    
 
@@ -72,7 +72,7 @@ class HSEObservation(models.Model):
     violation_memo_issued=models.IntegerField(null=True,blank=True)
     complaint_from_customer=models.IntegerField(null=True,blank=True)
     created_at = models.DateTimeField(default=timezone.now, editable=False,null=True,blank=True)
-    parent = models.ForeignKey(HSE, on_delete=models.CASCADE,null=True,blank=True)
+    hse = models.ForeignKey(HSE, on_delete=models.CASCADE,null=True,blank=True)
      
 
     class Meta:
@@ -88,7 +88,7 @@ class ManagementVisits(models.Model):
     no_of_compilance_done_file=models.FileField(upload_to='uploads/',null=True)
     observation_pending=models.IntegerField()
     created_at = models.DateTimeField(default=timezone.now, editable=False)
-    parent = models.ForeignKey(HSE, on_delete=models.CASCADE,null=True)
+    hse = models.ForeignKey(HSE, on_delete=models.CASCADE,null=True)
 
 
     class Meta:
@@ -101,7 +101,7 @@ class Incidents(models.Model):
     no_of_occupation_illness=models.IntegerField(null=True,blank=True)
     no_of_environment_illness=models.IntegerField(null=True,blank=True)
     created_at = models.DateTimeField(default=timezone.now, editable=False,null=True,blank=True)
-    parent = models.ForeignKey(HSE, on_delete=models.CASCADE,null=True,blank=True)
+    hse = models.ForeignKey(HSE, on_delete=models.CASCADE,null=True,blank=True)
 
 
 
