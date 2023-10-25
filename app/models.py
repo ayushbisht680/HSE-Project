@@ -197,7 +197,7 @@ class IncidentForm(models.Model):
     ResponsiblePerson=models.TextField(max_length=100)
     InvestigationStatus=models.TextField(max_length=100)
     AttachReport=models.FileField(upload_to='formUploads',null=True)
-    incident_instance = models.ForeignKey(Incidents, on_delete=models.CASCADE,null=True)
+    incidents = models.ForeignKey(Incidents, on_delete=models.CASCADE,null=True)
 
     class Meta:
         verbose_name = "Incident Form" 

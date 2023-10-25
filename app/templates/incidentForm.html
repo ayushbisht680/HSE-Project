@@ -378,6 +378,34 @@
 
        calculateWeekAndYearForm1(); 
 
+       $.ajax({
+         type: "GET",
+         url: "/api/parent/",
+         success: function (data) {
+             const today = new Date();
+             const weekNumber = getWeekNumber(today);
+             const year = today.getFullYear();
+            
+      
+             // Search for an item with matching week_number and year
+             const foundItem = data.find(item => item.week_number === weekNumber && item.year === year);          
+
+      
+             if (foundItem) {
+                 const fieldData = foundItem.form_status;
+                 if (fieldData == 1) {
+                  document.getElementById('addRowButton').style.display='none';
+                  
+                 }
+             } else {
+                 console.log(`No data found for week ${weekNumber} and year ${year}`);
+             }
+         },
+         error: function (xhr, status, error) {
+             console.error("Error:", status, error);
+         }
+      }); 
+
       
        {% comment %} $(document).ready(function() {
          let submitted = false; 
@@ -399,6 +427,8 @@
          });
        
        });  {% endcomment %}
+
+   
 
       
       

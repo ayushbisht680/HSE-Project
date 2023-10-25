@@ -276,6 +276,7 @@
          }
          .valueButton{
          width:65px;
+         border:none !important;
          }
          .btnMargin{
          border: 1px solid lightgrey;
@@ -302,7 +303,7 @@
          }
          .plusIcon{
          width: 39px;
-         height: 25px;
+         height: 30px;
          }
          #adjustWidth{
          width:80% !important;
@@ -322,7 +323,7 @@
          border:none !important;
          }
          .accordion-item {
-         margin-top: 20px; /* Adjust the value as needed */
+         margin-top: 20px; 
          border:1px solid lightgrey !important;
          }
          .accordion-button:not(.collapsed) {
@@ -412,6 +413,13 @@
       </style>
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+      <script>
+         // Listen for the popstate event (e.g., when the user presses the back button)
+         window.addEventListener('popstate', function (event) {
+             // Refresh the page when the back button is pressed
+             location.reload();
+         });
+     </script>
    </head>
    <body>
       <div class="container-fluid">
@@ -492,12 +500,12 @@
                      </div>
                      <div class="date-cont">
                         <div class="messageDisplay">The form is filled for :</div>
-                        <div class="viewDate">17th September - Today - Sunday</div>
+                        <div class="viewDate" id="viewingDate">17th September - Today - Sunday</div>
                         <div class='clickArrow'>
-                           <div onclick="changeDate(-1)"  style="display: flex;">
+                           <div onclick="changeDate(-1)"  style="display: flex;" id='oneDateBack'>
                               <img src=" {% static 'images/left_date.svg' %} " class="arrow" > </img>
                            </div>
-                           <div onclick="changeDate(1)"  style="display: flex;">
+                           <div onclick="changeDate(1)"  style="display: flex;" id='oneDateAhead'>
                               <img src=" {% static 'images/right_date.svg' %}" class="arrow" > </img>
                            </div>
                         </div>
@@ -524,7 +532,7 @@
                                           <div class="input-group" id="adjustWidth">
                                              <input type="number" class="form-control disableIt" id="input1" placeholder="Total man days worked"name="total_man_days_worked" required>
                                              <div class=" btnMargin">
-                                                <button class="btn  valueButton disableBtn" type="button" id="increment1"><img src="{% static 'images/plusIcon.png' %}" class="plusIcon"></button>
+                                                <button class="btn  valueButton disableBtn" type="button" id="increment1"><img src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
                                                 <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement1"><img src="{% static 'images/minusButton.svg' %}"></button>
                                              </div>
                                           </div>
@@ -547,7 +555,7 @@
                                        <div class="input-group">
                                           <input type="number" class="form-control disableIt" id="input3" placeholder="Number of persons inducted in the site" name="no_of_person_inducted_site" required >
                                           <div class=" btnMargin">
-                                             <button class="btn  valueButton disableBtn" type="button" id="increment3"><img src="{% static 'images/plusIcon.png' %}" class="plusIcon"></button>
+                                             <button class="btn  valueButton disableBtn" type="button" id="increment3"><img src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
                                              <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement3"><img src="{% static 'images/minusButton.svg' %}"></button>
                                           </div>
                                        </div>
@@ -557,7 +565,7 @@
                                        <div class="input-group">
                                           <input type="number" class="form-control disableIt" id="input4" placeholder="Total number of toolbox talk attendees" name="no_of_toolbox_attendees" required >
                                           <div class=" btnMargin">
-                                             <button class="btn  valueButton disableBtn" type="button" id="increment4"><img src="{% static 'images/plusIcon.png' %}" class="plusIcon"></button>
+                                             <button class="btn  valueButton disableBtn" type="button" id="increment4"><img src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
                                              <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement4"><img src="{% static 'images/minusButton.svg' %}"></button>
                                           </div>
                                        </div>
@@ -568,7 +576,7 @@
                                           <div class="input-group" id="adjustWidth">
                                              <input type="number" class="form-control disableIt disableBefore" id="extraInput1" placeholder="Tool box talk (man-hours)" name="toolbox_talk_manhours" required>
                                              <div class=" btnMargin">
-                                                <button class="btn  valueButton disableBtn  " type="button" id="extraIncrement1"><img src="{% static 'images/plusIcon.png' %}" class="plusIcon"></button>
+                                                <button class="btn  valueButton disableBtn  " type="button" id="extraIncrement1"><img src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
                                                 <button class="btn  valueButton decBtn disableBtn" type="button" id="extraDecrement1"><img src="{% static 'images/minusButton.svg' %}"></button>
                                              </div>
                                           </div>
@@ -585,7 +593,7 @@
                                           <div class="input-group" id="adjustWidth">
                                              <input type="number" class="form-control disableIt disableBefore" id="extraInput2" placeholder="Number of HSE promotional activities" name="promotional_activities" required>
                                              <div class=" btnMargin">
-                                                <button class="btn  valueButton disableBtn  " type="button" id="extraIncrement2"><img src="{% static 'images/plusIcon.png' %}" class="plusIcon"></button>
+                                                <button class="btn  valueButton disableBtn  " type="button" id="extraIncrement2"><img src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
                                                 <button class="btn  valueButton decBtn disableBtn" type="button" id="extraDecrement2"><img src="{% static 'images/minusButton.svg' %}"></button>
                                              </div>
                                           </div>
@@ -601,7 +609,7 @@
                                        <div class="input-group">
                                           <input type="number" class="form-control disableIt" id="extraInput3" placeholder="Number of HSE committee meetings" name="committe_meetings" required >
                                           <div class=" btnMargin">
-                                             <button class="btn  valueButton disableBtn" type="button" id="extraIncrement3"><img src="{% static 'images/plusIcon.png' %}" class="plusIcon"></button>
+                                             <button class="btn  valueButton disableBtn" type="button" id="extraIncrement3"><img src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
                                              <button class="btn  valueButton decBtn disableBtn" type="button" id="extraDecrement3"><img src="{% static 'images/minusButton.svg' %}"></button>
                                           </div>
                                        </div>
@@ -633,7 +641,7 @@
                                           <div class="input-group" id="adjustWidth">
                                              <input type="number" class="form-control disableIt disableBefore" id="input5" placeholder="HSE Trainings (no. of attendees from Amplus)" name="hse_training_attendees" required>
                                              <div class=" btnMargin">
-                                                <button class="btn  valueButton disableBtn  " type="button" id="increment5"><img src="{% static 'images/plusIcon.png' %}" class="plusIcon"></button>
+                                                <button class="btn  valueButton disableBtn  " type="button" id="increment5"><img src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
                                                 <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement5"><img src="{% static 'images/minusButton.svg' %}"></button>
                                              </div>
                                           </div>
@@ -655,7 +663,7 @@
                                           <div class="input-group" id="adjustWidth">
                                              <input type="number" class="form-control disableIt disableBefore" id="input7" placeholder="HSE Trainings (no. of attendees from Contractor)" name="hse_training_contractor" required>
                                              <div class=" btnMargin">
-                                                <button class="btn  valueButton disableBtn" type="button" id="increment7"><img src="{% static 'images/plusIcon.png' %}" class="plusIcon"></button>
+                                                <button class="btn  valueButton disableBtn" type="button" id="increment7"><img src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
                                                 <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement7"><img src="{% static 'images/minusButton.svg' %}"></button>
                                              </div>
                                           </div>
@@ -707,7 +715,7 @@
                                           <div class="input-group" id="adjustWidth">
                                              <input type="number" class="form-control disableIt" id="input9" placeholder="Number of daily HSE observations" name="daily_hse_observation" required>
                                              <div class=" btnMargin">
-                                                <button class="btn  valueButton disableBtn" type="button" id="increment9"><img src="{% static 'images/plusIcon.png' %}" class="plusIcon"></button>
+                                                <button class="btn  valueButton disableBtn" type="button" id="increment9"><img src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
                                                 <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement9"><img src="{% static 'images/minusButton.svg' %}"></button>
                                              </div>
                                           </div>
@@ -718,7 +726,7 @@
                                        </div>
                                        <div id='formsLink1'>
                                           <img src="{% static 'images/Frame.png' %}">
-                                          <a href="/api/my_form/" class="linkForm">Fill the data</a>
+                                          <a href="/api/observation_form_/" class="linkForm">Fill the data</a>
                                        </div>
                                     </div>
                                     <div class="mb-3 ">
@@ -726,13 +734,13 @@
                                        <div class="input-group">
                                           <input type="number" class="form-control disableIt" id="input10" placeholder="Number of STOP Work notice issued" name="stop_work_notice" required>
                                           <div class=" btnMargin">
-                                             <button class="btn  valueButton disableBtn" type="button" id="increment10"><img src="{% static 'images/plusIcon.png' %}" class="plusIcon"></button>
+                                             <button class="btn  valueButton disableBtn" type="button" id="increment10"><img src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
                                              <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement10"><img src="{% static 'images/minusButton.svg' %}"</button>
                                           </div>
                                        </div>
                                        <div id='formsLink2'>
                                           <img src="{% static 'images/Frame.png' %}">
-                                          <a href="/api/my_stopwork/" class="linkForm">Fill the data</a>
+                                          <a href="/api/stopwork_form_/" class="linkForm">Fill the data</a>
                                        </div>
                                     </div>
                                     <div class="mb-3 ">
@@ -740,13 +748,13 @@
                                        <div class="input-group">
                                           <input type="number" class="form-control disableIt" id="input11" placeholder="Number of Violation Memo issued" name="violation_memo_issued" required>
                                           <div class=" btnMargin">
-                                             <button class="btn  valueButton disableBtn " type="button" id="increment11"><img src="{% static 'images/plusIcon.png' %}" class="plusIcon"></button>
+                                             <button class="btn  valueButton disableBtn " type="button" id="increment11"><img src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
                                              <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement11"><img src="{% static 'images/minusButton.svg' %}"</button>
                                           </div>
                                        </div>
                                        <div id='formsLink3'>
                                           <img src="{% static 'images/Frame.png' %}">
-                                          <a href="/api/violation_memo/" class="linkForm">Fill the data</a>
+                                          <a href="/api/violation_memo_/" class="linkForm">Fill the data</a>
                                        </div>
                                     </div>
                                     <div class="mb-3 ">
@@ -754,7 +762,7 @@
                                        <div class="input-group">
                                           <input type="number" class="form-control disableIt" id="input12" placeholder="Number of complaints from customers" name="complaint_from_customer" required>
                                           <div class=" btnMargin">
-                                             <button class="btn  valueButton disableBtn " type="button" id="increment12"><img src="{% static 'images/plusIcon.png' %}" class="plusIcon"></button>
+                                             <button class="btn  valueButton disableBtn " type="button" id="increment12"><img src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
                                              <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement12"><img src="{% static 'images/minusButton.svg' %}"</button>
                                           </div>
                                        </div>
@@ -785,7 +793,7 @@
                                           <div class="input-group" id="adjustWidth">
                                              <input type="number" class="form-control disableIt" id="input13" placeholder="Number of Management HSE Visits" name="no_of_management_visits" required>
                                              <div class=" btnMargin">
-                                                <button class="btn  valueButton disableBtn " type="button" id="increment13"><img src="{% static 'images/plusIcon.png' %}" class="plusIcon"></button>
+                                                <button class="btn  valueButton disableBtn " type="button" id="increment13"><img src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
                                                 <button class="btn  valueButton decBtn disableBtn"  type="button" id="decrement13"><img src="{% static 'images/minusButton.svg' %}"></button>
                                              </div>
                                           </div>
@@ -801,7 +809,7 @@
                                           <div class="input-group" id="adjustWidth">
                                              <input type="number" class="form-control disableIt" id="input14" placeholder="Total Findings" name="total_findings" required>
                                              <div class=" btnMargin">
-                                                <button class="btn  valueButton disableBtn " type="button" id="increment14"><img src="{% static 'images/plusIcon.png' %}" class="plusIcon"></button>
+                                                <button class="btn  valueButton disableBtn " type="button" id="increment14"><img src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
                                                 <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement14"><img src="{% static 'images/minusButton.svg' %}"></button>
                                              </div>
                                           </div>
@@ -817,7 +825,7 @@
                                           <div class="input-group" id="adjustWidth">
                                              <input type="number" class="form-control disableIt" id="input15" placeholder="Number of compilance done" name="no_of_compilance_done" required>
                                              <div class=" btnMargin">
-                                                <button class="btn  valueButton disableBtn" type="button" id="increment15"><img src="{% static 'images/plusIcon.png' %}" class="plusIcon"></button>
+                                                <button class="btn  valueButton disableBtn" type="button" id="increment15"><img src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
                                                 <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement15"><img src="{% static 'images/minusButton.svg' %}"></button>
                                              </div>
                                           </div>
@@ -856,13 +864,13 @@
                                        <div class="input-group" >
                                           <input type="number" class="form-control disableIt" id="input17" placeholder="Number of Incidents" name="no_of_incidents" required>
                                           <div class=" btnMargin">
-                                             <button class="btn  valueButton disableBtn " type="button" id="increment17"><img src="{% static 'images/plusIcon.png' %}" class="plusIcon"></button>
+                                             <button class="btn  valueButton disableBtn " type="button" id="increment17"><img src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
                                              <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement17"><img src="{% static 'images/minusButton.svg' %}"></button>
                                           </div>
                                        </div>
                                        <div id='formsLink4'>
                                           <img src="{% static 'images/Frame.png' %}">
-                                          <a href="/api/my_incident_form/" class="linkForm">Fill the data</a>
+                                          <a href="/api/incident_form_/" class="linkForm">Fill the data</a>
                                        </div>
                                     </div>
                                     <div class="mb-3">
@@ -870,7 +878,7 @@
                                        <div class="input-group" >
                                           <input type="number" class="form-control disableIt" id="input18" placeholder="Number of occupational illness" name="no_of_occupation_illness" required>
                                           <div class=" btnMargin">
-                                             <button class="btn  valueButton disableBtn" type="button" id="increment18"><img src="{% static 'images/plusIcon.png' %}" class="plusIcon"></button>
+                                             <button class="btn  valueButton disableBtn" type="button" id="increment18"><img src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
                                              <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement18"><img src="{% static 'images/minusButton.svg' %}"></button>
                                           </div>
                                        </div>
@@ -880,7 +888,7 @@
                                        <div class="input-group" >
                                           <input type="number" class="form-control disableIt" id="input19" placeholder="Number of environmental illness" name="no_of_environment_illness" required>
                                           <div class=" btnMargin">
-                                             <button class="btn  valueButton disableBtn" type="button" id="increment19"><img src="{% static 'images/plusIcon.png' %}" class="plusIcon"></button>
+                                             <button class="btn  valueButton disableBtn" type="button" id="increment19"><img src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
                                              <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement19"><img src="{% static 'images/minusButton.svg' %}"></button>
                                           </div>
                                        </div>
@@ -891,10 +899,11 @@
                                     </div>
                                  </form>
                                  <div class="saveBtn">
-                                    <form method="POST" action="{% url 'Parent' %}" enctype="multipart/form-data"  >
+                                    <form method="POST" action="{% url 'Parent' %}" enctype="multipart/form-data">
                                        {% csrf_token %}
                                        <input type="hidden" name="week_number" id="week_number6" class='weekValue' >
                                        <input type="hidden" name="year" id="year6" class='yearValue' >
+                                       <input type="hidden" name="from_status" id="from_status" class='from_status' value='1'>
                                        <button type="submit" class="btn btn-primary " id="finalSubmit" style='display:none'>Final Save</button>
                                        <button type="button" class="btn btn-secondary" id="closeBtn" style='display:none' onclick="previewPage2()">Close</button>
                                     </form>
@@ -1022,8 +1031,6 @@
       // Periodically update the calendar to reflect the current week
       setInterval(updateCalendar, 1000 * 60 * 60); // Update every hour (adjust as needed)
       
-      console.log(weekStartDate)
-      console.log(weekEndDate)
       
       
       
@@ -1086,13 +1093,34 @@
       // Function to change the date by a specified number of days
       function changeDate(days) {
          TodaysDate.setDate(TodaysDate.getDate() + days);
-         console.log(weekStartDate)
-         console.log(weekEndDate)
-         console.log(incrementEndDate)
-         
-       
+        
+
          if (TodaysDate >= weekStartDate && TodaysDate <= incrementEndDate) {
-           itsDateElement.textContent = formatDate(TodaysDate);
+
+         const startDate=itsDateElement.textContent = formatDate(weekStartDate);
+         const lastDate=itsDateElement.textContent = formatDate(weekEndDate);
+
+          itsDateElement.textContent = formatDate(TodaysDate);
+
+
+           const divElement = document.getElementById('viewingDate');
+            const value = divElement.innerText;
+
+            if(lastDate==value){
+               document.getElementById('oneDateAhead').style.display='none';
+            }
+            else if(startDate==value){
+               document.getElementById('oneDateBack').style.display='none';
+
+
+            }
+            else{
+               document.getElementById('oneDateBack').style.display='flex';
+               document.getElementById('oneDateAhead').style.display='flex';
+
+            }
+           
+
          }
        }
        
@@ -1221,7 +1249,6 @@
              .then(data => {
                  const categoryData = data[category][data[category].length - 1];
                  const categoryId = categoryData['id'];
-                 console.log(categoryId)
                  document.getElementById(`toBeUpdatedId${oldId}`).value = categoryId
       
                  
@@ -1314,7 +1341,6 @@
          fetch(`/api/incident_form/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
          .then(response => response.json())
          .then(data => {
-            console.log(data.length)
       
             if(data.length==undefined){
                document.getElementById("input18").disabled = true;
@@ -1367,7 +1393,7 @@
             }
             }
       
-      $.ajax({
+    $.ajax({
          type: "GET",
          url: "/api/parent/",
          success: function (data) {
@@ -1380,7 +1406,6 @@
              const foundItem = data.find(item => item.week_number === weekNumber && item.year === year);
              const elementWeek = document.querySelectorAll('.weekValue');
              const elementYear = document.querySelectorAll('.yearValue');
-             console.log('week is set')
 
              elementWeek.forEach((element) => {
                  element.value = weekNumber;
@@ -1408,10 +1433,9 @@
                      document.getElementById('fileInputLabel5').style.display='none'
                      document.getElementById('fileInputLabel6').style.display='none'
                      document.getElementById('fileInputLabel7').style.display='none'
-                     document.getElementById('formsLink1').style.display='none'
-                     document.getElementById('formsLink2').style.display='none'
-                     document.getElementById('formsLink3').style.display='none'
-                     document.getElementById('formsLink4').style.display='none'
+                     document.getElementById('extrafileInputLabel1').style.display='none'
+                     document.getElementById('extrafileInputLabel2').style.display='none' 
+                    
       
       
       
@@ -1433,7 +1457,7 @@
          error: function (xhr, status, error) {
              console.error("Error:", status, error);
          }
-      }); 
+      });  
       
       
       
@@ -1493,7 +1517,6 @@
          fetch(`/api/child-models/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
          .then(response => response.json())
          .then(data => {
-            console.log(data)
          if(data['General HSE'].length==0 || data['HSE Training'].length==0 || data['HSE Observation'].length==0 || data['HSE Observation'][0].daily_hse_observation==null  || data['Management Visits'].length==0 || data['Incidents'].length==0 ||data['Incidents'][0].no_of_incidents==null ){
              
                Swal.fire({
@@ -1546,7 +1569,6 @@
       const uploadLabel = document.getElementById("fileInputLabel1");
       const fileDisplay = document.getElementById("fileDisplay1");
       const fileName = document.getElementById("fileName1");
-      const removeButton = document.getElementById("removeButton1");
 
       fileInput.addEventListener("change", function () {
           const file = fileInput.files[0];
@@ -1556,12 +1578,9 @@
           }
       });
 
-      removeButton.addEventListener("click", function () {
-          fileInput.value = "";
-          fileName.textContent = "";
-          fileDisplay.style.display = "none";
-          uploadLabel.style.display = "block";
-      });
+      
+
+  
 
     
 

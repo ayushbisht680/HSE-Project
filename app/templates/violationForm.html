@@ -9,6 +9,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="stylesheet" href="">
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+     
    </head>
    <style>
       .mainTable{
@@ -149,6 +150,7 @@
          background-color: #3E9FFE;
       }
    </style>
+   
    <body>
       <!-- Success Modal -->
       <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
@@ -372,6 +374,36 @@
       });
       
       }); {% endcomment %}
+
+      $.ajax({
+         type: "GET",
+         url: "/api/parent/",
+         success: function (data) {
+             const today = new Date();
+             const weekNumber = getWeekNumber(today);
+             const year = today.getFullYear();
+      
+      
+             // Search for an item with matching week_number and year
+             const foundItem = data.find(item => item.week_number === weekNumber && item.year === year);          
+
+      
+             if (foundItem) {
+                 const fieldData = foundItem.form_status;
+                 if (fieldData == 1) {
+                  document.getElementById('addRowButton').style.display='none';
+                  
+                 }
+             } else {
+                 console.log(`No data found for week ${weekNumber} and year ${year}`);
+             }
+         },
+         error: function (xhr, status, error) {
+             console.error("Error:", status, error);
+         }
+      }); 
+
+  
       
       
    </script>

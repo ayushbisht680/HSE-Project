@@ -12,7 +12,6 @@ from django.contrib import messages
 
 
 
-
 class MyTemplateView(APIView):
     def get(self, request):
         return TemplateResponse(request, "index.html")
@@ -102,6 +101,8 @@ class GeneralHSEAPI(APIView):
 
 
     #     return Response('HSE object does not exist', status=status.HTTP_400_BAD_REQUEST)
+
+    # @check_hse_form_status  
 
     def post(self, request):
         data = request.data
@@ -774,13 +775,15 @@ class ParentAPI(APIView):
 
     def post(self, request):
         data = request.data
+        print(data)
         week_number = data.get("week_number")
         year = data.get("year")
-        from_status=1
+        # from_status=data.get("from_status")
+        from_status = 1   
 
         hse_instance = HSE.objects.get(week_number=week_number, year=year, plant_code=10000)
-        hse_instance.form_status = from_status  # Update form_status to 1
-        hse_instance.save()  # Save the changes
+        hse_instance.form_status = from_status  
+        hse_instance.save()  
 
       
         return HttpResponseRedirect('/api/my_html')
@@ -897,7 +900,7 @@ class HSEObservationFormAPI(APIView):
             hse_observation_form.hse_observation = hse_observation
             hse_observation_form.save()
 
-            return HttpResponseRedirect('/api/my_form/')
+            return HttpResponseRedirect('/api/observation_form_/')
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -950,7 +953,7 @@ class StopWorkFormAPI(APIView):
                     stop_work_form.save()
 
                     # return Response(serializer.data, status=status.HTTP_201_CREATED)
-                    return HttpResponseRedirect('/api/my_stopwork/')
+                    return HttpResponseRedirect('/api/stopwork_form_/')
 
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             else:
@@ -967,7 +970,7 @@ class StopWorkFormAPI(APIView):
                     stop_work_form.save()
 
                     # return Response(serializer.data, status=status.HTTP_201_CREATED)
-                    return HttpResponseRedirect('/api/my_stopwork/')
+                    return HttpResponseRedirect('/api/stopwork_form_/')
                 else:
                     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         else:
@@ -1021,7 +1024,7 @@ class ViolationMemoAPI(APIView):
                     violation_memo_form.save()
 
                     # return Response(serializer.data, status=status.HTTP_201_CREATED)
-                    return HttpResponseRedirect('/api/violation_memo/')
+                    return HttpResponseRedirect('/api/violation_memo_/')
                 
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             else:
@@ -1059,7 +1062,7 @@ class IncidentFormAPI(APIView):
             incident = Incidents.objects.filter(hse=hse).first()
             
             if incident:
-                incident_form = IncidentForm.objects.filter(incident_instance=incident)
+                incident_form = IncidentForm.objects.filter(incidents=incident)
 
                 if incident_form:
                     serializer = IncidentFormSerializer(incident_form, many=True)
@@ -1145,10 +1148,10 @@ class IncidentFormAPI(APIView):
 
         if serializer.is_valid():
             hse_incident_from = serializer.save()
-            hse_incident_from.incident_instance = hse_incident
+            hse_incident_from.incidents = hse_incident
             hse_incident_from.save()
 
-            return HttpResponseRedirect('/api/my_incident_form/')
+            return HttpResponseRedirect('/api/incident_form_/')
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

@@ -52,10 +52,12 @@
 
                         let cellClass = '';
 
-                        if (isHighlight) {
-                            cellClass = 'highlight';
-                        } else if (isToday) {
+                        if (isToday) {
                             cellClass = 'today';
+                        }
+
+                        if (isHighlight) {
+                            cellClass += ' highlight';
                         }
 
                         calendarHTML += `<td class="${cellClass}" data-week-start="${day}">${day}</td>`;
@@ -71,24 +73,6 @@
 
             calendarHTML += '</table>';
             document.getElementById("calendar").innerHTML = calendarHTML;
-
-            // Add event listeners to each calendar cell
-            const calendarCells = document.querySelectorAll('.myTable td');
-            calendarCells.forEach((cell) => {
-                cell.addEventListener('click', () => {
-                    // Clear existing highlights
-                    calendarCells.forEach((cell) => {
-                        cell.classList.remove('highlight');
-                    });
-
-                    // Highlight the entire week for the clicked date
-                    const weekStart = cell.getAttribute('data-week-start');
-                    const weekEnd = parseInt(weekStart, 10) + 6;
-                    for (let i = weekStart; i <= weekEnd; i++) {
-                        calendarCells[i - 1].classList.add('highlight');
-                    }
-                });
-            });
         };
 
         // Event listener for "Previous Month" button
@@ -107,16 +91,17 @@
         const currentDate = new Date();
         currentDate.setDate(currentDate.getDate() - currentDate.getDay()); // Start from the current week's Sunday
         updateCalendar(currentDate);
+
+        // Highlight the current week
+        document.querySelector('.highlight').addEventListener('click', () => {
+            document.querySelectorAll('.highlight').forEach((cell) => {
+                cell.classList.remove('highlight');
+            });
+            const weekStart = document.querySelector('.highlight').getAttribute('data-week-start');
+            document.querySelectorAll(`[data-week-start="${weekStart}"]`).forEach((cell) => {
+                cell.classList.add('highlight');
+            });
+        });
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
