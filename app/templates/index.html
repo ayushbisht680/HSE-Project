@@ -12,7 +12,7 @@
          width: 23% !important;
          }
          .col-md-9{
-            width: 77% !important;
+         width: 77% !important;
          }
          th, td {
          border: 1px solid #ddd;
@@ -407,8 +407,8 @@
          margin-top: 5px;
          }
          #removeButton1{
-            height:18px;
-            width:18px;
+         height:18px;
+         width:18px;
          }
       </style>
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
@@ -419,7 +419,7 @@
              // Refresh the page when the back button is pressed
              location.reload();
          });
-     </script>
+      </script>
    </head>
    <body>
       <div class="container-fluid">
@@ -458,7 +458,6 @@
                            <a href="#" for="sec" id="toggle-accordion5">Incidents</a>
                         </div>
                      </div>
-                     
                   </div>
                </div>
             </div>
@@ -536,14 +535,13 @@
                                                 <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement1"><img src="{% static 'images/minusButton.svg' %}"></button>
                                              </div>
                                           </div>
-                                           <div class="uploadBtn">
+                                          <div class="uploadBtn">
                                              <input type="file" class="form-control-file disableIt" id="fileInput1" style="display: none" name="today_day_worked_file" >
                                              <label class="input-group-text uploadColor" for="fileInput1" id="fileInputLabel1" style='width: 107px;'>Upload File</label>
                                              <div class="fileDisplay" id="fileDisplay1" style="display: none; align-items: center;">
                                                 <span class="fileName" id="fileName1" style='font-size: 12px; margin-left: 20px;'></span>
-                                            </div>
-                                          </div>                 
-                                 
+                                             </div>
+                                          </div>
                                        </div>
                                     </div>
                                     <div class="mb-3 changingWidth">
@@ -586,7 +584,6 @@
                                           </div>
                                        </div>
                                     </div>
-
                                     <div class="mb-3">
                                        <label for="extraInput2" class="form-label ">Number of HSE promotional activities</label>
                                        <div class='seperateAllElement' style='display: flex'>
@@ -603,7 +600,6 @@
                                           </div>
                                        </div>
                                     </div>
-                                    
                                     <div class="mb-3 ">
                                        <label for="extraInput3" class="form-label ">Number of HSE committee meetings</label>
                                        <div class="input-group">
@@ -614,7 +610,6 @@
                                           </div>
                                        </div>
                                     </div>
-
                                     <div class="saveBtn">
                                        <button type="submit" class="btn btn-success disableIt" id="SaveAndNext1" >Save & Next</button>
                                     </div>
@@ -651,7 +646,6 @@
                                           </div>
                                        </div>
                                     </div>
-
                                     <div class=" changingWidth">
                                        <label for="input6" class="form-label ">Duration of training session</label>
                                        <input type="number" class="form-control disableIt disableBefore" id="input6" placeholder="Duration of training session" name="duration_of_trainee" min="1" required>
@@ -678,17 +672,14 @@
                                        <input type="number" class="form-control disableIt disableBefore" id="input8" placeholder="Duration of training session" name="duration_of_contractor" min="1" required>
                                     </div>
                                     <span class="error-message" id="number-error2">Fill duration above 1hr</span>
-                                     
                                     <div class="mb-3 changingWidth">
                                        <label for="extraInput4" class="form-label">Amplus HSE training (man-hours)</label>
                                        <input type="number" class="form-control disableIt" id="extraInput4" placeholder="Amplus HSE training" name="amplus_hse_trainings" required>
                                     </div>
-
                                     <div class="mb-3 changingWidth">
                                        <label for="extraInput5" class="form-label">Contractor HSE training (man-hours)</label>
                                        <input type="number" class="form-control disableIt" id="extraInput5" placeholder="Contractor HSE training" name="contractor_hse_trainings" required>
                                     </div>
-
                                     <div class="saveBtn">
                                        <button type="submit" class="btn btn-success disableIt disableBefore"  id="SaveAndNext2" >Save & Next</button>
                                     </div>
@@ -870,7 +861,7 @@
                                        </div>
                                        <div id='formsLink4'>
                                           <img src="{% static 'images/Frame.png' %}">
-                                          <a href="/api/incident_form_/" class="linkForm">Fill the data</a>
+                                          <a href="/api/incident_form_/" class="linkForm" id='incidentHref'>Fill the data</a>
                                        </div>
                                     </div>
                                     <div class="mb-3">
@@ -977,10 +968,10 @@
          var startDate = new Date(d);
          d.setDate(d.getDate() + 6);
          var endDate = new Date(d);
-
+      
          d.setDate(d.getDate() + 1);
          var FinalEnddate=new Date(d);
-
+      
       
         return [startDate, endDate,FinalEnddate];
       };
@@ -1094,33 +1085,33 @@
       function changeDate(days) {
          TodaysDate.setDate(TodaysDate.getDate() + days);
         
-
+      
          if (TodaysDate >= weekStartDate && TodaysDate <= incrementEndDate) {
-
+      
          const startDate=itsDateElement.textContent = formatDate(weekStartDate);
          const lastDate=itsDateElement.textContent = formatDate(weekEndDate);
-
+      
           itsDateElement.textContent = formatDate(TodaysDate);
-
-
+      
+      
            const divElement = document.getElementById('viewingDate');
             const value = divElement.innerText;
-
+      
             if(lastDate==value){
                document.getElementById('oneDateAhead').style.display='none';
             }
             else if(startDate==value){
                document.getElementById('oneDateBack').style.display='none';
-
-
+      
+      
             }
             else{
                document.getElementById('oneDateBack').style.display='flex';
                document.getElementById('oneDateAhead').style.display='flex';
-
+      
             }
            
-
+      
          }
        }
        
@@ -1393,7 +1384,7 @@
             }
             }
       
-    $.ajax({
+      $.ajax({
          type: "GET",
          url: "/api/parent/",
          success: function (data) {
@@ -1406,14 +1397,14 @@
              const foundItem = data.find(item => item.week_number === weekNumber && item.year === year);
              const elementWeek = document.querySelectorAll('.weekValue');
              const elementYear = document.querySelectorAll('.yearValue');
-
+      
              elementWeek.forEach((element) => {
                  element.value = weekNumber;
              });   
              elementYear.forEach((element) => {
                element.value = year;
            });            
-
+      
       
              if (foundItem) {
                  const fieldData = foundItem.form_status;
@@ -1564,12 +1555,12 @@
       
       }
       
-     
+      
       const fileInput = document.getElementById("fileInput1");
       const uploadLabel = document.getElementById("fileInputLabel1");
       const fileDisplay = document.getElementById("fileDisplay1");
       const fileName = document.getElementById("fileName1");
-
+      
       fileInput.addEventListener("change", function () {
           const file = fileInput.files[0];
           if (file) {
@@ -1578,14 +1569,18 @@
           }
       });
 
-      
+      document.getElementById('previewBtn').addEventListener('click', function() {
+         localStorage.setItem('buttonClicked', 'true');
+     });
+       
+     
+     document.getElementById('closeBtn').addEventListener('click', function() {
+      localStorage.removeItem('buttonClicked');
+      });
 
-  
-
-    
-
-
-      
+   window.addEventListener('load', function() {
+      localStorage.removeItem('buttonClicked');
+   });
 
    </script>
 </html>

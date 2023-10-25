@@ -309,7 +309,13 @@
       function populateInputField() {
          const today = new Date();
          const weekNumber = getWeekNumber(today);
-         const year = today.getFullYear()         
+         const year = today.getFullYear()    
+         const buttonClicked = localStorage.getItem('buttonClicked');
+
+         if (buttonClicked === 'true') {
+             // Hide the "add row" button
+             document.getElementById('addRowButton').style.display = 'none';
+         }     
          
       fetch(`/api/incident_form/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
       .then(response => response.json())

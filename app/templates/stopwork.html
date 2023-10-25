@@ -384,6 +384,13 @@
              const today = new Date();
              const weekNumber = getWeekNumber(today);
              const year = today.getFullYear();
+
+             const buttonClicked = localStorage.getItem('buttonClicked');
+
+             if (buttonClicked === 'true') {
+                 // Hide the "add row" button
+                 document.getElementById('addRowButton').style.display = 'none';
+             }
             
       
              // Search for an item with matching week_number and year
