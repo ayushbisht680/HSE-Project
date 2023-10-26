@@ -391,7 +391,7 @@
       
       
              // Search for an item with matching week_number and year
-             const foundItem = data.find(item => item.week_number === weekNumber && item.year === year);          
+             const foundItem = data.find(item => item.week_number === weekNumber && item.year === year); 
 
       
              if (foundItem) {
@@ -400,7 +400,8 @@
                   document.getElementById('addRowButton').style.display='none';
                   
                  }
-             } else {
+             } 
+             else {
                  console.log(`No data found for week ${weekNumber} and year ${year}`);
              }
          },

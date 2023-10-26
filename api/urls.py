@@ -1,4 +1,7 @@
 from django.urls import path
+from django.conf.urls import url
+
+
 from app.views import *
 from django.conf import settings
 from django.conf.urls.static import static
@@ -11,12 +14,13 @@ urlpatterns = [
     path('management_visit/', ManagementAPI.as_view(), name="Management Visits"),
     path('incidents/', IncidentsAPI.as_view(), name="Incidents"),
     path('my_html/', MyTemplateView.as_view(),name='MyHTML'),
+    # url(r'my_html/$/', MyTemplateView.as_view(),name='MyHTML'),
     path('observation_form_/', MyFormView.as_view(),name='Observation'),
     path('stopwork_form_/', MyStopWork.as_view(),name='StopWork'),
     path('violation_memo_/', MyViolationMemo.as_view(),name='ViolationMemo'),
     path('incident_form_/', MyIncidentForm.as_view(),name='my_incident_form'),
     path('my_observers_form/', MyListObservers.as_view(),name='my_observers_form'),
-    path('parent/', ParentAPI.as_view(),name='Parent'),
+    path('parent/', HSEAPI.as_view(),name='Parent'),
     path('child-models/', AllModelsListView.as_view(), name='child-model-list'),
     path('observation_form/', HSEObservationFormAPI.as_view(), name='observation_form'),
     path('stopWork_form/', StopWorkFormAPI.as_view(), name='stopWork_form'),

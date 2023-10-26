@@ -1,107 +1,105 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Interactive Calendar</title>
     <style>
-        /* Custom CSS for styling */
-        th, td {
-            padding: 10px;
-            text-align: center;
-        }
-        .myTable {
+        table {
             border-collapse: collapse;
         }
-        .myTable th, .myTable td {
-            border: 1px solid black;
+        td {
+            border: 1px solid #000;
+            padding: 5px;
+            text-align: center;
+            width: 50px;
         }
         .highlight {
-            background-color: yellow; /* Customize the highlight color as needed */
+            background-color: yellow; /* Customize the highlight style */
         }
     </style>
 </head>
 <body>
-    <div>
-        <button id="prevMonth">Previous Month</button>
-        <button id="nextMonth">Next Month</button>
-    </div>
-    <div id="calendar"></div>
+    <table>
+        <thead>
+            <tr>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+                <th>Fri</th>
+                <th>Sat</th>
+                <th>Sun</th>
+            </tr>
+        </thead>
+        <tbody id="calendar-body">
+        </tbody>
+    </table>
 
     <script>
-        let calendarStartDate;
+        const today = new Date(2023, 10, 15); // Set today's date to October 30, 2023
+        const currentDay = today.getDate();
+        const year = today.getFullYear();
 
-        const updateCalendar = (startDate) => {
-            calendarStartDate = new Date(startDate);
-            year = calendarStartDate.getFullYear();
-            month = calendarStartDate.getMonth();
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
+        function getWeekNumber(date) {
+            date = new Date(date);
+            date.setHours(0, 0, 0, 0);
+            date.setDate(date.getDate() + 4 - (date.getDay() || 7));
+            var yearStart = new Date(date.getFullYear(), 0, 1);
+            var weekNumber = Math.ceil(((date - yearStart) / 86400000 + 1) / 7);
+            return weekNumber;
+        }
 
-            let calendarHTML = '<table class="myTable"><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr><tr>';
+        // Function to update the calendar
+        function updateCalendar() {
+            const weekNumber = getWeekNumber(today);
 
-            let day = 1;
+            const getWeekDates = (year, weekNumber) => {
+                var d = new Date(year, 0, 1 + (weekNumber - 1) * 7);
+                var dayNum = d.getDay();
+                var diff = --dayNum;
+                d.setDate(d.getDate() - diff);
+                var startDate = new Date(d);
+                d.setDate(d.getDate() + 6);
+                var endDate = new Date(d);
+
+                return [startDate, endDate];
+            };
+
+            [weekStartDate, weekEndDate] = getWeekDates(year, weekNumber);
+
+            const calendarBody = document.getElementById("calendar-body");
+            calendarBody.innerHTML = '';
+
+            today.setDate(1); // Set the date to the 1st of the current month
+            const currentMonth = today.getMonth();
+
+            today.setDate(currentDay);
+
+            let offset = (today.getDay() - 1 + 7) % 7;
+
+            today.setDate(currentDay - offset);
 
             for (let i = 0; i < 6; i++) {
+                const row = document.createElement("tr");
                 for (let j = 0; j < 7; j++) {
-                    if (i === 0 && j < calendarStartDate.getDay()) {
-                        // Days from the previous week
-                        const prevWeekDay = calendarStartDate.getDate() - calendarStartDate.getDay() + j;
-                        calendarHTML += `<td class="other-month">${prevWeekDay}</td>`;
-                    } else if (day <= daysInMonth) {
-                        // Days from the current month
-                        const isToday = year === new Date().getFullYear() && month === new Date().getMonth() && day === new Date().getDate();
-                        const isHighlight = day >= calendarStartDate.getDate() && day < calendarStartDate.getDate() + 7;
+                    const cell = document.createElement("td");
+                    const day = today.getDate();
+                    cell.textContent = day;
 
-                        let cellClass = '';
-
-                        if (isToday) {
-                            cellClass = 'today';
-                        }
-
-                        if (isHighlight) {
-                            cellClass += ' highlight';
-                        }
-
-                        calendarHTML += `<td class="${cellClass}" data-week-start="${day}">${day}</td>`;
-                        day++;
-                    } else {
-                        // Days from the next month
-                        calendarHTML += `<td class="other-month">${day - daysInMonth}</td>`;
-                        day++;
+                    if (
+                        today.getMonth() === currentMonth &&
+                        today >= weekStartDate &&
+                        today <= weekEndDate
+                    ) {
+                        cell.classList.add("highlight");
                     }
+
+                    row.appendChild(cell);
+                    today.setDate(day + 1);
                 }
-                calendarHTML += '</tr><tr>';
+                calendarBody.appendChild(row);
             }
+        }
 
-            calendarHTML += '</table>';
-            document.getElementById("calendar").innerHTML = calendarHTML;
-        };
-
-        // Event listener for "Previous Month" button
-        document.getElementById("prevMonth").addEventListener("click", () => {
-            calendarStartDate.setMonth(calendarStartDate.getMonth() - 1);
-            updateCalendar(calendarStartDate);
-        });
-
-        // Event listener for "Next Month" button
-        document.getElementById("nextMonth").addEventListener("click", () => {
-            calendarStartDate.setMonth(calendarStartDate.getMonth() + 1);
-            updateCalendar(calendarStartDate);
-        });
-
-        // Initialize the calendar starting from the current date
-        const currentDate = new Date();
-        currentDate.setDate(currentDate.getDate() - currentDate.getDay()); // Start from the current week's Sunday
-        updateCalendar(currentDate);
-
-        // Highlight the current week
-        document.querySelector('.highlight').addEventListener('click', () => {
-            document.querySelectorAll('.highlight').forEach((cell) => {
-                cell.classList.remove('highlight');
-            });
-            const weekStart = document.querySelector('.highlight').getAttribute('data-week-start');
-            document.querySelectorAll(`[data-week-start="${weekStart}"]`).forEach((cell) => {
-                cell.classList.add('highlight');
-            });
-        });
+        updateCalendar();
     </script>
 </body>
 </html>

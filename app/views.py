@@ -9,6 +9,7 @@ from rest_framework import generics
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib import messages
+from django.shortcuts import redirect
 
 
 
@@ -39,6 +40,8 @@ class MyListObservers(APIView):
 class DataTable(APIView):
     def get(self, request):
         return TemplateResponse(request, "dataTable.html")
+    
+
 
 
 
@@ -109,6 +112,7 @@ class GeneralHSEAPI(APIView):
         week_number = data.get("week_number", None)
         year = data.get("year", None)
         general_hse_instance = None
+        existing_id = None 
 
         plant = Plant.objects.filter(id=10000).first()
         hse = HSE.objects.filter(week_number=week_number, year=year).first()
@@ -120,11 +124,10 @@ class GeneralHSEAPI(APIView):
             existing_instance = GeneralHse.objects.filter(hse=hse).first()
 
             if existing_instance:
-                existing__id = existing_instance.id
-                print(' ID:', existing__id)
+                existing_id = existing_instance.id
+                print('ID:', existing_id)
 
                 serializer = GeneralHSESerializer(existing_instance, data=data)
-
             else:
                 hse_instance, created = HSE.objects.update_or_create(
                     week_number=week_number,
@@ -133,14 +136,18 @@ class GeneralHSEAPI(APIView):
                     defaults={"form_status": 0},
                 )
                 general_hse_instance = GeneralHse(hse=hse_instance)
-                print('Creating a new  instance:', general_hse_instance)
 
                 serializer = GeneralHSESerializer(general_hse_instance, data=data)
 
             if serializer.is_valid():
                 instance = serializer.save()
                 instance.save()
-                return HttpResponseRedirect('/api/my_html')
+
+
+                # return HttpResponseRedirect('/api/my_html')
+                # return Response({'data':serializer.data})
+                return Response(data, status=status.HTTP_201_CREATED)
+
 
         else:
             hse_instance, created = HSE.objects.update_or_create(
@@ -156,18 +163,46 @@ class GeneralHSEAPI(APIView):
             if serializer.is_valid():
                 instance = serializer.save()
                 instance.save()
-                return HttpResponseRedirect('/api/my_html')
+
+                # return HttpResponseRedirect('/api/my_html')
+                # return Response({'data':serializer.data})
+                return Response(data, status=status.HTTP_201_CREATED)
+
+
+
 
         return Response('HSE object does not exist', status=status.HTTP_400_BAD_REQUEST)
 
+
+
+
+
     def put(self, request):
         data = request.data
-        serializer = GeneralHSESerializer(data=data)
+        week_number = data.get("week_number", None)
+        year = data.get("year", None)
+
+       
+        try:
+            hse = HSE.objects.get(week_number=week_number, year=year)
+        except HSE.DoesNotExist:
+            return Response('HSE entry not found', status=status.HTTP_404_NOT_FOUND)
+
+        if hse.form_status == 1:
+            return Response('Form has already been submitted', status=status.HTTP_400_BAD_REQUEST)
+
+        existing_instance = GeneralHse.objects.filter(hse=hse).first()
+
+        general_hse_instance = existing_instance
+        serializer = GeneralHSESerializer(general_hse_instance, data=data)
+
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         else:
-            return Response(serializer.errors)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 
     def patch(self, request):
         data = request.data
@@ -251,6 +286,7 @@ class HSETrainingsAPI(APIView):
         week_number = data.get("week_number", None)
         year = data.get("year", None)
         hse_training_instance = None
+        existing__id=None
 
         plant = Plant.objects.filter(id=10000).first()
         hse = HSE.objects.filter(week_number=week_number, year=year).first()
@@ -282,7 +318,11 @@ class HSETrainingsAPI(APIView):
             if serializer.is_valid():
                 instance = serializer.save()
                 instance.save()
-                return HttpResponseRedirect('/api/my_html')
+                # return HttpResponseRedirect('/api/my_html')
+                # return redirect('/api/my_html/{existing__id}/')
+                return Response(data, status=status.HTTP_201_CREATED)
+
+
 
         else:
             hse_instance, created = HSE.objects.update_or_create(
@@ -298,7 +338,11 @@ class HSETrainingsAPI(APIView):
             if serializer.is_valid():
                 instance = serializer.save()
                 instance.save()
-                return HttpResponseRedirect('/api/my_html')
+                # return HttpResponseRedirect('/api/my_html')
+                # return redirect('/api/my_html/{existing__id}/')
+                return Response(data, status=status.HTTP_201_CREATED)
+
+
 
         return Response('HSE object does not exist', status=status.HTTP_400_BAD_REQUEST)
 
@@ -393,9 +437,12 @@ class HSEObservationAPI(APIView):
         week_number = data.get("week_number", None)
         year = data.get("year", None)
         hse_observation = None
+        print(week_number)
+        print(year)
 
         plant = Plant.objects.filter(id=10000).first()
         hse = HSE.objects.filter(week_number=week_number, year=year).first()
+        print(hse)
 
         if hse:
             if hse.form_status == 1:
@@ -428,7 +475,10 @@ class HSEObservationAPI(APIView):
             if serializer.is_valid():
                 instance = serializer.save()
                 instance.save()
-                return HttpResponseRedirect('/api/my_html')
+                # return HttpResponseRedirect('/api/my_html')
+                return Response(data, status=status.HTTP_201_CREATED)
+
+
 
         else:
             hse_instance, created = HSE.objects.update_or_create(
@@ -437,6 +487,7 @@ class HSEObservationAPI(APIView):
                 plant_code=plant,
                 defaults={"form_status": 0},
             )
+            print('hello ayush')
             hse_observation = HSEObservation(hse=hse_instance)
 
             serializer = HSEObservationSerializer(hse_observation, data=data)
@@ -444,7 +495,9 @@ class HSEObservationAPI(APIView):
             if serializer.is_valid():
                 instance = serializer.save()
                 instance.save()
-                return HttpResponseRedirect('/api/my_html')
+                # return HttpResponseRedirect('/api/my_html')
+                return Response(data, status=status.HTTP_201_CREATED)
+
 
         return Response('HSE object does not exist', status=status.HTTP_400_BAD_REQUEST)
 
@@ -570,7 +623,9 @@ class ManagementAPI(APIView):
             if serializer.is_valid():
                 instance = serializer.save()
                 instance.save()
-                return HttpResponseRedirect('/api/my_html')
+                return Response(data, status=status.HTTP_201_CREATED)
+
+                # return HttpResponseRedirect('/api/my_html')
 
         else:
             hse_instance, created = HSE.objects.update_or_create(
@@ -586,7 +641,9 @@ class ManagementAPI(APIView):
             if serializer.is_valid():
                 instance = serializer.save()
                 instance.save()
-                return HttpResponseRedirect('/api/my_html')
+                return Response(data, status=status.HTTP_201_CREATED)
+
+                # return HttpResponseRedirect('/api/my_html')
 
         return Response('HSE object does not exist', status=status.HTTP_400_BAD_REQUEST)
 
@@ -718,7 +775,9 @@ class IncidentsAPI(APIView):
             if serializer.is_valid():
                 instance = serializer.save()
                 instance.save()
-                return HttpResponseRedirect('/api/my_html')
+                # return HttpResponseRedirect('/api/my_html')
+                return Response(data, status=status.HTTP_201_CREATED)
+
 
         else:
             hse_instance, created = HSE.objects.update_or_create(
@@ -734,7 +793,9 @@ class IncidentsAPI(APIView):
             if serializer.is_valid():
                 instance = serializer.save()
                 instance.save()
-                return HttpResponseRedirect('/api/my_html')
+                # return HttpResponseRedirect('/api/my_html')
+                return Response(data,status=status.HTTP_201_CREATED)
+
 
         return Response('HSE object does not exist', status=status.HTTP_400_BAD_REQUEST)
 
@@ -766,7 +827,7 @@ class IncidentsAPI(APIView):
         return Response({"message": "Person deleted successfully"})
 
 
-class ParentAPI(APIView):
+class HSEAPI(APIView):
     def get(self, request):
         obj = HSE.objects.all()
         serializer = HSESerializer(obj, many=True)
@@ -789,8 +850,6 @@ class ParentAPI(APIView):
         return HttpResponseRedirect('/api/my_html')
 
     
-    
-
 
 class AllModelsListView(generics.ListAPIView):
     serializer_class = GeneralHSESerializer
@@ -836,7 +895,6 @@ class AllModelsListView(generics.ListAPIView):
             return Response(response_data)
         else:
             return Response({"detail": "hse data not found"}, status=404)
-
 
 
        
@@ -904,8 +962,7 @@ class HSEObservationFormAPI(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-        
+    
 
 class StopWorkFormAPI(APIView):
 

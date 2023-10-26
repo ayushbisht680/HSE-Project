@@ -410,15 +410,20 @@
          height:18px;
          width:18px;
          }
+
+          {% comment %} .accordion-button:not(.collapsed)::after {
+             background-image: url('/static/images/accordianImg.svg') !important;
+         }  {% endcomment %}
+         {% comment %} .accordion-button::after{
+             background-image: url('/static/images/accordianImg.svg') !important;
+
+
+         }  {% endcomment %}
       </style>
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
       <script>
-         // Listen for the popstate event (e.g., when the user presses the back button)
-         window.addEventListener('popstate', function (event) {
-             // Refresh the page when the back button is pressed
-             location.reload();
-         });
+       
       </script>
    </head>
    <body>
@@ -462,10 +467,19 @@
                </div>
             </div>
             <div class="col-md-9">
-               <div class="alert alert-warning alert-dismissible fade show" role="alert" id="alert"  style="display: none;">
-                  <strong>Please Fill all the above forms</strong> 
-                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+
+              <div class="modal fade" tabindex="-1" id="successModal" role="dialog">
+               <div class="modal-dialog modal-dialog-centered" role="document">
+                   <div class="modal-content">
+                       <div class="modal-body">
+                           <p class="text-center">Data Saved Successfully</p>
+                       </div>
+                   </div>
                </div>
+           </div>
+           
+              
                <div class='myNavbar'>
                   <nav class="navbar">
                      <div class="imageAlign">
@@ -524,7 +538,7 @@
                                     {% csrf_token %}
                                     <input type="hidden" name="week_number" id="week_number1" class='weekValue' >
                                     <input type="hidden" name="year" id="year1" class='yearValue' >
-                                    <input type="hidden" name="toBeUpdatedId1" id="toBeUpdatedId1" >
+                                    <input type="hidden" name="toBeUpdatedId1" id="toBeUpdatedId1" value='' >
                                     <div class="mb-3">
                                        <label for="input1" class="form-label ">Total man days worked</label>
                                        <div class='seperateAllElement' style='display: flex'>
@@ -886,7 +900,7 @@
                                     </div>
                                     <div class="saveBtn" id='finalSubmitDiv'>
                                        <button type="button" class="btn btn-success lastPreview" onclick='previewPage()' id='previewBtn'>Preview </button>
-                                       <button type="submit" class="btn btn-success disableIt lastButton" id="incidentBtn" onclick="calculateWeekAndYear('week_number5', 'year5')">Save</button>
+                                       <button type="submit" class="btn btn-success disableIt lastButton" id="incidentBtn" >Save</button>
                                     </div>
                                  </form>
                                  <div class="saveBtn">
@@ -927,7 +941,6 @@
       
    </script>
    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
@@ -988,6 +1001,8 @@
             if (i === 0 && j < daysFromPrevMonth) {
                 // Days from the previous month
                 const prevMonthDay = new Date(year, month, 0).getDate() - daysFromPrevMonth + j + 1;
+                console.log(prevMonthDay)
+                console.log('Hello')
                 calendarHTML += `<td class="other-month">${prevMonthDay}</td>`;
             } else if (day <= daysInMonth) {
                 // Days from the current month
@@ -1144,8 +1159,8 @@
        
        const getTodayWeek = new Date();
        const weekNumberInMonth = getWeekNumberInMonth(today);
-      const myWeek = document.getElementById('weekDisplay');
-      const itsDate = document.getElementById('dateDisplay');
+       const myWeek = document.getElementById('weekDisplay');
+       const itsDate = document.getElementById('dateDisplay');
       
       myWeek.textContent = `Week ${weekNumberInMonth}`; 
       itsDate.textContent = `${startDateFormatted}- ${endDateFormatted}`;
@@ -1581,6 +1596,45 @@
    window.addEventListener('load', function() {
       localStorage.removeItem('buttonClicked');
    });
+
+
+   function handleFormSubmission(formId, url) {
+       const form = document.getElementById(formId);
+       form.addEventListener("submit", function (event) {
+           event.preventDefault();
+   
+           const formData = new FormData(this);
+   
+           fetch(url, {
+               method: "PUT",
+               body: formData,
+           })
+           .then(response => {
+            console.log(response)
+             if (response.status === 200 ) {
+                   $('#successModal').modal('show');
+                   setTimeout(function () {
+                       $('#successModal').modal('hide');
+                   }, 1000); 
+               } else {
+                   console.error("Form submission failed. Status:", response.status);
+               } 
+           })
+           .catch(error => {
+               console.error("Error:", error);
+           });
+       });
+   }
+   
+   handleFormSubmission("form1", "{% url 'General HSE' %}");
+   handleFormSubmission("form2", "{% url 'HSE Trainings' %}");
+   handleFormSubmission("form3", "{% url 'HSE Observations' %}");
+   handleFormSubmission("form4", "{% url 'Management Visits' %}");
+   handleFormSubmission("final-form", "{% url 'Incidents' %}");
+   
+  
+
+  
 
    </script>
 </html>
