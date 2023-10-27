@@ -51,156 +51,72 @@ class GeneralHSEAPI(APIView):
         serializer = GeneralHSESerializer(obj, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
-    # def post(self, request):
-    #     data = request.data
-    #     week_number = data.get("week_number", None)
-    #     year = data.get("year", None)
-    #     entry_id = request.data.get("toBeUpdatedId1")
-    #     general_hse_instance = None
 
-    #     plant = Plant.objects.filter(id=10000).first()
-    #     hse = HSE.objects.filter(week_number=week_number, year=year).first()
-
-    #     if hse:
-    #         if hse.form_status == 1:
-    #             return Response('Form already submitted', status=status.HTTP_400_BAD_REQUEST)
-
-    #         if entry_id:
-    #             try:
-    #                 general_hse_instance = GeneralHse.objects.get(id=entry_id)
-    #             except GeneralHse.DoesNotExist:
-    #                 general_hse_instance = None
-
-    #         if not general_hse_instance:
-    #             hse_instance, created = HSE.objects.update_or_create(
-    #                 week_number=week_number,
-    #                 year=year,
-    #                 plant_code=plant,
-    #                 defaults={"form_status": 0},
-    #             )
-    #             general_hse_instance = GeneralHse(hse=hse_instance)
-
-    #         serializer = GeneralHSESerializer(general_hse_instance, data=data)
-    #         if serializer.is_valid():
-    #             instance = serializer.save()
-    #             instance.save()
-    #             return HttpResponseRedirect('/api/my_html')
-
-    #     else:
-    #         hse_instance, created = HSE.objects.get_or_create(
-    #             week_number=week_number,
-    #             year=year,
-    #             plant_code=plant,
-    #             defaults={"form_status": 0},
-    #         )
-    #         general_hse_instance = GeneralHse(hse=hse_instance)
-
-    #     serializer = GeneralHSESerializer(general_hse_instance, data=data)
-
-    #     if serializer.is_valid():
-    #         instance = serializer.save()
-    #         instance.save()
-    #         return HttpResponseRedirect('/api/my_html')
-
-
-    #     return Response('HSE object does not exist', status=status.HTTP_400_BAD_REQUEST)
-
-    # @check_hse_form_status  
 
     def post(self, request):
         data = request.data
         week_number = data.get("week_number", None)
         year = data.get("year", None)
+        plant_code = data.get("plant_id")
         general_hse_instance = None
-        existing_id = None 
+        print(plant_code)
 
-        plant = Plant.objects.filter(id=10000).first()
-        hse = HSE.objects.filter(week_number=week_number, year=year).first()
+        plant = Plant.objects.filter(id=plant_code).first()
 
-        if hse:
-            if hse.form_status == 1:
-                return Response('Form already submitted', status=status.HTTP_400_BAD_REQUEST)
+        hse_instance, created = HSE.objects.get_or_create(
+            week_number=week_number,
+            year=year,
+            plant_code=plant,
+            defaults={"form_status": 0},
+        )
+        print(hse_instance)
 
-            existing_instance = GeneralHse.objects.filter(hse=hse).first()
+        if hse_instance.form_status == 1:
+            return Response('Form already submitted', status=status.HTTP_400_BAD_REQUEST)
 
-            if existing_instance:
-                existing_id = existing_instance.id
-                print('ID:', existing_id)
+        general_hse_instance = GeneralHse(hse=hse_instance)
+        print(general_hse_instance)
+        serializer = GeneralHSESerializer(general_hse_instance, data=data)
 
-                serializer = GeneralHSESerializer(existing_instance, data=data)
-            else:
-                hse_instance, created = HSE.objects.update_or_create(
-                    week_number=week_number,
-                    year=year,
-                    plant_code=plant,
-                    defaults={"form_status": 0},
-                )
-                general_hse_instance = GeneralHse(hse=hse_instance)
-
-                serializer = GeneralHSESerializer(general_hse_instance, data=data)
-
-            if serializer.is_valid():
-                instance = serializer.save()
-                instance.save()
-
-
-                # return HttpResponseRedirect('/api/my_html')
-                # return Response({'data':serializer.data})
-                return Response(data, status=status.HTTP_201_CREATED)
-
-
+        if serializer.is_valid():
+            instance = serializer.save()
+            return Response({'id': instance.id, 'data': serializer.data}, status=status.HTTP_201_CREATED)
         else:
-            hse_instance, created = HSE.objects.update_or_create(
-                week_number=week_number,
-                year=year,
-                plant_code=plant,
-                defaults={"form_status": 0},
-            )
-            general_hse_instance = GeneralHse(hse=hse_instance)
-
-            serializer = GeneralHSESerializer(general_hse_instance, data=data)
-
-            if serializer.is_valid():
-                instance = serializer.save()
-                instance.save()
-
-                # return HttpResponseRedirect('/api/my_html')
-                # return Response({'data':serializer.data})
-                return Response(data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-
-
-        return Response('HSE object does not exist', status=status.HTTP_400_BAD_REQUEST)
-
-
-
-
+        
 
     def put(self, request):
         data = request.data
         week_number = data.get("week_number", None)
         year = data.get("year", None)
+        plant_code=data.get("plant_id")
+        id = data.get("toBeUpdatedId") 
 
-       
+        print(id)
+        print("Hello, it's a put request")
+        
         try:
-            hse = HSE.objects.get(week_number=week_number, year=year)
-        except HSE.DoesNotExist:
-            return Response('HSE entry not found', status=status.HTTP_404_NOT_FOUND)
+            existing_instance = GeneralHse.objects.get(id=id)
+            print(existing_instance.hse.form_status)
 
-        if hse.form_status == 1:
-            return Response('Form has already been submitted', status=status.HTTP_400_BAD_REQUEST)
+            if existing_instance.hse.form_status == 1:
+                return Response('Form has already been submitted', status=status.HTTP_400_BAD_REQUEST)
+            
+        except GeneralHse.DoesNotExist:
+                return Response('GeneralHse instance does not exist', status=status.HTTP_400_BAD_REQUEST)
 
-        existing_instance = GeneralHse.objects.filter(hse=hse).first()
-
-        general_hse_instance = existing_instance
-        serializer = GeneralHSESerializer(general_hse_instance, data=data)
+        serializer = GeneralHSESerializer(existing_instance, data=data)
 
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
 
 
 
@@ -227,12 +143,13 @@ class HSETrainingsAPI(APIView):
         serializer = HSETrainingsSerializer(obj, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+
     # def post(self, request):
     #     data = request.data
     #     week_number = data.get("week_number", None)
     #     year = data.get("year", None)
-    #     entry_id = request.data.get("toBeUpdatedId2")
     #     hse_training_instance = None
+    #     existing__id=None
 
     #     plant = Plant.objects.filter(id=10000).first()
     #     hse = HSE.objects.filter(week_number=week_number, year=year).first()
@@ -241,13 +158,15 @@ class HSETrainingsAPI(APIView):
     #         if hse.form_status == 1:
     #             return Response('Form already submitted', status=status.HTTP_400_BAD_REQUEST)
 
-    #         if entry_id:
-    #             try:
-    #                 hse_training_instance = HSETrainingsModel.objects.get(id=entry_id)
-    #             except HSETrainingsModel.DoesNotExist:
-    #                 hse_training_instance = None
+    #         existing_instance = HSETrainingsModel.objects.filter(hse=hse).first()
 
-    #         if not hse_training_instance:
+    #         if existing_instance:
+    #             existing__id = existing_instance.id
+    #             print(' ID:', existing__id)
+
+    #             serializer = HSETrainingsSerializer(existing_instance, data=data)
+
+    #         else:
     #             hse_instance, created = HSE.objects.update_or_create(
     #                 week_number=week_number,
     #                 year=year,
@@ -255,15 +174,21 @@ class HSETrainingsAPI(APIView):
     #                 defaults={"form_status": 0},
     #             )
     #             hse_training_instance = HSETrainingsModel(hse=hse_instance)
+    #             print('Creating a new  instance:', hse_training_instance)
 
-    #         serializer = HSETrainingsSerializer(hse_training_instance, data=data)
+    #             serializer = HSETrainingsSerializer(hse_training_instance, data=data)
+
     #         if serializer.is_valid():
     #             instance = serializer.save()
     #             instance.save()
-    #             return HttpResponseRedirect('/api/my_html')
+    #             # return HttpResponseRedirect('/api/my_html')
+    #             # return redirect('/api/my_html/{existing__id}/')
+    #             return Response(data, status=status.HTTP_201_CREATED)
+
+
 
     #     else:
-    #         hse_instance, created = HSE.objects.get_or_create(
+    #         hse_instance, created = HSE.objects.update_or_create(
     #             week_number=week_number,
     #             year=year,
     #             plant_code=plant,
@@ -271,12 +196,15 @@ class HSETrainingsAPI(APIView):
     #         )
     #         hse_training_instance = HSETrainingsModel(hse=hse_instance)
 
-    #     serializer = HSETrainingsSerializer(hse_training_instance, data=data)
-        
-    #     if serializer.is_valid():
-    #         instance = serializer.save()
-    #         instance.save()
-    #         return HttpResponseRedirect('/api/my_html')
+    #         serializer = HSETrainingsSerializer(hse_training_instance, data=data)
+
+    #         if serializer.is_valid():
+    #             instance = serializer.save()
+    #             instance.save()
+    #             # return HttpResponseRedirect('/api/my_html')
+    #             # return redirect('/api/my_html/{existing__id}/')
+    #             return Response(data, status=status.HTTP_201_CREATED)
+
 
 
     #     return Response('HSE object does not exist', status=status.HTTP_400_BAD_REQUEST)
@@ -285,75 +213,63 @@ class HSETrainingsAPI(APIView):
         data = request.data
         week_number = data.get("week_number", None)
         year = data.get("year", None)
+        plant_code = data.get("plant_id")
         hse_training_instance = None
-        existing__id=None
+        print(plant_code)
 
-        plant = Plant.objects.filter(id=10000).first()
-        hse = HSE.objects.filter(week_number=week_number, year=year).first()
+        plant = Plant.objects.filter(id=plant_code).first()
 
-        if hse:
-            if hse.form_status == 1:
-                return Response('Form already submitted', status=status.HTTP_400_BAD_REQUEST)
+        hse_instance, created = HSE.objects.get_or_create(
+            week_number=week_number,
+            year=year,
+            plant_code=plant,
+            defaults={"form_status": 0},
+        )
+        print(hse_instance)
 
-            existing_instance = HSETrainingsModel.objects.filter(hse=hse).first()
+        if hse_instance.form_status == 1:
+            return Response('Form already submitted', status=status.HTTP_400_BAD_REQUEST)
 
-            if existing_instance:
-                existing__id = existing_instance.id
-                print(' ID:', existing__id)
+        hse_training_instance = HSETrainingsModel(hse=hse_instance)
+        print(hse_training_instance)
+        serializer = HSETrainingsSerializer(hse_training_instance, data=data)
 
-                serializer = HSETrainingsSerializer(existing_instance, data=data)
-
-            else:
-                hse_instance, created = HSE.objects.update_or_create(
-                    week_number=week_number,
-                    year=year,
-                    plant_code=plant,
-                    defaults={"form_status": 0},
-                )
-                hse_training_instance = HSETrainingsModel(hse=hse_instance)
-                print('Creating a new  instance:', hse_training_instance)
-
-                serializer = HSETrainingsSerializer(hse_training_instance, data=data)
-
-            if serializer.is_valid():
-                instance = serializer.save()
-                instance.save()
-                # return HttpResponseRedirect('/api/my_html')
-                # return redirect('/api/my_html/{existing__id}/')
-                return Response(data, status=status.HTTP_201_CREATED)
-
-
-
+        if serializer.is_valid():
+            instance = serializer.save()
+            return Response({'id': instance.id, 'data': serializer.data}, status=status.HTTP_201_CREATED)
         else:
-            hse_instance, created = HSE.objects.update_or_create(
-                week_number=week_number,
-                year=year,
-                plant_code=plant,
-                defaults={"form_status": 0},
-            )
-            hse_training_instance = HSETrainingsModel(hse=hse_instance)
-
-            serializer = HSETrainingsSerializer(hse_training_instance, data=data)
-
-            if serializer.is_valid():
-                instance = serializer.save()
-                instance.save()
-                # return HttpResponseRedirect('/api/my_html')
-                # return redirect('/api/my_html/{existing__id}/')
-                return Response(data, status=status.HTTP_201_CREATED)
-
-
-
-        return Response('HSE object does not exist', status=status.HTTP_400_BAD_REQUEST)
-
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+    
     def put(self, request):
         data = request.data
-        serializer = HSETrainingsSerializer(data=data)
+        week_number = data.get("week_number", None)
+        year = data.get("year", None)
+        plant_code=data.get("plant_id")
+        id = data.get("toBeUpdatedId") 
+
+        print(id)
+        print("Hello, it's a put request")
+        
+        try:
+            existing_instance = HSETrainingsModel.objects.get(id=id)
+            print(existing_instance.hse.form_status)
+
+            if existing_instance.hse.form_status == 1:
+                return Response('Form has already been submitted', status=status.HTTP_400_BAD_REQUEST)
+            
+        except HSETrainingsModel.DoesNotExist:
+                return Response('HSE Training instance does not exist', status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = HSETrainingsSerializer(existing_instance, data=data)
+
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         else:
-            return Response(serializer.errors)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 
     def patch(self, request):
         data = request.data
@@ -378,137 +294,65 @@ class HSEObservationAPI(APIView):
         serializer = HSEObservationSerializer(obj, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    # def post(self, request):
-    #     data = request.data
-    #     week_number = data.get("week_number", None)
-    #     year = data.get("year", None)
-    #     entry_id = request.data.get("toBeUpdatedId3")
-    #     observation_instance = None
-
-    #     plant = Plant.objects.filter(id=10000).first()
-    #     hse = HSE.objects.filter(week_number=week_number, year=year).first()
-
-    #     if hse:
-    #         if hse.form_status == 1:
-    #             return Response('Form already submitted', status=status.HTTP_400_BAD_REQUEST)
-
-    #         if entry_id:
-    #             try:
-    #                 observation_instance = HSEObservation.objects.get(id=entry_id)
-    #             except HSEObservation.DoesNotExist:
-    #                 observation_instance = None
-
-    #         if not observation_instance:
-    #             hse_instance, created = HSE.objects.update_or_create(
-    #                 week_number=week_number,
-    #                 year=year,
-    #                 plant_code=plant,
-    #                 defaults={"form_status": 0},
-    #             )
-    #             observation_instance = HSEObservation(hse=hse_instance)
-
-    #         serializer = HSEObservationSerializer(observation_instance, data=data)
-    #         if serializer.is_valid():
-    #             instance = serializer.save()
-    #             instance.save()
-    #             return HttpResponseRedirect('/api/my_html')
-
-    #     else:
-    #         hse_instance, created = HSE.objects.update_or_create(
-    #             week_number=week_number,
-    #             year=year,
-    #             plant_code=plant,
-    #             defaults={"form_status": 0},
-    #         )
-    #         observation_instance = HSEObservation(hse=hse_instance)
-
-    #     serializer = HSEObservationSerializer(observation_instance, data=data)
-        
-    #     if serializer.is_valid():
-    #         instance = serializer.save()
-    #         instance.save()
-    #         return HttpResponseRedirect('/api/my_html')
-
-
-    #     return Response('HSE object does not exist', status=status.HTTP_400_BAD_REQUEST)
-
     def post(self, request):
         data = request.data
         week_number = data.get("week_number", None)
         year = data.get("year", None)
-        hse_observation = None
-        print(week_number)
-        print(year)
+        plant_code = data.get("plant_id")
+        hse_observation_instance = None
+        print(plant_code)
 
-        plant = Plant.objects.filter(id=10000).first()
-        hse = HSE.objects.filter(week_number=week_number, year=year).first()
-        print(hse)
+        plant = Plant.objects.filter(id=plant_code).first()
 
-        if hse:
-            if hse.form_status == 1:
-                return Response('Form already submitted', status=status.HTTP_400_BAD_REQUEST)
+        hse_instance, created = HSE.objects.get_or_create(
+            week_number=week_number,
+            year=year,
+            plant_code=plant,
+            defaults={"form_status": 0},
+        )
+        print(hse_instance)
 
-            # Check if an incident object already exists
-            existing_observation = HSEObservation.objects.filter(hse=hse).first()
+        if hse_instance.form_status == 1:
+            return Response('Form already submitted', status=status.HTTP_400_BAD_REQUEST)
 
-            if existing_observation:
-                # An incident object already exists; you can get its ID
-                existing_observation_id = existing_observation.id
-                print('Incident ID:', existing_observation_id)
+        hse_observation_instance = HSEObservation(hse=hse_instance)
+        print(hse_observation_instance)
+        serializer = HSEObservationSerializer(hse_observation_instance, data=data)
 
-                # Use existing_incident_id or perform any updates on the existing incident
-                serializer = HSEObservationSerializer(existing_observation, data=data)
-
-            else:
-                # No existing incident object, create a new one
-                hse_instance, created = HSE.objects.update_or_create(
-                    week_number=week_number,
-                    year=year,
-                    plant_code=plant,
-                    defaults={"form_status": 0},
-                )
-                hse_observation = HSEObservation(hse=hse_instance)
-                print('Creating a new incident instance:', hse_observation)
-
-                serializer = IncidentsSerializer(hse_observation, data=data)
-
-            if serializer.is_valid():
-                instance = serializer.save()
-                instance.save()
-                # return HttpResponseRedirect('/api/my_html')
-                return Response(data, status=status.HTTP_201_CREATED)
-
-
-
+        if serializer.is_valid():
+            instance = serializer.save()
+            return Response({'id': instance.id, 'data': serializer.data}, status=status.HTTP_201_CREATED)
         else:
-            hse_instance, created = HSE.objects.update_or_create(
-                week_number=week_number,
-                year=year,
-                plant_code=plant,
-                defaults={"form_status": 0},
-            )
-            print('hello ayush')
-            hse_observation = HSEObservation(hse=hse_instance)
-
-            serializer = HSEObservationSerializer(hse_observation, data=data)
-
-            if serializer.is_valid():
-                instance = serializer.save()
-                instance.save()
-                # return HttpResponseRedirect('/api/my_html')
-                return Response(data, status=status.HTTP_201_CREATED)
-
-
-        return Response('HSE object does not exist', status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
 
     def put(self, request):
         data = request.data
-        serializer = HSEObservationSerializer(data=data)
+        week_number = data.get("week_number", None)
+        year = data.get("year", None)
+        plant_code=data.get("plant_id")
+        id = data.get("toBeUpdatedId") 
+
+        print(id)
+        print("Hello, it's a put request")
+        
+        try:
+            existing_instance = HSEObservation.objects.get(id=id)
+            print(existing_instance.hse.form_status)
+
+            if existing_instance.hse.form_status == 1:
+                return Response('Form has already been submitted', status=status.HTTP_400_BAD_REQUEST)
+            
+        except HSEObservation.DoesNotExist:
+                return Response('HSE Observation instance does not exist', status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = HSEObservationSerializer(existing_instance, data=data)
+
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         else:
-            return Response(serializer.errors)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def patch(self, request):
         data = request.data
@@ -591,70 +435,60 @@ class ManagementAPI(APIView):
         data = request.data
         week_number = data.get("week_number", None)
         year = data.get("year", None)
+        plant_code = data.get("plant_id")
         management_instance = None
+        print(plant_code)
 
-        plant = Plant.objects.filter(id=10000).first()
-        hse = HSE.objects.filter(week_number=week_number, year=year).first()
+        plant = Plant.objects.filter(id=plant_code).first()
 
-        if hse:
-            if hse.form_status == 1:
-                return Response('Form already submitted', status=status.HTTP_400_BAD_REQUEST)
+        hse_instance, created = HSE.objects.get_or_create(
+            week_number=week_number,
+            year=year,
+            plant_code=plant,
+            defaults={"form_status": 0},
+        )
+        print(hse_instance)
 
-            existing_instance = ManagementVisits.objects.filter(hse=hse).first()
+        if hse_instance.form_status == 1:
+            return Response('Form already submitted', status=status.HTTP_400_BAD_REQUEST)
 
-            if existing_instance:
-                existing__id = existing_instance.id
-                print(' ID:', existing__id)
+        management_instance = ManagementVisits(hse=hse_instance)
+        print(management_instance)
+        serializer = ManagementSerializer(management_instance, data=data)
 
-                serializer = ManagementSerializer(existing_instance, data=data)
-
-            else:
-                hse_instance, created = HSE.objects.update_or_create(
-                    week_number=week_number,
-                    year=year,
-                    plant_code=plant,
-                    defaults={"form_status": 0},
-                )
-                management_instance = ManagementVisits(hse=hse_instance)
-                print('Creating a new  instance:', management_instance)
-
-                serializer = ManagementSerializer(management_instance, data=data)
-
-            if serializer.is_valid():
-                instance = serializer.save()
-                instance.save()
-                return Response(data, status=status.HTTP_201_CREATED)
-
-                # return HttpResponseRedirect('/api/my_html')
-
+        if serializer.is_valid():
+            instance = serializer.save()
+            return Response({'id': instance.id, 'data': serializer.data}, status=status.HTTP_201_CREATED)
         else:
-            hse_instance, created = HSE.objects.update_or_create(
-                week_number=week_number,
-                year=year,
-                plant_code=plant,
-                defaults={"form_status": 0},
-            )
-            management_instance = ManagementVisits(hse=hse_instance)
-
-            serializer = ManagementSerializer(management_instance, data=data)
-
-            if serializer.is_valid():
-                instance = serializer.save()
-                instance.save()
-                return Response(data, status=status.HTTP_201_CREATED)
-
-                # return HttpResponseRedirect('/api/my_html')
-
-        return Response('HSE object does not exist', status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request):
         data = request.data
-        serializer = ManagementSerializer(data=data)
+        week_number = data.get("week_number", None)
+        year = data.get("year", None)
+        plant_code=data.get("plant_id")
+        id = data.get("toBeUpdatedId") 
+
+        print(id)
+        print("Hello, it's a put request")
+        
+        try:
+            existing_instance = ManagementVisits.objects.get(id=id)
+            print(existing_instance.hse.form_status)
+
+            if existing_instance.hse.form_status == 1:
+                return Response('Form has already been submitted', status=status.HTTP_400_BAD_REQUEST)
+            
+        except ManagementVisits.DoesNotExist:
+                return Response('Management Visits instance does not exist', status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = ManagementSerializer(existing_instance, data=data)
+
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         else:
-            return Response(serializer.errors)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def patch(self, request):
         data = request.data
@@ -680,13 +514,12 @@ class IncidentsAPI(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+
     # def post(self, request):
     #     data = request.data
     #     week_number = data.get("week_number", None)
     #     year = data.get("year", None)
-    #     entry_id = request.data.get("toBeUpdatedId5")
     #     incident_instance = None
-    #     print(entry_id)
 
     #     plant = Plant.objects.filter(id=10000).first()
     #     hse = HSE.objects.filter(week_number=week_number, year=year).first()
@@ -695,15 +528,15 @@ class IncidentsAPI(APIView):
     #         if hse.form_status == 1:
     #             return Response('Form already submitted', status=status.HTTP_400_BAD_REQUEST)
 
-    #         if entry_id:
-    #             try:
-    #                 incident_instance = Incidents.objects.get(id=entry_id)
-    #                 print('got the id')
-    #                 print(incident_instance)
-    #             except Incidents.DoesNotExist:
-    #                 incident_instance = None
+    #         existing_incident = Incidents.objects.filter(hse=hse).first()
 
-    #         if not incident_instance:
+    #         if existing_incident:
+    #             existing_incident_id = existing_incident.id
+    #             print('Incident ID:', existing_incident_id)
+
+    #             serializer = IncidentsSerializer(existing_incident, data=data)
+
+    #         else:
     #             hse_instance, created = HSE.objects.update_or_create(
     #                 week_number=week_number,
     #                 year=year,
@@ -711,14 +544,16 @@ class IncidentsAPI(APIView):
     #                 defaults={"form_status": 0},
     #             )
     #             incident_instance = Incidents(hse=hse_instance)
-    #             print('did not got id ')
-    #             print(incident_instance)
+    #             print('Creating a new incident instance:', incident_instance)
 
-    #         serializer = IncidentsSerializer(incident_instance, data=data)
+    #             serializer = IncidentsSerializer(incident_instance, data=data)
+
     #         if serializer.is_valid():
     #             instance = serializer.save()
     #             instance.save()
-    #             return HttpResponseRedirect('/api/my_html')
+    #             # return HttpResponseRedirect('/api/my_html')
+    #             return Response(data, status=status.HTTP_201_CREATED)
+
 
     #     else:
     #         hse_instance, created = HSE.objects.update_or_create(
@@ -729,86 +564,77 @@ class IncidentsAPI(APIView):
     #         )
     #         incident_instance = Incidents(hse=hse_instance)
 
-    #     serializer = IncidentsSerializer(incident_instance, data=data)
-        
-    #     if serializer.is_valid():
-    #         instance = serializer.save()
-    #         instance.save()
-    #         return HttpResponseRedirect('/api/my_html')
+    #         serializer = IncidentsSerializer(incident_instance, data=data)
+
+    #         if serializer.is_valid():
+    #             instance = serializer.save()
+    #             instance.save()
+    #             # return HttpResponseRedirect('/api/my_html')
+    #             return Response(data,status=status.HTTP_201_CREATED)
 
 
     #     return Response('HSE object does not exist', status=status.HTTP_400_BAD_REQUEST)
-
+    
     def post(self, request):
         data = request.data
         week_number = data.get("week_number", None)
         year = data.get("year", None)
+        plant_code = data.get("plant_id")
         incident_instance = None
+        print(plant_code)
 
-        plant = Plant.objects.filter(id=10000).first()
-        hse = HSE.objects.filter(week_number=week_number, year=year).first()
+        plant = Plant.objects.filter(id=plant_code).first()
 
-        if hse:
-            if hse.form_status == 1:
-                return Response('Form already submitted', status=status.HTTP_400_BAD_REQUEST)
+        hse_instance, created = HSE.objects.get_or_create(
+            week_number=week_number,
+            year=year,
+            plant_code=plant,
+            defaults={"form_status": 0},
+        )
+        print(hse_instance)
 
-            existing_incident = Incidents.objects.filter(hse=hse).first()
+        if hse_instance.form_status == 1:
+            return Response('Form already submitted', status=status.HTTP_400_BAD_REQUEST)
 
-            if existing_incident:
-                existing_incident_id = existing_incident.id
-                print('Incident ID:', existing_incident_id)
+        incident_instance = Incidents(hse=hse_instance)
+        print(incident_instance)
+        serializer = IncidentsSerializer(incident_instance, data=data)
 
-                serializer = IncidentsSerializer(existing_incident, data=data)
-
-            else:
-                hse_instance, created = HSE.objects.update_or_create(
-                    week_number=week_number,
-                    year=year,
-                    plant_code=plant,
-                    defaults={"form_status": 0},
-                )
-                incident_instance = Incidents(hse=hse_instance)
-                print('Creating a new incident instance:', incident_instance)
-
-                serializer = IncidentsSerializer(incident_instance, data=data)
-
-            if serializer.is_valid():
-                instance = serializer.save()
-                instance.save()
-                # return HttpResponseRedirect('/api/my_html')
-                return Response(data, status=status.HTTP_201_CREATED)
-
-
+        if serializer.is_valid():
+            instance = serializer.save()
+            return Response({'id': instance.id, 'data': serializer.data}, status=status.HTTP_201_CREATED)
         else:
-            hse_instance, created = HSE.objects.update_or_create(
-                week_number=week_number,
-                year=year,
-                plant_code=plant,
-                defaults={"form_status": 0},
-            )
-            incident_instance = Incidents(hse=hse_instance)
-
-            serializer = IncidentsSerializer(incident_instance, data=data)
-
-            if serializer.is_valid():
-                instance = serializer.save()
-                instance.save()
-                # return HttpResponseRedirect('/api/my_html')
-                return Response(data,status=status.HTTP_201_CREATED)
-
-
-        return Response('HSE object does not exist', status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
     def put(self, request):
         data = request.data
-        serializer = IncidentsSerializer(data=data)
+        week_number = data.get("week_number", None)
+        year = data.get("year", None)
+        plant_code=data.get("plant_id")
+        id = data.get("toBeUpdatedId") 
+
+        print(id)
+        print("Hello, it's a put request")
+        
+        try:
+            existing_instance = Incidents.objects.get(id=id)
+            print(existing_instance.hse.form_status)
+
+            if existing_instance.hse.form_status == 1:
+                return Response('Form has already been submitted', status=status.HTTP_400_BAD_REQUEST)
+            
+        except Incidents.DoesNotExist:
+                return Response('Incident instance does not exist', status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = IncidentsSerializer(existing_instance, data=data)
+
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         else:
-            return Response(serializer.errors)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def patch(self, request):
         data = request.data
@@ -1196,11 +1022,9 @@ class IncidentFormAPI(APIView):
         hse_incident = Incidents.objects.filter(hse=hse).first()
 
         if not hse_incident:
-            # Create a new instance of HSEObservation with null values
             hse_incident = Incidents(hse=hse)
             hse_incident.save()
 
-        # Continue with the code for saving HSEObservationForm
         serializer = IncidentFormSerializer(data=data)
 
         if serializer.is_valid():

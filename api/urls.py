@@ -1,7 +1,4 @@
 from django.urls import path
-from django.conf.urls import url
-
-
 from app.views import *
 from django.conf import settings
 from django.conf.urls.static import static
@@ -14,7 +11,6 @@ urlpatterns = [
     path('management_visit/', ManagementAPI.as_view(), name="Management Visits"),
     path('incidents/', IncidentsAPI.as_view(), name="Incidents"),
     path('my_html/', MyTemplateView.as_view(),name='MyHTML'),
-    # url(r'my_html/$/', MyTemplateView.as_view(),name='MyHTML'),
     path('observation_form_/', MyFormView.as_view(),name='Observation'),
     path('stopwork_form_/', MyStopWork.as_view(),name='StopWork'),
     path('violation_memo_/', MyViolationMemo.as_view(),name='ViolationMemo'),

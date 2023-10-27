@@ -410,21 +410,16 @@
          height:18px;
          width:18px;
          }
-
-          {% comment %} .accordion-button:not(.collapsed)::after {
-             background-image: url('/static/images/accordianImg.svg') !important;
+         {% comment %} .accordion-button:not(.collapsed)::after {
+         background-image: url('/static/images/accordianImg.svg') !important;
          }  {% endcomment %}
          {% comment %} .accordion-button::after{
-             background-image: url('/static/images/accordianImg.svg') !important;
-
-
+         background-image: url('/static/images/accordianImg.svg') !important;
          }  {% endcomment %}
       </style>
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-      <script>
-       
-      </script>
+      <script></script>
    </head>
    <body>
       <div class="container-fluid">
@@ -438,48 +433,54 @@
                      <div id="calendar"></div>
                      <div class="horizontal-line"></div>
                      <h5 class="menu">Menu</h5>
-                     <div id='backcolorDiv1' style='display:flex ; height:60px align-items:center;margin-top:10px'>
-                        <div class="myNavi">
-                           <a href="#" for="name" id="toggle-accordion1">General HSE</a>
+                     <div id='clickMainDiv1'>
+                        <div id='backcolorDiv1' style='display:flex ; height:60px align-items:center;margin-top:10px'>
+                           <div class="myNavi">
+                              <a href="#" for="name" id="toggle-accordion1">General HSE</a>
+                           </div>
                         </div>
                      </div>
-                     <div id='backcolorDiv2' style='display:flex ; height:60px; align-items:center; margin-top:10px'>
-                        <div class="myNavi">
-                           <a href="#" for="age" id="toggle-accordion2">HSE Trainings</a>
+                     <div id='clickMainDiv2'>
+                        <div id='backcolorDiv2' style='display:flex ; height:60px; align-items:center; margin-top:10px'>
+                           <div class="myNavi">
+                              <a href="#" for="age" id="toggle-accordion2">HSE Trainings</a>
+                           </div>
                         </div>
                      </div>
-                     <div id='backcolorDiv3' style='display:flex ; height:60px; align-items:center;margin-top:10px'>
-                        <div class="myNavi">
-                           <a href="#" for="class" id="toggle-accordion3">HSE Observations</a>
+                     <div id='clickMainDiv3'>
+                        <div id='backcolorDiv3' style='display:flex ; height:60px; align-items:center;margin-top:10px'>
+                           <div class="myNavi">
+                              <a href="#" for="class" id="toggle-accordion3">HSE Observations</a>
+                           </div>
                         </div>
                      </div>
-                     <div id='backcolorDiv4' style='display:flex ; height:60px ;align-items:center;margin-top:10px'>
-                        <div class="myNavi">
-                           <a href="#" for="sec" id="toggle-accordion4">Management Visits</a>
+                     <div id='clickMainDiv4'>
+                        <div id='backcolorDiv4' style='display:flex ; height:60px ;align-items:center;margin-top:10px'>
+                           <div class="myNavi">
+                              <a href="#" for="sec" id="toggle-accordion4">Management Visits</a>
+                           </div>
                         </div>
                      </div>
-                     <div id='backcolorDiv5' style='display:flex ; height:60px; align-items:center;margin-top:10px'>
-                        <div class="myNavi">
-                           <a href="#" for="sec" id="toggle-accordion5">Incidents</a>
+                     <div id='clickMainDiv5'>
+                        <div id='backcolorDiv5' style='display:flex ; height:60px; align-items:center;margin-top:10px'>
+                           <div class="myNavi">
+                              <a href="#" for="sec" id="toggle-accordion5">Incidents</a>
+                           </div>
                         </div>
                      </div>
                   </div>
                </div>
             </div>
             <div class="col-md-9">
-
-
-              <div class="modal fade" tabindex="-1" id="successModal" role="dialog">
-               <div class="modal-dialog modal-dialog-centered" role="document">
-                   <div class="modal-content">
-                       <div class="modal-body">
+               <div class="modal fade" tabindex="-1" id="successModal" role="dialog">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                     <div class="modal-content">
+                        <div class="modal-body">
                            <p class="text-center">Data Saved Successfully</p>
-                       </div>
-                   </div>
+                        </div>
+                     </div>
+                  </div>
                </div>
-           </div>
-           
-              
                <div class='myNavbar'>
                   <nav class="navbar">
                      <div class="imageAlign">
@@ -538,7 +539,8 @@
                                     {% csrf_token %}
                                     <input type="hidden" name="week_number" id="week_number1" class='weekValue' >
                                     <input type="hidden" name="year" id="year1" class='yearValue' >
-                                    <input type="hidden" name="toBeUpdatedId1" id="toBeUpdatedId1" value='' >
+                                    <input type="hidden" name="plant_id" id="plant_id" value='10000' >
+                                    <input type="hidden" name="toBeUpdatedId" id="toBeUpdatedId1" >
                                     <div class="mb-3">
                                        <label for="input1" class="form-label ">Total man days worked</label>
                                        <div class='seperateAllElement' style='display: flex'>
@@ -643,7 +645,8 @@
                                     {% csrf_token %}
                                     <input type="hidden" name="week_number" id="week_number2" class='weekValue' >
                                     <input type="hidden" name="year" id="year2" class='yearValue'>
-                                    <input type="hidden" name="toBeUpdatedId2" id="toBeUpdatedId2">
+                                    <input type="hidden" name="plant_id" id="plant_id" value='10000' >
+                                    <input type="hidden" name="toBeUpdatedId" id="toBeUpdatedId2">
                                     <div class="mb-3">
                                        <label for="input5" class="form-label ">HSE Trainings (no. of attendees from Amplus)</label>
                                        <div class='seperateAllElement' style='display: flex'>
@@ -713,7 +716,8 @@
                                     {% csrf_token %}
                                     <input type="hidden" name="week_number" id="week_number3" class='weekValue'>
                                     <input type="hidden" name="year" id="year3" class='yearValue'>
-                                    <input type="hidden" name="toBeUpdatedId3" id="toBeUpdatedId3" value="">
+                                    <input type="hidden" name="toBeUpdatedId" id="toBeUpdatedId3" value="">
+                                    <input type="hidden" name="plant_id" id="plant_id" value='10000' >
                                     <div class="mb-3">
                                        <label for="input9" class="form-label ">Number of daily HSE observations</label>
                                        <div class='seperateAllElement' style='display: flex'>
@@ -791,7 +795,9 @@
                                     {% csrf_token %}
                                     <input type="hidden" name="week_number" id="week_number4" class='weekValue'>
                                     <input type="hidden" name="year" id="year4" class='yearValue'>
-                                    <input type="hidden" name="toBeUpdatedId4" id="toBeUpdatedId4" value="">
+                                    <input type="hidden" name="plant_id" id="plant_id" value='10000' >
+                                    <input type="hidden" name="toBeUpdatedId" id="toBeUpdatedId4" >
+
                                     <div class="mb-3">
                                        <label for="input13" class="form-label ">Number of Management HSE Visits</label>
                                        <div class='seperateAllElement' style='display: flex'>
@@ -863,7 +869,8 @@
                                     {% csrf_token %}
                                     <input type="hidden" name="week_number" id="week_number5" class='weekValue'>
                                     <input type="hidden" name="year" id="year5" class='yearValue'>
-                                    <input type="hidden" name="toBeUpdatedId5" id="toBeUpdatedId5" value="">
+                                    <input type="hidden" name="plant_id" id="plant_id" value='10000' >
+                                    <input type="hidden" name="toBeUpdatedId" id="toBeUpdatedId5" value="">
                                     <div class="mb-3">
                                        <label for="input17" class="form-label ">Number of Incidents</label>
                                        <div class="input-group" >
@@ -1038,8 +1045,6 @@
       setInterval(updateCalendar, 1000 * 60 * 60); // Update every hour (adjust as needed)
       
       
-      
-      
       // Display the date range at the top
       const dateRangeElement = document.querySelector('.date-range');
       const startDateFormatted = weekStartDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
@@ -1132,8 +1137,6 @@
        
        
        
-      
-      // second JS 
       function myDate(date) {
       const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
       const month = monthNames[date.getMonth()];
@@ -1472,10 +1475,11 @@
              const toggleAccordionLink = document.getElementById(`toggle-accordion${accordionNumber}`);
              const accordionContent = document.getElementById(`collapse${accordionNumber}`);
              const backcolorDiv = document.getElementById(`backcolorDiv${accordionNumber}`);
+             const clickMainDiv= document.getElementById(`clickMainDiv${accordionNumber}`);
       
              let isAccordionOpen = false;
       
-             toggleAccordionLink.addEventListener('click', function(e) {
+             clickMainDiv.addEventListener('click', function(e) {
                  e.preventDefault();
                  isAccordionOpen = !isAccordionOpen;
                  accordionContent.classList.toggle('show', isAccordionOpen);
@@ -1583,58 +1587,88 @@
               fileDisplay.style.display = "flex";
           }
       });
-
+      
       document.getElementById('previewBtn').addEventListener('click', function() {
          localStorage.setItem('buttonClicked', 'true');
-     });
+      });
        
-     
-     document.getElementById('closeBtn').addEventListener('click', function() {
+      
+      document.getElementById('closeBtn').addEventListener('click', function() {
       localStorage.removeItem('buttonClicked');
       });
-
-   window.addEventListener('load', function() {
+      
+      window.addEventListener('load', function() {
       localStorage.removeItem('buttonClicked');
-   });
-
-
-   function handleFormSubmission(formId, url) {
-       const form = document.getElementById(formId);
-       form.addEventListener("submit", function (event) {
-           event.preventDefault();
-   
-           const formData = new FormData(this);
-   
-           fetch(url, {
-               method: "PUT",
-               body: formData,
-           })
-           .then(response => {
+      });
+      
+      function handleFormSubmission(formId, url,toUpdateId) {
+      const form = document.getElementById(formId);
+      form.addEventListener("submit", function (event) {
+          event.preventDefault();
+      
+          const formData = new FormData(this);
+          const csrftoken = getCookie('csrftoken');
+          const existingID = formData.get("toBeUpdatedId");
+          console.log(existingID)
+      
+          // Determine the HTTP method (PUT or POST)
+          const methodValue = existingID ? "PUT" : "POST";
+      
+          fetch(url, {
+              method: methodValue,
+              body: formData,
+              headers: {
+                  "X-CSRFToken": csrftoken,
+              },
+          })
+      
+          .then(response => {
             console.log(response)
-             if (response.status === 200 ) {
-                   $('#successModal').modal('show');
-                   setTimeout(function () {
-                       $('#successModal').modal('hide');
-                   }, 1000); 
-               } else {
-                   console.error("Form submission failed. Status:", response.status);
-               } 
-           })
-           .catch(error => {
-               console.error("Error:", error);
-           });
-       });
-   }
-   
-   handleFormSubmission("form1", "{% url 'General HSE' %}");
-   handleFormSubmission("form2", "{% url 'HSE Trainings' %}");
-   handleFormSubmission("form3", "{% url 'HSE Observations' %}");
-   handleFormSubmission("form4", "{% url 'Management Visits' %}");
-   handleFormSubmission("final-form", "{% url 'Incidents' %}");
-   
-  
-
-  
-
+            if (response.status === 201 || response.status === 200) {
+               $('#successModal').modal('show');
+      
+               setTimeout(function () {
+                   $('#successModal').modal('hide');
+               }, 1000);
+      
+           }
+            else {
+               console.error("Form submission failed. Status:", res.status);
+           }
+            return response.json()
+          })
+      
+          .then(res => {
+            console.log(res)
+            const id=res.id
+            const a=document.getElementById(toUpdateId).value=id
+            console.log(a)
+            
+          })
+          .catch(error => {
+              console.error("Error:", error);
+          });
+      });
+      }
+      
+      
+      function getCookie(name) {
+      const value = `; ${document.cookie}`; 
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift();
+      }
+      
+      
+      
+      handleFormSubmission("form1", "{% url 'General HSE' %}","toBeUpdatedId1");
+      handleFormSubmission("form2", "{% url 'HSE Trainings' %}","toBeUpdatedId2");
+      handleFormSubmission("form3", "{% url 'HSE Observations' %}","toBeUpdatedId3");
+      handleFormSubmission("form4", "{% url 'Management Visits' %}","toBeUpdatedId4");
+      handleFormSubmission("final-form", "{% url 'Incidents' %}","toBeUpdatedId5");
+      
+      
+      
+      
+      
    </script>
 </html>
