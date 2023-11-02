@@ -15,9 +15,11 @@ class Plant(models.Model):
     address = models.TextField(null=True, blank=True)
 
 class HSE(models.Model):
-    week_number = models.IntegerField()
-    year = models.IntegerField()
     plant_code=models.ForeignKey(Plant, on_delete=models.CASCADE,null=True)
+    created_at = models.DateTimeField(default=timezone.now, editable=False)
+    updated_at = models.DateTimeField(auto_now=True, editable=False)
+    formSubmittedDate = models.DateField(default=None, null=True)
+
     form_status=models.IntegerField()
 
     class Meta:
@@ -36,8 +38,8 @@ class GeneralHse(models.Model):
     promotional_activities=models.IntegerField()
     promotional_activities_file=models.FileField(upload_to='uploads/', null=True)
     committe_meetings=models.IntegerField()
-    
-    created_at = models.DateTimeField(default=timezone.now, editable=False)
+    submittedDate = models.DateField(default=None, null=True)
+
     hse = models.ForeignKey(HSE, on_delete=models.CASCADE,null=True)
 
 
@@ -55,7 +57,8 @@ class HSETrainingsModel(models.Model):
     duration_of_contractor=models.IntegerField()
     amplus_hse_trainings=models.IntegerField()
     contractor_hse_trainings=models.IntegerField()
-    created_at = models.DateTimeField(default=timezone.now, editable=False)
+    submittedDate = models.DateField(default=None, null=True)
+
     hse = models.ForeignKey(HSE, on_delete=models.CASCADE,null=True)
 
    
@@ -71,7 +74,8 @@ class HSEObservation(models.Model):
     stop_work_notice=models.IntegerField(null=True,blank=True)
     violation_memo_issued=models.IntegerField(null=True,blank=True)
     complaint_from_customer=models.IntegerField(null=True,blank=True)
-    created_at = models.DateTimeField(default=timezone.now, editable=False,null=True,blank=True)
+    submittedDate = models.DateField(default=None, null=True)
+
     hse = models.ForeignKey(HSE, on_delete=models.CASCADE,null=True,blank=True)
      
 
@@ -87,7 +91,8 @@ class ManagementVisits(models.Model):
     no_of_compilance_done=models.IntegerField()
     no_of_compilance_done_file=models.FileField(upload_to='uploads/',null=True)
     observation_pending=models.IntegerField()
-    created_at = models.DateTimeField(default=timezone.now, editable=False)
+    submittedDate = models.DateField(default=None, null=True)
+
     hse = models.ForeignKey(HSE, on_delete=models.CASCADE,null=True)
 
 
@@ -100,7 +105,8 @@ class Incidents(models.Model):
     no_of_incidents=models.IntegerField(null=True,blank=True)
     no_of_occupation_illness=models.IntegerField(null=True,blank=True)
     no_of_environment_illness=models.IntegerField(null=True,blank=True)
-    created_at = models.DateTimeField(default=timezone.now, editable=False,null=True,blank=True)
+    submittedDate = models.DateField(default=None, null=True)
+
     hse = models.ForeignKey(HSE, on_delete=models.CASCADE,null=True,blank=True)
 
 
@@ -127,6 +133,7 @@ class HSEObservationForm(models.Model):
     OpenEvidence=models.FileField(upload_to='formUploads',null=True)
     ClosedEvidence=models.FileField(upload_to='formUploads',null=True)
     Remark=models.TextField(max_length=200)
+    created_at = models.DateTimeField(default=timezone.now, editable=False)
     hse_observation = models.ForeignKey(HSEObservation, on_delete=models.CASCADE,null=True)
 
     class Meta:
@@ -151,6 +158,8 @@ class StopWorkForm(models.Model):
     OpenEvidence=models.FileField(upload_to='formUploads',null=True)
     ClosedEvidence=models.FileField(upload_to='formUploads',null=True)
     Remark=models.TextField(max_length=200)
+    created_at = models.DateTimeField(default=timezone.now, editable=False)
+
     hse_observation = models.ForeignKey(HSEObservation, on_delete=models.CASCADE,null=True)
 
     class Meta:
@@ -171,6 +180,7 @@ class ViolationMemoForm(models.Model):
     IssuedTo=models.TextField(max_length=100)
     PenaltyImposed=models.TextField(max_length=100)
     Amount=models.IntegerField()
+    created_at = models.DateTimeField(default=timezone.now, editable=False)
     hse_observation = models.ForeignKey(HSEObservation, on_delete=models.CASCADE,null=True)
 
     class Meta:
@@ -197,6 +207,7 @@ class IncidentForm(models.Model):
     ResponsiblePerson=models.TextField(max_length=100)
     InvestigationStatus=models.TextField(max_length=100)
     AttachReport=models.FileField(upload_to='formUploads',null=True)
+    created_at = models.DateTimeField(default=timezone.now, editable=False)
     incidents = models.ForeignKey(Incidents, on_delete=models.CASCADE,null=True)
 
     class Meta:

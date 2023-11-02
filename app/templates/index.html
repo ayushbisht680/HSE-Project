@@ -410,6 +410,11 @@
          height:18px;
          width:18px;
          }
+         .form-control:focus {
+            
+            box-shadow:none !important;
+        }
+
          {% comment %} .accordion-button:not(.collapsed)::after {
          background-image: url('/static/images/accordianImg.svg') !important;
          }  {% endcomment %}
@@ -514,7 +519,7 @@
                      </div>
                      <div class="date-cont">
                         <div class="messageDisplay">The form is filled for :</div>
-                        <div class="viewDate" id="viewingDate">17th September - Today - Sunday</div>
+                        <div class="viewDate" id="viewingDate"></div>
                         <div class='clickArrow'>
                            <div onclick="changeDate(-1)"  style="display: flex;" id='oneDateBack'>
                               <img src=" {% static 'images/left_date.svg' %} " class="arrow" > </img>
@@ -537,10 +542,11 @@
                               <div class="accordion-body">
                                  <form method="POST" action="{% url 'General HSE' %}" enctype="multipart/form-data" id="form1" >
                                     {% csrf_token %}
-                                    <input type="hidden" name="week_number" id="week_number1" class='weekValue' >
-                                    <input type="hidden" name="year" id="year1" class='yearValue' >
                                     <input type="hidden" name="plant_id" id="plant_id" value='10000' >
                                     <input type="hidden" name="toBeUpdatedId" id="toBeUpdatedId1" >
+                                    <input type="hidden" name="formSubmitDate" class="formSubmitDate" >
+                                    <input type="hidden" name="submittedDate" class="getDateFormat" >
+
                                     <div class="mb-3">
                                        <label for="input1" class="form-label ">Total man days worked</label>
                                        <div class='seperateAllElement' style='display: flex'>
@@ -553,7 +559,7 @@
                                           </div>
                                           <div class="uploadBtn">
                                              <input type="file" class="form-control-file disableIt" id="fileInput1" style="display: none" name="today_day_worked_file" >
-                                             <label class="input-group-text uploadColor" for="fileInput1" id="fileInputLabel1" style='width: 107px;'>Upload File</label>
+                                             <label class="input-group-text uploadColor subForms" for="fileInput1" id="fileInputLabel1" style='width: 107px;'>Upload File</label>
                                              <div class="fileDisplay" id="fileDisplay1" style="display: none; align-items: center;">
                                                 <span class="fileName" id="fileName1" style='font-size: 12px; margin-left: 20px;'></span>
                                              </div>
@@ -596,7 +602,7 @@
                                           </div>
                                           <div class="uploadBtn">
                                              <input type="file" class="form-control-file disableIt disableBefore" id="extraFileInput1" style="display: none" name="toolbox_talk_manhours_file" >
-                                             <label class="input-group-text uploadColor" for="extraFileInput1" id="extrafileInputLabel1">Upload File</label>
+                                             <label class="input-group-text uploadColor subForms" for="extraFileInput1" id="extrafileInputLabel1">Upload File</label>
                                           </div>
                                        </div>
                                     </div>
@@ -612,7 +618,7 @@
                                           </div>
                                           <div class="uploadBtn">
                                              <input type="file" class="form-control-file disableIt disableBefore" id="extraFileInput2" style="display: none" name="promotional_activities_file" >
-                                             <label class="input-group-text uploadColor" for="extraFileInput1" id="extrafileInputLabel2">Upload File</label>
+                                             <label class="input-group-text uploadColor subForms" for="extraFileInput1" id="extrafileInputLabel2">Upload File</label>
                                           </div>
                                        </div>
                                     </div>
@@ -627,7 +633,7 @@
                                        </div>
                                     </div>
                                     <div class="saveBtn">
-                                       <button type="submit" class="btn btn-success disableIt" id="SaveAndNext1" >Save & Next</button>
+                                       <button type="submit" class="btn btn-success disableIt subForms" id="SaveAndNext1" >Save & Next</button>
                                     </div>
                                  </form>
                               </div>
@@ -643,8 +649,8 @@
                               <div class="accordion-body">
                                  <form method="POST" action="{% url 'HSE Trainings' %}" enctype="multipart/form-data" id="form2">
                                     {% csrf_token %}
-                                    <input type="hidden" name="week_number" id="week_number2" class='weekValue' >
-                                    <input type="hidden" name="year" id="year2" class='yearValue'>
+                                    <input type="hidden" name="submittedDate" class="getDateFormat" >
+                                    <input type="hidden" name="formSubmitDate" class="formSubmitDate" >
                                     <input type="hidden" name="plant_id" id="plant_id" value='10000' >
                                     <input type="hidden" name="toBeUpdatedId" id="toBeUpdatedId2">
                                     <div class="mb-3">
@@ -659,13 +665,13 @@
                                           </div>
                                           <div class="uploadBtn">
                                              <input type="file" class="form-control-file disableIt disableBefore" id="fileInput2" style="display: none" name="no_of_attendees_amplus" >
-                                             <label class="input-group-text uploadColor" for="fileInput2" id="fileInputLabel2">Upload File</label>
+                                             <label class="input-group-text uploadColor subForms" for="fileInput2" id="fileInputLabel2">Upload File</label>
                                           </div>
                                        </div>
                                     </div>
                                     <div class=" changingWidth">
-                                       <label for="input6" class="form-label ">Duration of training session</label>
-                                       <input type="number" class="form-control disableIt disableBefore" id="input6" placeholder="Duration of training session" name="duration_of_trainee" min="1" required>
+                                       <label for="input6" class="form-label ">Duration of training session (In hours)</label>
+                                       <input type="number" class="form-control disableIt disableBefore" id="input6" placeholder="Duration of training session (In hours)" name="duration_of_trainee" min="1" required>
                                     </div>
                                     <span class="error-message" id="number-error1">Fill duration above 1hr</span>
                                     <div class="mb-3">
@@ -680,13 +686,13 @@
                                           </div>
                                           <div class="uploadBtn">
                                              <input type="file" class="form-control-file disableIt disableBefore" id="fileInput3" style="display: none" name='no_of_attendees_contractor'>
-                                             <label class="input-group-text uploadColor" for="fileInput3" id="fileInputLabel3" >Upload File</label>
+                                             <label class="input-group-text uploadColor subForms" for="fileInput3" id="fileInputLabel3" >Upload File</label>
                                           </div>
                                        </div>
                                     </div>
                                     <div class="changingWidth">
-                                       <label for="input8" class="form-label">Duration of training session</label>
-                                       <input type="number" class="form-control disableIt disableBefore" id="input8" placeholder="Duration of training session" name="duration_of_contractor" min="1" required>
+                                       <label for="input8" class="form-label">Duration of training session (In hours)</label>
+                                       <input type="number" class="form-control disableIt disableBefore" id="input8" placeholder="Duration of training session (In hours)" name="duration_of_contractor" min="1" required>
                                     </div>
                                     <span class="error-message" id="number-error2">Fill duration above 1hr</span>
                                     <div class="mb-3 changingWidth">
@@ -698,7 +704,7 @@
                                        <input type="number" class="form-control disableIt" id="extraInput5" placeholder="Contractor HSE training" name="contractor_hse_trainings" required>
                                     </div>
                                     <div class="saveBtn">
-                                       <button type="submit" class="btn btn-success disableIt disableBefore"  id="SaveAndNext2" >Save & Next</button>
+                                       <button type="submit" class="btn btn-success disableIt disableBefore subForms"  id="SaveAndNext2" >Save & Next</button>
                                     </div>
                                  </form>
                               </div>
@@ -712,64 +718,64 @@
                            </h2>
                            <div id="collapse3" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                               <div class="accordion-body">
-                                 <form method="POST" action="{% url 'HSE Observations' %}" enctype="multipart/form-data"  id="form3">
+                                 <form method="POST" action="{% url 'HSE Observations' %}" enctype="multipart/form-data" id="form3">
                                     {% csrf_token %}
-                                    <input type="hidden" name="week_number" id="week_number3" class='weekValue'>
-                                    <input type="hidden" name="year" id="year3" class='yearValue'>
+                                    <input type="hidden" name="submittedDate" class="getDateFormat" >
+                                    <input type="hidden" name="formSubmitDate" class="formSubmitDate" id='formSubmitDate' >
                                     <input type="hidden" name="toBeUpdatedId" id="toBeUpdatedId3" value="">
                                     <input type="hidden" name="plant_id" id="plant_id" value='10000' >
                                     <div class="mb-3">
                                        <label for="input9" class="form-label ">Number of daily HSE observations</label>
                                        <div class='seperateAllElement' style='display: flex'>
                                           <div class="input-group" id="adjustWidth">
-                                             <input type="number" class="form-control disableIt" id="input9" placeholder="Number of daily HSE observations" name="daily_hse_observation" required>
+                                             <input type="number" class="form-control disableIt " id="input9" placeholder="Number of daily HSE observations" name="daily_hse_observation"  required  >
                                              <div class=" btnMargin">
                                                 <button class="btn  valueButton disableBtn" type="button" id="increment9"><img src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
                                                 <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement9"><img src="{% static 'images/minusButton.svg' %}"></button>
                                              </div>
                                           </div>
                                           <div class="uploadBtn">
-                                             <input type="file" class="form-control-file disableIt" id="fileInput4" style="display: none" name="hse_observation">
-                                             <label class="input-group-text uploadColor" for="fileInput4" id="fileInputLabel4">Upload File</label>
+                                             <input type="file" class="form-control-file" id="fileInput4" style="display: none" name="hse_observation">
+                                             <label class="input-group-text uploadColor subForms" for="fileInput4" id="fileInputLabel4">Upload File</label>
                                           </div>
                                        </div>
-                                       <div id='formsLink1'>
+                                       <div id='formsLink1' class='subForms'>
                                           <img src="{% static 'images/Frame.png' %}">
-                                          <a href="/api/observation_form_/" class="linkForm">Fill the data</a>
+                                          <a id='observationLink' href="/" class="linkForm">Fill the data</a>
                                        </div>
                                     </div>
                                     <div class="mb-3 ">
                                        <label for="input10" class="form-label ">Number of STOP Work notice issued</label>
                                        <div class="input-group">
-                                          <input type="number" class="form-control disableIt" id="input10" placeholder="Number of STOP Work notice issued" name="stop_work_notice" required>
+                                          <input type="number" class="form-control disableIt " id="input10" placeholder="Number of STOP Work notice issued" name="stop_work_notice"  required >
                                           <div class=" btnMargin">
                                              <button class="btn  valueButton disableBtn" type="button" id="increment10"><img src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
                                              <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement10"><img src="{% static 'images/minusButton.svg' %}"</button>
                                           </div>
                                        </div>
-                                       <div id='formsLink2'>
+                                       <div id='formsLink2' class='subForms'>
                                           <img src="{% static 'images/Frame.png' %}">
-                                          <a href="/api/stopwork_form_/" class="linkForm">Fill the data</a>
+                                          <a id="stopWorkLink" href="" class="linkForm">Fill the data</a>
                                        </div>
                                     </div>
                                     <div class="mb-3 ">
                                        <label for="input11" class="form-label ">Number of Violation Memo issued</label>
                                        <div class="input-group">
-                                          <input type="number" class="form-control disableIt" id="input11" placeholder="Number of Violation Memo issued" name="violation_memo_issued" required>
+                                          <input type="number" class="form-control disableIt " id="input11" placeholder="Number of Violation Memo issued" name="violation_memo_issued" required >
                                           <div class=" btnMargin">
                                              <button class="btn  valueButton disableBtn " type="button" id="increment11"><img src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
                                              <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement11"><img src="{% static 'images/minusButton.svg' %}"</button>
                                           </div>
                                        </div>
-                                       <div id='formsLink3'>
+                                       <div id='formsLink3' class='subForms'>
                                           <img src="{% static 'images/Frame.png' %}">
-                                          <a href="/api/violation_memo_/" class="linkForm">Fill the data</a>
+                                          <a  id="violationLink" href="" class="linkForm">Fill the data</a>
                                        </div>
                                     </div>
                                     <div class="mb-3 ">
                                        <label for="input11" class="form-label ">Number of complaints from customers</label>
                                        <div class="input-group">
-                                          <input type="number" class="form-control disableIt" id="input12" placeholder="Number of complaints from customers" name="complaint_from_customer" required>
+                                          <input type="number" class="form-control disableIt  " id="input12" placeholder="Number of complaints from customers" name="complaint_from_customer" required >
                                           <div class=" btnMargin">
                                              <button class="btn  valueButton disableBtn " type="button" id="increment12"><img src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
                                              <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement12"><img src="{% static 'images/minusButton.svg' %}"</button>
@@ -777,7 +783,7 @@
                                        </div>
                                     </div>
                                     <div class="saveBtn">
-                                       <button type="submit" class="btn btn-success disableIt" id="observationBtn">Save & Next</button>
+                                       <button type="submit" class="btn btn-success" id="observationBtn" >Save & Next</button>
                                     </div>
                                  </form>
                               </div>
@@ -793,8 +799,8 @@
                               <div class="accordion-body">
                                  <form method="POST" action="{% url 'Management Visits' %}" enctype="multipart/form-data" id="form4">
                                     {% csrf_token %}
-                                    <input type="hidden" name="week_number" id="week_number4" class='weekValue'>
-                                    <input type="hidden" name="year" id="year4" class='yearValue'>
+                                    <input type="hidden" name="submittedDate" class="getDateFormat" >
+                                    <input type="hidden" name="formSubmitDate" class="formSubmitDate" >
                                     <input type="hidden" name="plant_id" id="plant_id" value='10000' >
                                     <input type="hidden" name="toBeUpdatedId" id="toBeUpdatedId4" >
 
@@ -810,7 +816,7 @@
                                           </div>
                                           <div class="uploadBtn">
                                              <input type="file" class="form-control-file disableIt" id="fileInput5" style="display: none" name="no_of_management_visits_file">
-                                             <label class="input-group-text uploadColor" for="fileInput5" id="fileInputLabel5">Upload File</label>
+                                             <label class="input-group-text uploadColor subForms" for="fileInput5" id="fileInputLabel5">Upload File</label>
                                           </div>
                                        </div>
                                     </div>
@@ -826,7 +832,7 @@
                                           </div>
                                           <div class="uploadBtn">
                                              <input type="file" class="form-control-file disableIt" id="fileInput6" style="display: none" name="total_findings_file" >
-                                             <label class="input-group-text uploadColor" for="fileInput6" id="fileInputLabel6">Upload File</label>
+                                             <label class="input-group-text uploadColor subForms" for="fileInput6" id="fileInputLabel6">Upload File</label>
                                           </div>
                                        </div>
                                     </div>
@@ -842,7 +848,7 @@
                                           </div>
                                           <div class="uploadBtn">
                                              <input type="file" class="form-control-file disableIt" id="fileInput7" style="display: none" name="no_of_compilance_done_file">
-                                             <label class="input-group-text uploadColor" for="fileInput7" id="fileInputLabel7">Upload File</label>
+                                             <label class="input-group-text uploadColor subForms" for="fileInput7" id="fileInputLabel7">Upload File</label>
                                           </div>
                                        </div>
                                     </div>
@@ -851,7 +857,7 @@
                                        <input type="number" class="form-control disableIt" id="input16" placeholder="Number of observation pending (to be compiled)" name="observation_pending" required>
                                     </div>
                                     <div class="saveBtn">
-                                       <button type="submit" class="btn btn-success disableIt" id="SaveAndNext4">Save & Next</button>
+                                       <button type="submit" class="btn btn-success disableIt subForms" id="SaveAndNext4">Save & Next</button>
                                     </div>
                                  </form>
                               </div>
@@ -867,8 +873,8 @@
                               <div class="accordion-body">
                                  <form method="POST" action="{% url 'Incidents' %}" enctype="multipart/form-data" id="final-form">
                                     {% csrf_token %}
-                                    <input type="hidden" name="week_number" id="week_number5" class='weekValue'>
-                                    <input type="hidden" name="year" id="year5" class='yearValue'>
+                                    <input type="hidden" name="submittedDate" class="getDateFormat" >
+                                    <input type="hidden" name="formSubmitDate" class="formSubmitDate" >
                                     <input type="hidden" name="plant_id" id="plant_id" value='10000' >
                                     <input type="hidden" name="toBeUpdatedId" id="toBeUpdatedId5" value="">
                                     <div class="mb-3">
@@ -880,9 +886,9 @@
                                              <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement17"><img src="{% static 'images/minusButton.svg' %}"></button>
                                           </div>
                                        </div>
-                                       <div id='formsLink4'>
+                                       <div id='formsLink4' class='subForms'>
                                           <img src="{% static 'images/Frame.png' %}">
-                                          <a href="/api/incident_form_/" class="linkForm" id='incidentHref'>Fill the data</a>
+                                          <a id="incidentLink" href="" class="linkForm" id='incidentHref'>Fill the data</a>
                                        </div>
                                     </div>
                                     <div class="mb-3">
@@ -907,7 +913,7 @@
                                     </div>
                                     <div class="saveBtn" id='finalSubmitDiv'>
                                        <button type="button" class="btn btn-success lastPreview" onclick='previewPage()' id='previewBtn'>Preview </button>
-                                       <button type="submit" class="btn btn-success disableIt lastButton" id="incidentBtn" >Save</button>
+                                       <button type="submit" class="btn btn-success disableIt lastButton subForms" id="incidentBtn" >Save</button>
                                     </div>
                                  </form>
                                  <div class="saveBtn">
@@ -935,7 +941,9 @@
       <!--col-->
       <!--row-->
       </div>
-      <!--container fluid-->   
+      <!--container fluid--> 
+
+
    </body>
    <script >
       const message = "{{ message }}";
@@ -945,6 +953,7 @@
          // Display the alert
          alertElement.style.display = "block";
       }
+
       
    </script>
    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -952,7 +961,103 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
    <script>
-      // JavaScript code to generate the calendar with the highlighted date range
+      {% comment %} const today = new Date();
+      const year = today.getFullYear();
+      const month = today.getMonth();
+      const firstDayOfMonth = new Date(year, month, 1);
+      const lastDayOfMonth = new Date(year, month + 1, 0);
+      const daysFromPrevMonth = firstDayOfMonth.getDay();
+      const daysInMonth = lastDayOfMonth.getDate();
+      
+      
+      const updateCalendar = () => {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = today.getMonth();
+        const firstDayOfMonth = new Date(year, month, 1);
+        const lastDayOfMonth = new Date(year, month + 1, 0);
+        const daysFromPrevMonth = firstDayOfMonth.getDay();
+        const daysInMonth = lastDayOfMonth.getDate();
+      
+        const getWeekDates = () => {
+          const now = new Date();
+          const weekStartDate = new Date(now);
+          const weekEndDate = new Date(now);
+          const incrementEndDate = new Date(now);
+      
+          // Set to the next Saturday
+          weekStartDate.setDate(now.getDate() + (6 - now.getDay() + 7) % 7);
+          weekEndDate.setDate(weekStartDate.getDate() + 6);
+          incrementEndDate.setDate(weekEndDate.getDate() + 1);
+      
+          return [weekStartDate, weekEndDate, incrementEndDate];
+        };
+      
+        [weekStartDate, weekEndDate, incrementEndDate] = getWeekDates();
+        console.log(weekStartDate);
+        console.log(weekEndDate);
+        console.log(incrementEndDate);
+      
+        const startMonth = weekStartDate.getMonth();
+        const endMonth = weekEndDate.getMonth();
+      
+        let firstDayOfEndMonth;
+        let daysInSecondMonth;
+      
+        if (startMonth !== endMonth) {
+          const lastDayOfStartMonth = new Date(weekStartDate.getFullYear(), startMonth + 1, 0);
+          const daysInFirstMonth = lastDayOfStartMonth.getDate() - weekStartDate.getDate() + 1;
+      
+          firstDayOfEndMonth = new Date(weekEndDate.getFullYear(), endMonth, 1);
+          daysInSecondMonth = weekEndDate.getDate();
+        }
+      
+        let calendarHTML = '<table class="myTable"><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr><tr>';
+      
+        let day = 1;
+      
+        for (let i = 0; i < 6; i++) {
+          calendarHTML += '<tr>';
+          for (let j = 0; j < 7; j++) {
+            if (i === 0 && j < daysFromPrevMonth) {
+              const prevMonthDay = new Date(year, month, 0).getDate() - daysFromPrevMonth + j + 1;
+              calendarHTML += `<td class="other-month">${prevMonthDay}</td>`;
+            } else if (day <= daysInMonth) {
+              const isToday = year === today.getFullYear() && month === today.getMonth() && day === today.getDate();
+              const currentDate = new Date(year, month, day);
+
+              const isHighlight = currentDate >= weekStartDate && currentDate <= weekEndDate ;
+      
+              let cellClass = '';
+
+              if (currentDate.getDate() === weekStartDate.getDate()) {
+               cellClass = ' highlight'; 
+             }
+              if (isHighlight) {
+                cellClass = 'highlight'; 
+              } else if (isToday) {
+                cellClass = 'today';
+              }
+      
+              calendarHTML += `<td class="${cellClass}">${day}</td>`;
+              day++;
+            } else {
+              calendarHTML += `<td class="other-month">${day - daysInMonth}</td>`;
+              day++;
+            }
+          }
+          calendarHTML += '</tr>';
+        }
+      
+        calendarHTML += '</table>';
+        document.getElementById("calendar").innerHTML = calendarHTML;
+      };
+      
+      updateCalendar();
+      setInterval(updateCalendar, 1000 * 60 * 60); {% endcomment %}
+
+     
+     
       const today = new Date();
       const year = today.getFullYear();
       const month = today.getMonth();
@@ -1008,8 +1113,6 @@
             if (i === 0 && j < daysFromPrevMonth) {
                 // Days from the previous month
                 const prevMonthDay = new Date(year, month, 0).getDate() - daysFromPrevMonth + j + 1;
-                console.log(prevMonthDay)
-                console.log('Hello')
                 calendarHTML += `<td class="other-month">${prevMonthDay}</td>`;
             } else if (day <= daysInMonth) {
                 // Days from the current month
@@ -1044,8 +1147,8 @@
       // Periodically update the calendar to reflect the current week
       setInterval(updateCalendar, 1000 * 60 * 60); // Update every hour (adjust as needed)
       
+
       
-      // Display the date range at the top
       const dateRangeElement = document.querySelector('.date-range');
       const startDateFormatted = weekStartDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
       const endDateFormatted = weekEndDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
@@ -1056,7 +1159,6 @@
       const itsDateElement = document.querySelector(".viewDate");
       const itsDateElement1 = document.querySelector(".theDate1");
       
-      // Function to format the date as "17th September - Today - Sunday"
       function formatDate(date) {
          const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
          const months = ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
@@ -1095,14 +1197,33 @@
                   return "th";
           }
       }
+
+      function getDateFromURL() {
+         const urlParams = new URLSearchParams(window.location.search);
+         return urlParams.get("date");
+       }
+       
+       let TodaysDate;
+       const dateFromURL = getDateFromURL();
+       
+       if (dateFromURL) {
+         TodaysDate = new Date(dateFromURL);
+         console.log(`date from the url is ${dateFromURL}`)
+       } else {
+         TodaysDate = new Date();
+         console.log(`no date in url`)
+
+       }
+
       
       // Get the current date
-      let TodaysDate = new Date();
+       let TodaysDate2 = new Date();
+
       itsDateElement.textContent = formatDate(TodaysDate); // Initial value
-      itsDateElement1.textContent = formatDate1(TodaysDate); // Initial value
+      itsDateElement1.textContent = formatDate1(TodaysDate2); // Initial value
       
-      // Function to change the date by a specified number of days
       function changeDate(days) {
+         // get the date 
          TodaysDate.setDate(TodaysDate.getDate() + days);
         
       
@@ -1116,6 +1237,14 @@
       
            const divElement = document.getElementById('viewingDate');
             const value = divElement.innerText;
+            console.log(value)
+            const ConvertedValue=convertDateToYYYYMMDD(value)
+            console.log(` converted value is ${ConvertedValue}`)
+
+
+            const newUrl = `${window.location.origin}${window.location.pathname}?date=${ConvertedValue}`;
+            window.history.pushState({}, '', newUrl);
+
       
             if(lastDate==value){
                document.getElementById('oneDateAhead').style.display='none';
@@ -1131,10 +1260,59 @@
       
             }
            
-      
          }
+         processDate()
        }
+
+      function getDateFromURL() {
+         const urlParams = new URLSearchParams(window.location.search);
+         return urlParams.get("date");
+      }
+      
+      if (performance.navigation.type === 1) {
+         const currentURL = window.location.href;
+         console.log('Page is reloaded, current URL:', currentURL);
+      
+         const dateValue = getDateFromURL();
+
+
+      
+         if (dateValue) {
+            // convert the 2023-11-02 to Thu, 2nd, Nov to this format 
+            const inputDate = dateValue;
+            const formattedDate = formatDateToCustomFormat(inputDate);
+            console.log(` formatted date for me is ${formattedDate}`); // Output: "Thu, 2nd, Nov"
+
+           const divElement = document.getElementById('viewingDate');
+            divElement.innerText=formattedDate
+
+         console.log('Date parameter from URL:', dateValue);
+         } else {
+         console.log('Date parameter not found in the URL');
+         }
+      }
+    
+      function formatDateToCustomFormat(dateString) {
+         const date = new Date(dateString);
+         const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+         const months = [
+           'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+           'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+         ];
+         const day = date.getDate();
+         let daySuffix = 'th';
        
+         if (day === 1 || day === 21 || day === 31) {
+           daySuffix = 'st';
+         } else if (day === 2 || day === 22) {
+           daySuffix = 'nd';
+         } else if (day === 3 || day === 23) {
+           daySuffix = 'rd';
+         }
+       
+         const formattedDate = `${days[date.getDay()]}, ${day}${daySuffix}, ${months[date.getMonth()]}`;
+         return formattedDate;
+       }
        
        
       function myDate(date) {
@@ -1167,8 +1345,104 @@
       
       myWeek.textContent = `Week ${weekNumberInMonth}`; 
       itsDate.textContent = `${startDateFormatted}- ${endDateFormatted}`;
+
+
+
+
+      function convertDateToYYYYMMDD(dateString) {
+         const monthMap = {
+             'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06',
+             'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'
+         };
+
+         const dateParts = dateString.split(", ");
+         const day = dateParts[1].replace(/\D/g, ''); // Remove non-digits (e.g., "st", "nd", "rd", "th")
+         const month = monthMap[dateParts[2]];
+         const year = new Date().getFullYear(); // Get the current year
+     
+         const formattedDay = day.padStart(2, '0'); // Ensure day is two digits
+     
+         const formattedDate = `${year}-${month}-${formattedDay}`;
+         return formattedDate;
+     }
+     
+
+       function processDate() {
+         let getDateElement = document.getElementById('viewingDate');
+         let value = getDateElement.innerText;
+         
+
+         let formattedDate = convertDateToYYYYMMDD(value);
+
+         // console.log(formattedDate); // Output: "2023-10-30"
+
+         let getDateFormatInputs = document.querySelectorAll('.getDateFormat');
+         for (let i = 0; i < getDateFormatInputs.length; i++) {
+            getDateFormatInputs[i].value = formattedDate;
+        }
+
+        let getDateSubmitttedInputs = document.querySelectorAll('.formSubmitDate');
+        for (let i = 0; i < getDateSubmitttedInputs.length; i++) {
+         getDateSubmitttedInputs[i].value = formattedDate;
+       }
+
+       let observationLink = document.getElementById('observationLink');
+       observationLink.href = `/api/observation_form_/?date=${formattedDate}`;
+
+       let stopWorkLink = document.getElementById('stopWorkLink');
+       stopWorkLink.href = `/api/stopwork_form_/?date=${formattedDate}`;
+
+       let violationLink = document.getElementById('violationLink');
+       violationLink.href = `/api/violation_memo_/?date=${formattedDate}`;
+
+       let incidentLink = document.getElementById('incidentLink');
+       incidentLink.href = `/api/incident_form_/?date=${formattedDate}`;
+
+       let today = new Date();
+
+       let yyyy = today.getFullYear();
+       let mm = String(today.getMonth() + 1).padStart(2, '0');
+       let dd = String(today.getDate()).padStart(2, '0');
+       
+       let todaysDate = yyyy + '-' + mm + '-' + dd;
+
+       if(todaysDate < formattedDate){
+         previewPage3()
+         
+       }
+       else{
+
+         previewPage4()
+       }
+
+       
+       const apiURL = `/api/child-models/?date=${formattedDate}`;
+       fetch(apiURL)
+       .then(response => {
+           if (!response.ok) {
+               throw new Error(`HTTP error! Status: ${response.status}`);
+           }
+           return response.json(); 
+       })
+       .then(data => {
+           populateInputFields('General HSE', generalHSEFieldsID, generalHSEFields,1,data);
+           populateInputFields('HSE Training', hseTrainingFieldsID,hseTrainingFields,2,data);
+           populateInputFields('HSE Observation', hseObservationFieldsID,hseObservationFields,3,data);
+           populateInputFields('Incidents', incidentsFieldsID,incidentsFields,5,data); 
+           populateInputFields('Management Visits', managementVisitsFieldsID,managementVisitsFields,4,data);
+
+
+           
+       })
+       .catch(error => {
+           console.error('API request failed:', error);
+       });
+       
       
-      
+       return formattedDate;
+
+      }
+
       
       function setupIncrementDecrementButtons(decrementButtonId,incrementButtonId, inputFieldId) {
       const decrementButton = document.getElementById(decrementButtonId);
@@ -1245,33 +1519,32 @@
          var weekNumber = Math.ceil(((date - yearStart) / 86400000 + 1) / 7);
          return weekNumber;
       }
-       
+
       
-        function populateInputFields(category, fieldIds, fieldNames,oldId) {
-         const today = new Date();
-         const weekNumber = getWeekNumber(today);
-         const year = today.getFullYear();
-      
-      
-         fetch(`/api/child-models/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
-             .then(response => response.json())
-             .then(data => {
-                 const categoryData = data[category][data[category].length - 1];
-                 const categoryId = categoryData['id'];
-                 document.getElementById(`toBeUpdatedId${oldId}`).value = categoryId
-      
-                 
-                 fieldIds.forEach((fieldId, index) => {
-                     const fieldName = fieldNames[index];
-                     const fieldData = categoryData[fieldName];
+      function populateInputFields(category, fieldIds, fieldNames, oldId, data) {
+         if (data) {
+            const categoryData = data[category][data[category].length - 1];
+
+            if (categoryData === undefined) {
+                fieldIds.forEach((fieldId) => {
+                    document.getElementById(fieldId).value = '';
+                });
+                document.getElementById(`toBeUpdatedId${oldId}`).value = '';
+            } 
+            else {
+                const categoryId = categoryData['id'];
+        
+                document.getElementById(`toBeUpdatedId${oldId}`).value = categoryId;
+        
+                fieldIds.forEach((fieldId, index) => {
+                    const fieldName = fieldNames[index];
+                    const fieldData = categoryData[fieldName];
                     document.getElementById(fieldId).value = fieldData;
-      
-                 });
-             })
-             .catch(error => {
-                 console.error('Error:', error);
-             });
-      }
+                });
+            }
+        }
+     }
+     
       
       const generalHSEFieldsID = ['input1', 'input2', 'input3', 'input4','extraInput1','extraInput2','extraInput3'];
       const generalHSEFields = ['total_man_days_worked', 'total_safe_man_hours', 'no_of_person_inducted_site', 'no_of_toolbox_attendees','toolbox_talk_manhours','promotional_activities','committe_meetings'];
@@ -1283,25 +1556,17 @@
       const managementVisitsFields = ['no_of_management_visits', 'total_findings', 'no_of_compilance_done', 'observation_pending'];
       const incidentsFieldsID = ['input17', 'input18', 'input19'];
       const incidentsFields = ['no_of_incidents', 'no_of_occupation_illness', 'no_of_environment_illness'];
+
+
+
+      function populateInputFields2(queryString) {
+         console.log(`Query String is ${queryString}`)
+         
       
-      
-      
-      
-      populateInputFields('General HSE', generalHSEFieldsID, generalHSEFields,1);
-      populateInputFields('HSE Training', hseTrainingFieldsID,hseTrainingFields,2);
-      populateInputFields('HSE Observation', hseObservationFieldsID,hseObservationFields,3);
-      populateInputFields('Management Visits', managementVisitsFieldsID,managementVisitsFields,4);
-      populateInputFields('Incidents', incidentsFieldsID,incidentsFields,5);  
-      
-      
-      function populateInputFields2() {
-         const today = new Date();
-         const weekNumber = getWeekNumber(today);
-         const year = today.getFullYear();
-      
-         fetch(`/api/observation_form/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
-             .then(response => response.json())
+         fetch(`/api/observation_form/?plant_code=10000&formSubmitDate=${queryString}`)
+         .then(response => response.json())
              .then(data => {
+               console.log(data)
       
                if(data.length==undefined){
                   document.getElementById("input10").disabled = true;
@@ -1315,9 +1580,11 @@
                  console.error('Error:', error);
              });
       
-            fetch(`/api/stopWork_form/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
+             fetch(`/api/stopWork_form/?plant_code=10000&formSubmitDate=${queryString}`)
              .then(response => response.json())
              .then(data => {
+               console.log(data.length)
+
       
                if(data.length==undefined){
                   document.getElementById("input11").disabled = true;
@@ -1332,9 +1599,11 @@
                  console.error('Error:', error);
              });
       
-         fetch(`/api/violation_form/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
-         .then(response => response.json())
-         .then(data => {
+           fetch(`/api/violation_form/?plant_code=10000&formSubmitDate=${queryString}`)
+             .then(response => response.json())
+             .then(data => {
+            console.log(data.length)
+
       
       
             if(data.length==undefined){
@@ -1347,11 +1616,15 @@
             console.error('Error:', error);
          });
       
-         fetch(`/api/incident_form/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
+         fetch(`/api/incident_form/?plant_code=10000&formSubmitDate=${queryString}`)
          .then(response => response.json())
          .then(data => {
+            console.log(data.length)
+
       
             if(data.length==undefined){
+               console.log(data)
+
                document.getElementById("input18").disabled = true;
                document.getElementById("input19").disabled = true;
                document.getElementById("incidentBtn").disabled = true;
@@ -1362,14 +1635,12 @@
          })
          .catch(error => {
             console.error('Error:', error);
-         });
+         });    
       
         }
-          
-      
-      
-      populateInputFields2();
-      
+
+
+
       
       function disableInputFields(className) {
       const elements = document.getElementsByClassName(className);
@@ -1382,7 +1653,7 @@
       const elements = document.getElementsByClassName(className);
       for (let i = 0; i < elements.length; i++) {
        elements[i].disabled = true;
-       elements[i].style.border = '1px solid white'; //
+       elements[i].style.border = '1px solid white'; 
       
       
       }
@@ -1406,25 +1677,9 @@
          type: "GET",
          url: "/api/parent/",
          success: function (data) {
-             const today = new Date();
-             const weekNumber = getWeekNumber(today);
-             const year = today.getFullYear();
-      
-      
-             // Search for an item with matching week_number and year
-             const foundItem = data.find(item => item.week_number === weekNumber && item.year === year);
-             const elementWeek = document.querySelectorAll('.weekValue');
-             const elementYear = document.querySelectorAll('.yearValue');
-      
-             elementWeek.forEach((element) => {
-                 element.value = weekNumber;
-             });   
-             elementYear.forEach((element) => {
-               element.value = year;
-           });            
-      
-      
-             if (foundItem) {
+            processDate(); 
+
+             {% comment %} if (foundItem) {
                  const fieldData = foundItem.form_status;
                  if (fieldData == 1) {
                      disableInputFields("disableIt");
@@ -1461,7 +1716,7 @@
                  }
              } else {
                  console.log(`No data found for week ${weekNumber} and year ${year}`);
-             }
+             } {% endcomment %}
          },
          error: function (xhr, status, error) {
              console.error("Error:", status, error);
@@ -1520,9 +1775,6 @@
       
       
       function previewPage() {
-         const today = new Date();
-         const weekNumber = getWeekNumber(today);
-         const year = today.getFullYear();
       
          fetch(`/api/child-models/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
          .then(response => response.json())
@@ -1601,15 +1853,14 @@
       localStorage.removeItem('buttonClicked');
       });
       
-      function handleFormSubmission(formId, url,toUpdateId) {
+   function handleFormSubmission(formId, url,toUpdateId) {
       const form = document.getElementById(formId);
       form.addEventListener("submit", function (event) {
           event.preventDefault();
-      
+          
           const formData = new FormData(this);
           const csrftoken = getCookie('csrftoken');
           const existingID = formData.get("toBeUpdatedId");
-          console.log(existingID)
       
           // Determine the HTTP method (PUT or POST)
           const methodValue = existingID ? "PUT" : "POST";
@@ -1649,7 +1900,9 @@
               console.error("Error:", error);
           });
       });
-      }
+   } 
+
+
       
       
       function getCookie(name) {
@@ -1664,10 +1917,35 @@
       handleFormSubmission("form2", "{% url 'HSE Trainings' %}","toBeUpdatedId2");
       handleFormSubmission("form3", "{% url 'HSE Observations' %}","toBeUpdatedId3");
       handleFormSubmission("form4", "{% url 'Management Visits' %}","toBeUpdatedId4");
-      handleFormSubmission("final-form", "{% url 'Incidents' %}","toBeUpdatedId5");
+      handleFormSubmission("final-form", "{% url 'Incidents' %}","toBeUpdatedId5"); 
       
       
-      
+      function previewPage3() {
+         disableInputFields("disableIt");
+         disableButtonFields("disableBtn");
+         document.querySelector('.lastPreview').style.display = 'none';
+       
+         const subForms = document.querySelectorAll('.subForms');
+
+         subForms.forEach(subForm => {
+            subForm.style.display = 'none';
+         });
+
+         
+         
+         }
+      function previewPage4() {
+         enableInputFields("disableIt");
+        enableButtonFields("disableBtn");
+        document.querySelector('.lastPreview').style.display = 'block';
+
+         const subForms = document.querySelectorAll('.subForms');
+
+         subForms.forEach(subForm => {
+            subForm.style.display = 'block';
+         });
+         
+         }
       
       
    </script>

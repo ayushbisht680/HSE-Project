@@ -221,8 +221,9 @@
          <form method="POST" action="{% url 'violation_form' %}" enctype="multipart/form-data" id="form" autocomplete="off" style="display: none;" >
             {% csrf_token %}
             <div class="rowTable1">
-               <input type="hidden" name="week_number" id="week_number_Form1" value="">
-               <input type="hidden" name="year" id="year_form1" value="">
+               <input type="hidden" name="plant_id" id="plant_id" value='10000' >
+               <input type="hidden" name="formSubmitDate" id="formSubmitDate" >
+
                <div class="Srno"><input type="text" class="srWidth valueInput1" placeholder="Enter Here" name="SrNo" id="Srno" value='1'></div>
                <div class="commonWidth"><input type="date" class="valueInput1" placeholder="Enter Here" name="Date" required></div>
                <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Enter Here" name="ProjectName" required></div>
@@ -242,7 +243,7 @@
                </div>
                <div class="commonWidth"><input type="number" class="valueInput1" placeholder="Enter Here" name="Amount" required ></div>
                <div >
-                  <button type="submit" class="submitBUtton" id="submitButton" onclick="calculateWeekAndYearForm1()">Submit</button>
+                  <button type="submit" class="submitBUtton" id="submitButton" >Submit</button>
                </div>
             </div>
          </form>
@@ -272,37 +273,27 @@
    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
    <script>
-      function getWeekNumber(date) {
-         date = new Date(date);
-         date.setHours(0, 0, 0, 0);
-         date.setDate(date.getDate() + 4 - (date.getDay() || 7));
-         var yearStart = new Date(date.getFullYear(), 0, 1);
-         var weekNumber = Math.ceil(((date - yearStart) / 86400000 + 1) / 7);
-         return weekNumber;
+
+      function getQueryString() {
+         const url = window.location.href;
+         const queryString = new URL(url).searchParams.get("date");
+         return queryString;
        }
-      
-      function calculateWeekAndYearForm1() {
-         const currentDate = new Date();
-         const weekNumber = getWeekNumber(currentDate);
-         const year = currentDate.getFullYear();
-        
-         
-         // Set the calculated values in the hidden input fields
-         document.getElementById("week_number_Form1").value = weekNumber;
-         document.getElementById("year_form1").value = year;
-      
-         
-      }
+     
+       const queryString = getQueryString();
+       console.log(queryString)
+     
+       if (queryString) {
+         document.getElementById('formSubmitDate').value = queryString;
+       }
+
       
       populateInputField()
       
       
       function populateInputField() {
-         const today = new Date();
-         const weekNumber = getWeekNumber(today);
-         const year = today.getFullYear()         
          
-      fetch(`/api/violation_form/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
+      fetch(`/api/violation_form/?plant_code=10000&formSubmitDate=${queryString}`)
       .then(response => response.json())
       .then(data => {
          document.getElementById('Srno').value=data[data.length-1].SrNo+1
@@ -351,7 +342,6 @@
       }
       }
 
-      calculateWeekAndYearForm1();
 
       
        
@@ -375,6 +365,7 @@
       
       }); {% endcomment %}
 
+     {% comment %} 
       $.ajax({
          type: "GET",
          url: "/api/parent/",
@@ -408,7 +399,7 @@
          error: function (xhr, status, error) {
              console.error("Error:", status, error);
          }
-      }); 
+      });  {% endcomment %}
 
   
       

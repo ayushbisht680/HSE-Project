@@ -51,15 +51,18 @@ class HSEObservationFormSerializer(serializers.ModelSerializer):
         model=HSEObservationForm
         fields='__all__'
 
+
 class StopWorkFormSerializer(serializers.ModelSerializer):
     class Meta:
         model=StopWorkForm
         fields='__all__'
 
+
 class ViolationFormSerializer(serializers.ModelSerializer):
     class Meta:
         model=ViolationMemoForm
         fields='__all__'
+        
 
 class IncidentFormSerializer(serializers.ModelSerializer):
     class Meta:

@@ -1,105 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <style>
-        table {
-            border-collapse: collapse;
-        }
-        td {
-            border: 1px solid #000;
-            padding: 5px;
-            text-align: center;
-            width: 50px;
-        }
-        .highlight {
-            background-color: yellow; /* Customize the highlight style */
-        }
-    </style>
+  <style>
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+    }
+    .day {
+      border: 1px solid #ccc;
+      padding: 5px;
+    }
+    .highlight {
+      background-color: #ffcc00;
+    }
+  </style>
 </head>
 <body>
-    <table>
-        <thead>
-            <tr>
-                <th>Mon</th>
-                <th>Tue</th>
-                <th>Wed</th>
-                <th>Thu</th>
-                <th>Fri</th>
-                <th>Sat</th>
-                <th>Sun</th>
-            </tr>
-        </thead>
-        <tbody id="calendar-body">
-        </tbody>
-    </table>
+  <div class="calendar" id="calendar"></div>
 
-    <script>
-        const today = new Date(2023, 10, 15); // Set today's date to October 30, 2023
-        const currentDay = today.getDate();
-        const year = today.getFullYear();
+  <script>
+    const calendar = document.getElementById("calendar");
+    const today = new Date();
+    const currentMonth = today.getMonth(); // Current month (0-indexed)
 
-        function getWeekNumber(date) {
-            date = new Date(date);
-            date.setHours(0, 0, 0, 0);
-            date.setDate(date.getDate() + 4 - (date.getDay() || 7));
-            var yearStart = new Date(date.getFullYear(), 0, 1);
-            var weekNumber = Math.ceil(((date - yearStart) / 86400000 + 1) / 7);
-            return weekNumber;
-        }
+    let startDate = new Date(today.getFullYear(), currentMonth, 1);
 
-        // Function to update the calendar
-        function updateCalendar() {
-            const weekNumber = getWeekNumber(today);
+    while (startDate.getDay() !== 6) {
+      startDate.setDate(startDate.getDate() + 1); // Move to the first Saturday
+    }
 
-            const getWeekDates = (year, weekNumber) => {
-                var d = new Date(year, 0, 1 + (weekNumber - 1) * 7);
-                var dayNum = d.getDay();
-                var diff = --dayNum;
-                d.setDate(d.getDate() - diff);
-                var startDate = new Date(d);
-                d.setDate(d.getDate() + 6);
-                var endDate = new Date(d);
+    let currentDate = new Date(startDate);
 
-                return [startDate, endDate];
-            };
+    while (true) {
+      const weekDiv = document.createElement("div");
+      weekDiv.classList.add("week");
 
-            [weekStartDate, weekEndDate] = getWeekDates(year, weekNumber);
+      for (let i = 0; i < 7; i++) {
+        const dayDiv = document.createElement("div");
+        dayDiv.classList.add("day");
+        dayDiv.textContent = currentDate.getDate();
+        weekDiv.appendChild(dayDiv);
+        currentDate.setDate(currentDate.getDate() + 1);
+      }
 
-            const calendarBody = document.getElementById("calendar-body");
-            calendarBody.innerHTML = '';
+      weekDiv.classList.add("highlight");
+      calendar.appendChild(weekDiv);
 
-            today.setDate(1); // Set the date to the 1st of the current month
-            const currentMonth = today.getMonth();
-
-            today.setDate(currentDay);
-
-            let offset = (today.getDay() - 1 + 7) % 7;
-
-            today.setDate(currentDay - offset);
-
-            for (let i = 0; i < 6; i++) {
-                const row = document.createElement("tr");
-                for (let j = 0; j < 7; j++) {
-                    const cell = document.createElement("td");
-                    const day = today.getDate();
-                    cell.textContent = day;
-
-                    if (
-                        today.getMonth() === currentMonth &&
-                        today >= weekStartDate &&
-                        today <= weekEndDate
-                    ) {
-                        cell.classList.add("highlight");
-                    }
-
-                    row.appendChild(cell);
-                    today.setDate(day + 1);
-                }
-                calendarBody.appendChild(row);
-            }
-        }
-
-        updateCalendar();
-    </script>
+      if (currentDate.getMonth() !== currentMonth) {
+        break;
+      }
+    }
+  </script>
 </body>
 </html>
