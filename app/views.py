@@ -59,8 +59,16 @@ class GeneralHSEAPI(APIView):
         plant_code = data.get("plant_id")
         form_Submit_date=data.get("formSubmitDate")
         general_hse_instance = None
-        print(plant_code)
-        print(form_Submit_date)
+
+        form_submit_date = datetime.strptime(data.get("formSubmitDate"), "%Y-%m-%d")
+        start_range = datetime.strptime(data.get("startRange"), "%Y-%m-%d")
+        end_range = datetime.strptime(data.get("endRange"), "%Y-%m-%d")
+        
+
+
+        if form_submit_date < start_range or form_submit_date > end_range:
+           return Response({'Cannot submit the form for this date'}, status=status.HTTP_400_BAD_REQUEST)
+
 
         plant = Plant.objects.filter(id=plant_code).first()
 
@@ -69,13 +77,11 @@ class GeneralHSEAPI(APIView):
             formSubmittedDate=form_Submit_date,
             defaults={"form_status": 0},
         )
-        print(hse_instance)
 
         if hse_instance.form_status == 1:
             return Response('Form already submitted', status=status.HTTP_400_BAD_REQUEST)
 
         general_hse_instance = GeneralHse(hse=hse_instance)
-        print(general_hse_instance)
         serializer = GeneralHSESerializer(general_hse_instance, data=data)
 
         if serializer.is_valid():
@@ -126,7 +132,15 @@ class HSETrainingsAPI(APIView):
         hse_training_instance = None
         form_Submit_date=data.get("formSubmitDate")
 
-        print(plant_code)
+        form_submit_date = datetime.strptime(data.get("formSubmitDate"), "%Y-%m-%d")
+        start_range = datetime.strptime(data.get("startRange"), "%Y-%m-%d")
+        end_range = datetime.strptime(data.get("endRange"), "%Y-%m-%d")
+        
+
+
+        if form_submit_date < start_range or form_submit_date > end_range:
+           return Response({'Cannot submit the form for this date'}, status=status.HTTP_400_BAD_REQUEST)
+
 
         plant = Plant.objects.filter(id=plant_code).first()
 
@@ -188,8 +202,16 @@ class HSEObservationAPI(APIView):
         data = request.data
         plant_code = data.get("plant_id")
         form_Submit_date=data.get("formSubmitDate")
-
         hse_observation_instance = None
+
+        form_submit_date = datetime.strptime(data.get("formSubmitDate"), "%Y-%m-%d")
+        start_range = datetime.strptime(data.get("startRange"), "%Y-%m-%d")
+        end_range = datetime.strptime(data.get("endRange"), "%Y-%m-%d")
+        
+
+
+        if form_submit_date < start_range or form_submit_date > end_range:
+           return Response({'Cannot submit the form for this date'}, status=status.HTTP_400_BAD_REQUEST)
 
         plant = Plant.objects.filter(id=plant_code).first()
 
@@ -252,8 +274,16 @@ class ManagementAPI(APIView):
         data = request.data
         plant_code = data.get("plant_id")
         management_instance = None
-        print(plant_code)
         form_Submit_date=data.get("formSubmitDate")
+
+        form_submit_date = datetime.strptime(data.get("formSubmitDate"), "%Y-%m-%d")
+        start_range = datetime.strptime(data.get("startRange"), "%Y-%m-%d")
+        end_range = datetime.strptime(data.get("endRange"), "%Y-%m-%d")
+        
+
+
+        if form_submit_date < start_range or form_submit_date > end_range:
+           return Response({'Cannot submit the form for this date'}, status=status.HTTP_400_BAD_REQUEST)
 
 
         plant = Plant.objects.filter(id=plant_code).first()
@@ -317,8 +347,15 @@ class IncidentsAPI(APIView):
         data = request.data
         plant_code = data.get("plant_id")
         incident_instance = None
-        print(plant_code)
         form_Submit_date=data.get("formSubmitDate")
+        form_submit_date = datetime.strptime(data.get("formSubmitDate"), "%Y-%m-%d")
+        start_range = datetime.strptime(data.get("startRange"), "%Y-%m-%d")
+        end_range = datetime.strptime(data.get("endRange"), "%Y-%m-%d")
+        
+
+
+        if form_submit_date < start_range or form_submit_date > end_range:
+           return Response({'Cannot submit the form for this date'}, status=status.HTTP_400_BAD_REQUEST)
 
 
         plant = Plant.objects.filter(id=plant_code).first()
@@ -469,6 +506,7 @@ class HSEObservationFormAPI(APIView):
         data = request.data
         plant_code = data.get("plant_id")
         form_Submit_date=data.get("formSubmitDate")
+
         print(form_Submit_date)
 
         plant = Plant.objects.filter(id=plant_code).first()
@@ -502,7 +540,9 @@ class HSEObservationFormAPI(APIView):
             redirect_url = f"/api/observation_form_/?date={form_Submit_date}"
             # redirect_url = f"/api/my_html/?date={form_Submit_date}"
 
-            return HttpResponseRedirect(redirect_url)
+            # return HttpResponseRedirect(redirect_url)
+            return Response({'data': serializer.data}, status=status.HTTP_201_CREATED)
+
         
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -568,7 +608,9 @@ class StopWorkFormAPI(APIView):
 
             
             redirect_url = f"/api/stopwork_form_/?date={form_Submit_date}"
-            return HttpResponseRedirect(redirect_url)
+            # return HttpResponseRedirect(redirect_url)
+            return Response({'data': serializer.data}, status=status.HTTP_201_CREATED)
+
         
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -634,7 +676,9 @@ class ViolationMemoAPI(APIView):
 
             
             redirect_url = f"/api/violation_memo_/?date={form_Submit_date}"
-            return HttpResponseRedirect(redirect_url)
+            # return HttpResponseRedirect(redirect_url)
+            return Response({'data': serializer.data}, status=status.HTTP_201_CREATED)
+
         
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -701,7 +745,9 @@ class IncidentFormAPI(APIView):
 
             redirect_url = f"/api/incident_form_/?date={form_Submit_date}"
 
-            return HttpResponseRedirect(redirect_url)
+            # return HttpResponseRedirect(redirect_url)
+            return Response({'data': serializer.data}, status=status.HTTP_201_CREATED)
+
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
