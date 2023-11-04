@@ -422,13 +422,10 @@ class HSEAPI(APIView):
 
     def post(self, request):
         data = request.data
-        print(data)
-        week_number = data.get("week_number")
-        year = data.get("year")
         # from_status=data.get("from_status")
         from_status = 1   
 
-        hse_instance = HSE.objects.get(week_number=week_number, year=year, plant_code=10000)
+        hse_instance = HSE.objects.get( plant_code=10000)
         hse_instance.form_status = from_status  
         hse_instance.save()  
 
@@ -478,12 +475,14 @@ class HSEObservationFormAPI(APIView):
         print(plant_code)
         form_Submit_date=self.request.query_params.get("formSubmitDate")
 
+
         print(form_Submit_date)
 
 
         hse = HSE.objects.filter(formSubmittedDate=form_Submit_date,plant_code=plant_code).first()
+
     
-        if hse:
+        if hse:                
             hse_observation = HSEObservation.objects.filter(hse=hse).first()
             
             if hse_observation:
@@ -492,11 +491,11 @@ class HSEObservationFormAPI(APIView):
                 if hse_observation_forms:
                     serializer = HSEObservationFormSerializer(hse_observation_forms, many=True)
 
-                    return Response(serializer.data)
+                    return Response({'data':serializer.data,'status':hse.form_status})
                 else:
-                    return Response({"detail": "HSEObservationForm not found"}, status=status.HTTP_404_NOT_FOUND)
+                    return Response({"detail": "HSEObservationForm not found",'form_status':hse.form_status}, status=status.HTTP_404_NOT_FOUND)
             else:
-                return Response({"detail": "HSEObservation not found"}, status=status.HTTP_404_NOT_FOUND)
+                return Response({"detail": "HSEObservation not found",'form_status':hse.form_status}, status=status.HTTP_404_NOT_FOUND)
         else:
             return Response({"detail": "hse data not found"}, status=status.HTTP_404_NOT_FOUND)
 
@@ -566,7 +565,7 @@ class StopWorkFormAPI(APIView):
                 if stop_work_forms:
                     serializer = StopWorkFormSerializer(stop_work_forms, many=True)
 
-                    return Response(serializer.data)
+                    return Response({'data':serializer.data,'status':hse.form_status})
                 else:
                     return Response({"detail": "StopWork Form not found"}, status=status.HTTP_404_NOT_FOUND)
             else:
@@ -634,7 +633,7 @@ class ViolationMemoAPI(APIView):
                 if stop_work_forms:
                     serializer = ViolationFormSerializer(stop_work_forms, many=True)
 
-                    return Response(serializer.data)
+                    return Response({'data':serializer.data,'status':hse.form_status})
                 else:
                     return Response({"detail": "Violation Form not found"}, status=status.HTTP_404_NOT_FOUND)
             else:
@@ -703,7 +702,7 @@ class IncidentFormAPI(APIView):
                 if incident_form:
                     serializer = IncidentFormSerializer(incident_form, many=True)
 
-                    return Response(serializer.data)
+                    return Response({'data':serializer.data,'status':hse.form_status})
                 else:
                     return Response({"detail": "Incident Form not found"}, status=status.HTTP_404_NOT_FOUND)
             else:

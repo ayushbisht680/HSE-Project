@@ -332,8 +332,22 @@
       .then(response => response.json())
       .then(data => {
 
-         document.getElementById('Srno').value=data[data.length-1].SrNo+1
-         createAndPopulateFormRows(data); 
+         if (data && Array.isArray(data.data) && 'status' in data) {
+            // Access the data array and the form_status
+            const dataArray = data.data;
+            const formStatus = data.status;
+
+            console.log('Data Array:', dataArray);
+            console.log('Form Status:', formStatus);
+
+            if(formStatus==1){
+               document.getElementById('addRowButton').style.display='none'
+
+            }
+
+            document.getElementById('Srno').value=dataArray[dataArray.length-1].SrNo+1
+            createAndPopulateFormRows(dataArray); 
+         } 
       
       })
       .catch(error => {
