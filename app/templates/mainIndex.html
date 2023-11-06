@@ -9,10 +9,11 @@
          padding-left:0px !important;
          }
          .col-md-3 {
-            background-color:black;
-
+         width: 23% !important;
          }
-         
+         .col-md-9{
+         width: 77% !important;
+         }
          th, td {
          border: 1px solid #ddd;
          text-align: center;
@@ -64,7 +65,7 @@
          margin-bottom:0px !important;
          }
          .myTable {
-         width: 100%;
+         width: 278px;
          }
          .my-cont{
          padding-right: 0px !important;
@@ -72,7 +73,6 @@
          background-color:black;
          top:0px;
          bottom:0px;
-         width: 25%;
          }
          .navbar{
          background-color: white;
@@ -108,7 +108,7 @@
          font-size: 13px;
          font-weight: 600;
          margin-top: 11px;
-         width: 98px;
+         width: 90px;
          }
          .arrow-cont {
          display: flex;
@@ -251,10 +251,11 @@
          margin-right: 9px;
          overflow: hidden;
          }
+         /* Style the image to fill the round container */
          .round-image img {
          width: 100%;
          height: 100%;
-         object-fit: cover; 
+         object-fit: cover; /* Maintain aspect ratio and cover the round container */
          }
          .horizontal-line {
          height: 1px; 
@@ -428,6 +429,7 @@
       <div class="container-fluid">
          <div class="row">
             <div class="col-md-3 ">
+               <div class="mainDiv">
                   <div class="my-cont ">
                      <div class="centerDates">
                         <p><span class="date-range"></span></p>
@@ -471,6 +473,7 @@
                         </div>
                      </div>
                   </div>
+               </div>
             </div>
             <div class="col-md-9">
                <div class="modal fade" tabindex="-1" id="successModal" role="dialog">
@@ -959,10 +962,9 @@
                                     </div>
                                  </form>
                                  <div class="saveBtn">
-                                    <form method="POST" action="{% url 'Parent' %}" enctype="multipart/form-data" id='finalSubmitFo'>
+                                    <form method="POST" action="{% url 'Parent' %}" enctype="multipart/form-data">
                                        {% csrf_token %}
-                                       <input type="hidden" name="startRange" class="startRange" >
-                                        <input type="hidden" name="endRange" class="endRange" >
+                                       <input type="hidden" name="from_status" id="from_status" class='from_status' value='1'>
                                        <button type="submit" class="btn btn-primary " id="finalSubmit" style='display:none'>Final Save</button>
                                        {% comment %} <button type="button" class="btn btn-secondary" id="closeBtn" style='display:none' onclick="previewPage2()">Close</button> {% endcomment %}
                                     </form>
@@ -991,56 +993,6 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
    <script>
-
-      
-   function handleFinalSubmission(formId, url) {
-      const form = document.getElementById(formId);
-      form.addEventListener("submit", function (event) {
-          event.preventDefault();
-          
-          const formData = new FormData(this);
-          const csrftoken = getCookie('csrftoken');
-          const existingID = formData.get("toBeUpdatedId");
-      
-          const methodValue = existingID ? "PUT" : "POST";
-      
-          fetch(url, {
-              method: methodValue,
-              body: formData,
-              headers: {
-                  "X-CSRFToken": csrftoken,
-              },
-          })
-      
-          .then(response => {
-            console.log(response)
-            if (response.status === 201 || response.status === 200) {
-               $('#successModal').modal('show');
-      
-               setTimeout(function () {
-                   $('#successModal').modal('hide');
-               }, 1000);
-      
-           }
-            else {
-               console.error("Form submission failed. Status:", res.status);
-           }
-            return response.json()
-          })
-      
-          .then(res => {
-            console.log(res)
-            const id=res.id
-            const a=document.getElementById(toUpdateId).value=id
-            console.log(a)
-            
-          })
-          .catch(error => {
-              console.error("Error:", error);
-          });
-      });
-   }
-
       const today = new Date();
       //const year = today.getFullYear();
      // const month = today.getMonth();
@@ -1601,7 +1553,6 @@
        if(formattedDate < startRange){
          console.log('smaller date')
 
-
          DisablingSmallerDate()
 
        }
@@ -1619,21 +1570,16 @@
            return response.json(); 
        })
        .then(data => {
-          console.log(data)
-
-       
-          // keep a check for them here if allFieldsNonEmpty
            populateInputFields('General HSE', generalHSEFieldsID, generalHSEFields,1,data);
            populateInputFields('HSE Training', hseTrainingFieldsID,hseTrainingFields,2,data);
            populateInputFields('HSE Observation', hseObservationFieldsID,hseObservationFields,3,data);
            populateInputFields('Incidents', incidentsFieldsID,incidentsFields,5,data); 
-           populateInputFields('Management Visits', managementVisitsFieldsID,managementVisitsFields,4,data); 
+           populateInputFields('Management Visits', managementVisitsFieldsID,managementVisitsFields,4,data);
 
 
            
        })
        .catch(error => {
-         
            console.error('API request failed:', error);
        });
        
@@ -1641,8 +1587,6 @@
        return formattedDate;
 
       }
-
-     
 
       
       function setupIncrementDecrementButtons(decrementButtonId,incrementButtonId, inputFieldId) {
@@ -2041,8 +1985,9 @@
           });
       });
    } 
- 
 
+
+      
       
       function getCookie(name) {
       const value = `; ${document.cookie}`; 

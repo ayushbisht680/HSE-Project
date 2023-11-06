@@ -129,10 +129,17 @@
       }
       #addRowButton{
          color: white;
-         font-size: 11px;
+         font-size: 10px;
          background-color: #3E9FFE;
-    }
+         margin-left: 20px;
+         }
     
+         #redirectButton{
+            width:36px;
+            height:36px;
+            margin-left:16px;
+         }
+        
    </style>
    <body>
       <div class="modal fade" tabindex="-1" id="successModal" role="dialog">
@@ -146,9 +153,11 @@
       </div>
       
       <div class="heading">
-         <button type="button" class="btn btn-info" id="redirectButton">Back</button>
+         {% comment %} <button type="button" class="btn btn-info" id="redirectButton">Back</button> {% endcomment %}
+         <img src='{% static 'images/Frame.svg' %}' alt="Image Description" id="redirectButton" >
 
-         <div style="margin-left: 12px">
+
+         <div style="margin-left: 12px ; margin-top: 7px;">
             <h6 style="font-size: 15px">Stop Work Form Details</h6>
          </div>
          <div class='addrowBtn'>
@@ -245,22 +254,22 @@
             <div class="commonWidth">
                <div class="input-group">
                   <div class="custom-file">
-                     <input type="file" class="custom-file-input" id="openEvidenceInput" name="OpenEvidence" aria-describedby="openEvidenceAddon" style="display: none;">
-                     <label class="custom-file-label" for="openEvidenceInput"></label>
+                     <input type="file" class="custom-file-input" id="OpenEvidence" name="OpenEvidence" aria-describedby="openEvidenceAddon" style="display: none;">
+                     <label class="custom-file-label" for="OpenEvidence"></label>
                   </div>
                   <div class="input-group-append">
-                     <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('openEvidenceInput').click()">Upload File</button>
+                     <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('OpenEvidence').click()" id='OpenEvidenceBtn'>Upload File</button>
                   </div>
                </div>
             </div>
             <div class="commonWidth">
                <div class="input-group">
                   <div class="custom-file">
-                     <input type="file" class="custom-file-input" id="openEvidenceInput" name="ClosedEvidence" aria-describedby="openEvidenceAddon" style="display: none;">
-                     <label class="custom-file-label" for="openEvidenceInput"></label>
+                     <input type="file" class="custom-file-input" id="ClosedEvidence" name="ClosedEvidence" aria-describedby="openEvidenceAddon" style="display: none;">
+                     <label class="custom-file-label" for="ClosedEvidence"></label>
                   </div>
                   <div class="input-group-append">
-                     <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('openEvidenceInput').click()">Upload File</button>
+                     <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('ClosedEvidence').click()" id='ClosedEvidenceBtn'>Upload File</button>
                   </div>
                </div>
             </div>
@@ -489,25 +498,19 @@
       });  {% endcomment %}
 
       
-       {% comment %} $(document).ready(function() {
-         let submitted = false; 
+      function setupFileUpload(inputId, buttonId) {
+         const fileInput = document.getElementById(inputId);
+         const fileUploadButton = document.getElementById(buttonId);
        
-         $('#submitButton').click(function(event) {
-           event.preventDefault(); 
-       
-       
-           $('#successModal').modal('show');
-       
-           setTimeout(function() {
-             $('#successModal').modal('hide'); 
-             if (!submitted) {
-               submitted = true;
-               $('form').submit(); 
-             }
-           }, 1000);
+         fileInput.addEventListener('change', function () {
+           if (fileInput.files.length > 0) {
+             fileUploadButton.textContent = 'File Added';
+           }
          });
+       }
        
-       }); {% endcomment %}
+       setupFileUpload('OpenEvidence', 'OpenEvidenceBtn');
+       setupFileUpload('ClosedEvidence', 'ClosedEvidenceBtn');
 
       
     

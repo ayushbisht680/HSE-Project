@@ -146,9 +146,16 @@
       }
       #addRowButton{
          color: white;
-         font-size: 11px;
+         font-size: 10px;
          background-color: #3E9FFE;
-      }
+         margin-left: 20px;
+         }
+    
+         #redirectButton{
+            width:36px;
+            height:36px;
+            margin-left:16px;
+         }
    </style>
    
    <body>
@@ -164,9 +171,11 @@
       </div>
 
       <div class="heading">
-         <button type="button" class="btn btn-info" id="redirectButton">Back</button>
+         {% comment %} <button type="button" class="btn btn-info" id="redirectButton">Back</button> {% endcomment %}
+         <img src='{% static 'images/Frame.svg' %}' alt="Image Description" id="redirectButton" >
 
-         <div style='margin-left: 12px'>
+
+         <div style='margin-left: 12px ;margin-top: 7px;'>
             <h6 style="font-size: 15px">Violation Memo Form Details</h6>
          </div>
          <div class='addrowBtn'>

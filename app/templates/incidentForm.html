@@ -127,8 +127,15 @@
       }
       #addRowButton{
          color: white;
-         font-size: 11px;
+         font-size: 10px;
          background-color: #3E9FFE;
+         margin-left: 20px;
+         }
+    
+         #redirectButton{
+            width:36px;
+            height:36px;
+            margin-left:16px;
          }
    </style>
    <body>
@@ -144,9 +151,11 @@
       </div>
 
       <div class="heading">
-         <button type="button" class="btn btn-info" id="redirectButton">Back</button> 
+         {% comment %} <button type="button" class="btn btn-info" id="redirectButton">Back</button>  {% endcomment %}
+         <img src='{% static 'images/Frame.svg' %}' alt="Image Description" id="redirectButton" >
 
-         <div style='margin-left: 12px'>
+
+         <div style='margin-left: 12px;margin-top: 7px'>
             <h6 style='font-size: 15px'>Incident Report Form Details</h6>
          </div>
          <div class='addrowBtn'>
@@ -264,10 +273,10 @@
                <div class="input-group">
                   <div class="custom-file">
                      <input type="file" class="custom-file-input" id="AttachReport" name="AttachReport" aria-describedby="openEvidenceAddon" style="display: none;">
-                     <label class="custom-file-label" for="openEvidenceInput"></label>
+                     <label class="custom-file-label" for="AttachReport"></label>
                   </div>
                   <div class="input-group-append">
-                     <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('AttachReport').click()">Upload File</button>
+                     <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('AttachReport').click()" id='AttachReportBtn'>Upload File</button>
                   </div>
                </div>
             </div>
@@ -486,26 +495,19 @@
       });  {% endcomment %}
 
       
-       {% comment %} $(document).ready(function() {
-         let submitted = false; 
+      function setupFileUpload(inputId, buttonId) {
+         const fileInput = document.getElementById(inputId);
+         const fileUploadButton = document.getElementById(buttonId);
        
-         $('#submitButton').click(function(event) {
-           event.preventDefault(); 
-       
-           calculateWeekAndYearForm1();
-           $('form').submit(); 
-       
-           $('#successModal').modal('show');
-       
-           setTimeout(function() {
-             $('#successModal').modal('hide'); 
-             if (!submitted) {
-               submitted = true;
-             }
-           }, 1000);
+         fileInput.addEventListener('change', function () {
+           if (fileInput.files.length > 0) {
+             fileUploadButton.textContent = 'File Added';
+           }
          });
-       
-       });  {% endcomment %}
+       }
+    
+    
+    setupFileUpload('AttachReport', 'AttachReportBtn');
 
    
 

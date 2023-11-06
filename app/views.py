@@ -422,15 +422,18 @@ class HSEAPI(APIView):
 
     def post(self, request):
         data = request.data
-        # from_status=data.get("from_status")
-        from_status = 1   
+        start_range = datetime.strptime(data.get("startRange"), "%Y-%m-%d")
+        end_range = datetime.strptime(data.get("endRange"), "%Y-%m-%d")
 
-        hse_instance = HSE.objects.get( plant_code=10000)
-        hse_instance.form_status = from_status  
-        hse_instance.save()  
+        hse_objects = HSE.objects.filter(
+            formSubmittedDate__gte=start_range,
+            formSubmittedDate__lte=end_range
+        )
+        hse_objects.update(form_status=1)
+        return Response('Changed the form Status to 1', status=status.HTTP_201_CREATED)
 
-      
-        return HttpResponseRedirect('/api/my_html')
+
+        # return HttpResponseRedirect('/api/my_html')
 
     
 

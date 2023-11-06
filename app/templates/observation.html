@@ -130,8 +130,14 @@
       }
       #addRowButton{
       color: white;
-      font-size: 11px;
+      font-size: 10px;
       background-color: #3E9FFE;
+      margin-left: 20px;
+      }
+      #redirectButton{
+         width:36px;
+         height:36px;
+         margin-left:16px;
       }
      
    </style>
@@ -149,9 +155,10 @@
       </div>
 
       <div class="heading">
-          <button type="button" class="btn btn-info" id="redirectButton">Back</button> 
+          {% comment %} <button type="button" class="btn btn-info" id="redirectButton">B</button>  {% endcomment %}
+          <img src='{% static 'images/Frame.svg' %}' alt="Image Description" id="redirectButton" >
 
-         <div style='margin-left: 12px'>
+         <div style='margin-left: 12px ; margin-top: 7px;'>
             <h6 style="font-size: 15px">Daily HSE Observation Form Details</h6>
          </div>
          <div class='addrowBtn'>
@@ -256,13 +263,13 @@
             <div class="commonWidth">
                <div class="input-group">
                   <div class="custom-file">
-                     <input type="file" class="custom-file-input" name="OpenEvidence" id="OpenEvidence1"
+                     <input type="file" class="custom-file-input" name="OpenEvidence" id="OpenEvidence"
                         aria-describedby="openEvidenceAddon" style="display: none;">
                      <label class="custom-file-label" for="openEvidenceInput" id="fileInputLabel1"></label>
                   </div>
-                  <div class="input-group-append">
+                  <div class="input-group-append" id='openEvidenveBtn'>
                      <button class="btn btn-outline-secondary" type="button"
-                        onclick="document.getElementById('OpenEvidence').click()">Upload File</button>
+                        onclick="document.getElementById('OpenEvidence').click()" id='OpenEvidenceBtn'>Upload File</button>
                   </div>
                </div>
             </div>
@@ -271,11 +278,11 @@
                   <div class="custom-file">
                      <input type="file" class="custom-file-input" name="ClosedEvidence" id="ClosedEvidence"
                         aria-describedby="openEvidenceAddon" style="display: none;">
-                     <label class="custom-file-label" for="closedEvidenceInput" id="fileInputLabel"></label>
+                     <label class="custom-file-label" for="closedEvidenceInput" id="fileInputLabel2"></label>
                   </div>
-                  <div class="input-group-append">
+                  <div class="input-group-append" >
                      <button class="btn btn-outline-secondary" type="button"
-                        onclick="document.getElementById('ClosedEvidence').click()">Upload File</button>
+                        onclick="document.getElementById('ClosedEvidence').click()" id='ClosedEvidenceBtn'>Upload File</button>
                   </div>
                </div>
             </div>
@@ -465,8 +472,6 @@
 
 
 
-     
-      
 
        {% comment %} $.ajax({
          type: "GET",
@@ -505,18 +510,20 @@
    
        
 
-       {% comment %} function setupFileUpload(inputId, labelId) {
+      function setupFileUpload(inputId, buttonId) {
          const fileInput = document.getElementById(inputId);
-         const fileInputLabel = document.getElementById(labelId);
-         
+         const fileUploadButton = document.getElementById(buttonId);
+       
          fileInput.addEventListener('change', function () {
-          if (fileInput.files.length > 0) {
-              fileInputLabel.textContent = 'File Added!';
-          }
+           if (fileInput.files.length > 0) {
+             fileUploadButton.textContent = 'File Added';
+           }
          });
-         } {% endcomment %}
-
-         {% comment %} setupFileUpload() {% endcomment %}
+       }
+       
+       setupFileUpload('OpenEvidence', 'OpenEvidenceBtn');
+       setupFileUpload('ClosedEvidence', 'ClosedEvidenceBtn');
+       
 
          
         
