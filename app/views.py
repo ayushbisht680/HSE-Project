@@ -21,7 +21,6 @@ class MyTemplateView(APIView):
     
 class MyFormView(APIView):
     def get(self, request):
-
         return TemplateResponse(request, "observation.html")
     
 class MyStopWork(APIView):
@@ -390,8 +389,6 @@ class IncidentsAPI(APIView):
         data = request.data
         id = data.get("toBeUpdatedId") 
 
-        print(id)
-        print("Hello, it's a put request")
         
         try:
             existing_instance = Incidents.objects.get(id=id)
@@ -475,12 +472,7 @@ class HSEObservationFormAPI(APIView):
 
     def get(self, request):
         plant_code =self.request.query_params.get("plant_code")
-        print(plant_code)
         form_Submit_date=self.request.query_params.get("formSubmitDate")
-
-
-        print(form_Submit_date)
-
 
         hse = HSE.objects.filter(formSubmittedDate=form_Submit_date,plant_code=plant_code).first()
 

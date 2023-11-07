@@ -1,135 +1,149 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-   <head>
-      <title>HSE Project</title>
-      <style>
-         .row>*{
-         padding-right:0px !important;
-         padding-left:0px !important;
-         }
-         .col-md-3 {
-            background-color:black;
 
-         }
-         
-         th, td {
+<head>
+   <title>HSE Project</title>
+   <style>
+      .row>* {
+         padding-right: 0px !important;
+         padding-left: 0px !important;
+      }
+
+      th,
+      td {
          border: 1px solid #ddd;
          text-align: center;
          color: white;
-         }
-         th{
+      }
+
+      th {
          color: darkgrey;
-         width:35px;
-         font-size: 13px;
+         width: 35px;
+         font-size: 11px;
          font-weight: 500;
          text-align: center !important;
-         }
-         tr{
-         font-size: 13px;
-         }
-         a {
+      }
+
+      tr {
+         font-size: 11px;
+      }
+
+      a {
          text-decoration: none !important;
          color: white !important;
-         font-size: 15px;
+         font-size: 13px;
          font-weight: 500;
-         }
-         .highlight {
+      }
+
+      .highlight {
          background-color: #3E9FFE;
-         }
-         .mainDiv{
-         display: inline-block;
-         background-color: black;
-         width:100%
-         }
-         .date-range{
+      }
+
+      .date-range {
          color: white;
-         font-size: 14px;
+         font-size: 12px;
          font-weight: 500;
-         }
-         .menu{
+      }
+
+      .menu {
          color: white;
          margin-top: 20px;
          margin-left: 20px;
-         }
-         .mb-3{
+      }
+
+      .mb-3 {
          height: 88px;
-         margin-left: 18px;
          margin-top: 32px;
-         }
-         .myNavi{
+      }
+
+      .myNavi {
          height: 38px;
          margin-left: 20px;
          margin-top: 17px;
-         margin-bottom:0px !important;
-         }
-         .myTable {
+         margin-bottom: 0px !important;
+      }
+
+      .myTable {
          width: 100%;
-         }
-         .my-cont{
+      }
+
+      .my-cont {
          padding-right: 0px !important;
-         position:fixed !important;
-         background-color:black;
-         top:0px;
-         bottom:0px;
-         width: 25%;
-         }
-         .navbar{
+         position: fixed !important;
+         background-color: black;
+         top: 0px;
+         bottom: 0px;
+         width: 16.6%;
+      }
+
+      .navbar {
          background-color: white;
          padding: 10px 0;
          height: 57px;
-         }
-         .myNavbar{
+      }
+
+      .myNavbar {
          width: 100%;
-         }
-         .big_container{
+      }
+
+      .big_container {
          display: flex;
-         }
-         .cont {
+      }
+
+      .cont {
          text-align: left;
          margin-top: 4px;
          background-color: rgba(62, 159, 254, 0.1);
          margin-left: 14px;
          margin-right: 14px;
-         boder: 1px solid rgba(62, 159, 254, 0.1) ;
          border-radius: 7px;
-         height: 11vw;
-         }
-         .date-cont {
+      }
+
+      .date-cont {
          display: flex;
          align-items: center;
          justify-content: left;
          font-size: 18px;
          padding: 10px;
-         }
-         .viewDate {
+      }
+
+      .viewDate {
          margin: 0 10px;
          color: #3E9FFE;
          font-size: 13px;
          font-weight: 600;
          margin-top: 11px;
-         width: 98px;
-         }
-         .arrow-cont {
+         width: 100px;
+         display: flex;
+         justify-content: center;
+      }
+
+      .arrow-cont {
          display: flex;
          align-items: center;
-         }
-         .theDate1{
+      }
+
+      .theDate1 {
          color: grey;
          font-size: 13px;
-         }
-         .arrow {
+      }
+
+      .arrow {
          font-size: 24px;
          cursor: pointer;
          margin: 0 5px;
          margin-top: 14px;
-         }
-         .hello{
+         width: 9px;
+      }
+
+      .hello {
          margin-left: 13px;
          font-weight: 700;
-         margin-top:15px;
-         }
-         .outer-container {
+         margin-top: 15px;
+      }
+
+      .outer-container {
          text-align: left;
          display: flex;
          flex-direction: row;
@@ -137,161 +151,187 @@
          border-radius: 4px;
          margin-top: 9px;
          margin-right: 10px;
-         height: 34px; 
-         }
-         .showWeek {
+         height: 34px;
+      }
+
+      .showWeek {
          font-size: 13px;
          margin-top: 8px;
          color: white;
-         }
-         .showDate {
+      }
+
+      .showDate {
          font-size: 13px;
          margin-top: 7px;
          margin-right: 14px;
          margin-bottom: 0px;
          font-weight: 500;
-         }
-         /* Style the div outer-containers */
-         .display-outer-container2 {
+      }
+
+      .display-outer-container2 {
          margin: initial;
-         }
-         .display-outer-container1 {
+      }
+
+      .display-outer-container1 {
          margin-right: 9px;
          background-color: #3E9FFE;
          width: 71px;
          justify-content: center;
          display: flex;
-         }
-         .sideView{
+      }
+
+      .sideView {
          display: flex;
          justify-content: space-between;
          argin-top: 8px;
-         }
-         .uploadBtn{
+      }
+
+      .uploadBtn {
          margin-top: 7px;
-         }
-         .toggle-container {
-         display: none; /* Initially hide the container */
+      }
+
+      .toggle-container {
+         display: none;
          padding: 29px;
          margin-top: 10px;
-         }
-         .toggle-button {
+      }
+
+      .toggle-button {
          cursor: pointer;
-         float: right; /* Place the button on the right */
-         }
-         /* Style for labels */
-         label {
+         float: right;
+      }
+
+      label {
          display: block;
          margin-bottom: 5px;
-         }
-         /* Style for the file input group */
-         .input-group {
+      }
+
+      .input-group {
          margin-top: 5px;
-         width: 81% !important;
-         }
-         /* Style for the "Upload File" label */
-         .input-group-text {
+         width: 80% !important;
+      }
+
+      .input-group-text {
          cursor: pointer;
-         margin:15px
-         } 
-         /* Style for the file input (hidden) */
-         .form-control-file {
+         margin: 15px
+      }
+
+      .form-control-file {
          display: none;
-         margin:15px;
-         }
-         /* Style for the container with spacing */
-         .section-container {
+         margin: 15px;
+      }
+
+      .section-container {
          border: 1px solid #cfc8c8;
          padding: 20px;
          margin-top: 20px;
          border-radius: 5px;
-         }
-         .form-control{
-         font-size: 12px !important
-         color: lightgrey !important
-         width: 83% !important;
-         }
-         .form-control::placeholder{
-         font-size:13px;
-         color:lightgrey
-         }
-         .maincontainer{
+      }
+
+      .form-control {
+         font-size: 12px !important color: lightgrey !important width: 83% !important;
+      }
+
+      .form-control::placeholder {
+         font-size: 13px;
+         color: lightgrey
+      }
+
+      .maincontainer {
          margin-left: 14px;
          margin-right: 14px;
-         }
-         .changeInput{
-         height: 39px !important ;
-         margin-right:auto;
-         }
-         .changeLabel{
+      }
+
+      .changeInput {
+         height: 39px !important;
+         margin-right: auto;
+      }
+
+      .changeLabel {
          margin-top: 14px !important;
-         }
-         .input-group-text{
+      }
+
+      .input-group-text {
          margin: 0px !important;
-         }
-         .btn{
-         float:right
-         }
-         .form-label{
+      }
+
+      .btn {
+         float: right
+      }
+
+      .form-label {
          margin-top: 13px;
          font-weight: 600;
-         font-size:14px;
-         }
-         .uploadColor{
-         border:1px solid #2c8ff1 !important;
+         font-size: 14px;
+      }
+
+      .uploadColor {
+         border: 1px solid #2c8ff1 !important;
          color: #2c8ff1 !important;
-         }
-         .colorH6{
+      }
+
+      .colorH6 {
          color: #7a7676;
-         }
-         .round-image {
+      }
+
+      .round-image {
          width: 51px;
          height: 43px;
          border-radius: 48%;
          margin-right: 9px;
          overflow: hidden;
-         }
-         .round-image img {
+      }
+
+      .round-image img {
          width: 100%;
          height: 100%;
-         object-fit: cover; 
-         }
-         .horizontal-line {
-         height: 1px; 
-         background-color: white; 
-         width: 100%; 
+         object-fit: cover;
+      }
+
+      .horizontal-line {
+         height: 1px;
+         background-color: white;
+         width: 100%;
          margin: 10px auto;
          margin-bottom: 0px;
-         }
-         .imageAlign{
-         display:flex;
+      }
+
+      .imageAlign {
+         display: flex;
          margin-left: 13px;
-         }
-         .hamburger{
+      }
+
+      .hamburger {
          margin-right: 10px;
-         }
-         .amplusLogo{
+      }
+
+      .amplusLogo {
          margin-left: 10px;
-         }
-         .valueButton{
-         width:65px;
-         border:none !important;
-         }
-         .btnMargin{
+      }
+
+      .valueButton {
+         width: 65px;
+         border: none !important;
+      }
+
+      .btnMargin {
          border: 1px solid lightgrey;
          margin-right: 35px;
-         }
-         .changeWidth{
-         width:67%
-         }
-         .changingWidth {
-         width: 75%;
-         margin-left: 18px;
-         }
-         .inputAndButton{
-         display:flex;
-         }
-         .addingBtn{
+      }
+
+      .changeWidth {
+         width: 67%
+      }
+
+      .changingWidth {
+         width: 76%;
+      }
+
+      .inputAndButton {
+         display: flex;
+      }
+
+      .addingBtn {
          display: flex;
          justify-content: center;
          width: 136px;
@@ -299,885 +339,1030 @@
          align-items: center;
          margin-top: 45px;
          border: 1px solid lightgrey;
-         }
-         .plusIcon{
+      }
+
+      .plusIcon {
          width: 39px;
          height: 30px;
-         }
-         #adjustWidth{
-         width:80% !important;
+      }
+
+      #adjustWidth {
+         width: 80% !important;
          height: 35px;
-         }
-         .saveBtn{
+      }
+
+      .saveBtn {
          height: 3vw !important
-         }
-         .centerDates{
+      }
+
+      .centerDates {
          display: flex;
          justify-content: center;
-         }
-         .btn-success{
-         margin-right:54px;
-         font-size:13px !important;
+      }
+
+      .btn-success {
+         margin-right: 54px;
+         font-size: 13px !important;
          background-color: #10B981 !important;
-         border:none !important;
-         }
-         .accordion-item {
-         margin-top: 20px; 
-         border:1px solid lightgrey !important;
-         }
-         .accordion-button:not(.collapsed) {
+         border: none !important;
+      }
+
+      .accordion-item {
+         margin-top: 20px;
+         border: 1px solid lightgrey !important;
+      }
+
+      .accordion-button:not(.collapsed) {
          background-color: white !important;
          box-shadow: none !important;
          color: grey !important;
          font-size: 16px;
          font-weight: 500;
-         }
-         .accordion-header{
+      }
+
+      .accordion-header {
          border: 1px solid #fbf7f7;
-         }
-         .accordion-button{
-         font-size: 16px !important;
+      }
+
+      .accordion-button {
+         font-size: 14px !important;
          color: grey !important;
          font-weight: 500 !important;
-         }
-         .date-cont1{
+      }
+
+      .date-cont1 {
          margin-left: 15px;
          font-size: 14px;
-         }
-         .decBtn{
+      }
+
+      .decBtn {
          padding-bottom: 10px !important;
-         }
-         input[type="number"]::-webkit-inner-spin-button,
-         input[type="number"]::-webkit-outer-spin-button {
+      }
+
+      input[type="number"]::-webkit-inner-spin-button,
+      input[type="number"]::-webkit-outer-spin-button {
          -webkit-appearance: none;
          appearance: none;
          margin: 0;
-         }
-         .error-message {
+      }
+
+      .error-message {
          color: #B3261E;
          display: block;
          font-size: 12px;
          margin-left: 26px;
          margin-top: 4px;
-         display:none;
-         }
-         .error-border {
-         border: 1.5px solid #B3261E  !important;
-         }
-         .alertspan{
+         display: none;
+      }
+
+      .error-border {
+         border: 1.5px solid #B3261E !important;
+      }
+
+      .alertspan {
          margin-left: 17px !important;
-         }
-         .small-popup {
-         max-width: 400px;   
-         }
-         .messageDisplay{
+      }
+
+      .small-popup {
+         max-width: 400px;
+      }
+
+      .messageDisplay {
          color: #3E9FFE;
          font-size: 14px;
          font-weight: 490;
          margin-top: 11px;
-         }
-         .linkForm{
-         color:#3E9FFE !important;
+      }
+
+      .linkForm {
+         color: #3E9FFE !important;
          font-size: 13px !important;
          font-weight: 400;
-         border-bottom: 1.5px solid #3E9FFE; 
-         }
-         .lastButton{
+         border-bottom: 1.5px solid #3E9FFE;
+      }
+
+      .lastButton {
          margin-right: 12px;
          margin-top: 15px;
-         }
-         .lastPreview{
+      }
+
+      .lastPreview {
          margin-top: 15px;
          margin-right: 12px;
-         }
-         .clickArrow{
+      }
+
+      .clickArrow {
          display: flex;
          justify-content: center;
          margin-left: 3px;
-         }
-         #finalSubmit{
+      }
+
+      #finalSubmit {
          font-size: 12px;
          margin-right: 20px;
          margin-top: 5px;
-         }
-         #closeBtn{
+      }
+
+      #closeBtn {
          font-size: 12px;
          margin-right: 10px;
          margin-top: 5px;
-         }
-         #removeButton1{
-         height:18px;
-         width:18px;
-         }
-         .form-control:focus {
-            
-            box-shadow:none !important;
-        }
+      }
 
-         {% comment %} .accordion-button:not(.collapsed)::after {
+      #removeButton1 {
+         height: 18px;
+         width: 18px;
+      }
+
+      .form-control:focus {
+         box-shadow: none !important;
+      }
+
+      .incHeight {
+         height: 44px;
+      }
+
+     
+
+      {% comment %} .accordion-button:not(.collapsed)::after {
          background-image: url('/static/images/accordianImg.svg') !important;
-         }  {% endcomment %}
-         {% comment %} .accordion-button::after{
+      }
+
+      .accordion-button::after {
          background-image: url('/static/images/accordianImg.svg') !important;
-         }  {% endcomment %}
-      </style>
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-   </head>
-   <body>
-      <div class="container-fluid">
-         <div class="row">
-            <div class="col-md-3 ">
-                  <div class="my-cont ">
-                     <div class="centerDates">
-                        <p><span class="date-range"></span></p>
+      } {% endcomment %}
+
+   </style>
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+
+<body>
+   <div class="container-fluid">
+      <div class="row">
+         <div class="col-md-2 ">
+            <div class="my-cont ">
+               <div class="centerDates">
+                  <p><span class="date-range"></span></p>
+               </div>
+               <div id="calendar"></div>
+               <div class="horizontal-line"></div>
+               <h6 class="menu">Menu</h6>
+               <div id='clickMainDiv1'>
+                  <div id='backcolorDiv1' style='display:flex ; height:60px align-items:center;margin-top:10px'>
+                     <div class="myNavi">
+                        <a href="#" for="name" id="toggle-accordion1">General HSE</a>
                      </div>
-                     <div id="calendar"></div>
-                     <div class="horizontal-line"></div>
-                     <h5 class="menu">Menu</h5>
-                     <div id='clickMainDiv1'>
-                        <div id='backcolorDiv1' style='display:flex ; height:60px align-items:center;margin-top:10px'>
-                           <div class="myNavi">
-                              <a href="#" for="name" id="toggle-accordion1">General HSE</a>
-                           </div>
+                  </div>
+               </div>
+               <div id='clickMainDiv2'>
+                  <div id='backcolorDiv2' style='display:flex ; height:60px; align-items:center; margin-top:10px'>
+                     <div class="myNavi">
+                        <a href="#" for="age" id="toggle-accordion2">HSE Trainings</a>
+                     </div>
+                  </div>
+               </div>
+               <div id='clickMainDiv3'>
+                  <div id='backcolorDiv3' style='display:flex ; height:60px; align-items:center;margin-top:10px'>
+                     <div class="myNavi">
+                        <a href="#" for="class" id="toggle-accordion3">HSE Observations</a>
+                     </div>
+                  </div>
+               </div>
+               <div id='clickMainDiv4'>
+                  <div id='backcolorDiv4' style='display:flex ; height:60px ;align-items:center;margin-top:10px'>
+                     <div class="myNavi">
+                        <a href="#" for="sec" id="toggle-accordion4">Management Visits</a>
+                     </div>
+                  </div>
+               </div>
+               <div id='clickMainDiv5'>
+                  <div id='backcolorDiv5' style='display:flex ; height:60px; align-items:center;margin-top:10px'>
+                     <div class="myNavi">
+                        <a href="#" for="sec" id="toggle-accordion5">Incidents</a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-md-10">
+            <div class="modal fade" tabindex="-1" id="successModal" role="dialog">
+               <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                     <div class="modal-body">
+                        <p class="text-center">Data Saved Successfully</p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class='myNavbar'>
+               <nav class="navbar">
+                  <div class="imageAlign">
+                     <div class="hamburger">
+                        <img src="{% static 'images/hamburger.svg' %}" alt="Description of the image" width="20px"
+                           height="20px">
+                     </div>
+                     <div class="amplusLogo">
+                        <img src="{% static 'images/amplus_logo.svg' %}" alt="Description of the image" width="30px"
+                           height="30px">
+                     </div>
+                  </div>
+                  <div class="round-image">
+                     <img src=" {% static 'images/photo-jpeg-example.jpg' %}" alt="Description of the image">
+                  </div>
+               </nav>
+               <div class="cont">
+                  <div class="sideView">
+                     <h6 class="hello">Hello Ayush ,</h6>
+                     <div class="outer-container">
+                        <!-- Week Display Container -->
+                        <div class="display-outer-container1">
+                           <p class="showWeek" id="weekDisplay"></p>
                         </div>
-                     </div>
-                     <div id='clickMainDiv2'>
-                        <div id='backcolorDiv2' style='display:flex ; height:60px; align-items:center; margin-top:10px'>
-                           <div class="myNavi">
-                              <a href="#" for="age" id="toggle-accordion2">HSE Trainings</a>
-                           </div>
-                        </div>
-                     </div>
-                     <div id='clickMainDiv3'>
-                        <div id='backcolorDiv3' style='display:flex ; height:60px; align-items:center;margin-top:10px'>
-                           <div class="myNavi">
-                              <a href="#" for="class" id="toggle-accordion3">HSE Observations</a>
-                           </div>
-                        </div>
-                     </div>
-                     <div id='clickMainDiv4'>
-                        <div id='backcolorDiv4' style='display:flex ; height:60px ;align-items:center;margin-top:10px'>
-                           <div class="myNavi">
-                              <a href="#" for="sec" id="toggle-accordion4">Management Visits</a>
-                           </div>
-                        </div>
-                     </div>
-                     <div id='clickMainDiv5'>
-                        <div id='backcolorDiv5' style='display:flex ; height:60px; align-items:center;margin-top:10px'>
-                           <div class="myNavi">
-                              <a href="#" for="sec" id="toggle-accordion5">Incidents</a>
-                           </div>
+                        <!-- Date Display Container -->
+                        <div class="display-outer-container2">
+                           <p class="showDate" id="dateDisplay"></p>
                         </div>
                      </div>
                   </div>
-            </div>
-            <div class="col-md-9">
-               <div class="modal fade" tabindex="-1" id="successModal" role="dialog">
-                  <div class="modal-dialog modal-dialog-centered" role="document">
-                     <div class="modal-content">
-                        <div class="modal-body">
-                           <p class="text-center">Data Saved Successfully</p>
+                  <div class="date-cont1">
+                     <div class="theDate1">17th September - Today - Sunday</div>
+                  </div>
+                  <div class="date-cont">
+                     <div class="messageDisplay">The form is filled for :</div>
+                     <div class="viewDate" id="viewingDate"></div>
+                     <div class='clickArrow'>
+                        <div onclick="changeDate(-1)" style="display: flex;" id='oneDateBack'>
+                           <img src=" {% static 'images/left_date.svg' %} " class="arrow"> </img>
+                        </div>
+                        <div onclick="changeDate(1)" style="display: flex;" id='oneDateAhead'>
+                           <img src=" {% static 'images/right_date.svg' %}" class="arrow"> </img>
                         </div>
                      </div>
                   </div>
                </div>
-               <div class='myNavbar'>
-                  <nav class="navbar">
-                     <div class="imageAlign">
-                        <div class="hamburger">
-                           <img src="{% static 'images/hamburger.svg' %}" alt="Description of the image" width="20px" height="20px">
-                        </div>
-                        <div class="amplusLogo">
-                           <img src="{% static 'images/amplus_logo.svg' %}" alt="Description of the image" width="30px" height="30px">
-                        </div>
-                     </div>
-                     <div class="round-image">
-                        <img src=" {% static 'images/photo-jpeg-example.jpg' %}" alt="Description of the image">
-                     </div>
-                  </nav>
-                  <div class="cont">
-                     <div class="sideView">
-                        <h5 class="hello">Hello Ayush ,</h5>
-                        <div class="outer-container">
-                           <!-- Week Display Container -->
-                           <div class="display-outer-container1">
-                              <p class="showWeek" id="weekDisplay"></p>
-                           </div>
-                           <!-- Date Display Container -->
-                           <div class="display-outer-container2">
-                              <p class="showDate" id="dateDisplay"></p>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="date-cont1">
-                        <div class="theDate1">17th September - Today - Sunday</div>
-                     </div>
-                     <div class="date-cont">
-                        <div class="messageDisplay">The form is filled for :</div>
-                        <div class="viewDate" id="viewingDate"></div>
-                        <div class='clickArrow'>
-                           <div onclick="changeDate(-1)"  style="display: flex;" id='oneDateBack'>
-                              <img src=" {% static 'images/left_date.svg' %} " class="arrow" > </img>
-                           </div>
-                           <div onclick="changeDate(1)"  style="display: flex;" id='oneDateAhead'>
-                              <img src=" {% static 'images/right_date.svg' %}" class="arrow" > </img>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="maincontainer">
-                     <div class="accordion"id="accordionExample" >
-                        <div class="accordion-item">
-                           <h2 class="accordion-header">
-                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+               <div class="maincontainer">
+                  <div class="accordion" id="accordionExample">
+                     <div class="accordion-item">
+                        <h2 class="accordion-header">
+                           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                              data-bs-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
                               General HSE
-                              </button>
-                           </h2>
-                           <div id="collapse1" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
-                              <div class="accordion-body">
-                                 <form method="POST" action="{% url 'General HSE' %}" enctype="multipart/form-data" id="form1" >
-                                    {% csrf_token %}
-                                    <input type="hidden" name="plant_id" id="plant_id" value='10000' >
-                                    <input type="hidden" name="toBeUpdatedId" id="toBeUpdatedId1" >
-                                    <input type="hidden" name="formSubmitDate" class="formSubmitDate" >
-                                    <input type="hidden" name="submittedDate" class="getDateFormat" >
-                                    <input type="hidden" name="startRange" class="startRange" >
-                                    <input type="hidden" name="endRange" class="endRange" >
-
-                                    <div class="mb-3">
-                                       <label for="input1" class="form-label ">Total man days worked</label>
-                                       <div class='seperateAllElement' style='display: flex'>
-                                          <div class="input-group" id="adjustWidth">
-                                             <input type="number" class="form-control disableIt" id="input1" placeholder="Total man days worked"name="total_man_days_worked" required>
-                                             <div class=" btnMargin">
-                                                <button class="btn  valueButton disableBtn" type="button" id="increment1"><img src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
-                                                <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement1"><img src="{% static 'images/minusButton.svg' %}"></button>
-                                             </div>
-                                          </div>
-                                          <div class="uploadBtn">
-                                             <input type="file" class="form-control-file disableIt" id="fileInput1" style="display: none" name="today_day_worked_file" >
-                                             <label class="input-group-text uploadColor subForms" for="fileInput1" id="fileInputLabel1" style='width: 107px;'>Upload File</label>
-                                             <div class="fileDisplay" id="fileDisplay1" style="display: none; align-items: center;">
-                                                <span class="fileName" id="fileName1" style='font-size: 12px; margin-left: 20px;'></span>
-                                             </div>
-                                          </div>
-                                       </div>
-                                    </div>
-                                    <div class="mb-3 changingWidth">
-                                       <label for="input2" class="form-label  ">Total safe man hours worked</label>
-                                       <input type="number" class="form-control disableIt" id="input2" placeholder="Total safe man hours worked" name="total_safe_man_hours" required>
-                                    </div>
-                                    <div class="mb-3 ">
-                                       <label for="input3" class="form-label ">Number of persons inducted in the site</label>
-                                       <div class="input-group">
-                                          <input type="number" class="form-control disableIt" id="input3" placeholder="Number of persons inducted in the site" name="no_of_person_inducted_site" required >
+                           </button>
+                        </h2>
+                        <div id="collapse1" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
+                           <div class="accordion-body">
+                              <form method="POST" action="{% url 'General HSE' %}" enctype="multipart/form-data"
+                                 id="form1">
+                                 {% csrf_token %}
+                                 <input type="hidden" name="plant_id" id="plant_id" value='10000'>
+                                 <input type="hidden" name="toBeUpdatedId" id="toBeUpdatedId1">
+                                 <input type="hidden" name="formSubmitDate" class="formSubmitDate">
+                                 <input type="hidden" name="submittedDate" class="getDateFormat">
+                                 <input type="hidden" name="startRange" class="startRange">
+                                 <input type="hidden" name="endRange" class="endRange">
+                                 <div class="mb-3">
+                                    <label for="input1" class="form-label ">Total man days worked</label>
+                                    <div class='seperateAllElement' style='display: flex'>
+                                       <div class="input-group" id="adjustWidth">
+                                          <input type="number" class="form-control disableIt" id="input1"
+                                             placeholder="Total man days worked" name="total_man_days_worked" required>
                                           <div class=" btnMargin">
-                                             <button class="btn  valueButton disableBtn" type="button" id="increment3"><img src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
-                                             <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement3"><img src="{% static 'images/minusButton.svg' %}"></button>
+                                             <button class="btn  valueButton disableBtn" type="button"
+                                                id="increment1"><img src="{% static 'images/plus-circle.svg' %}"
+                                                   class="plusIcon"></button>
+                                             <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                id="decrement1"><img
+                                                   src="{% static 'images/minusButton.svg' %}"></button>
+                                          </div>
+                                       </div>
+                                       <div class="uploadBtn">
+                                          <input type="file" class="form-control-file disableIt" id="fileInput1"
+                                             style="display: none" name="today_day_worked_file">
+                                          <label class="input-group-text uploadColor subForms" for="fileInput1"
+                                             id="fileInputLabel1" style='width: 107px;'>Upload File</label>
+                                          <div class="fileDisplay" id="fileDisplay1"
+                                             style="display: none; align-items: center;">
+                                             <span class="fileName" id="fileName1"
+                                                style='font-size: 12px; margin-left: 20px;'></span>
                                           </div>
                                        </div>
                                     </div>
-                                    <div class="mb-3 ">
-                                       <label for="input4" class="form-label ">Total number of toolbox talk attendees</label>
-                                       <div class="input-group">
-                                          <input type="number" class="form-control disableIt" id="input4" placeholder="Total number of toolbox talk attendees" name="no_of_toolbox_attendees" required >
+                                 </div>
+                                 <div class="mb-3 changingWidth">
+                                    <label for="input2" class="form-label  ">Total safe man hours worked</label>
+                                    <input type="number" class="form-control disableIt incHeight" id="input2"
+                                       placeholder="Total safe man hours worked" name="total_safe_man_hours" required>
+                                 </div>
+                                 <div class="mb-3 ">
+                                    <label for="input3" class="form-label ">Number of persons inducted in the
+                                       site</label>
+                                    <div class="input-group">
+                                       <input type="number" class="form-control disableIt " id="input3"
+                                          placeholder="Number of persons inducted in the site"
+                                          name="no_of_person_inducted_site" required>
+                                       <div class=" btnMargin">
+                                          <button class="btn  valueButton disableBtn" type="button" id="increment3"><img
+                                                src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
+                                          <button class="btn  valueButton decBtn disableBtn" type="button"
+                                             id="decrement3"><img src="{% static 'images/minusButton.svg' %}"></button>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="mb-3 ">
+                                    <label for="input4" class="form-label ">Total number of toolbox talk
+                                       attendees</label>
+                                    <div class="input-group">
+                                       <input type="number" class="form-control disableIt" id="input4"
+                                          placeholder="Total number of toolbox talk attendees"
+                                          name="no_of_toolbox_attendees" required>
+                                       <div class=" btnMargin">
+                                          <button class="btn  valueButton disableBtn" type="button" id="increment4"><img
+                                                src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
+                                          <button class="btn  valueButton decBtn disableBtn" type="button"
+                                             id="decrement4"><img src="{% static 'images/minusButton.svg' %}"></button>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="mb-3">
+                                    <label for="extraInput1" class="form-label ">Tool box talk (man-hours)</label>
+                                    <div class='seperateAllElement' style='display: flex'>
+                                       <div class="input-group" id="adjustWidth">
+                                          <input type="number" class="form-control disableIt disableBefore"
+                                             id="extraInput1" placeholder="Tool box talk (man-hours)"
+                                             name="toolbox_talk_manhours" required>
                                           <div class=" btnMargin">
-                                             <button class="btn  valueButton disableBtn" type="button" id="increment4"><img src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
-                                             <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement4"><img src="{% static 'images/minusButton.svg' %}"></button>
+                                             <button class="btn  valueButton disableBtn  " type="button"
+                                                id="extraIncrement1"><img src="{% static 'images/plus-circle.svg' %}"
+                                                   class="plusIcon"></button>
+                                             <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                id="extraDecrement1"><img
+                                                   src="{% static 'images/minusButton.svg' %}"></button>
+                                          </div>
+                                       </div>
+                                       <div class="uploadBtn">
+                                          <input type="file" class="form-control-file disableIt disableBefore"
+                                             id="extraFileInput1" style="display: none"
+                                             name="toolbox_talk_manhours_file">
+                                          <label class="input-group-text uploadColor subForms" for="extraFileInput1"
+                                             id="extrafileInputLabel1" style='width: 107px;'>Upload File</label>
+                                          <div class="fileDisplay" id="fileDisplay11"
+                                             style="display: none; align-items: center;">
+                                             <span class="fileName" id="fileName11"
+                                                style='font-size: 12px; margin-left: 20px;'></span>
                                           </div>
                                        </div>
                                     </div>
-                                    <div class="mb-3">
-                                       <label for="extraInput1" class="form-label ">Tool box talk (man-hours)</label>
-                                       <div class='seperateAllElement' style='display: flex'>
-                                          <div class="input-group" id="adjustWidth">
-                                             <input type="number" class="form-control disableIt disableBefore" id="extraInput1" placeholder="Tool box talk (man-hours)" name="toolbox_talk_manhours" required>
-                                             <div class=" btnMargin">
-                                                <button class="btn  valueButton disableBtn  " type="button" id="extraIncrement1"><img src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
-                                                <button class="btn  valueButton decBtn disableBtn" type="button" id="extraDecrement1"><img src="{% static 'images/minusButton.svg' %}"></button>
-                                             </div>
-                                          </div>
-                                          
-
-                                          <div class="uploadBtn">
-                                             <input type="file" class="form-control-file disableIt disableBefore" id="extraFileInput1" style="display: none" name="toolbox_talk_manhours_file" >
-                                             <label class="input-group-text uploadColor subForms" for="extraFileInput1" id="extrafileInputLabel1" style='width: 107px;'>Upload File</label>
-                                             <div class="fileDisplay" id="fileDisplay11" style="display: none; align-items: center;">
-                                                <span class="fileName" id="fileName11" style='font-size: 12px; margin-left: 20px;'></span>
-                                             </div>
-                                          </div>
-                                       </div>
-                                    </div>
-                                    <div class="mb-3">
-                                       <label for="extraInput2" class="form-label ">Number of HSE promotional activities</label>
-                                       <div class='seperateAllElement' style='display: flex'>
-                                          <div class="input-group" id="adjustWidth">
-                                             <input type="number" class="form-control disableIt disableBefore" id="extraInput2" placeholder="Number of HSE promotional activities" name="promotional_activities" required>
-                                             <div class=" btnMargin">
-                                                <button class="btn  valueButton disableBtn  " type="button" id="extraIncrement2"><img src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
-                                                <button class="btn  valueButton decBtn disableBtn" type="button" id="extraDecrement2"><img src="{% static 'images/minusButton.svg' %}"></button>
-                                             </div>
-                                          </div>
-                                          
-                                          <div class="uploadBtn">
-                                             <input type="file" class="form-control-file disableIt disableBefore" id="extraFileInput2" style="display: none" name="promotional_activities_file" >
-                                             <label class="input-group-text uploadColor subForms" for="extraFileInput2" id="extrafileInputLabel2" style='width: 107px;'>Upload File</label>
-                                             <div class="fileDisplay" id="fileDisplay22" style="display: none; align-items: center;">
-                                                <span class="fileName" id="fileName22" style='font-size: 12px; margin-left: 20px;'></span>
-                                             </div>
-                                          </div>
-                                       </div>
-                                    </div>
-                                    <div class="mb-3 ">
-                                       <label for="extraInput3" class="form-label ">Number of HSE committee meetings</label>
-                                       <div class="input-group">
-                                          <input type="number" class="form-control disableIt" id="extraInput3" placeholder="Number of HSE committee meetings" name="committe_meetings" required >
+                                 </div>
+                                 <div class="mb-3">
+                                    <label for="extraInput2" class="form-label ">Number of HSE promotional
+                                       activities</label>
+                                    <div class='seperateAllElement' style='display: flex'>
+                                       <div class="input-group" id="adjustWidth">
+                                          <input type="number" class="form-control disableIt disableBefore"
+                                             id="extraInput2" placeholder="Number of HSE promotional activities"
+                                             name="promotional_activities" required>
                                           <div class=" btnMargin">
-                                             <button class="btn  valueButton disableBtn" type="button" id="extraIncrement3"><img src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
-                                             <button class="btn  valueButton decBtn disableBtn" type="button" id="extraDecrement3"><img src="{% static 'images/minusButton.svg' %}"></button>
+                                             <button class="btn  valueButton disableBtn  " type="button"
+                                                id="extraIncrement2"><img src="{% static 'images/plus-circle.svg' %}"
+                                                   class="plusIcon"></button>
+                                             <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                id="extraDecrement2"><img
+                                                   src="{% static 'images/minusButton.svg' %}"></button>
+                                          </div>
+                                       </div>
+                                       <div class="uploadBtn">
+                                          <input type="file" class="form-control-file disableIt disableBefore"
+                                             id="extraFileInput2" style="display: none"
+                                             name="promotional_activities_file">
+                                          <label class="input-group-text uploadColor subForms" for="extraFileInput2"
+                                             id="extrafileInputLabel2" style='width: 107px;'>Upload File</label>
+                                          <div class="fileDisplay" id="fileDisplay22"
+                                             style="display: none; align-items: center;">
+                                             <span class="fileName" id="fileName22"
+                                                style='font-size: 12px; margin-left: 20px;'></span>
                                           </div>
                                        </div>
                                     </div>
-                                    <div class="saveBtn">
-                                       <button type="submit" class="btn btn-success disableIt subForms" id="SaveAndNext1" >Save & Next</button>
+                                 </div>
+                                 <div class="mb-3 ">
+                                    <label for="extraInput3" class="form-label ">Number of HSE committee
+                                       meetings</label>
+                                    <div class="input-group">
+                                       <input type="number" class="form-control disableIt" id="extraInput3"
+                                          placeholder="Number of HSE committee meetings" name="committe_meetings"
+                                          required>
+                                       <div class=" btnMargin">
+                                          <button class="btn  valueButton disableBtn" type="button"
+                                             id="extraIncrement3"><img src="{% static 'images/plus-circle.svg' %}"
+                                                class="plusIcon"></button>
+                                          <button class="btn  valueButton decBtn disableBtn" type="button"
+                                             id="extraDecrement3"><img
+                                                src="{% static 'images/minusButton.svg' %}"></button>
+                                       </div>
                                     </div>
-                                 </form>
-                              </div>
+                                 </div>
+                                 <div class="saveBtn">
+                                    <button type="submit" class="btn btn-success disableIt subForms"
+                                       id="SaveAndNext1">Save & Next</button>
+                                 </div>
+                              </form>
                            </div>
                         </div>
-                        <div class="accordion-item">
-                           <h2 class="accordion-header" id="headingTwo2">
-                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
+                     </div>
+                     <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingTwo2">
+                           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                              data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
                               HSE Trainings
-                              </button>
-                           </h2>
-                           <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                              <div class="accordion-body">
-                                 <form method="POST" action="{% url 'HSE Trainings' %}" enctype="multipart/form-data" id="form2">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="submittedDate" class="getDateFormat" >
-                                    <input type="hidden" name="formSubmitDate" class="formSubmitDate" >
-                                    <input type="hidden" name="plant_id" id="plant_id" value='10000' >
-                                    <input type="hidden" name="toBeUpdatedId" id="toBeUpdatedId2">
-                                    <input type="hidden" name="startRange" class="startRange" >
-                                    <input type="hidden" name="endRange" class="endRange" >
-
-                                    <div class="mb-3">
-                                       <label for="input5" class="form-label ">HSE Trainings (no. of attendees from Amplus)</label>
-                                       <div class='seperateAllElement' style='display: flex'>
-                                          <div class="input-group" id="adjustWidth">
-                                             <input type="number" class="form-control disableIt disableBefore" id="input5" placeholder="HSE Trainings (no. of attendees from Amplus)" name="hse_training_attendees" required>
-                                             <div class=" btnMargin">
-                                                <button class="btn  valueButton disableBtn  " type="button" id="increment5"><img src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
-                                                <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement5"><img src="{% static 'images/minusButton.svg' %}"></button>
-                                             </div>
+                           </button>
+                        </h2>
+                        <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                           <div class="accordion-body">
+                              <form method="POST" action="{% url 'HSE Trainings' %}" enctype="multipart/form-data"
+                                 id="form2">
+                                 {% csrf_token %}
+                                 <input type="hidden" name="submittedDate" class="getDateFormat">
+                                 <input type="hidden" name="formSubmitDate" class="formSubmitDate">
+                                 <input type="hidden" name="plant_id" id="plant_id" value='10000'>
+                                 <input type="hidden" name="toBeUpdatedId" id="toBeUpdatedId2">
+                                 <input type="hidden" name="startRange" class="startRange">
+                                 <input type="hidden" name="endRange" class="endRange">
+                                 <div class="mb-3">
+                                    <label for="input5" class="form-label ">HSE Trainings (no. of attendees from
+                                       Amplus)</label>
+                                    <div class='seperateAllElement' style='display: flex'>
+                                       <div class="input-group" id="adjustWidth">
+                                          <input type="number" class="form-control disableIt disableBefore" id="input5"
+                                             placeholder="HSE Trainings (no. of attendees from Amplus)"
+                                             name="hse_training_attendees" required>
+                                          <div class=" btnMargin">
+                                             <button class="btn  valueButton disableBtn  " type="button"
+                                                id="increment5"><img src="{% static 'images/plus-circle.svg' %}"
+                                                   class="plusIcon"></button>
+                                             <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                id="decrement5"><img
+                                                   src="{% static 'images/minusButton.svg' %}"></button>
                                           </div>
-                                          <div class="uploadBtn">
-                                             <input type="file" class="form-control-file disableIt" id="fileInput2" style="display: none" name="no_of_attendees_amplus" >
-                                             <label class="input-group-text uploadColor subForms" for="fileInput2" id="fileInputLabel2" style='width: 107px;'>Upload File</label>
-                                             <div class="fileDisplay" id="fileDisplay2" style="display: none; align-items: center;">
-                                                <span class="fileName" id="fileName2" style='font-size: 12px; margin-left: 20px;'></span>
-                                             </div>
+                                       </div>
+                                       <div class="uploadBtn">
+                                          <input type="file" class="form-control-file disableIt" id="fileInput2"
+                                             style="display: none" name="no_of_attendees_amplus">
+                                          <label class="input-group-text uploadColor subForms" for="fileInput2"
+                                             id="fileInputLabel2" style='width: 107px;'>Upload File</label>
+                                          <div class="fileDisplay" id="fileDisplay2"
+                                             style="display: none; align-items: center;">
+                                             <span class="fileName" id="fileName2"
+                                                style='font-size: 12px; margin-left: 20px;'></span>
                                           </div>
                                        </div>
                                     </div>
-                                    <div class=" changingWidth">
-                                       <label for="input6" class="form-label ">Duration of training session (In hours)</label>
-                                       <input type="number" class="form-control disableIt disableBefore" id="input6" placeholder="Duration of training session (In hours)" name="duration_of_trainee" min="1" required>
-                                    </div>
-                                    <span class="error-message" id="number-error1">Fill duration above 1hr</span>
-                                    <div class="mb-3">
-                                       <label for="input7" class="form-label ">HSE Trainings (no. of attendees from Contractor)</label>
-                                       <div class='seperateAllElement' style='display: flex'>
-                                          <div class="input-group" id="adjustWidth">
-                                             <input type="number" class="form-control disableIt disableBefore" id="input7" placeholder="HSE Trainings (no. of attendees from Contractor)" name="hse_training_contractor" required>
-                                             <div class=" btnMargin">
-                                                <button class="btn  valueButton disableBtn" type="button" id="increment7"><img src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
-                                                <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement7"><img src="{% static 'images/minusButton.svg' %}"></button>
-                                             </div>
+                                 </div>
+                                 <div class=" changingWidth">
+                                    <label for="input6" class="form-label ">Duration of training session (In
+                                       hours)</label>
+                                    <input type="number" class="form-control disableIt disableBefore incHeight "
+                                       id="input6" placeholder="Duration of training session (In hours)"
+                                       name="duration_of_trainee" min="1" required>
+                                 </div>
+                                 <span class="error-message" id="number-error1">Fill duration above 1hr</span>
+                                 <div class="mb-3">
+                                    <label for="input7" class="form-label ">HSE Trainings (no. of attendees from
+                                       Contractor)</label>
+                                    <div class='seperateAllElement' style='display: flex'>
+                                       <div class="input-group" id="adjustWidth">
+                                          <input type="number" class="form-control disableIt disableBefore" id="input7"
+                                             placeholder="HSE Trainings (no. of attendees from Contractor)"
+                                             name="hse_training_contractor" required>
+                                          <div class=" btnMargin">
+                                             <button class="btn  valueButton disableBtn" type="button"
+                                                id="increment7"><img src="{% static 'images/plus-circle.svg' %}"
+                                                   class="plusIcon"></button>
+                                             <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                id="decrement7"><img
+                                                   src="{% static 'images/minusButton.svg' %}"></button>
                                           </div>
-                                          <div class="uploadBtn">
-                                             <input type="file" class="form-control-file disableIt disableBefore" id="fileInput3" style="display: none" name="no_of_attendees_contractor" >
-                                             <label class="input-group-text uploadColor subForms" for="fileInput3" id="fileInputLabel3" style='width: 107px;'>Upload File</label>
-                                             <div class="fileDisplay" id="fileDisplay3" style="display: none; align-items: center;">
-                                                <span class="fileName" id="fileName3" style='font-size: 12px; margin-left: 20px;'></span>
-                                             </div>
+                                       </div>
+                                       <div class="uploadBtn">
+                                          <input type="file" class="form-control-file disableIt disableBefore"
+                                             id="fileInput3" style="display: none" name="no_of_attendees_contractor">
+                                          <label class="input-group-text uploadColor subForms" for="fileInput3"
+                                             id="fileInputLabel3" style='width: 107px;'>Upload File</label>
+                                          <div class="fileDisplay" id="fileDisplay3"
+                                             style="display: none; align-items: center;">
+                                             <span class="fileName" id="fileName3"
+                                                style='font-size: 12px; margin-left: 20px;'></span>
                                           </div>
                                        </div>
                                     </div>
-                                    <div class="changingWidth">
-                                       <label for="input8" class="form-label">Duration of training session (In hours)</label>
-                                       <input type="number" class="form-control disableIt disableBefore" id="input8" placeholder="Duration of training session (In hours)" name="duration_of_contractor" min="1" required>
-                                    </div>
-                                    <span class="error-message" id="number-error2">Fill duration above 1hr</span>
-                                    <div class="mb-3 changingWidth">
-                                       <label for="extraInput4" class="form-label">Amplus HSE training (man-hours)</label>
-                                       <input type="number" class="form-control disableIt" id="extraInput4" placeholder="Amplus HSE training" name="amplus_hse_trainings" required>
-                                    </div>
-                                    <div class="mb-3 changingWidth">
-                                       <label for="extraInput5" class="form-label">Contractor HSE training (man-hours)</label>
-                                       <input type="number" class="form-control disableIt" id="extraInput5" placeholder="Contractor HSE training" name="contractor_hse_trainings" required>
-                                    </div>
-                                    <div class="saveBtn">
-                                       <button type="submit" class="btn btn-success disableIt disableBefore subForms"  id="SaveAndNext2" >Save & Next</button>
-                                    </div>
-                                 </form>
-                              </div>
+                                 </div>
+                                 <div class="changingWidth">
+                                    <label for="input8" class="form-label">Duration of training session (In
+                                       hours)</label>
+                                    <input type="number" class="form-control disableIt disableBefore incHeight"
+                                       id="input8" placeholder="Duration of training session (In hours)"
+                                       name="duration_of_contractor" min="1" required>
+                                 </div>
+                                 <span class="error-message" id="number-error2">Fill duration above 1hr</span>
+                                 <div class="mb-3 changingWidth">
+                                    <label for="extraInput4" class="form-label">Amplus HSE training (man-hours)</label>
+                                    <input type="number" class="form-control disableIt incHeight" id="extraInput4"
+                                       placeholder="Amplus HSE training" name="amplus_hse_trainings" required>
+                                 </div>
+                                 <div class="mb-3 changingWidth">
+                                    <label for="extraInput5" class="form-label">Contractor HSE training
+                                       (man-hours)</label>
+                                    <input type="number" class="form-control disableIt incHeight" id="extraInput5"
+                                       placeholder="Contractor HSE training" name="contractor_hse_trainings" required>
+                                 </div>
+                                 <div class="saveBtn">
+                                    <button type="submit" class="btn btn-success disableIt disableBefore subForms"
+                                       id="SaveAndNext2">Save & Next</button>
+                                 </div>
+                              </form>
                            </div>
                         </div>
-                        <div class="accordion-item">
-                           <h2 class="accordion-header">
-                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
+                     </div>
+                     <div class="accordion-item">
+                        <h2 class="accordion-header">
+                           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                              data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
                               HSE Observations
-                              </button>
-                           </h2>
-                           <div id="collapse3" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                              <div class="accordion-body">
-                                 <form method="POST" action="{% url 'HSE Observations' %}" enctype="multipart/form-data" id="form3">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="submittedDate" class="getDateFormat" >
-                                    <input type="hidden" name="formSubmitDate" class="formSubmitDate" id='formSubmitDate' >
-                                    <input type="hidden" name="toBeUpdatedId" id="toBeUpdatedId3" value="">
-                                    <input type="hidden" name="plant_id" id="plant_id" value='10000' >
-                                    <input type="hidden" name="startRange" class="startRange" >
-                                    <input type="hidden" name="endRange" class="endRange" >
-
-                                    <div class="mb-3">
-                                       <label for="input9" class="form-label ">Number of daily HSE observations</label>
-                                       <div class='seperateAllElement' style='display: flex'>
-                                          <div class="input-group" id="adjustWidth">
-                                             <input type="number" class="form-control disableIt importantField " id="input9" placeholder="Number of daily HSE observations" name="daily_hse_observation"   required  >
-                                             <div class=" btnMargin">
-                                                <button class="btn  valueButton disableBtn" type="button" id="increment9"><img src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
-                                                <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement9"><img src="{% static 'images/minusButton.svg' %}"></button>
-                                             </div>
-                                          </div>
-
-                                          <div class="uploadBtn">
-                                             <input type="file" class="form-control-file disableIt" id="fileInput4" style="display: none" name="hse_observation" >
-                                             <label class="input-group-text uploadColor subForms" for="fileInput4" id="fileInputLabel4" style='width: 107px;'>Upload File</label>
-                                             <div class="fileDisplay" id="fileDisplay4" style="display: none; align-items: center;">
-                                                <span class="fileName" id="fileName4" style='font-size: 12px; margin-left: 20px;'></span>
-                                             </div>
+                           </button>
+                        </h2>
+                        <div id="collapse3" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                           <div class="accordion-body">
+                              <form method="POST" action="{% url 'HSE Observations' %}" enctype="multipart/form-data"
+                                 id="form3">
+                                 {% csrf_token %}
+                                 <input type="hidden" name="submittedDate" class="getDateFormat">
+                                 <input type="hidden" name="formSubmitDate" class="formSubmitDate" id='formSubmitDate'>
+                                 <input type="hidden" name="toBeUpdatedId" id="toBeUpdatedId3" value="">
+                                 <input type="hidden" name="plant_id" id="plant_id" value='10000'>
+                                 <input type="hidden" name="startRange" class="startRange">
+                                 <input type="hidden" name="endRange" class="endRange">
+                                 <div class="mb-3">
+                                    <label for="input9" class="form-label ">Number of daily HSE observations</label>
+                                    <div class='seperateAllElement' style='display: flex'>
+                                       <div class="input-group" id="adjustWidth">
+                                          <input type="number" class="form-control disableIt importantField "
+                                             id="input9" placeholder="Number of daily HSE observations"
+                                             name="daily_hse_observation" required>
+                                          <div class=" btnMargin">
+                                             <button class="btn  valueButton disableBtn" type="button"
+                                                id="increment9"><img src="{% static 'images/plus-circle.svg' %}"
+                                                   class="plusIcon"></button>
+                                             <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                id="decrement9"><img
+                                                   src="{% static 'images/minusButton.svg' %}"></button>
                                           </div>
                                        </div>
-                                       <div id='formsLink1' class='subForms'>
-                                          <img src="{% static 'images/Frame.png' %}">
-                                          <a id='observationLink' href="/" class="linkForm">Fill the data</a>
+                                       <div class="uploadBtn">
+                                          <input type="file" class="form-control-file disableIt" id="fileInput4"
+                                             style="display: none" name="hse_observation">
+                                          <label class="input-group-text uploadColor subForms" for="fileInput4"
+                                             id="fileInputLabel4" style='width: 107px;'>Upload File</label>
+                                          <div class="fileDisplay" id="fileDisplay4"
+                                             style="display: none; align-items: center;">
+                                             <span class="fileName" id="fileName4"
+                                                style='font-size: 12px; margin-left: 20px;'></span>
+                                          </div>
                                        </div>
                                     </div>
-                                    <div class="mb-3 ">
-                                       <label for="input10" class="form-label ">Number of STOP Work notice issued</label>
-                                       <div class="input-group">
-                                          <input type="number" class="form-control disableIt importantField" id="input10" placeholder="Number of STOP Work notice issued" name="stop_work_notice" required >
-                                          <div class=" btnMargin">
-                                             <button class="btn  valueButton disableBtn" type="button" id="increment10"><img src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
-                                             <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement10"><img src="{% static 'images/minusButton.svg' %}"</button>
-                                          </div>
-                                       </div>
-                                       <div id='formsLink2' class='subForms'>
-                                          <img src="{% static 'images/Frame.png' %}">
-                                          <a id="stopWorkLink" href="" class="linkForm">Fill the data</a>
+                                    <div id='formsLink1' class='subForms'>
+                                       <img src="{% static 'images/Frame.png' %}">
+                                       <a id='observationLink' href="/" class="linkForm">Fill the data</a>
+                                    </div>
+                                 </div>
+                                 <div class="mb-3 ">
+                                    <label for="input10" class="form-label ">Number of STOP Work notice issued</label>
+                                    <div class="input-group">
+                                       <input type="number" class="form-control disableIt importantField" id="input10"
+                                          placeholder="Number of STOP Work notice issued" name="stop_work_notice"
+                                          required>
+                                       <div class=" btnMargin">
+                                          <button class="btn  valueButton disableBtn" type="button"
+                                             id="increment10"><img src="{% static 'images/plus-circle.svg' %}"
+                                                class="plusIcon"></button>
+                                          <button class="btn  valueButton decBtn disableBtn" type="button"
+                                             id="decrement10"><img src="{% static 'images/minusButton.svg' %}" </button>
+                                                </div> </div> <div id='formsLink2' class='subForms'>
+                                             <img src="{% static 'images/Frame.png' %}">
+                                             <a id="stopWorkLink" href="" class="linkForm">Fill the data</a>
                                        </div>
                                     </div>
                                     <div class="mb-3 ">
                                        <label for="input11" class="form-label ">Number of Violation Memo issued</label>
                                        <div class="input-group">
-                                          <input type="number" class="form-control disableIt importantField " id="input11" placeholder="Number of Violation Memo issued" name="violation_memo_issued"  required >
+                                          <input type="number" class="form-control disableIt importantField "
+                                             id="input11" placeholder="Number of Violation Memo issued"
+                                             name="violation_memo_issued" required>
                                           <div class=" btnMargin">
-                                             <button class="btn  valueButton disableBtn " type="button" id="increment11"><img src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
-                                             <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement11"><img src="{% static 'images/minusButton.svg' %}"</button>
+                                             <button class="btn  valueButton disableBtn " type="button"
+                                                id="increment11"><img src="{% static 'images/plus-circle.svg' %}"
+                                                   class="plusIcon"></button>
+                                             <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                id="decrement11"><img src="{% static 'images/minusButton.svg' %}"
+                                                   </button> </div> </div> <div id='formsLink3' class='subForms'>
+                                                <img src="{% static 'images/Frame.png' %}">
+                                                <a id="violationLink" href="" class="linkForm">Fill the data</a>
                                           </div>
                                        </div>
-                                       <div id='formsLink3' class='subForms'>
-                                          <img src="{% static 'images/Frame.png' %}">
-                                          <a  id="violationLink" href="" class="linkForm">Fill the data</a>
-                                       </div>
-                                    </div>
-                                    <div class="mb-3 ">
-                                       <label for="input12" class="form-label ">Number of complaints from customers</label>
-                                       <div class="input-group">
-                                          <input type="number" class="form-control disableIt importantField  " id="input12" placeholder="Number of complaints from customers" name="complaint_from_customer"  required >
-                                          <div class=" btnMargin">
-                                             <button class="btn  valueButton disableBtn " type="button" id="increment12"><img src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
-                                             <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement12"><img src="{% static 'images/minusButton.svg' %}"</button>
-                                          </div>
-                                       </div>
-                                    </div>
-                                    <div class="saveBtn">
-                                       <button type="submit" class="btn btn-success" id="observationBtn" disabled >Save & Next</button>
-                                    </div>
-                                 </form>
-                              </div>
+                                       <div class="mb-3 ">
+                                          <label for="input12" class="form-label ">Number of complaints from
+                                             customers</label>
+                                          <div class="input-group">
+                                             <input type="number" class="form-control disableIt importantField  "
+                                                id="input12" placeholder="Number of complaints from customers"
+                                                name="complaint_from_customer" required>
+                                             <div class=" btnMargin">
+                                                <button class="btn  valueButton disableBtn " type="button"
+                                                   id="increment12"><img src="{% static 'images/plus-circle.svg' %}"
+                                                      class="plusIcon"></button>
+                                                <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                   id="decrement12"><img src="{% static 'images/minusButton.svg' %}"
+                                                      </button> </div> </div> </div> <div class="saveBtn">
+                                                   <button type="submit" class="btn btn-success" id="observationBtn"
+                                                      disabled>Save & Next</button>
+                                             </div>
+                              </form>
                            </div>
                         </div>
-                        <div class="accordion-item">
-                           <h2 class="accordion-header">
-                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4" aria-expanded="true" aria-controls="collapse4">
+                     </div>
+                     <div class="accordion-item">
+                        <h2 class="accordion-header">
+                           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                              data-bs-target="#collapse4" aria-expanded="true" aria-controls="collapse4">
                               Management Visits
-                              </button>
-                           </h2>
-                           <div id="collapse4" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
-                              <div class="accordion-body">
-                                 <form method="POST" action="{% url 'Management Visits' %}" enctype="multipart/form-data" id="form4">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="submittedDate" class="getDateFormat" >
-                                    <input type="hidden" name="formSubmitDate" class="formSubmitDate" >
-                                    <input type="hidden" name="plant_id" id="plant_id" value='10000' >
-                                    <input type="hidden" name="toBeUpdatedId" id="toBeUpdatedId4" >
-                                    <input type="hidden" name="startRange" class="startRange" >
-                                    <input type="hidden" name="endRange" class="endRange" >
-
-                                    <div class="mb-3">
-                                       <label for="input13" class="form-label ">Number of Management HSE Visits</label>
-                                       <div class='seperateAllElement' style='display: flex'>
-                                          <div class="input-group" id="adjustWidth">
-                                             <input type="number" class="form-control disableIt" id="input13" placeholder="Number of Management HSE Visits" name="no_of_management_visits" required>
-                                             <div class=" btnMargin">
-                                                <button class="btn  valueButton disableBtn " type="button" id="increment13"><img src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
-                                                <button class="btn  valueButton decBtn disableBtn"  type="button" id="decrement13"><img src="{% static 'images/minusButton.svg' %}"></button>
-                                             </div>
+                           </button>
+                        </h2>
+                        <div id="collapse4" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
+                           <div class="accordion-body">
+                              <form method="POST" action="{% url 'Management Visits' %}" enctype="multipart/form-data"
+                                 id="form4">
+                                 {% csrf_token %}
+                                 <input type="hidden" name="submittedDate" class="getDateFormat">
+                                 <input type="hidden" name="formSubmitDate" class="formSubmitDate">
+                                 <input type="hidden" name="plant_id" id="plant_id" value='10000'>
+                                 <input type="hidden" name="toBeUpdatedId" id="toBeUpdatedId4">
+                                 <input type="hidden" name="startRange" class="startRange">
+                                 <input type="hidden" name="endRange" class="endRange">
+                                 <div class="mb-3">
+                                    <label for="input13" class="form-label ">Number of Management HSE Visits</label>
+                                    <div class='seperateAllElement' style='display: flex'>
+                                       <div class="input-group" id="adjustWidth">
+                                          <input type="number" class="form-control disableIt" id="input13"
+                                             placeholder="Number of Management HSE Visits"
+                                             name="no_of_management_visits" required>
+                                          <div class=" btnMargin">
+                                             <button class="btn  valueButton disableBtn " type="button"
+                                                id="increment13"><img src="{% static 'images/plus-circle.svg' %}"
+                                                   class="plusIcon"></button>
+                                             <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                id="decrement13"><img
+                                                   src="{% static 'images/minusButton.svg' %}"></button>
                                           </div>
-                                          
-
-                                          <div class="uploadBtn">
-                                             <input type="file" class="form-control-file disableIt" id="fileInput5" style="display: none" name="no_of_management_visits_file" >
-                                             <label class="input-group-text uploadColor subForms" for="fileInput5" id="fileInputLabel5" style='width: 107px;'>Upload File</label>
-                                             <div class="fileDisplay" id="fileDisplay5" style="display: none; align-items: center;">
-                                                <span class="fileName" id="fileName5" style='font-size: 12px; margin-left: 20px;'></span>
-                                             </div>
-                                          </div>
-
-                                          
                                        </div>
-                                    </div>
-                                    <div class="mb-3">
-                                       <label for="input14" class="form-label ">Total Findings</label>
-                                       <div class='seperateAllElement' style='display: flex'>
-                                          <div class="input-group" id="adjustWidth">
-                                             <input type="number" class="form-control disableIt" id="input14" placeholder="Total Findings" name="total_findings" required>
-                                             <div class=" btnMargin">
-                                                <button class="btn  valueButton disableBtn " type="button" id="increment14"><img src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
-                                                <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement14"><img src="{% static 'images/minusButton.svg' %}"></button>
-                                             </div>
-                                          </div>
-                                          <div class="uploadBtn">
-                                             <input type="file" class="form-control-file disableIt" id="fileInput6" style="display: none" name="total_findings_file" >
-                                             <label class="input-group-text uploadColor subForms" for="fileInput6" id="fileInputLabel6" style='width: 107px;'>Upload File</label>
-                                             <div class="fileDisplay" id="fileDisplay6" style="display: none; align-items: center;">
-                                                <span class="fileName" id="fileName6" style='font-size: 12px; margin-left: 20px;'></span>
-                                             </div>
+                                       <div class="uploadBtn">
+                                          <input type="file" class="form-control-file disableIt" id="fileInput5"
+                                             style="display: none" name="no_of_management_visits_file">
+                                          <label class="input-group-text uploadColor subForms" for="fileInput5"
+                                             id="fileInputLabel5" style='width: 107px;'>Upload File</label>
+                                          <div class="fileDisplay" id="fileDisplay5"
+                                             style="display: none; align-items: center;">
+                                             <span class="fileName" id="fileName5"
+                                                style='font-size: 12px; margin-left: 20px;'></span>
                                           </div>
                                        </div>
                                     </div>
-                                    <div class="mb-3">
-                                       <label for="input15" class="form-label ">Number of compilance done</label>
-                                       <div class='seperateAllElement' style='display: flex'>
-                                          <div class="input-group" id="adjustWidth">
-                                             <input type="number" class="form-control disableIt" id="input15" placeholder="Number of compilance done" name="no_of_compilance_done" required>
-                                             <div class=" btnMargin">
-                                                <button class="btn  valueButton disableBtn" type="button" id="increment15"><img src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
-                                                <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement15"><img src="{% static 'images/minusButton.svg' %}"></button>
-                                             </div>
+                                 </div>
+                                 <div class="mb-3">
+                                    <label for="input14" class="form-label ">Total Findings</label>
+                                    <div class='seperateAllElement' style='display: flex'>
+                                       <div class="input-group" id="adjustWidth">
+                                          <input type="number" class="form-control disableIt" id="input14"
+                                             placeholder="Total Findings" name="total_findings" required>
+                                          <div class=" btnMargin">
+                                             <button class="btn  valueButton disableBtn " type="button"
+                                                id="increment14"><img src="{% static 'images/plus-circle.svg' %}"
+                                                   class="plusIcon"></button>
+                                             <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                id="decrement14"><img
+                                                   src="{% static 'images/minusButton.svg' %}"></button>
                                           </div>
-
-                                          <div class="uploadBtn">
-                                             <input type="file" class="form-control-file disableIt" id="fileInput7" style="display: none" name="no_of_compilance_done_file" >
-                                             <label class="input-group-text uploadColor subForms" for="fileInput7" id="fileInputLabel7" style='width: 107px;'>Upload File</label>
-                                             <div class="fileDisplay" id="fileDisplay7" style="display: none; align-items: center;">
-                                                <span class="fileName" id="fileName7" style='font-size: 12px; margin-left: 20px;'></span>
-                                             </div>
+                                       </div>
+                                       <div class="uploadBtn">
+                                          <input type="file" class="form-control-file disableIt" id="fileInput6"
+                                             style="display: none" name="total_findings_file">
+                                          <label class="input-group-text uploadColor subForms" for="fileInput6"
+                                             id="fileInputLabel6" style='width: 107px;'>Upload File</label>
+                                          <div class="fileDisplay" id="fileDisplay6"
+                                             style="display: none; align-items: center;">
+                                             <span class="fileName" id="fileName6"
+                                                style='font-size: 12px; margin-left: 20px;'></span>
                                           </div>
                                        </div>
                                     </div>
-                                    <div class="mb-3 changingWidth">
-                                       <label for="input16" class="form-label">Number of observation pending (to be compiled)</label>
-                                       <input type="number" class="form-control disableIt" id="input16" placeholder="Number of observation pending (to be compiled)" name="observation_pending" required>
+                                 </div>
+                                 <div class="mb-3">
+                                    <label for="input15" class="form-label ">Number of compilance done</label>
+                                    <div class='seperateAllElement' style='display: flex'>
+                                       <div class="input-group" id="adjustWidth">
+                                          <input type="number" class="form-control disableIt" id="input15"
+                                             placeholder="Number of compilance done" name="no_of_compilance_done"
+                                             required>
+                                          <div class=" btnMargin">
+                                             <button class="btn  valueButton disableBtn" type="button"
+                                                id="increment15"><img src="{% static 'images/plus-circle.svg' %}"
+                                                   class="plusIcon"></button>
+                                             <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                id="decrement15"><img
+                                                   src="{% static 'images/minusButton.svg' %}"></button>
+                                          </div>
+                                       </div>
+                                       <div class="uploadBtn">
+                                          <input type="file" class="form-control-file disableIt" id="fileInput7"
+                                             style="display: none" name="no_of_compilance_done_file">
+                                          <label class="input-group-text uploadColor subForms" for="fileInput7"
+                                             id="fileInputLabel7" style='width: 107px;'>Upload File</label>
+                                          <div class="fileDisplay" id="fileDisplay7"
+                                             style="display: none; align-items: center;">
+                                             <span class="fileName" id="fileName7"
+                                                style='font-size: 12px; margin-left: 20px;'></span>
+                                          </div>
+                                       </div>
                                     </div>
-                                    <div class="saveBtn">
-                                       <button type="submit" class="btn btn-success disableIt subForms" id="SaveAndNext4">Save & Next</button>
-                                    </div>
-                                 </form>
-                              </div>
+                                 </div>
+                                 <div class="mb-3 changingWidth">
+                                    <label for="input16" class="form-label">Number of observation pending (to be
+                                       compiled)</label>
+                                    <input type="number" class="form-control disableIt incHeight" id="input16"
+                                       placeholder="Number of observation pending (to be compiled)"
+                                       name="observation_pending" required>
+                                 </div>
+                                 <div class="saveBtn">
+                                    <button type="submit" class="btn btn-success disableIt subForms"
+                                       id="SaveAndNext4">Save & Next</button>
+                                 </div>
+                              </form>
                            </div>
                         </div>
-                        <div class="accordion-item">
-                           <h2 class="accordion-header">
-                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="true" aria-controls="collapse5">
+                     </div>
+                     <div class="accordion-item">
+                        <h2 class="accordion-header">
+                           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                              data-bs-target="#collapse5" aria-expanded="true" aria-controls="collapse5">
                               Incidents
-                              </button>
-                           </h2>
-                           <div id="collapse5" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
-                              <div class="accordion-body">
-                                 <form method="POST" action="{% url 'Incidents' %}" enctype="multipart/form-data" id="final-form">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="submittedDate" class="getDateFormat" >
-                                    <input type="hidden" name="formSubmitDate" class="formSubmitDate" >
-                                    <input type="hidden" name="plant_id" id="plant_id" value='10000' >
-                                    <input type="hidden" name="toBeUpdatedId" id="toBeUpdatedId5" value="">
-                                    <input type="hidden" name="startRange" class="startRange" >
-                                    <input type="hidden" name="endRange" class="endRange" >
-
-                                    <div class="mb-3">
-                                       <label for="input17" class="form-label ">Number of Incidents</label>
-                                       <div class="input-group" >
-                                          <input type="number" class="form-control disableIt impField" id="input17" placeholder="Number of Incidents" name="no_of_incidents" required>
-                                          <div class=" btnMargin">
-                                             <button class="btn  valueButton disableBtn " type="button" id="increment17"><img src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
-                                             <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement17"><img src="{% static 'images/minusButton.svg' %}"></button>
-                                          </div>
-                                       </div>
-                                       <div id='formsLink4' class='subForms'>
-                                          <img src="{% static 'images/Frame.png' %}">
-                                          <a id="incidentLink" href="" class="linkForm" id='incidentHref'>Fill the data</a>
-                                       </div>
-                                    </div>
-                                    <div class="mb-3">
-                                       <label for="input18" class="form-label ">Number of occupational illness</label>
-                                       <div class="input-group" >
-                                          <input type="number" class="form-control disableIt impField" id="input18" placeholder="Number of occupational illness" name="no_of_occupation_illness" required>
-                                          <div class=" btnMargin">
-                                             <button class="btn  valueButton disableBtn" type="button" id="increment18"><img src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
-                                             <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement18"><img src="{% static 'images/minusButton.svg' %}"></button>
-                                          </div>
+                           </button>
+                        </h2>
+                        <div id="collapse5" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
+                           <div class="accordion-body">
+                              <form method="POST" action="{% url 'Incidents' %}" enctype="multipart/form-data"
+                                 id="final-form">
+                                 {% csrf_token %}
+                                 <input type="hidden" name="submittedDate" class="getDateFormat">
+                                 <input type="hidden" name="formSubmitDate" class="formSubmitDate">
+                                 <input type="hidden" name="plant_id" id="plant_id" value='10000'>
+                                 <input type="hidden" name="toBeUpdatedId" id="toBeUpdatedId5" value="">
+                                 <input type="hidden" name="startRange" class="startRange">
+                                 <input type="hidden" name="endRange" class="endRange">
+                                 <div class="mb-3">
+                                    <label for="input17" class="form-label ">Number of Incidents</label>
+                                    <div class="input-group">
+                                       <input type="number" class="form-control disableIt impField" id="input17"
+                                          placeholder="Number of Incidents" name="no_of_incidents" required>
+                                       <div class=" btnMargin">
+                                          <button class="btn  valueButton disableBtn " type="button"
+                                             id="increment17"><img src="{% static 'images/plus-circle.svg' %}"
+                                                class="plusIcon"></button>
+                                          <button class="btn  valueButton decBtn disableBtn" type="button"
+                                             id="decrement17"><img src="{% static 'images/minusButton.svg' %}"></button>
                                        </div>
                                     </div>
-                                    <div class="mb-3">
-                                       <label for="input19" class="form-label ">Number of environmental illness</label>
-                                       <div class="input-group" >
-                                          <input type="number" class="form-control disableIt impField" id="input19" placeholder="Number of environmental illness" name="no_of_environment_illness" required>
-                                          <div class=" btnMargin">
-                                             <button class="btn  valueButton disableBtn" type="button" id="increment19"><img src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
-                                             <button class="btn  valueButton decBtn disableBtn" type="button" id="decrement19"><img src="{% static 'images/minusButton.svg' %}"></button>
-                                          </div>
-                                       </div>
+                                    <div id='formsLink4' class='subForms'>
+                                       <img src="{% static 'images/Frame.png' %}">
+                                       <a id="incidentLink" href="" class="linkForm" id='incidentHref'>Fill the data</a>
                                     </div>
-                                    <div class="saveBtn" id='finalSubmitDiv'>
-                                       {% comment %} <button type="button" class="btn btn-success lastPreview" onclick='previewPage()' id='previewBtn'>Preview </button> {% endcomment %}
-                                       <button type="submit" class="btn btn-success disableIt lastButton subForms" id="incidentBtn" style='width: 96px;' >Save</button>
-                                    </div>
-                                 </form>
-                                 <div class="saveBtn">
-                                    <form method="POST" action="{% url 'Parent' %}" enctype="multipart/form-data" id='finalSubmitFo'>
-                                       {% csrf_token %}
-                                       <input type="hidden" name="startRange" class="startRange" >
-                                        <input type="hidden" name="endRange" class="endRange" >
-                                       <button type="submit" class="btn btn-primary " id="finalSubmit" style='display:none'>Final Save</button>
-                                       {% comment %} <button type="button" class="btn btn-secondary" id="closeBtn" style='display:none' onclick="previewPage2()">Close</button> {% endcomment %}
-                                    </form>
                                  </div>
+                                 <div class="mb-3">
+                                    <label for="input18" class="form-label ">Number of occupational illness</label>
+                                    <div class="input-group">
+                                       <input type="number" class="form-control disableIt impField" id="input18"
+                                          placeholder="Number of occupational illness" name="no_of_occupation_illness"
+                                          required>
+                                       <div class=" btnMargin">
+                                          <button class="btn  valueButton disableBtn" type="button"
+                                             id="increment18"><img src="{% static 'images/plus-circle.svg' %}"
+                                                class="plusIcon"></button>
+                                          <button class="btn  valueButton decBtn disableBtn" type="button"
+                                             id="decrement18"><img src="{% static 'images/minusButton.svg' %}"></button>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="mb-3">
+                                    <label for="input19" class="form-label ">Number of environmental illness</label>
+                                    <div class="input-group">
+                                       <input type="number" class="form-control disableIt impField" id="input19"
+                                          placeholder="Number of environmental illness" name="no_of_environment_illness"
+                                          required>
+                                       <div class=" btnMargin">
+                                          <button class="btn  valueButton disableBtn" type="button"
+                                             id="increment19"><img src="{% static 'images/plus-circle.svg' %}"
+                                                class="plusIcon"></button>
+                                          <button class="btn  valueButton decBtn disableBtn" type="button"
+                                             id="decrement19"><img src="{% static 'images/minusButton.svg' %}"></button>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="saveBtn" id='finalSubmitDiv'>
+                                    {% comment %} <button type="button" class="btn btn-success lastPreview"
+                                       onclick='previewPage()' id='previewBtn'>Preview </button> {% endcomment %}
+                                    <button type="submit" class="btn btn-success disableIt lastButton subForms"
+                                       id="incidentBtn" style='width: 96px;'>Save</button>
+                                 </div>
+                              </form>
+                              <div class="saveBtn">
+                                 <form method="POST" action="{% url 'Parent' %}" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="from_status" id="from_status" class='from_status'
+                                       value='1'>
+                                    <button type="submit" class="btn btn-primary " id="finalSubmit"
+                                       style='display:none'>Final Save</button>
+                                    {% comment %} <button type="button" class="btn btn-secondary" id="closeBtn"
+                                       style='display:none' onclick="previewPage2()">Close</button> {% endcomment %}
+                                 </form>
                               </div>
                            </div>
                         </div>
                      </div>
                   </div>
                </div>
-               <!--main Acc-->
             </div>
-            <!--main container-->
+            <!--main Acc-->
          </div>
-         <!--mynavbar-->
+         <!--main container-->
       </div>
-      <!--col-->
-      <!--row-->
-      </div>
-      <!--container fluid--> 
+      <!--mynavbar-->
+   </div>
+   <!--col-->
+   <!--row-->
+   </div>
+   </div>
+   <!--container fluid-->
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+   integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script>
+   const today = new Date();
+   //const year = today.getFullYear();
+   // const month = today.getMonth();
 
 
-   </body>
-   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-   <script>
-
-      
-   function handleFinalSubmission(formId, url) {
-      const form = document.getElementById(formId);
-      form.addEventListener("submit", function (event) {
-          event.preventDefault();
-          
-          const formData = new FormData(this);
-          const csrftoken = getCookie('csrftoken');
-          const existingID = formData.get("toBeUpdatedId");
-      
-          const methodValue = existingID ? "PUT" : "POST";
-      
-          fetch(url, {
-              method: methodValue,
-              body: formData,
-              headers: {
-                  "X-CSRFToken": csrftoken,
-              },
-          })
-      
-          .then(response => {
-            console.log(response)
-            if (response.status === 201 || response.status === 200) {
-               $('#successModal').modal('show');
-      
-               setTimeout(function () {
-                   $('#successModal').modal('hide');
-               }, 1000);
-      
-           }
-            else {
-               console.error("Form submission failed. Status:", res.status);
-           }
-            return response.json()
-          })
-      
-          .then(res => {
-            console.log(res)
-            const id=res.id
-            const a=document.getElementById(toUpdateId).value=id
-            console.log(a)
-            
-          })
-          .catch(error => {
-              console.error("Error:", error);
-          });
-      });
-   }
-
+   const updateCalendar = () => {
       const today = new Date();
-      //const year = today.getFullYear();
-     // const month = today.getMonth();
-      
-      
-      const updateCalendar = () => {
-        const today = new Date();
-        const year = today.getFullYear();
-        const month = today.getMonth();
-        const firstDayOfMonth = new Date(year, month, 1);
-        const lastDayOfMonth = new Date(year, month + 1, 0);
-        const daysFromPrevMonth = firstDayOfMonth.getDay();
-        const daysInMonth = lastDayOfMonth.getDate();
-      
-        const getWeekDates = () => {
+      const year = today.getFullYear();
+      const month = today.getMonth();
+      const firstDayOfMonth = new Date(year, month, 1);
+      const lastDayOfMonth = new Date(year, month + 1, 0);
+      const daysFromPrevMonth = firstDayOfMonth.getDay();
+      const daysInMonth = lastDayOfMonth.getDate();
+
+      const getWeekDates = () => {
          const now = new Date();
          const weekStartDate = new Date(now);
          const weekEndDate = new Date(now);
-       
+
          // Calculate the previous Saturday
          weekStartDate.setDate(now.getDate() - (now.getDay() + 1) % 7);
-       
+
          // Calculate the following Friday
          weekEndDate.setDate(weekStartDate.getDate() + 6);
-       
+
+         // Check if both weekend date and today's date have passed
+         if (now > weekEndDate) {
+            // Adjust for the next week
+            weekStartDate.setDate(weekStartDate.getDate() + 7);
+            weekEndDate.setDate(weekEndDate.getDate() + 7);
+         }
+
          return [weekStartDate, weekEndDate];
-       };
-       
-       
-      
-        [weekStartDate, weekEndDate] = getWeekDates();
-      
-        const startMonth = weekStartDate.getMonth();
-        const endMonth = weekEndDate.getMonth();
-        console.log(startMonth)
-        console.log(endMonth)
-
-      
-        let firstDayOfEndMonth;
-        let daysInSecondMonth;
-      
-        if (startMonth !== endMonth) {
-          const lastDayOfStartMonth = new Date(weekStartDate.getFullYear(), startMonth + 1, 0);
-          const daysInFirstMonth = lastDayOfStartMonth.getDate() - weekStartDate.getDate() + 1;
-      
-          firstDayOfEndMonth = new Date(weekEndDate.getFullYear(), endMonth, 1);
-          daysInSecondMonth = weekEndDate.getDate();
-          console.log(`last day of month ${lastDayOfStartMonth}`)
-          console.log(` day in first month ${daysInFirstMonth}`)
-        }
-      
-        let calendarHTML = '<table class="myTable"><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr><tr>';
-      
-        let day = 1;
-      
-        for (let i = 0; i < 6; i++) {
-          calendarHTML += '<tr>';
-          for (let j = 0; j < 7; j++) {
-            if (i === 0 && j < daysFromPrevMonth) {
-              const prevMonthDay = new Date(year, month, 0).getDate() - daysFromPrevMonth + j + 1;
-              calendarHTML += `<td class="other-month">${prevMonthDay}</td>`;
-            } else if (day <= daysInMonth) {
-              const isToday = year === today.getFullYear() && month === today.getMonth() && day === today.getDate();
-              const currentDate = new Date(year, month, day);
-
-              const isHighlight = currentDate >= weekStartDate && currentDate <= weekEndDate ;
-      
-              let cellClass = '';
-
-              if (currentDate.getDate() === weekStartDate.getDate()) {
-               cellClass = ' highlight'; 
-             }
-              if (isHighlight) {
-                cellClass = 'highlight'; 
-              } else if (isToday) {
-                cellClass = 'today';
-              }
-      
-              calendarHTML += `<td class="${cellClass}">${day}</td>`;
-              day++;
-            } else {
-              calendarHTML += `<td class="other-month">${day - daysInMonth}</td>`;
-              day++;
-            }
-          }
-          calendarHTML += '</tr>';
-        }
-      
-        calendarHTML += '</table>';
-        document.getElementById("calendar").innerHTML = calendarHTML;
       };
-      
-      updateCalendar();
-      setInterval(updateCalendar, 1000 * 60 * 60); 
 
-      const message = "{{ message }}";
-      const alertElement = document.getElementById('alert');
-      
-      if (message) {
-         // Display the alert
-         alertElement.style.display = "block";
+
+
+
+      [weekStartDate, weekEndDate] = getWeekDates();
+
+      const startMonth = weekStartDate.getMonth();
+      const endMonth = weekEndDate.getMonth();
+      console.log(startMonth)
+      console.log(endMonth)
+
+
+      let firstDayOfEndMonth;
+      let daysInSecondMonth;
+
+      if (startMonth !== endMonth) {
+         const lastDayOfStartMonth = new Date(weekStartDate.getFullYear(), startMonth + 1, 0);
+         const daysInFirstMonth = lastDayOfStartMonth.getDate() - weekStartDate.getDate() + 1;
+
+         firstDayOfEndMonth = new Date(weekEndDate.getFullYear(), endMonth, 1);
+         daysInSecondMonth = weekEndDate.getDate();
+         console.log(`last day of month ${lastDayOfStartMonth}`)
+         console.log(` day in first month ${daysInFirstMonth}`)
       }
 
-      function initializeUploadButton(inputId, labelId, displayId, fileNameId) {
-         const fileInput = document.getElementById(inputId);
-         const uploadLabel = document.getElementById(labelId);
-         const fileDisplay = document.getElementById(displayId);
-         const fileName = document.getElementById(fileNameId);
-     
-         fileInput.addEventListener("change", function () {
-             const file = fileInput.files[0];
-             if (file) {
-                 fileName.textContent = file.name;
-                 fileDisplay.style.display = "flex";
-             }
-         });
-     }
-     
-     // Usage example:
-     initializeUploadButton("fileInput1", "fileInputLabel1", "fileDisplay1", "fileName1");
-     initializeUploadButton("fileInput2", "fileInputLabel2", "fileDisplay2", "fileName2");
-     initializeUploadButton("fileInput3", "fileInputLabel3", "fileDisplay3", "fileName3");
-     initializeUploadButton("fileInput4", "fileInputLabel4", "fileDisplay4", "fileName4");
-     initializeUploadButton("fileInput5", "fileInputLabel5", "fileDisplay5", "fileName5");
-     initializeUploadButton("fileInput6", "fileInputLabel6", "fileDisplay6", "fileName6");
-     initializeUploadButton("fileInput7", "fileInputLabel7", "fileDisplay7", "fileName7");
-     initializeUploadButton("extraFileInput1", "extrafileInputLabel1", "fileDisplay11", "fileName11");
-     initializeUploadButton("extraFileInput2", "extrafileInputLabel2", "fileDisplay22", "fileName22");
-     
+      let calendarHTML =
+         '<table class="myTable"><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr><tr>';
+
+      let day = 1;
+
+      for (let i = 0; i < 6; i++) {
+         calendarHTML += '<tr>';
+         for (let j = 0; j < 7; j++) {
+            if (i === 0 && j < daysFromPrevMonth) {
+               const prevMonthDay = new Date(year, month, 0).getDate() - daysFromPrevMonth + j + 1;
+               calendarHTML += `<td class="other-month">${prevMonthDay}</td>`;
+            } else if (day <= daysInMonth) {
+               const isToday = year === today.getFullYear() && month === today.getMonth() && day === today.getDate();
+               const currentDate = new Date(year, month, day);
+
+               const isHighlight = currentDate >= weekStartDate && currentDate <= weekEndDate;
+
+               let cellClass = '';
+
+               if (currentDate.getDate() === weekStartDate.getDate()) {
+                  cellClass = ' highlight';
+               }
+               if (isHighlight) {
+                  cellClass = 'highlight';
+               } else if (isToday) {
+                  cellClass = 'today';
+               }
+
+               calendarHTML += `<td class="${cellClass}">${day}</td>`;
+               day++;
+            } else {
+               calendarHTML += `<td class="other-month">${day - daysInMonth}</td>`;
+               day++;
+            }
+         }
+         calendarHTML += '</tr>';
+      }
+
+      calendarHTML += '</table>';
+      document.getElementById("calendar").innerHTML = calendarHTML;
+   };
+
+   updateCalendar();
+   setInterval(updateCalendar, 1000 * 60 * 60);
+
+   const message = "{{ message }}";
+   const alertElement = document.getElementById('alert');
+
+   if (message) {
+      // Display the alert
+      alertElement.style.display = "block";
+   }
+
+   function initializeUploadButton(inputId, labelId, displayId, fileNameId) {
+      const fileInput = document.getElementById(inputId);
+      const uploadLabel = document.getElementById(labelId);
+      const fileDisplay = document.getElementById(displayId);
+      const fileName = document.getElementById(fileNameId);
+
+      fileInput.addEventListener("change", function () {
+         const file = fileInput.files[0];
+         if (file) {
+            fileName.textContent = file.name;
+            fileDisplay.style.display = "flex";
+         }
+      });
+   }
+
+   // Usage example:
+   initializeUploadButton("fileInput1", "fileInputLabel1", "fileDisplay1", "fileName1");
+   initializeUploadButton("fileInput2", "fileInputLabel2", "fileDisplay2", "fileName2");
+   initializeUploadButton("fileInput3", "fileInputLabel3", "fileDisplay3", "fileName3");
+   initializeUploadButton("fileInput4", "fileInputLabel4", "fileDisplay4", "fileName4");
+   initializeUploadButton("fileInput5", "fileInputLabel5", "fileDisplay5", "fileName5");
+   initializeUploadButton("fileInput6", "fileInputLabel6", "fileDisplay6", "fileName6");
+   initializeUploadButton("fileInput7", "fileInputLabel7", "fileDisplay7", "fileName7");
+   initializeUploadButton("extraFileInput1", "extrafileInputLabel1", "fileDisplay11", "fileName11");
+   initializeUploadButton("extraFileInput2", "extrafileInputLabel2", "fileDisplay22", "fileName22");
 
 
-      const inputFields1 = document.querySelectorAll('.importantField');
-      const inputFields2 = document.querySelectorAll('.impField');
-      const submitButton1 = document.getElementById('observationBtn');
-      const submitButton2 = document.getElementById('incidentBtn');
 
-      inputFields1.forEach((inputField) => {
+   const inputFields1 = document.querySelectorAll('.importantField');
+   const inputFields2 = document.querySelectorAll('.impField');
+   const submitButton1 = document.getElementById('observationBtn');
+   const submitButton2 = document.getElementById('incidentBtn');
+
+   inputFields1.forEach((inputField) => {
       inputField.addEventListener('input', function () {
 
          const allFieldsNonEmpty = Array.from(inputFields1).every(field => field.value.trim() !== '');
@@ -1188,52 +1373,50 @@
             submitButton1.setAttribute('disabled', 'disabled');
          }
       });
-      })
+   })
 
-      inputFields2.forEach((inputField) => {
-         inputField.addEventListener('input', function () {
-   
-            const allFieldsNonEmpty = Array.from(inputFields2).every(field => field.value.trim() !== '');
-   
-            if (allFieldsNonEmpty) {
-               submitButton2.removeAttribute('disabled');
-            } else {
-               submitButton2.setAttribute('disabled', 'disabled');
-            }
-         });
-         })
+   inputFields2.forEach((inputField) => {
+      inputField.addEventListener('input', function () {
 
-      
+         const allFieldsNonEmpty = Array.from(inputFields2).every(field => field.value.trim() !== '');
 
-   
-      {% comment %} const today = new Date();
-      const year = today.getFullYear();
-      const month = today.getMonth();
-      const firstDayOfMonth = new Date(year, month, 1);
-      const lastDayOfMonth = new Date(year, month + 1, 0);  {% endcomment %}
-      
-      {% comment %}  For Calendar {% endcomment %}
-      
-      // Define global variables to store week start and end dates
-      {% comment %} let weekStartDate;
-      let weekEndDate;
-      let incrementEndDate;
-      
-      const updateCalendar = () => {
+         if (allFieldsNonEmpty) {
+            submitButton2.removeAttribute('disabled');
+         } else {
+            submitButton2.setAttribute('disabled', 'disabled');
+         }
+      });
+   })
+
+
+
+
+{% comment %}    
+   const today = new Date();
+   const year = today.getFullYear();
+   const month = today.getMonth();
+   const firstDayOfMonth = new Date(year, month, 1);
+   const lastDayOfMonth = new Date(year, month + 1, 0); {
+  
+   let weekStartDate;
+   let weekEndDate;
+   let incrementEndDate;
+
+   const updateCalendar = () => {
       const today = new Date();
       const year = today.getFullYear();
       const month = today.getMonth();
       const firstDayOfMonth = new Date(year, month, 1);
       const lastDayOfMonth = new Date(year, month + 1, 0);
-      
+
       // Calculate the number of days from the previous month
       const daysFromPrevMonth = firstDayOfMonth.getDay();
       const daysInMonth = lastDayOfMonth.getDate();
-      
+
       const weekNumber = getWeekNumber(today);
-      
+
       // Function to get the start and end dates of the current week
-      const getWeekDates = (year,weekNumber) => {
+      const getWeekDates = (year, weekNumber) => {
          var d = new Date(year, 0, 1 + (weekNumber - 1) * 7);
          var dayNum = d.getDay();
          var diff = --dayNum;
@@ -1241,844 +1424,815 @@
          var startDate = new Date(d);
          d.setDate(d.getDate() + 6);
          var endDate = new Date(d);
-      
+
          d.setDate(d.getDate() + 1);
-         var FinalEnddate=new Date(d);
-      
-      
-        return [startDate, endDate,FinalEnddate];
+         var FinalEnddate = new Date(d);
+
+
+         return [startDate, endDate, FinalEnddate];
       };
-      
+
       // Set the global week start and end dates
-      [weekStartDate, weekEndDate,incrementEndDate] = getWeekDates(year,weekNumber);
-      
-      let calendarHTML = '<table class="myTable"><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr><tr>';
-      
+      [weekStartDate, weekEndDate, incrementEndDate] = getWeekDates(year, weekNumber);
+
+      let calendarHTML =
+         '<table class="myTable"><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr><tr>';
+
       let day = 1;
-      
+
       for (let i = 0; i < 6; i++) {
-        for (let j = 0; j < 7; j++) {
+         for (let j = 0; j < 7; j++) {
             if (i === 0 && j < daysFromPrevMonth) {
-                // Days from the previous month
-                const prevMonthDay = new Date(year, month, 0).getDate() - daysFromPrevMonth + j + 1;
-                calendarHTML += `<td class="other-month">${prevMonthDay}</td>`;
+               // Days from the previous month
+               const prevMonthDay = new Date(year, month, 0).getDate() - daysFromPrevMonth + j + 1;
+               calendarHTML += `<td class="other-month">${prevMonthDay}</td>`;
             } else if (day <= daysInMonth) {
-                // Days from the current month
-                const isToday = year === today.getFullYear() && month === today.getMonth() && day === today.getDate();
-                const isHighlight = day >= weekStartDate.getDate() && day <= weekEndDate.getDate();
-      
-                let cellClass = '';
-      
-                if (isHighlight) {
-                    cellClass = 'highlight';
-                } else if (isToday) {
-                    cellClass = 'today';
-                }
-      
-                calendarHTML += `<td class="${cellClass}">${day}</td>`;
-                day++;
+               // Days from the current month
+               const isToday = year === today.getFullYear() && month === today.getMonth() && day === today.getDate();
+               const isHighlight = day >= weekStartDate.getDate() && day <= weekEndDate.getDate();
+
+               let cellClass = '';
+
+               if (isHighlight) {
+                  cellClass = 'highlight';
+               } else if (isToday) {
+                  cellClass = 'today';
+               }
+
+               calendarHTML += `<td class="${cellClass}">${day}</td>`;
+               day++;
             } else {
-                // Days from the next month
-                calendarHTML += `<td class="other-month">${day - daysInMonth}</td>`;
-                day++;
+               // Days from the next month
+               calendarHTML += `<td class="other-month">${day - daysInMonth}</td>`;
+               day++;
             }
-        }
-        calendarHTML += '</tr><tr>';
+         }
+         calendarHTML += '</tr><tr>';
       }
-      
+
       calendarHTML += '</table>';
       document.getElementById("calendar").innerHTML = calendarHTML;
-      };
-      
-      updateCalendar(); // Initial call to set up the calendar
-      
-      // Periodically update the calendar to reflect the current week
-      setInterval(updateCalendar, 1000 * 60 * 60); // Update every hour (adjust as needed)  {% endcomment %}
-      
+   };
 
-      
-      const dateRangeElement = document.querySelector('.date-range');
-      const startDateFormatted = weekStartDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-      const endDateFormatted = weekEndDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-      
-      dateRangeElement.textContent = `${startDateFormatted} - ${endDateFormatted}`;
-      
-      
-      const itsDateElement = document.querySelector(".viewDate");
-      const itsDateElement1 = document.querySelector(".theDate1");
-      
-      function formatDate(date) {
-         const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-         const months = ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
-      
-         const dayOfWeek = daysOfWeek[date.getDay()];
-         const dayOfMonth = date.getDate();
-         const month = months[date.getMonth()];
-      
-         const daySuffix = getDaySuffix(dayOfMonth);
-      
-         return `${dayOfWeek}, ${dayOfMonth}${daySuffix}, ${month}`;
+   updateCalendar(); // Initial call to set up the calendar
+
+   // Periodically update the calendar to reflect the current week
+   setInterval(updateCalendar, 1000 * 60 * 60); // Update every hour (adjust as needed {% endcomment %}
+
+
+
+   const dateRangeElement = document.querySelector('.date-range');
+   const startDateFormatted = weekStartDate.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+   });
+   const endDateFormatted = weekEndDate.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+   });
+
+   dateRangeElement.textContent = `${startDateFormatted} - ${endDateFormatted}`;
+
+
+   const itsDateElement = document.querySelector(".viewDate");
+   const itsDateElement1 = document.querySelector(".theDate1");
+
+   function formatDate(date) {
+      const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      const months = ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
+
+      const dayOfWeek = daysOfWeek[date.getDay()];
+      const dayOfMonth = date.getDate();
+      const month = months[date.getMonth()];
+
+      const daySuffix = getDaySuffix(dayOfMonth);
+
+      return `${dayOfWeek}, ${dayOfMonth}${daySuffix}, ${month}`;
+   }
+
+   function formatDate1(date) {
+      const day = date.getDate();
+      const month = date.toLocaleString('default', {
+         month: 'long'
+      });
+      const daySuffix = getDaySuffix(day);
+      const dayOfWeek = date.toLocaleString('default', {
+         weekday: 'long'
+      });
+
+      return `${day}${daySuffix} ${month} - Today- ${dayOfWeek} `;
+   }
+
+   // Function to get the day suffix (e.g., 1st, 2nd, 3rd, 4th)
+   function getDaySuffix(day) {
+      if (day >= 11 && day <= 13) {
+         return "th";
       }
-      
-      function formatDate1(date) {
-          const day = date.getDate();
-          const month = date.toLocaleString('default', { month: 'long' });
-          const daySuffix = getDaySuffix(day);
-          const dayOfWeek = date.toLocaleString('default', { weekday: 'long' });
-      
-          return `${day}${daySuffix} ${month} - Today- ${dayOfWeek} `;
+      switch (day % 10) {
+         case 1:
+            return "st";
+         case 2:
+            return "nd";
+         case 3:
+            return "rd";
+         default:
+            return "th";
       }
-      
-      // Function to get the day suffix (e.g., 1st, 2nd, 3rd, 4th)
-      function getDaySuffix(day) {
-          if (day >= 11 && day <= 13) {
-              return "th";
-          }
-          switch (day % 10) {
-              case 1:
-                  return "st";
-              case 2:
-                  return "nd";
-              case 3:
-                  return "rd";
-              default:
-                  return "th";
-          }
-      }
+   }
 
-      function getDateFromURL() {
-         const urlParams = new URLSearchParams(window.location.search);
-         return urlParams.get("date");
-       }
-       
-       let TodaysDate;
-       const dateFromURL = getDateFromURL();
-       
-       if (dateFromURL) {
-         TodaysDate = new Date(dateFromURL);
-         console.log(`date from the url is ${dateFromURL}`)
-       } else {
-         TodaysDate = new Date();
-         console.log(`no date in url`)
+   function getDateFromURL() {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get("date");
+   }
 
-       }
+   let TodaysDate;
+   const dateFromURL = getDateFromURL();
 
-       function formatDateToYYYYMMDD(inputDate) {
-         // converts date to yyyy-mm-dd format
-         const date = new Date(inputDate);
-         const year = date.getFullYear();
-         const month = String(date.getMonth() + 1).padStart(2, "0");
-         const day = String(date.getDate()).padStart(2, "0");
-         return `${year}-${month}-${day}`;
-       }
+   if (dateFromURL) {
+      TodaysDate = new Date(dateFromURL);
+      console.log(`date from the url is ${dateFromURL}`)
+   } else {
+      TodaysDate = new Date();
+      console.log(`no date in url`)
 
-      
-      // Get the current date
-       let TodaysDate2 = new Date();
+   }
 
-      itsDateElement.textContent = formatDate(TodaysDate); // Initial value
-      itsDateElement1.textContent = formatDate1(TodaysDate2); // Initial value
-
-      
-      
-      function changeDate(days) {
-         // get the date 
-
-         TodaysDate.setDate(TodaysDate.getDate() + days);
-
-      
-        // if (TodaysDate >= weekStartDate && TodaysDate <= incrementEndDate) {
-      
-        const startDate=itsDateElement.textContent = formatDate(weekStartDate);
-        const lastDate=itsDateElement.textContent = formatDate(weekEndDate);
-       
-      
-          itsDateElement.textContent = formatDate(TodaysDate);
-      
-      
-           const divElement = document.getElementById('viewingDate');
-            const value = divElement.innerText;
-           // console.log(value)
-            const ConvertedValue=convertDateToYYYYMMDD(value)
-            //console.log(` converted value is ${ConvertedValue}`)
+   function formatDateToYYYYMMDD(inputDate) {
+      // converts date to yyyy-mm-dd format
+      const date = new Date(inputDate);
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+   }
 
 
-            const newUrl = `${window.location.origin}${window.location.pathname}?date=${ConvertedValue}`;
-            window.history.pushState({}, '', newUrl);
+   // Get the current date
+   let TodaysDate2 = new Date();
 
-      
-            {% comment %} if(lastDate==value){
-               document.getElementById('oneDateAhead').style.display='none';
-            }
-            else if(startDate==value){
-               document.getElementById('oneDateBack').style.display='none';
-      
-      
-            }
-            else{
-               document.getElementById('oneDateBack').style.display='flex';
-               document.getElementById('oneDateAhead').style.display='flex';
-      
-            }  {% endcomment %}
-           
-        // }
-         window.location.reload();
-         processDate()
+   itsDateElement.textContent = formatDate(TodaysDate); // Initial value
+   itsDateElement1.textContent = formatDate1(TodaysDate2); // Initial value
 
 
-       }
 
-      function getDateFromURL() {
-         const urlParams = new URLSearchParams(window.location.search);
-         return urlParams.get("date");
-      }
-      
-      if (performance.navigation.type === 1) {
-         const currentURL = window.location.href;
-         console.log('Page is reloaded, current URL:', currentURL);
-      
-         const dateValue = getDateFromURL();
+   function changeDate(days) {
+      // get the date 
+
+      TodaysDate.setDate(TodaysDate.getDate() + days);
 
 
-      
-         if (dateValue) {
-            // convert the 2023-11-02 to Thu, 2nd, Nov to this format 
-            const inputDate = dateValue;
-            const formattedDate = formatDateToCustomFormat(inputDate);
-            console.log(` formatted date for me is ${formattedDate}`); 
+      // if (TodaysDate >= weekStartDate && TodaysDate <= incrementEndDate) {
 
-           const divElement = document.getElementById('viewingDate');
-            divElement.innerText=formattedDate
+      const startDate = itsDateElement.textContent = formatDate(weekStartDate);
+      const lastDate = itsDateElement.textContent = formatDate(weekEndDate);
+
+
+      itsDateElement.textContent = formatDate(TodaysDate);
+
+
+      const divElement = document.getElementById('viewingDate');
+      const value = divElement.innerText;
+      // console.log(value)
+      const ConvertedValue = convertDateToYYYYMMDD(value)
+      //console.log(` converted value is ${ConvertedValue}`)
+
+
+      const newUrl = `${window.location.origin}${window.location.pathname}?date=${ConvertedValue}`;
+      window.history.pushState({}, '', newUrl);
+
+
+     
+      {% comment %} if (lastDate == value) {
+         document.getElementById('oneDateAhead').style.display = 'none';
+      } else if (startDate == value) {
+         document.getElementById('oneDateBack').style.display = 'none';
+
+
+      } else {
+         document.getElementById('oneDateBack').style.display = 'flex';
+         document.getElementById('oneDateAhead').style.display = 'flex';
+
+      }  {% endcomment %}
+
+      window.location.reload();
+      processDate()
+
+
+   }
+
+   function getDateFromURL() {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get("date");
+   }
+
+   if (performance.navigation.type === 1) {
+      const currentURL = window.location.href;
+      console.log('Page is reloaded, current URL:', currentURL);
+
+      const dateValue = getDateFromURL();
+
+
+
+      if (dateValue) {
+         // convert the 2023-11-02 to Thu, 2nd, Nov to this format 
+         const inputDate = dateValue;
+         const formattedDate = formatDateToCustomFormat(inputDate);
+         console.log(` formatted date for me is ${formattedDate}`);
+
+         const divElement = document.getElementById('viewingDate');
+         divElement.innerText = formattedDate
 
          console.log('Date parameter from URL:', dateValue);
-         } else {
+      } else {
          console.log('Date parameter not found in the URL');
-         }
       }
-    
-      function formatDateToCustomFormat(dateString) {
-         const date = new Date(dateString);
-         const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-         const months = [
-           'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-           'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-         ];
-         const day = date.getDate();
-         let daySuffix = 'th';
-       
-         if (day === 1 || day === 21 || day === 31) {
-           daySuffix = 'st';
-         } else if (day === 2 || day === 22) {
-           daySuffix = 'nd';
-         } else if (day === 3 || day === 23) {
-           daySuffix = 'rd';
-         }
-       
-         const formattedDate = `${days[date.getDay()]}, ${day}${daySuffix}, ${months[date.getMonth()]}`;
-         return formattedDate;
-       }
-       
-       
-      function myDate(date) {
-      const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
-      const month = monthNames[date.getMonth()];
-      const day = String(date.getDate()).padStart(2, '0');
-      const year = date.getFullYear();
-      return `${month} ${day}, ${year}`;
+   }
+
+   function formatDateToCustomFormat(dateString) {
+      const date = new Date(dateString);
+      const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      const months = [
+         'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+         'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+      ];
+      const day = date.getDate();
+      let daySuffix = 'th';
+
+      if (day === 1 || day === 21 || day === 31) {
+         daySuffix = 'st';
+      } else if (day === 2 || day === 22) {
+         daySuffix = 'nd';
+      } else if (day === 3 || day === 23) {
+         daySuffix = 'rd';
       }
-      
-      // Get the current date
-      const currDate = new Date();
-      
-      // Calculate the date after 7 days
-      const myNextWeekDate = new Date(currDate);
-      myNextWeekDate.setDate(myNextWeekDate.getDate() + 6);
-      
-      // Update the HTML elements with today's date and the date after 7 days
-      
-      function getWeekNumberInMonth(date) {
-         var dayOfMonth = date.getDate();
-         var weekNumber = Math.ceil(dayOfMonth / 7);
-          return weekNumber;
-       }
-       
-       const getTodayWeek = new Date();
-       const weekNumberInMonth = getWeekNumberInMonth(today);
-       const myWeek = document.getElementById('weekDisplay');
-       const itsDate = document.getElementById('dateDisplay');
-      
-      myWeek.textContent = `Week ${weekNumberInMonth}`; 
-      itsDate.textContent = `${startDateFormatted}- ${endDateFormatted}`;
+
+      const formattedDate = `${days[date.getDay()]}, ${day}${daySuffix}, ${months[date.getMonth()]}`;
+      return formattedDate;
+   }
 
 
 
-      function convertDateToYYYYMMDD(dateString) {
-         const monthMap = {
-             'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06',
-             'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'
-         };
+   let weekNumber = 1;
+   let currentMonth = null;
 
-         const dateParts = dateString.split(", ");
-         const day = dateParts[1].replace(/\D/g, ''); // Remove non-digits (e.g., "st", "nd", "rd", "th")
-         const month = monthMap[dateParts[2]];
-         const year = new Date().getFullYear(); // Get the current year
-     
-         const formattedDay = day.padStart(2, '0'); // Ensure day is two digits
-     
-         const formattedDate = `${year}-${month}-${formattedDay}`;
-         return formattedDate;
-     }
-     
+   function getWeekNumber(weekStartDate, weekEndDate) {
+      const startMonth = weekStartDate.getMonth();
+      const endMonth = weekEndDate.getMonth();
+      const today = new Date();
+      const todaysMonth = today.getMonth();
 
-       function processDate() {
-         let getDateElement = document.getElementById('viewingDate');
-         let value = getDateElement.innerText;
-         
+      if (currentMonth === null) {
+         currentMonth = todaysMonth;
+      } else if (startMonth !== endMonth) {
+         // Different months, continue incrementing the week number
+      } else if (todaysMonth === startMonth) {
+         currentMonth = startMonth;
+         weekNumber = 1;
+      }
 
-         let formattedDate = convertDateToYYYYMMDD(value);
-         let startRange=formatDateToYYYYMMDD(weekStartDate)
-         let EndRange=formatDateToYYYYMMDD(weekEndDate)
+      return weekNumber++;
+   }
 
-         // dates are in the format of yyyy-mm-dd
 
-          console.log(`formattedDate ${formattedDate}`)
-          console.log(`startRange ${startRange}`)
-          console.log(`EndRange ${EndRange}`)
+   const myWeek = document.getElementById('weekDisplay');
+   const weekNumber1 = getWeekNumber(weekStartDate, weekEndDate);
+   myWeek.textContent = `Week ${weekNumber1}`;
 
-          let today = new Date();
+   const itsDate = document.getElementById('dateDisplay');
+   itsDate.textContent = `${startDateFormatted}- ${endDateFormatted}`;
 
-         let yyyy = today.getFullYear();
-         let mm = String(today.getMonth() + 1).padStart(2, '0');
-         let dd = String(today.getDate()).padStart(2, '0');
-         
-         let todaysDate = yyyy + '-' + mm + '-' + dd;
-         //console.log(`todays date is ${todaysDate}`)
 
-          if(formattedDate > todaysDate){
-            DisablingGreaterDate()
-           return;
 
-          }  
-           
+   function convertDateToYYYYMMDD(dateString) {
+      const monthMap = {
+         'Jan': '01',
+         'Feb': '02',
+         'Mar': '03',
+         'Apr': '04',
+         'May': '05',
+         'Jun': '06',
+         'Jul': '07',
+         'Aug': '08',
+         'Sep': '09',
+         'Oct': '10',
+         'Nov': '11',
+         'Dec': '12'
+      };
 
-         let getStartRangeInputs = document.querySelectorAll('.startRange');
-         for (let i = 0; i < getStartRangeInputs.length; i++) {
-            getStartRangeInputs[i].value = startRange;
-        }
+      const dateParts = dateString.split(", ");
+      const day = dateParts[1].replace(/\D/g, ''); // Remove non-digits (e.g., "st", "nd", "rd", "th")
+      const month = monthMap[dateParts[2]];
+      const year = new Date().getFullYear(); // Get the current year
 
-        let getEndRangeInputs = document.querySelectorAll('.endRange');
-        for (let i = 0; i < getEndRangeInputs.length; i++) {
+      const formattedDay = day.padStart(2, '0'); // Ensure day is two digits
+
+      const formattedDate = `${year}-${month}-${formattedDay}`;
+      return formattedDate;
+   }
+
+
+   function processDate() {
+      let getDateElement = document.getElementById('viewingDate');
+      let value = getDateElement.innerText;
+
+
+      let formattedDate = convertDateToYYYYMMDD(value);
+      let startRange = formatDateToYYYYMMDD(weekStartDate)
+      let EndRange = formatDateToYYYYMMDD(weekEndDate)
+
+      // dates are in the format of yyyy-mm-dd
+
+      console.log(`formattedDate ${formattedDate}`)
+      console.log(`startRange ${startRange}`)
+      console.log(`EndRange ${EndRange}`)
+
+      let today = new Date();
+
+      let yyyy = today.getFullYear();
+      let mm = String(today.getMonth() + 1).padStart(2, '0');
+      let dd = String(today.getDate()).padStart(2, '0');
+
+      let todaysDate = yyyy + '-' + mm + '-' + dd;
+      //console.log(`todays date is ${todaysDate}`)
+
+      if (formattedDate > todaysDate) {
+         DisablingGreaterDate()
+         return;
+
+      }
+
+
+      let getStartRangeInputs = document.querySelectorAll('.startRange');
+      for (let i = 0; i < getStartRangeInputs.length; i++) {
+         getStartRangeInputs[i].value = startRange;
+      }
+
+      let getEndRangeInputs = document.querySelectorAll('.endRange');
+      for (let i = 0; i < getEndRangeInputs.length; i++) {
          getEndRangeInputs[i].value = EndRange;
-       }
+      }
 
-         // console.log(formattedDate); // Output: "2023-10-30"
+      // console.log(formattedDate); // Output: "2023-10-30"
 
-         let getDateFormatInputs = document.querySelectorAll('.getDateFormat');
-         for (let i = 0; i < getDateFormatInputs.length; i++) {
-            getDateFormatInputs[i].value = formattedDate;
-        }
+      let getDateFormatInputs = document.querySelectorAll('.getDateFormat');
+      for (let i = 0; i < getDateFormatInputs.length; i++) {
+         getDateFormatInputs[i].value = formattedDate;
+      }
 
-        let getDateSubmitttedInputs = document.querySelectorAll('.formSubmitDate');
-        for (let i = 0; i < getDateSubmitttedInputs.length; i++) {
+      let getDateSubmitttedInputs = document.querySelectorAll('.formSubmitDate');
+      for (let i = 0; i < getDateSubmitttedInputs.length; i++) {
          getDateSubmitttedInputs[i].value = formattedDate;
-       }
+      }
 
 
-       let observationLink = document.getElementById('observationLink');
-       observationLink.href = `/api/observation_form_/?date=${formattedDate}`;
+      let observationLink = document.getElementById('observationLink');
+      observationLink.href = `/api/observation_form_/?date=${formattedDate}`;
 
-       let stopWorkLink = document.getElementById('stopWorkLink');
-       stopWorkLink.href = `/api/stopwork_form_/?date=${formattedDate}`;
+      let stopWorkLink = document.getElementById('stopWorkLink');
+      stopWorkLink.href = `/api/stopwork_form_/?date=${formattedDate}`;
 
-       let violationLink = document.getElementById('violationLink');
-       violationLink.href = `/api/violation_memo_/?date=${formattedDate}`;
+      let violationLink = document.getElementById('violationLink');
+      violationLink.href = `/api/violation_memo_/?date=${formattedDate}`;
 
-       let incidentLink = document.getElementById('incidentLink');
-       incidentLink.href = `/api/incident_form_/?date=${formattedDate}`;
+      let incidentLink = document.getElementById('incidentLink');
+      incidentLink.href = `/api/incident_form_/?date=${formattedDate}`;
 
-       
-   
-       if(formattedDate < startRange){
+
+
+      if (formattedDate < startRange) {
          console.log('smaller date')
-
 
          DisablingSmallerDate()
 
-       }
-
-       populateInputFields2(formattedDate);
-
-
-       
-       const apiURL = `/api/child-models/?date=${formattedDate}`;
-       fetch(apiURL)
-       .then(response => {
-           if (!response.ok) {
-               throw new Error(`HTTP error! Status: ${response.status}`);
-           }
-           return response.json(); 
-       })
-       .then(data => {
-          console.log(data)
-
-       
-          // keep a check for them here if allFieldsNonEmpty
-           populateInputFields('General HSE', generalHSEFieldsID, generalHSEFields,1,data);
-           populateInputFields('HSE Training', hseTrainingFieldsID,hseTrainingFields,2,data);
-           populateInputFields('HSE Observation', hseObservationFieldsID,hseObservationFields,3,data);
-           populateInputFields('Incidents', incidentsFieldsID,incidentsFields,5,data); 
-           populateInputFields('Management Visits', managementVisitsFieldsID,managementVisitsFields,4,data); 
-
-
-           
-       })
-       .catch(error => {
-         
-           console.error('API request failed:', error);
-       });
-       
-      
-       return formattedDate;
-
       }
 
-     
+      populateInputFields2(formattedDate);
 
-      
-      function setupIncrementDecrementButtons(decrementButtonId,incrementButtonId, inputFieldId) {
+
+
+      const apiURL = `/api/child-models/?date=${formattedDate}`;
+      fetch(apiURL)
+         .then(response => {
+            if (!response.ok) {
+               throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+         })
+         .then(data => {
+            populateInputFields('General HSE', generalHSEFieldsID, generalHSEFields, 1, data);
+            populateInputFields('HSE Training', hseTrainingFieldsID, hseTrainingFields, 2, data);
+            populateInputFields('HSE Observation', hseObservationFieldsID, hseObservationFields, 3, data);
+            populateInputFields('Incidents', incidentsFieldsID, incidentsFields, 5, data);
+            populateInputFields('Management Visits', managementVisitsFieldsID, managementVisitsFields, 4, data);
+
+
+
+         })
+         .catch(error => {
+            console.error('API request failed:', error);
+         });
+
+
+      return formattedDate;
+
+   }
+
+
+   function setupIncrementDecrementButtons(decrementButtonId, incrementButtonId, inputFieldId) {
       const decrementButton = document.getElementById(decrementButtonId);
       const incrementButton = document.getElementById(incrementButtonId);
       const inputField = document.getElementById(inputFieldId);
-      
+
       decrementButton.addEventListener("click", () => {
-          const currentValue = parseInt(inputField.value, 10);
-          if (!isNaN(currentValue) && currentValue > 1) {
-              inputField.value = (currentValue - 1).toString();
-          }
-      });
-      
-      incrementButton.addEventListener("click", () => {
-          const currentValue = parseInt(inputField.value, 10);
-          if (!isNaN(currentValue)) {
-              inputField.value = (currentValue + 1).toString();
-          }
-      });
-      }
-      
-      // Example usage:
-      setupIncrementDecrementButtons("decrement1", "increment1", "input1");
-      setupIncrementDecrementButtons("decrement3", "increment3", "input3");
-      setupIncrementDecrementButtons("decrement4", "increment4", "input4");
-      setupIncrementDecrementButtons("decrement5", "increment5", "input5");
-      setupIncrementDecrementButtons("decrement7", "increment7", "input7");
-      setupIncrementDecrementButtons("decrement9", "increment9", "input9");
-      setupIncrementDecrementButtons("decrement10", "increment10", "input10");
-      setupIncrementDecrementButtons("decrement11", "increment11", "input11");
-      setupIncrementDecrementButtons("decrement12", "increment12", "input12");
-      setupIncrementDecrementButtons("decrement13", "increment13", "input13");
-      setupIncrementDecrementButtons("decrement14", "increment14", "input14");
-      setupIncrementDecrementButtons("decrement15", "increment15", "input15");
-      setupIncrementDecrementButtons("decrement17", "increment17", "input17");
-      setupIncrementDecrementButtons("decrement18", "increment18", "input18");
-      setupIncrementDecrementButtons("decrement19", "increment19", "input19");
-      setupIncrementDecrementButtons("extraDecrement1", "extraIncrement1", "extraInput1");
-      setupIncrementDecrementButtons("extraDecrement2", "extraIncrement2", "extraInput2");
-      setupIncrementDecrementButtons("extraDecrement3", "extraIncrement3", "extraInput3");
-      
-      const numberInput1 = document.getElementById("input6");
-      const numberInput2 = document.getElementById("input8");
-      const numberError1 = document.getElementById("number-error1");
-      const numberError2 = document.getElementById("number-error2");
-      
-      
-      numberInput1.addEventListener("input", function () {
-          if (parseInt(numberInput1.value) <= 1) {
-              numberError1.style.display = "block";
-              numberInput1.classList.add("error-border");
-          } else {
-              numberError1.style.display = "none";
-              numberInput1.classList.remove("error-border");
-          }
-      });
-      
-      
-      numberInput2.addEventListener("input", function () {
-         if (parseInt(numberInput2.value) <= 1) {
-             numberError2.style.display = "block";
-             numberInput2.classList.add("error-border");
-         } else {
-             numberError2.style.display = "none";
-             numberInput2.classList.remove("error-border");
+         const currentValue = parseInt(inputField.value, 10);
+         if (!isNaN(currentValue) && currentValue > 1) {
+            inputField.value = (currentValue - 1).toString();
          }
       });
-      
-   
 
-      function populateInputFields(category, fieldIds, fieldNames, oldId, data) {
-         if (data) {
-            const categoryData = data[category][data[category].length - 1];
+      incrementButton.addEventListener("click", () => {
+         const currentValue = parseInt(inputField.value, 10);
+         if (!isNaN(currentValue)) {
+            inputField.value = (currentValue + 1).toString();
+         }
+      });
+   }
 
-            if (categoryData === undefined) {
-                fieldIds.forEach((fieldId) => {
-                    document.getElementById(fieldId).value = '';
-                });
-                document.getElementById(`toBeUpdatedId${oldId}`).value = '';
-            } 
-            else {
-                const categoryId = categoryData['id'];
-        
-                document.getElementById(`toBeUpdatedId${oldId}`).value = categoryId;
-        
-                fieldIds.forEach((fieldId, index) => {
-                    const fieldName = fieldNames[index];
-                    const fieldData = categoryData[fieldName];
-                    document.getElementById(fieldId).value = fieldData;
-                });
-            }
-        }
-     }
-     
-      
-      const generalHSEFieldsID = ['input1', 'input2', 'input3', 'input4','extraInput1','extraInput2','extraInput3'];
-      const generalHSEFields = ['total_man_days_worked', 'total_safe_man_hours', 'no_of_person_inducted_site', 'no_of_toolbox_attendees','toolbox_talk_manhours','promotional_activities','committe_meetings'];
-      const hseTrainingFieldsID = ['input5', 'input6', 'input7', 'input8','extraInput4','extraInput5'];
-      const hseTrainingFields = ['hse_training_attendees', 'duration_of_trainee', 'hse_training_contractor', 'duration_of_contractor','amplus_hse_trainings','contractor_hse_trainings'];
-      const hseObservationFieldsID = ['input9', 'input10', 'input11', 'input12'];
-      const hseObservationFields = ['daily_hse_observation', 'stop_work_notice', 'violation_memo_issued', 'complaint_from_customer'];
-      const managementVisitsFieldsID = ['input13', 'input14', 'input15', 'input16'];
-      const managementVisitsFields = ['no_of_management_visits', 'total_findings', 'no_of_compilance_done', 'observation_pending'];
-      const incidentsFieldsID = ['input17', 'input18', 'input19'];
-      const incidentsFields = ['no_of_incidents', 'no_of_occupation_illness', 'no_of_environment_illness'];
+   // Example usage:
+   setupIncrementDecrementButtons("decrement1", "increment1", "input1");
+   setupIncrementDecrementButtons("decrement3", "increment3", "input3");
+   setupIncrementDecrementButtons("decrement4", "increment4", "input4");
+   setupIncrementDecrementButtons("decrement5", "increment5", "input5");
+   setupIncrementDecrementButtons("decrement7", "increment7", "input7");
+   setupIncrementDecrementButtons("decrement9", "increment9", "input9");
+   setupIncrementDecrementButtons("decrement10", "increment10", "input10");
+   setupIncrementDecrementButtons("decrement11", "increment11", "input11");
+   setupIncrementDecrementButtons("decrement12", "increment12", "input12");
+   setupIncrementDecrementButtons("decrement13", "increment13", "input13");
+   setupIncrementDecrementButtons("decrement14", "increment14", "input14");
+   setupIncrementDecrementButtons("decrement15", "increment15", "input15");
+   setupIncrementDecrementButtons("decrement17", "increment17", "input17");
+   setupIncrementDecrementButtons("decrement18", "increment18", "input18");
+   setupIncrementDecrementButtons("decrement19", "increment19", "input19");
+   setupIncrementDecrementButtons("extraDecrement1", "extraIncrement1", "extraInput1");
+   setupIncrementDecrementButtons("extraDecrement2", "extraIncrement2", "extraInput2");
+   setupIncrementDecrementButtons("extraDecrement3", "extraIncrement3", "extraInput3");
+
+   const numberInput1 = document.getElementById("input6");
+   const numberInput2 = document.getElementById("input8");
+   const numberError1 = document.getElementById("number-error1");
+   const numberError2 = document.getElementById("number-error2");
 
 
+   numberInput1.addEventListener("input", function () {
+      if (parseInt(numberInput1.value) <= 1) {
+         numberError1.style.display = "block";
+         numberInput1.classList.add("error-border");
+      } else {
+         numberError1.style.display = "none";
+         numberInput1.classList.remove("error-border");
+      }
+   });
 
-      async function populateInputFields2(queryString) {
-         console.log(`Query String is ${queryString}`);
-       
-         const endpoints = [
-           {
-             endpoint: "/api/observation_form",
-             inputIds: ["input10"],
-             elementIds: ["formsLink2"],
-           },
-           {
-             endpoint: "/api/stopWork_form",
-             inputIds: ["input11"],
-             elementIds: ["formsLink3"],
-           },
-           {
-             endpoint: "/api/violation_form",
-             inputIds: ["input12"],
-             elementIds: [null],
-           },
-           {
-             endpoint: "/api/incident_form",
-             inputIds: ["input18", "input19"],
-             elementIds: [null, null],
-           },
-         ];
-       
-         const plantCode = "10000";
-         const fetchOptions = {
-           method: "GET",
-         };
-       
-         for (const { endpoint, inputIds, elementIds } of endpoints) {
-           try {
-             const response = await fetch(
+
+   numberInput2.addEventListener("input", function () {
+      if (parseInt(numberInput2.value) <= 1) {
+         numberError2.style.display = "block";
+         numberInput2.classList.add("error-border");
+      } else {
+         numberError2.style.display = "none";
+         numberInput2.classList.remove("error-border");
+      }
+   });
+
+
+
+   function populateInputFields(category, fieldIds, fieldNames, oldId, data) {
+      if (data) {
+         const categoryData = data[category][data[category].length - 1];
+
+         if (categoryData === undefined) {
+            fieldIds.forEach((fieldId) => {
+               document.getElementById(fieldId).value = '';
+            });
+            document.getElementById(`toBeUpdatedId${oldId}`).value = '';
+         } else {
+            const categoryId = categoryData['id'];
+
+            document.getElementById(`toBeUpdatedId${oldId}`).value = categoryId;
+
+            fieldIds.forEach((fieldId, index) => {
+               const fieldName = fieldNames[index];
+               const fieldData = categoryData[fieldName];
+               document.getElementById(fieldId).value = fieldData;
+            });
+         }
+      }
+   }
+
+
+   const generalHSEFieldsID = ['input1', 'input2', 'input3', 'input4', 'extraInput1', 'extraInput2', 'extraInput3'];
+   const generalHSEFields = ['total_man_days_worked', 'total_safe_man_hours', 'no_of_person_inducted_site',
+      'no_of_toolbox_attendees', 'toolbox_talk_manhours', 'promotional_activities', 'committe_meetings'
+   ];
+   const hseTrainingFieldsID = ['input5', 'input6', 'input7', 'input8', 'extraInput4', 'extraInput5'];
+   const hseTrainingFields = ['hse_training_attendees', 'duration_of_trainee', 'hse_training_contractor',
+      'duration_of_contractor', 'amplus_hse_trainings', 'contractor_hse_trainings'
+   ];
+   const hseObservationFieldsID = ['input9', 'input10', 'input11', 'input12'];
+   const hseObservationFields = ['daily_hse_observation', 'stop_work_notice', 'violation_memo_issued',
+      'complaint_from_customer'
+   ];
+   const managementVisitsFieldsID = ['input13', 'input14', 'input15', 'input16'];
+   const managementVisitsFields = ['no_of_management_visits', 'total_findings', 'no_of_compilance_done',
+      'observation_pending'
+   ];
+   const incidentsFieldsID = ['input17', 'input18', 'input19'];
+   const incidentsFields = ['no_of_incidents', 'no_of_occupation_illness', 'no_of_environment_illness'];
+
+
+
+   async function populateInputFields2(queryString) {
+      console.log(`Query String is ${queryString}`);
+
+      const endpoints = [{
+            endpoint: "/api/observation_form",
+            inputIds: ["input10"],
+            elementIds: ["formsLink2"],
+         },
+         {
+            endpoint: "/api/stopWork_form",
+            inputIds: ["input11"],
+            elementIds: ["formsLink3"],
+         },
+         {
+            endpoint: "/api/violation_form",
+            inputIds: ["input12"],
+            elementIds: [null],
+         },
+         {
+            endpoint: "/api/incident_form",
+            inputIds: ["input18", "input19"],
+            elementIds: [null, null],
+         },
+      ];
+
+      const plantCode = "10000";
+      const fetchOptions = {
+         method: "GET",
+      };
+
+      for (const {
+            endpoint,
+            inputIds,
+            elementIds
+         } of endpoints) {
+         try {
+            const response = await fetch(
                `${endpoint}/?plant_code=${plantCode}&formSubmitDate=${queryString}`,
                fetchOptions
-             );
-       
-             if (response.status === 404) {
+            );
+
+            if (response.status === 404) {
                console.log(`Endpoint ${endpoint} returned a 404 response. No data found.`);
-       
+
                for (let i = 0; i < inputIds.length; i++) {
-                 document.getElementById(inputIds[i]).disabled = true;
-                 if (elementIds[i]) {
-                   document.getElementById(elementIds[i]).style.display = 'none';
-                 }
+                  document.getElementById(inputIds[i]).disabled = true;
+                  if (elementIds[i]) {
+                     document.getElementById(elementIds[i]).style.display = 'none';
+                  }
                }
-             }
-           } catch (error) {
-             console.error('Error:', error);
-           }
+            }
+         } catch (error) {
+            console.error('Error:', error);
          }
-       
-         console.log('All data fetched and processed.');
-       }
-       
-       
-      
-      function disableInputFields(className) {
+      }
+
+      console.log('All data fetched and processed.');
+   }
+
+
+
+   function disableInputFields(className) {
       const elements = document.getElementsByClassName(className);
       for (let i = 0; i < elements.length; i++) {
-          elements[i].disabled = true;
+         elements[i].disabled = true;
       }
-      }
-      
-      function disableButtonFields(className) {
+   }
+
+   function disableButtonFields(className) {
       const elements = document.getElementsByClassName(className);
       for (let i = 0; i < elements.length; i++) {
-       elements[i].disabled = true;
-       elements[i].style.border = '1px solid white'; 
-      
-      
-      }
-      }
-      function enableInputFields(className) {
-         const elements = document.getElementsByClassName(className);
-         for (let i = 0; i < elements.length; i++) {
-             elements[i].disabled = false;
-         }
-         }
-         function enableButtonFields(className) {
-            const elements = document.getElementsByClassName(className);
-            for (let i = 0; i < elements.length; i++) {
-             elements[i].disabled = false;
-            
-            
-            }
-            }
-      
-      $.ajax({
-         type: "GET",
-         url: "/api/parent/",
-         success: function (data) {
-            processDate(); 
+         elements[i].disabled = true;
+         elements[i].style.border = '1px solid white';
 
-             {% comment %} if (foundItem) {
-                 const fieldData = foundItem.form_status;
-                 if (fieldData == 1) {
-                     disableInputFields("disableIt");
-                     disableButtonFields("disableBtn");
-                     document.querySelector('.lastPreview').style.display = 'none';
-                     document.getElementById('SaveAndNext1').style.display='none'
-                     document.getElementById('SaveAndNext2').style.display='none'
-                     document.getElementById('SaveAndNext4').style.display='none'
-                     document.getElementById('observationBtn').style.display='none'
-                     document.getElementById('incidentBtn').style.display='none'
-                     document.getElementById('fileInputLabel1').style.display='none'
-                     document.getElementById('fileInputLabel2').style.display='none'
-                     document.getElementById('fileInputLabel3').style.display='none'
-                     document.getElementById('fileInputLabel4').style.display='none'
-                     document.getElementById('fileInputLabel5').style.display='none'
-                     document.getElementById('fileInputLabel6').style.display='none'
-                     document.getElementById('fileInputLabel7').style.display='none'
-                     document.getElementById('extrafileInputLabel1').style.display='none'
-                     document.getElementById('extrafileInputLabel2').style.display='none' 
-                    
-      
-      
-      
-                     Swal.fire({
-                         icon: 'success',
-                         title: 'Form for this week is now submitted',
-                         text: 'You can now view the form',
-                         confirmButtonColor: '#3085d6',
-                         confirmButtonText: 'OK',
-                         customClass: {
-                             popup: 'small-popup'
-                         }
-                     });
-                 }
-             } else {
-                 console.log(`No data found for week ${weekNumber} and year ${year}`);
-             } {% endcomment %}
-         },
-         error: function (xhr, status, error) {
-             console.error("Error:", status, error);
-         }
-      });  
-      
-      
-      
-       document.addEventListener('DOMContentLoaded', function() {
-         function setupAccordion(accordionNumber) {
-             const toggleAccordionLink = document.getElementById(`toggle-accordion${accordionNumber}`);
-             const accordionContent = document.getElementById(`collapse${accordionNumber}`);
-             const backcolorDiv = document.getElementById(`backcolorDiv${accordionNumber}`);
-             const clickMainDiv= document.getElementById(`clickMainDiv${accordionNumber}`);
-      
-             let isAccordionOpen = false;
-      
-             clickMainDiv.addEventListener('click', function(e) {
-                 e.preventDefault();
-                 isAccordionOpen = !isAccordionOpen;
-                 accordionContent.classList.toggle('show', isAccordionOpen);
-      
-                 if (isAccordionOpen) {
-                     toggleAccordionLink.style.setProperty('color', '#3E9FFE', 'important');
-                     backcolorDiv.style.setProperty('background-color', 'rgba(62, 159, 254, 0.3)', 'important');
-                 } else {
-                     toggleAccordionLink.style.removeProperty('color');
-                     backcolorDiv.style.removeProperty('background-color');
-                 }
-             });
-         }
-      
-         for (let i = 1; i <= 5; i++) {
-             setupAccordion(i);
-         }
-      });
-      
-      
 
-      
-        
-      function previewPage() {
-      
-         fetch(`/api/child-models/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
+      }
+   }
+
+   function enableInputFields(className) {
+      const elements = document.getElementsByClassName(className);
+      for (let i = 0; i < elements.length; i++) {
+         elements[i].disabled = false;
+      }
+   }
+
+   function enableButtonFields(className) {
+      const elements = document.getElementsByClassName(className);
+      for (let i = 0; i < elements.length; i++) {
+         elements[i].disabled = false;
+
+
+      }
+   }
+
+   $.ajax({
+      type: "GET",
+      url: "/api/parent/",
+      success: function (data) {
+         processDate();
+      },
+      error: function (xhr, status, error) {
+         console.error("Error:", status, error);
+      }
+   });
+
+
+
+   document.addEventListener('DOMContentLoaded', function () {
+      function setupAccordion(accordionNumber) {
+         const toggleAccordionLink = document.getElementById(`toggle-accordion${accordionNumber}`);
+         const accordionContent = document.getElementById(`collapse${accordionNumber}`);
+         const backcolorDiv = document.getElementById(`backcolorDiv${accordionNumber}`);
+         const clickMainDiv = document.getElementById(`clickMainDiv${accordionNumber}`);
+
+         let isAccordionOpen = false;
+
+         clickMainDiv.addEventListener('click', function (e) {
+            e.preventDefault();
+            isAccordionOpen = !isAccordionOpen;
+            accordionContent.classList.toggle('show', isAccordionOpen);
+
+            if (isAccordionOpen) {
+               toggleAccordionLink.style.setProperty('color', '#3E9FFE', 'important');
+               backcolorDiv.style.setProperty('background-color', 'rgba(62, 159, 254, 0.3)', 'important');
+            } else {
+               toggleAccordionLink.style.removeProperty('color');
+               backcolorDiv.style.removeProperty('background-color');
+            }
+         });
+      }
+
+      for (let i = 1; i <= 5; i++) {
+         setupAccordion(i);
+      }
+   });
+
+
+
+
+
+   function previewPage() {
+
+      fetch(`/api/child-models/?week_number=${weekNumber}&year=${year}&plant_code=10000`)
          .then(response => response.json())
          .then(data => {
-         if(data['General HSE'].length==0 || data['HSE Training'].length==0 || data['HSE Observation'].length==0 || data['HSE Observation'][0].daily_hse_observation==null  || data['Management Visits'].length==0 || data['Incidents'].length==0 ||data['Incidents'][0].no_of_incidents==null ){
-             
+            if (data['General HSE'].length == 0 || data['HSE Training'].length == 0 || data['HSE Observation']
+               .length == 0 || data['HSE Observation'][0].daily_hse_observation == null || data['Management Visits']
+               .length == 0 || data['Incidents'].length == 0 || data['Incidents'][0].no_of_incidents == null) {
+
                Swal.fire({
                   icon: 'error',
                   title: 'Please fill all the forms ',
                   confirmButtonColor: '#3085d6',
                   confirmButtonText: 'OK',
                   customClass: {
-                      popup: 'small-popup'
+                     popup: 'small-popup'
                   }
-              });
-               
-             }
-         else{
+               });
+
+            } else {
                disableInputFields("disableIt");
                disableButtonFields("disableBtn");
                document.querySelector('.lastPreview').style.display = 'none';
-               document.getElementById('incidentBtn').style.display='none';
-               document.getElementById('finalSubmitDiv').style.display='none';
-      
+               document.getElementById('incidentBtn').style.display = 'none';
+               document.getElementById('finalSubmitDiv').style.display = 'none';
+
                // Show the "Final Save" button
                document.querySelector('#finalSubmit').style.display = 'block';
                document.querySelector('#closeBtn').style.display = 'block';
-            }     
-            
+            }
+
          })
-      
+
          .catch(error => {
-             console.error('Error:', error);
+            console.error('Error:', error);
          });
-      
-         
-      }
-      
-      function previewPage2() {
+
+
+   }
+
+   function previewPage2() {
       enableInputFields("disableIt");
       enableButtonFields("disableBtn");
       document.querySelector('.lastPreview').style.display = 'block';
-      document.getElementById('incidentBtn').style.display='block';
-      document.getElementById('finalSubmitDiv').style.display='block';
-      
+      document.getElementById('incidentBtn').style.display = 'block';
+      document.getElementById('finalSubmitDiv').style.display = 'block';
+
       // Show the "Final Save" button
       document.querySelector('#finalSubmit').style.display = 'none';
       document.querySelector('#closeBtn').style.display = 'none';
-      
-      }
-      
-      
-      {% comment %} const fileInput = document.getElementById("fileInput1");
-      const uploadLabel = document.getElementById("fileInputLabel1");
-      const fileDisplay = document.getElementById("fileDisplay1");
-      const fileName = document.getElementById("fileName1");
-      
-      fileInput.addEventListener("change", function () {
-          const file = fileInput.files[0];
-          if (file) {
-              fileName.textContent = file.name;
-              fileDisplay.style.display = "flex";
-          }
-      }); {% endcomment %}
-      
 
-      
-   function handleFormSubmission(formId, url,toUpdateId) {
+   }
+
+
+
+
+   function handleFormSubmission(formId, url, toUpdateId) {
       const form = document.getElementById(formId);
       form.addEventListener("submit", function (event) {
-          event.preventDefault();
-          
-          const formData = new FormData(this);
-          const csrftoken = getCookie('csrftoken');
-          const existingID = formData.get("toBeUpdatedId");
-      
-          const methodValue = existingID ? "PUT" : "POST";
-      
-          fetch(url, {
-              method: methodValue,
-              body: formData,
-              headers: {
-                  "X-CSRFToken": csrftoken,
-              },
-          })
-      
-          .then(response => {
-            console.log(response)
-            if (response.status === 201 || response.status === 200) {
-               $('#successModal').modal('show');
-      
-               setTimeout(function () {
-                   $('#successModal').modal('hide');
-               }, 1000);
-      
-           }
-            else {
-               console.error("Form submission failed. Status:", res.status);
-           }
-            return response.json()
-          })
-      
-          .then(res => {
-            console.log(res)
-            const id=res.id
-            const a=document.getElementById(toUpdateId).value=id
-            console.log(a)
-            
-          })
-          .catch(error => {
-              console.error("Error:", error);
-          });
-      });
-   } 
- 
+         event.preventDefault();
 
-      
-      function getCookie(name) {
-      const value = `; ${document.cookie}`; 
+         const formData = new FormData(this);
+         const csrftoken = getCookie('csrftoken');
+         const existingID = formData.get("toBeUpdatedId");
+
+         const methodValue = existingID ? "PUT" : "POST";
+
+         fetch(url, {
+               method: methodValue,
+               body: formData,
+               headers: {
+                  "X-CSRFToken": csrftoken,
+               },
+            })
+
+            .then(response => {
+               console.log(response)
+               if (response.status === 201 || response.status === 200) {
+                  $('#successModal').modal('show');
+
+                  setTimeout(function () {
+                     $('#successModal').modal('hide');
+                  }, 1000);
+
+               } else {
+                  console.error("Form submission failed. Status:", res.status);
+               }
+               return response.json()
+            })
+
+            .then(res => {
+               console.log(res)
+               const id = res.id
+               const a = document.getElementById(toUpdateId).value = id
+               console.log(a)
+
+            })
+            .catch(error => {
+               console.error("Error:", error);
+            });
+      });
+   }
+
+
+
+
+   function getCookie(name) {
+      const value = `; ${document.cookie}`;
       const parts = value.split(`; ${name}=`);
       if (parts.length === 2) return parts.pop().split(';').shift();
-      }
-      
-      
-      
-      handleFormSubmission("form1", "{% url 'General HSE' %}","toBeUpdatedId1");
-      handleFormSubmission("form2", "{% url 'HSE Trainings' %}","toBeUpdatedId2");
-      handleFormSubmission("form3", "{% url 'HSE Observations' %}","toBeUpdatedId3");
-      handleFormSubmission("form4", "{% url 'Management Visits' %}","toBeUpdatedId4");
-      handleFormSubmission("final-form", "{% url 'Incidents' %}","toBeUpdatedId5"); 
-      
-      
-      function DisablingGreaterDate() {
-         disableInputFields("disableIt");
-         disableButtonFields("disableBtn");
-         //document.querySelector('.lastPreview').style.display = 'none';
-       
-         const subForms = document.querySelectorAll('.subForms');
+   }
 
-         subForms.forEach(subForm => {
-            subForm.style.display = 'none';
-         });  
-      }
 
-      function DisablingSmallerDate() {
-         disableInputFields("disableIt");
-         disableButtonFields("disableBtn");
-         //document.querySelector('.lastPreview').style.display = 'none';
-       
-      }
 
-      
-    
-   </script>
+   handleFormSubmission("form1", "{% url 'General HSE' %}", "toBeUpdatedId1");
+   handleFormSubmission("form2", "{% url 'HSE Trainings' %}", "toBeUpdatedId2");
+   handleFormSubmission("form3", "{% url 'HSE Observations' %}", "toBeUpdatedId3");
+   handleFormSubmission("form4", "{% url 'Management Visits' %}", "toBeUpdatedId4");
+   handleFormSubmission("final-form", "{% url 'Incidents' %}", "toBeUpdatedId5");
+
+
+   function DisablingGreaterDate() {
+      disableInputFields("disableIt");
+      disableButtonFields("disableBtn");
+      //document.querySelector('.lastPreview').style.display = 'none';
+
+      const subForms = document.querySelectorAll('.subForms');
+
+      subForms.forEach(subForm => {
+         subForm.style.display = 'none';
+      });
+   }
+
+   function DisablingSmallerDate() {
+      disableInputFields("disableIt");
+      disableButtonFields("disableBtn");
+      //document.querySelector('.lastPreview').style.display = 'none';
+
+   }
+</script>
+
 </html>
