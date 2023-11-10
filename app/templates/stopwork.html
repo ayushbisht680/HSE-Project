@@ -54,15 +54,14 @@
       font-size: 13px;
       font-weight: 600;
       }
-      .valueInput1{
-      height:43px;
-      margin-left: 15px;
-      border: none;
-      outline: none;
-      font-size: 15px;
-      font-weight: 600;
-      font-size: 13px;
-      }
+      .valueInput1 {
+         height: 30px;
+         margin-left: 15px;
+         font-size: 15px;
+         font-weight: 400;
+         font-size: 12px;
+         outline:none;
+     }
       .CLassdropdown{
       width: 110px;
       height: 28px;
@@ -223,7 +222,7 @@
       <form method="POST" action="{% url 'stopWork_form' %}" enctype="multipart/form-data" id="form" autocomplete="off" style="display: none;">
          {% csrf_token %}
          <div class="rowTable1">
-            <input type="hidden" name="plant_id" id="plant_id" value='10000' >
+            <input type="hidden" name="plant_id" id="plant_id" >
             <input type="hidden" name="formSubmitDate" id="formSubmitDate" >
 
             <div class="Srno"><input type="text" class="srWidth valueInput1" placeholder="Sr.No" name="SrNo" id='Srno' value='1'></div>
@@ -313,21 +312,29 @@
 
       function getQueryString() {
          const url = window.location.href;
-         const queryString = new URL(url).searchParams.get("date");
-         return queryString;
-       }
-     
-       const queryString = getQueryString();
-       console.log(queryString)
+         const searchParams = new URL(url).searchParams;
+         const date = searchParams.get("date");
+         const plantcode = searchParams.get("plantcode");
+         return { date, plantcode };
+     }
+
+
+      const queryParams = getQueryString();
+      console.log(queryParams.date); // This will log the "date" parameter
+      console.log(queryParams.plantcode);
 
        document.getElementById("redirectButton").addEventListener("click", function() {
-         window.location.href = `/api/my_html/?date=${queryString}`; 
-       }); 
-     
-     
-       if (queryString) {
-         document.getElementById('formSubmitDate').value = queryString;
+        window.location.href = `/api/my_html/?date=${queryParams.date}`; 
+        //window.history.back();
+
+       });
+      
+
+       if (queryParams.date) {
+         document.getElementById('formSubmitDate').value = queryParams.date;
+         document.getElementById('plant_id').value = queryParams.plantcode;
        }
+
 
     
 
@@ -337,7 +344,7 @@
       function populateInputField() {
          const today = new Date();        
          
-      fetch(`/api/stopWork_form/?plant_code=10000&formSubmitDate=${queryString}`)
+      fetch(`/api/stopWork_form/?plant_code=${queryParams.plantcode}&formSubmitDate=${queryParams.date}`)
       .then(response => response.json())
       .then(data => {
 

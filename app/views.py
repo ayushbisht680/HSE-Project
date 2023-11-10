@@ -85,12 +85,12 @@ class GeneralHSEAPI(APIView):
 
         if serializer.is_valid():
             instance = serializer.save()
+        
             return Response({'id': instance.id, 'data': serializer.data}, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
         
+      
 
     def put(self, request):
         data = request.data
@@ -435,37 +435,37 @@ class HSEAPI(APIView):
     
 
 class AllModelsListView(generics.ListAPIView):
-    serializer_class = GeneralHSESerializer
-
     def get(self, request):
-        date= request.query_params.get('date', None) 
-        
-        child1_data = GeneralHse.objects.filter(submittedDate=date)
-        child2_data = HSETrainingsModel.objects.filter(submittedDate=date)
-        child3_data = HSEObservation.objects.filter(submittedDate=date)
-        child4_data = ManagementVisits.objects.filter(submittedDate=date)
-        child5_data = Incidents.objects.filter(submittedDate=date)
-            
+        date = request.query_params.get('date', None)
+        plant_code = request.query_params.get('plantcode', None)
 
-        child1_serializer = GeneralHSESerializer(child1_data, many=True)
-        child2_serializer = HSETrainingsSerializer(child2_data, many=True)
-        child3_serializer = HSEObservationSerializer(child3_data, many=True)
-        child4_serializer = ManagementSerializer(child4_data, many=True)
-        child5_serializer = IncidentsSerializer(child5_data, many=True)
-            
-            
+        hse_queryset = HSE.objects.filter(formSubmittedDate=date, plant_code=plant_code).first()
 
-        response_data = {
+        if hse_queryset:
+            child1_data = hse_queryset.generalhse_set.all()
+            child2_data = hse_queryset.hsetrainingsmodel_set.all()
+            child3_data = hse_queryset.hseobservation_set.all()
+            child4_data = hse_queryset.managementvisits_set.all()
+            child5_data = hse_queryset.incidents_set.all()
+
+            child1_serializer = GeneralHSESerializer(child1_data, many=True)
+            child2_serializer = HSETrainingsSerializer(child2_data, many=True)
+            child3_serializer = HSEObservationSerializer(child3_data, many=True)
+            child4_serializer = ManagementSerializer(child4_data, many=True)
+            child5_serializer = IncidentsSerializer(child5_data, many=True)
+
+            response_data = {
                 "General HSE": child1_serializer.data,
                 "HSE Training": child2_serializer.data,
                 "HSE Observation": child3_serializer.data,
                 "Management Visits": child4_serializer.data,
                 "Incidents": child5_serializer.data,
-
             }
 
-        return Response(response_data)
-
+            return Response(response_data, status=status.HTTP_200_OK)
+        else:
+            response_data = {'detail': 'No data found for this date and plantcode'}
+            return Response(response_data, status=status.HTTP_404_NOT_FOUND)
 
        
 class HSEObservationFormAPI(APIView):
