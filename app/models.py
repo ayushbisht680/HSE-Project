@@ -39,6 +39,7 @@ class GeneralHse(models.Model):
     promotional_activities_file=models.FileField(upload_to='uploads/', null=True)
     committe_meetings=models.IntegerField()
     submittedDate = models.DateField(default=None, null=True)
+    formSubmitted = models.BooleanField(default=False)  
 
     hse = models.ForeignKey(HSE, on_delete=models.CASCADE,null=True)
 
@@ -58,6 +59,7 @@ class HSETrainingsModel(models.Model):
     amplus_hse_trainings=models.IntegerField()
     contractor_hse_trainings=models.IntegerField()
     submittedDate = models.DateField(default=None, null=True)
+    formSubmitted = models.BooleanField(default=False)  
 
     hse = models.ForeignKey(HSE, on_delete=models.CASCADE,null=True)
 
@@ -75,6 +77,7 @@ class HSEObservation(models.Model):
     violation_memo_issued=models.IntegerField(null=True,blank=True)
     complaint_from_customer=models.IntegerField(null=True,blank=True)
     submittedDate = models.DateField(default=None, null=True)
+    formSubmitted = models.BooleanField(default=False)  
 
     hse = models.ForeignKey(HSE, on_delete=models.CASCADE,null=True,blank=True)
      
@@ -92,6 +95,7 @@ class ManagementVisits(models.Model):
     no_of_compilance_done_file=models.FileField(upload_to='uploads/',null=True)
     observation_pending=models.IntegerField()
     submittedDate = models.DateField(default=None, null=True)
+    formSubmitted = models.BooleanField(default=False)  
 
     hse = models.ForeignKey(HSE, on_delete=models.CASCADE,null=True)
 
@@ -106,6 +110,7 @@ class Incidents(models.Model):
     no_of_occupation_illness=models.IntegerField(null=True,blank=True)
     no_of_environment_illness=models.IntegerField(null=True,blank=True)
     submittedDate = models.DateField(default=None, null=True)
+    formSubmitted = models.BooleanField(default=False)  
 
     hse = models.ForeignKey(HSE, on_delete=models.CASCADE,null=True,blank=True)
 

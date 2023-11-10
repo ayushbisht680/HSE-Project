@@ -12,6 +12,8 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.utils import timezone
 from datetime import datetime
+from django.db.models import Q
+
 
 
 
@@ -51,23 +53,20 @@ class GeneralHSEAPI(APIView):
         obj = GeneralHse.objects.all()
         serializer = GeneralHSESerializer(obj, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-
+        
 
     def post(self, request):
         data = request.data
         plant_code = data.get("plant_id")
-        form_Submit_date=data.get("formSubmitDate")
+        form_Submit_date = data.get("formSubmitDate")
         general_hse_instance = None
 
-        form_submit_date = datetime.strptime(data.get("formSubmitDate"), "%Y-%m-%d")
+        form_submit_date = datetime.strptime(form_Submit_date, "%Y-%m-%d")
         start_range = datetime.strptime(data.get("startRange"), "%Y-%m-%d")
         end_range = datetime.strptime(data.get("endRange"), "%Y-%m-%d")
-        
-
 
         if form_submit_date < start_range or form_submit_date > end_range:
-           return Response({'Cannot submit the form for this date'}, status=status.HTTP_400_BAD_REQUEST)
-
+            return Response({'Cannot submit the form for this date'}, status=status.HTTP_400_BAD_REQUEST)
 
         plant = Plant.objects.filter(id=plant_code).first()
 
@@ -85,10 +84,14 @@ class GeneralHSEAPI(APIView):
 
         if serializer.is_valid():
             instance = serializer.save()
-        
+            
+            instance.formSubmitted = True
+            instance.save()
+
             return Response({'id': instance.id, 'data': serializer.data}, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
         
       
 
@@ -113,7 +116,10 @@ class GeneralHSEAPI(APIView):
         serializer = GeneralHSESerializer(existing_instance, data=data)
 
         if serializer.is_valid():
-            serializer.save()
+            instance = serializer.save()
+            
+            instance.formSubmitted = True
+            instance.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -148,17 +154,18 @@ class HSETrainingsAPI(APIView):
             formSubmittedDate=form_Submit_date,
             defaults={"form_status": 0},
         )
-        print(hse_instance)
 
         if hse_instance.form_status == 1:
             return Response('Form already submitted', status=status.HTTP_400_BAD_REQUEST)
 
         hse_training_instance = HSETrainingsModel(hse=hse_instance)
-        print(hse_training_instance)
         serializer = HSETrainingsSerializer(hse_training_instance, data=data)
 
         if serializer.is_valid():
             instance = serializer.save()
+            
+            instance.formSubmitted = True
+            instance.save()
             return Response({'id': instance.id, 'data': serializer.data}, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -167,9 +174,6 @@ class HSETrainingsAPI(APIView):
     def put(self, request):
         data = request.data
         id = data.get("toBeUpdatedId") 
-
-        print(id)
-        print("Hello, it's a put request")
         
         try:
             existing_instance = HSETrainingsModel.objects.get(id=id)
@@ -184,7 +188,10 @@ class HSETrainingsAPI(APIView):
         serializer = HSETrainingsSerializer(existing_instance, data=data)
 
         if serializer.is_valid():
-            serializer.save()
+            instance = serializer.save()
+            
+            instance.formSubmitted = True
+            instance.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -233,6 +240,9 @@ class HSEObservationAPI(APIView):
 
         if serializer.is_valid():
             instance = serializer.save()
+            
+            instance.formSubmitted = True
+            instance.save()
             return Response({'id': instance.id, 'data': serializer.data}, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -255,7 +265,10 @@ class HSEObservationAPI(APIView):
         serializer = HSEObservationSerializer(existing_instance, data=data)
 
         if serializer.is_valid():
-            serializer.save()
+            instance = serializer.save()
+            
+            instance.formSubmitted = True
+            instance.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -293,17 +306,18 @@ class ManagementAPI(APIView):
 
             defaults={"form_status": 0},
         )
-        print(hse_instance)
 
         if hse_instance.form_status == 1:
             return Response('Form already submitted', status=status.HTTP_400_BAD_REQUEST)
 
         management_instance = ManagementVisits(hse=hse_instance)
-        print(management_instance)
         serializer = ManagementSerializer(management_instance, data=data)
 
         if serializer.is_valid():
             instance = serializer.save()
+            
+            instance.formSubmitted = True
+            instance.save()
             return Response({'id': instance.id, 'data': serializer.data}, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -312,8 +326,6 @@ class ManagementAPI(APIView):
         data = request.data
         id = data.get("toBeUpdatedId") 
 
-        print(id)
-        print("Hello, it's a put request")
         
         try:
             existing_instance = ManagementVisits.objects.get(id=id)
@@ -328,7 +340,10 @@ class ManagementAPI(APIView):
         serializer = ManagementSerializer(existing_instance, data=data)
 
         if serializer.is_valid():
-            serializer.save()
+            instance = serializer.save()
+            
+            instance.formSubmitted = True
+            instance.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -364,7 +379,6 @@ class IncidentsAPI(APIView):
             formSubmittedDate=form_Submit_date,
             defaults={"form_status": 0},
         )
-        print(hse_instance)
 
         if hse_instance.form_status == 1:
             return Response('Form already submitted', status=status.HTTP_400_BAD_REQUEST)
@@ -379,6 +393,9 @@ class IncidentsAPI(APIView):
 
         if serializer.is_valid():
             instance = serializer.save()
+            
+            instance.formSubmitted = True
+            instance.save()
             return Response({'id': instance.id, 'data': serializer.data}, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -403,7 +420,10 @@ class IncidentsAPI(APIView):
         serializer = IncidentsSerializer(existing_instance, data=data)
 
         if serializer.is_valid():
-            serializer.save()
+            instance = serializer.save()
+            
+            instance.formSubmitted = True
+            instance.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -411,26 +431,61 @@ class IncidentsAPI(APIView):
 
 
 class HSEAPI(APIView):
-    def get(self, request):
+
+
+    def get(self, request): 
         obj = HSE.objects.all()
         serializer = HSESerializer(obj, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
+        return Response(serializer.data, status=status.HTTP_200_OK)  
+            
 
     def post(self, request):
         data = request.data
         start_range = datetime.strptime(data.get("startRange"), "%Y-%m-%d")
         end_range = datetime.strptime(data.get("endRange"), "%Y-%m-%d")
+        plant_code=data.get('plant_id')
 
-        hse_objects = HSE.objects.filter(
-            formSubmittedDate__gte=start_range,
-            formSubmittedDate__lte=end_range
+        print(plant_code)
+        print(start_range)
+        print(end_range)
+
+        hse_queryset = HSE.objects.filter(
+            Q(formSubmittedDate__gte=start_range) &
+            Q(formSubmittedDate__lte=end_range) &
+            Q(plant_code=plant_code)
         )
-        hse_objects.update(form_status=1)
-        return Response('Changed the form Status to 1', status=status.HTTP_201_CREATED)
+
+        # Iterate through each HSE object and check the formSubmitted status of related instances
+        general_hse_statuses = []
+        hse_trainings_statuses = []
+        hse_observation_statuses = []
+        management_visits_statuses = []
+        incidents_statuses = []
+
+        for hse_object in hse_queryset:
+            general_hse_statuses.extend(hse_object.generalhse_set.values_list('formSubmitted', flat=True))
+            hse_trainings_statuses.extend(hse_object.hsetrainingsmodel_set.values_list('formSubmitted', flat=True))
+            hse_observation_statuses.extend(hse_object.hseobservation_set.values_list('formSubmitted', flat=True))
+            management_visits_statuses.extend(hse_object.managementvisits_set.values_list('formSubmitted', flat=True))
+            incidents_statuses.extend(hse_object.incidents_set.values_list('formSubmitted', flat=True))
+
+        # Check if any formSubmitted is False
+        if False in general_hse_statuses or False in hse_trainings_statuses or False in hse_observation_statuses or False in management_visits_statuses or False in incidents_statuses:
+            return Response("Form not submitted for all instances", status=status.HTTP_400_BAD_REQUEST)
+        
+        hse_queryset.update(form_status=1)
 
 
-        # return HttpResponseRedirect('/api/my_html')
+        response_data = {
+            "general_hse_statuses": general_hse_statuses,
+            "hse_trainings_statuses": hse_trainings_statuses,
+            "hse_observation_statuses": hse_observation_statuses,
+            "management_visits_statuses": management_visits_statuses,
+            "incidents_statuses": incidents_statuses,
+        }
+
+
+        return Response(response_data, status=status.HTTP_200_OK)
 
     
 
@@ -455,6 +510,7 @@ class AllModelsListView(generics.ListAPIView):
             child5_serializer = IncidentsSerializer(child5_data, many=True)
 
             response_data = {
+                "hse_status": hse_queryset.form_status,
                 "General HSE": child1_serializer.data,
                 "HSE Training": child2_serializer.data,
                 "HSE Observation": child3_serializer.data,
