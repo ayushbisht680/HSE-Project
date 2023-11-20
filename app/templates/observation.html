@@ -138,6 +138,11 @@
          height:36px;
          margin-left:16px;
       }
+      .input-group-append{
+         display:flex;
+         flex-direction: column;
+         align-items: center;
+      }
      
    </style>
    <body>
@@ -228,7 +233,7 @@
 
             <div class="Srno"><input type="text" class="srWidth valueInput1" placeholder="Sr.No" name="SrNo" id="Srno" value='1'></div>
             <div class="commonWidth"><input type="date" class="valueInput1" placeholder="Date" name="Date" required></div>
-            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Time" name="Time" required></div>
+            <div class="commonWidth"><input type="time" class="valueInput1" placeholder="Time" name="Time" required></div>
             <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Location" name="Location" id="Location" required></div>
             <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Plant/Site" name="PlantSite" id="PlantSite" required></div>
             <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Observation" name="Observation" id="Observation" required></div>
@@ -257,6 +262,7 @@
                   <option value="NA">NA</option>
                </select>
             </div>
+            
             <div class="commonWidth">
                <div class="input-group">
                   <div class="custom-file">
@@ -267,9 +273,12 @@
                   <div class="input-group-append" id='openEvidenveBtn'>
                      <button class="btn btn-outline-secondary" type="button"
                         onclick="document.getElementById('OpenEvidence').click()" id='OpenEvidenceBtn'>Upload File</button>
+                        <span style='font-size:10px;' id='uploadedFileName1'></span>
+
                   </div>
                </div>
             </div>
+
             <div class="commonWidth">
                <div class="input-group">
                   <div class="custom-file">
@@ -277,12 +286,14 @@
                         aria-describedby="openEvidenceAddon" style="display: none;">
                      <label class="custom-file-label" for="closedEvidenceInput" id="fileInputLabel2"></label>
                   </div>
-                  <div class="input-group-append" >
+                  <div class="input-group-append">
                      <button class="btn btn-outline-secondary" type="button"
                         onclick="document.getElementById('ClosedEvidence').click()" id='ClosedEvidenceBtn'>Upload File</button>
+                     <span style='font-size:10px;' id='uploadedFileName2'></span>
                   </div>
                </div>
             </div>
+
             <div class="chnWidth">
                <input type="text" placeholder="Remark" class=" extraspace valueInput1" name="Remark" id="Remark" required>
             </div>
@@ -318,9 +329,36 @@
       </template>
    </body>
    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
    <script>
-      
+
+      document.getElementById('OpenEvidence').addEventListener('change', function () {
+         updateFileName('OpenEvidence','fileInputLabel1', 'uploadedFileName1');
+     }); 
+
+      document.getElementById('ClosedEvidence').addEventListener('change', function () {
+         updateFileName('ClosedEvidence','fileInputLabel2', 'uploadedFileName2');
+     });
+     
+     function updateFileName(id1, id2,id3) {
+      const fileInput = document.getElementById(id1);
+      const fileLabel = document.getElementById(id2);
+      const uploadedFileName = document.getElementById(id3);
+
+      if (fileInput.files.length > 0) {
+         const fileName = fileInput.files[0].name;
+         uploadedFileName.textContent = fileName;
+         uploadedFileName.style.display = 'inline'; // Show the span element
+      } else {
+         uploadedFileName.textContent = ''; // Clear the span content
+         uploadedFileName.style.display = 'none'; // Hide the span element
+      }
+     }
+
+   
+     
 
       function getQueryString() {
          const url = window.location.href;
@@ -437,6 +475,20 @@
                   }, 1000);
          
               }
+              else if(response.status === 400){
+               console.log('plant does not exists')
+                        Swal.fire({
+                           icon: 'error',
+                           title: 'Cannot Submit the form ',
+                           confirmButtonColor: '#3085d6',
+                           confirmButtonText: 'OK',
+                           customClass: {
+                              popup: 'small-popup'
+                           }
+                        });
+               return Promise.reject(`HTTP error! Status: ${response.status}`);
+              }
+
                else {
                   console.error("Form submission failed. Status:", res.status);
               }
@@ -473,45 +525,9 @@
          handleFormSubmission("form", "{% url 'observation_form' %}");
 
 
-
-
-       {% comment %} $.ajax({
-         type: "GET",
-         url: "/api/parent/",
-         success: function (data) {
-             const today = new Date();
-             const weekNumber = getWeekNumber(today);
-             const year = today.getFullYear();
-
-             const buttonClicked = localStorage.getItem('buttonClicked');
-
-             if (buttonClicked === 'true') {
-                 document.getElementById('addRowButton').style.display = 'none';
-             }
-            
-      
-             const foundItem = data.find(item => item.week_number === weekNumber && item.year === year);          
-
-      
-             if (foundItem) {
-                 const fieldData = foundItem.form_status;
-                 if (fieldData == 1) {
-                  document.getElementById('addRowButton').style.display='none';
-                  
-                 }
-             } 
-             else {
-                 console.log(`No data found for week ${weekNumber} and year ${year}`);
-             }
-         },
-         error: function (xhr, status, error) {
-             console.error("Error:", status, error);
-         }
-      });  {% endcomment %}
-
    
        
-
+{% comment %} 
       function setupFileUpload(inputId, buttonId) {
          const fileInput = document.getElementById(inputId);
          const fileUploadButton = document.getElementById(buttonId);
@@ -524,7 +540,7 @@
        }
        
        setupFileUpload('OpenEvidence', 'OpenEvidenceBtn');
-       setupFileUpload('ClosedEvidence', 'ClosedEvidenceBtn');
+       setupFileUpload('ClosedEvidence', 'ClosedEvidenceBtn'); {% endcomment %}
        
 
          

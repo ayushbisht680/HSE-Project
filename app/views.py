@@ -69,6 +69,10 @@ class GeneralHSEAPI(APIView):
             return Response({'Cannot submit the form for this date'}, status=status.HTTP_400_BAD_REQUEST)
 
         plant = Plant.objects.filter(id=plant_code).first()
+        if not plant:
+            return Response('No such plant exists', status=status.HTTP_400_BAD_REQUEST)
+
+
 
         hse_instance, created = HSE.objects.get_or_create(
             plant_code=plant,
@@ -101,8 +105,7 @@ class GeneralHSEAPI(APIView):
         id = data.get("toBeUpdatedId") 
         submitted_date=data.get('submitted_date')
         print(submitted_date)
-
-        
+  
         try:
             existing_instance = GeneralHse.objects.get(id=id)
             print(existing_instance.hse.form_status)
@@ -148,6 +151,8 @@ class HSETrainingsAPI(APIView):
 
 
         plant = Plant.objects.filter(id=plant_code).first()
+        if not plant:
+            return Response('No such plant exists', status=status.HTTP_400_BAD_REQUEST)
 
         hse_instance, created = HSE.objects.get_or_create(
             plant_code=plant,
@@ -220,6 +225,8 @@ class HSEObservationAPI(APIView):
            return Response({'Cannot submit the form for this date'}, status=status.HTTP_400_BAD_REQUEST)
 
         plant = Plant.objects.filter(id=plant_code).first()
+        if not plant:
+            return Response('No such plant exists', status=status.HTTP_400_BAD_REQUEST)
 
         hse_instance, created = HSE.objects.get_or_create(
             plant_code=plant,
@@ -299,6 +306,8 @@ class ManagementAPI(APIView):
 
 
         plant = Plant.objects.filter(id=plant_code).first()
+        if not plant:
+            return Response('No such plant exists', status=status.HTTP_400_BAD_REQUEST)
 
         hse_instance, created = HSE.objects.get_or_create(
             plant_code=plant,
@@ -373,6 +382,8 @@ class IncidentsAPI(APIView):
 
 
         plant = Plant.objects.filter(id=plant_code).first()
+        if not plant:
+            return Response('No such plant exists', status=status.HTTP_400_BAD_REQUEST)
 
         hse_instance, created = HSE.objects.get_or_create(
             plant_code=plant,
@@ -560,6 +571,8 @@ class HSEObservationFormAPI(APIView):
         print(form_Submit_date)
 
         plant = Plant.objects.filter(id=plant_code).first()
+        if not plant:
+            return Response('No such plant exists', status=status.HTTP_400_BAD_REQUEST)
 
         hse = HSE.objects.filter(formSubmittedDate=form_Submit_date,plant_code=plant_code).first()
 
@@ -597,7 +610,6 @@ class HSEObservationFormAPI(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    
 
 class StopWorkFormAPI(APIView):
 
@@ -631,6 +643,8 @@ class StopWorkFormAPI(APIView):
         print(form_Submit_date)
 
         plant = Plant.objects.filter(id=plant_code).first()
+        if not plant:
+            return Response('No such plant exists', status=status.HTTP_400_BAD_REQUEST)
 
         hse = HSE.objects.filter(formSubmittedDate=form_Submit_date,plant_code=plant_code).first()
 
@@ -699,6 +713,8 @@ class ViolationMemoAPI(APIView):
         form_Submit_date=data.get("formSubmitDate")
 
         plant = Plant.objects.filter(id=plant_code).first()
+        if not plant:
+            return Response('No such plant exists', status=status.HTTP_400_BAD_REQUEST)
 
         hse = HSE.objects.filter(formSubmittedDate=form_Submit_date,plant_code=plant_code).first()
 
@@ -732,8 +748,6 @@ class ViolationMemoAPI(APIView):
         
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
         
 
 class IncidentFormAPI(APIView):
@@ -768,6 +782,8 @@ class IncidentFormAPI(APIView):
         form_Submit_date=data.get("formSubmitDate")
 
         plant = Plant.objects.filter(id=plant_code).first()
+        if not plant:
+            return Response('No such plant exists', status=status.HTTP_400_BAD_REQUEST)
 
 
         hse = HSE.objects.filter(formSubmittedDate=form_Submit_date,plant_code=plant_code).first()

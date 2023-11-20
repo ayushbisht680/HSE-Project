@@ -1,56 +1,30 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <style>
-    .calendar {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      text-align: center;
-    }
-    .day {
-      border: 1px solid #ccc;
-      padding: 5px;
-    }
-    .highlight {
-      background-color: #ffcc00;
-    }
-  </style>
-</head>
-<body>
-  <div class="calendar" id="calendar"></div>
-
-  <script>
-    const calendar = document.getElementById("calendar");
-    const today = new Date();
-    const currentMonth = today.getMonth(); // Current month (0-indexed)
-
-    let startDate = new Date(today.getFullYear(), currentMonth, 1);
-
-    while (startDate.getDay() !== 6) {
-      startDate.setDate(startDate.getDate() + 1); // Move to the first Saturday
-    }
-
-    let currentDate = new Date(startDate);
-
-    while (true) {
-      const weekDiv = document.createElement("div");
-      weekDiv.classList.add("week");
-
-      for (let i = 0; i < 7; i++) {
-        const dayDiv = document.createElement("div");
-        dayDiv.classList.add("day");
-        dayDiv.textContent = currentDate.getDate();
-        weekDiv.appendChild(dayDiv);
-        currentDate.setDate(currentDate.getDate() + 1);
+const apiURL = `/api/child-models/?plantcode=${selectedValue}&date=${formattedDate}`;
+fetch(apiURL)
+   .then(response => {
+      if (!response.ok) {
+         throw new Error(`HTTP error! Status: ${response.status}`);
+         // empty my all input fields
       }
+      return response.json();
+   })
+   .then(data => {
+      console.log(data)
+      console.log(data.hse_status)
 
-      weekDiv.classList.add("highlight");
-      calendar.appendChild(weekDiv);
+      if (data.hse_status && data.hse_status === 1) {
+         // only view the data 
+         //DisablingSmallerDate()
 
-      if (currentDate.getMonth() !== currentMonth) {
-        break;
-      }
-    }
-  </script>
-</body>
-</html>
+     }
+
+      populateInputFields('General HSE', generalHSEFieldsID, generalHSEFields, 1, data);
+      populateInputFields('HSE Training', hseTrainingFieldsID, hseTrainingFields, 2, data);
+      populateInputFields('HSE Observation', hseObservationFieldsID, hseObservationFields, 3, data);
+      populateInputFields('Incidents', incidentsFieldsID, incidentsFields, 5, data);
+      populateInputFields('Management Visits', managementVisitsFieldsID, managementVisitsFields, 4, data);
+
+
+   })
+   .catch(error => {
+      console.error('API request failed:', error);
+   });
