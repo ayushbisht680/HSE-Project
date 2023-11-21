@@ -28,15 +28,15 @@ class HSE(models.Model):
 
    
 class GeneralHse(models.Model):
-    today_day_worked_file = models.FileField(upload_to='uploads/', null=True)
+    today_day_worked_file = models.FileField(upload_to='uploads/', null=True,blank=True)
     total_man_days_worked = models.IntegerField()
     total_safe_man_hours = models.IntegerField()
     no_of_person_inducted_site = models.IntegerField()
     no_of_toolbox_attendees = models.IntegerField()
     toolbox_talk_manhours=models.IntegerField()
-    toolbox_talk_manhours_file=models.FileField(upload_to='uploads/', null=True)
+    toolbox_talk_manhours_file=models.FileField(upload_to='uploads/', null=True,blank=True)
     promotional_activities=models.IntegerField()
-    promotional_activities_file=models.FileField(upload_to='uploads/', null=True)
+    promotional_activities_file=models.FileField(upload_to='uploads/', null=True,blank=True)
     committe_meetings=models.IntegerField()
     submittedDate = models.DateField(default=None, null=True)
     formSubmitted = models.BooleanField(default=False)  

@@ -1,30 +1,47 @@
-const apiURL = `/api/child-models/?plantcode=${selectedValue}&date=${formattedDate}`;
-fetch(apiURL)
-   .then(response => {
-      if (!response.ok) {
-         throw new Error(`HTTP error! Status: ${response.status}`);
-         // empty my all input fields
-      }
-      return response.json();
-   })
-   .then(data => {
-      console.log(data)
-      console.log(data.hse_status)
+<div class="uploadBtn">
+   <input type="file" class="form-control-file disableIt" id="fileInput1"
+      style='display:none' name="today_day_worked_file">
+   <label class="input-group-text uploadColor subForms" for="fileInput1"
+      id="fileInputLabel1" style='width: 107px;'>Upload File</label>
 
-      if (data.hse_status && data.hse_status === 1) {
-         // only view the data 
-         //DisablingSmallerDate()
+  <div class="fileDisplay" id="fileDisplay1"
+      style=" align-items: center;">
+      <span class="fileName" id="fileName1"
+         style='font-size: 12px;margin-left: 20px;'></span>
+   </div> 
 
-     }
-
-      populateInputFields('General HSE', generalHSEFieldsID, generalHSEFields, 1, data);
-      populateInputFields('HSE Training', hseTrainingFieldsID, hseTrainingFields, 2, data);
-      populateInputFields('HSE Observation', hseObservationFieldsID, hseObservationFields, 3, data);
-      populateInputFields('Incidents', incidentsFieldsID, incidentsFields, 5, data);
-      populateInputFields('Management Visits', managementVisitsFieldsID, managementVisitsFields, 4, data);
+</div>
 
 
-   })
-   .catch(error => {
-      console.error('API request failed:', error);
-   });
+<div class="uploadBtn">
+   <input type="file" class="form-control-file disableIt disableBefore"
+      id="extraFileInput1" style="display: none"
+      name="toolbox_talk_manhours_file">
+   <label class="input-group-text uploadColor subForms" for="extraFileInput1"
+      id="extrafileInputLabel1" style='width: 107px;'>Upload File</label>
+
+    <div class="fileDisplay" id="fileDisplay11"
+      style="display: none; align-items: center;">
+      <span class="fileName" id="fileName11"
+         style='font-size: 12px; margin-left: 20px;'></span>
+   </div>
+
+</div>
+
+
+<div class="commonWidth">
+   <div class="input-group">
+      <div class="custom-file">
+         <input type="file" class="custom-file-input" name="OpenEvidence" id="OpenEvidence"
+            aria-describedby="openEvidenceAddon" style="display: none;">
+         <label class="custom-file-label" for="openEvidenceInput" id="fileInputLabel1"></label>
+      </div>
+      <div class="input-group-append" id='openEvidenveBtn'>
+         <button class="btn btn-outline-secondary" type="button"
+            onclick="document.getElementById('OpenEvidence').click()" id='OpenEvidenceBtn'>Upload File</button>
+            <span style='font-size:10px;' id='uploadedFileName1'></span>
+
+      </div>
+   </div>
+</div>
+

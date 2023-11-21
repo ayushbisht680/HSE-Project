@@ -17,6 +17,7 @@ from django.db.models import Q
 
 
 
+
 class MyTemplateView(APIView):
     def get(self, request):
         return TemplateResponse(request, "index.html")
@@ -97,36 +98,65 @@ class GeneralHSEAPI(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         
-      
+    # def put(self, request):
+    #     data = request.data
+    #     plant_code = data.get("plant_id")
+    #     id = data.get("toBeUpdatedId")
+    #     submitted_date = data.get('submitted_date')
+    #     print(data.get('today_day_worked_file'))
+    #     print(data.get('toolbox_talk_manhours_file'))
+    #     print(data.get('promotional_activities_file'))
+
+
+    #     try:
+    #         existing_instance = GeneralHse.objects.get(id=id)
+    #         print(existing_instance.hse.form_status)
+
+    #         if existing_instance.hse.form_status == 1:
+    #             return Response('Form has already been submitted', status=status.HTTP_400_BAD_REQUEST)
+
+    #     except GeneralHse.DoesNotExist:
+    #         return Response('GeneralHse instance does not exist', status=status.HTTP_400_BAD_REQUEST)
+
+    #     serializer = GeneralHSESerializer(existing_instance, data=data, partial=True)
+
+    #     if serializer.is_valid():
+    #         instance = serializer.save()
+
+    #         instance.formSubmitted = True
+    #         instance.save()
+    #         return Response(serializer.data, status=status.HTTP_200_OK)
+    #     else:
+    #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
     def put(self, request):
         data = request.data
-        plant_code=data.get("plant_id")
-        id = data.get("toBeUpdatedId") 
-        submitted_date=data.get('submitted_date')
-        print(submitted_date)
-  
+        plant_code = data.get("plant_id")
+        id = data.get("toBeUpdatedId")
+      
         try:
             existing_instance = GeneralHse.objects.get(id=id)
-            print(existing_instance.hse.form_status)
 
             if existing_instance.hse.form_status == 1:
                 return Response('Form has already been submitted', status=status.HTTP_400_BAD_REQUEST)
-            
-        except GeneralHse.DoesNotExist:
-                return Response('GeneralHse instance does not exist', status=status.HTTP_400_BAD_REQUEST)
 
-        serializer = GeneralHSESerializer(existing_instance, data=data)
+        except GeneralHse.DoesNotExist:
+            return Response('GeneralHse instance does not exist', status=status.HTTP_400_BAD_REQUEST)
+        
+
+
+        serializer = GeneralHSESerializer(existing_instance, data=data, partial=True)
 
         if serializer.is_valid():
             instance = serializer.save()
-            
             instance.formSubmitted = True
             instance.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+        
 
 class HSETrainingsAPI(APIView):
     def get(self, request):
