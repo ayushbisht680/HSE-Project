@@ -424,9 +424,8 @@
          padding: 2px;
          }
          .fileName{
-            border:none;
-            outline:none;
-            
+         border:none;
+         outline:none;
          }
          {% comment %} .accordion-button:not(.collapsed)::after {
          background-image: url('/static/images/accordianImg.svg') !important;
@@ -592,19 +591,16 @@
                                                    src="{% static 'images/minusButton.svg' %}"></button>
                                              </div>
                                           </div>
-
                                           <div class="uploadBtn">
                                              <input type="file" class="form-control-file disableIt" id="fileInput1"
                                                 style='display:none' name="today_day_worked_file">
                                              <label class="input-group-text uploadColor subForms" for="fileInput1"
                                                 id="fileInputLabel1" style='width: 107px;'>Upload File</label>
-
-                                            <div class="fileDisplay" id="fileDisplay1"
+                                             <div class="fileDisplay" id="fileDisplay1"
                                                 style=" align-items: center;">
-                                                <span class="fileName" id="fileName1"
-                                                   style='font-size: 12px;margin-left: 20px;'></span>
-                                             </div> 
-
+                                                <input class="fileName" id="fileName1"
+                                                   style='font-size: 12px;' disabled></input>
+                                             </div>
                                           </div>
                                        </div>
                                     </div>
@@ -659,22 +655,18 @@
                                                    src="{% static 'images/minusButton.svg' %}"></button>
                                              </div>
                                           </div>
-                                            
                                           <div class="uploadBtn">
                                              <input type="file" class="form-control-file disableIt disableBefore"
                                                 id="extraFileInput1" style="display: none"
                                                 name="toolbox_talk_manhours_file">
                                              <label class="input-group-text uploadColor subForms" for="extraFileInput1"
                                                 id="extrafileInputLabel1" style='width: 107px;'>Upload File</label>
-
-                                              <div class="fileDisplay" id="fileDisplay11"
-                                                style="display: none; align-items: center;">
-                                                <span class="fileName" id="fileName11"
-                                                   style='font-size: 12px; margin-left: 20px;'></span>
+                                             <div class="fileDisplay" id="fileDisplay11"
+                                                style=" align-items: center;">
+                                                <input class="fileName" id="fileName11"
+                                                   style='font-size: 12px; ' disabled></input>
                                              </div>
-
                                           </div>
-                                          
                                        </div>
                                     </div>
                                     <div class="mb-3">
@@ -700,15 +692,11 @@
                                                 name="promotional_activities_file">
                                              <label class="input-group-text uploadColor subForms" for="extraFileInput2"
                                                 id="extrafileInputLabel2" style='width: 107px;'>Upload File</label>
-
-                                              <div class="fileDisplay" id="fileDisplay22"
-                                                style="display: none; align-items: center;">
-                                                <span class="fileName" id="fileName22"
-                                                   style='font-size: 12px; margin-left: 20px;'></span>
-                                             </div> 
-
-                                             
-
+                                             <div class="fileDisplay" id="fileDisplay22"
+                                                style=" align-items: center;">
+                                                <input class="fileName" id="fileName22"
+                                                   style='font-size: 12px;' disabled></input>
+                                             </div>
                                           </div>
                                        </div>
                                     </div>
@@ -777,13 +765,11 @@
                                                 style="display: none" name="no_of_attendees_amplus">
                                              <label class="input-group-text uploadColor subForms" for="fileInput2"
                                                 id="fileInputLabel2" style='width: 107px;'>Upload File</label>
-
-                                              <div class="fileDisplay" id="fileDisplay2"
-                                                style="display: none; align-items: center;">
-                                                <span class="fileName" id="fileName2"
-                                                   style='font-size: 12px; margin-left: 20px;'></span>
-                                             </div>    
-
+                                             <div class="fileDisplay" id="fileDisplay2"
+                                                style="align-items: center;">
+                                                <input class="fileName" id="fileName2"
+                                                   style='font-size: 12px;' disabled></input>
+                                             </div>
                                           </div>
                                        </div>
                                     </div>
@@ -817,14 +803,11 @@
                                                 id="fileInput3" style="display: none" name="no_of_attendees_contractor">
                                              <label class="input-group-text uploadColor subForms" for="fileInput3"
                                                 id="fileInputLabel3" style='width: 107px;'>Upload File</label>
-
-                                              <div class="fileDisplay" id="fileDisplay3"
-                                                style="display: none; align-items: center;">
-                                                <span class="fileName" id="fileName3"
-                                                   style='font-size: 12px; margin-left: 20px;'></span>
-                                             </div> 
-
-
+                                             <div class="fileDisplay" id="fileDisplay3"
+                                                style="align-items: center;">
+                                                <input class="fileName" id="fileName3"
+                                                   style='font-size: 12px;' disabled></input>
+                                             </div>
                                           </div>
                                        </div>
                                     </div>
@@ -894,16 +877,19 @@
                                                 style="display: none" name="hse_observation">
                                              <label class="input-group-text uploadColor subForms" for="fileInput4"
                                                 id="fileInputLabel4" style='width: 107px;'>Upload File</label>
-                                             <div class="fileDisplay" id="fileDisplay4"
-                                                style="display: none; align-items: center;">
-                                                <span class="fileName" id="fileName4"
-                                                   style='font-size: 12px; margin-left: 20px;'></span>
-                                             </div>
                                           </div>
                                        </div>
-                                       <div id='formsLink1' style='margin-top: 5px;' class='formsLink' >
-                                          <img src="{% static 'images/Frame.png' %}">
-                                          <a id='observationLink' href="" class="linkForm">Fill the data</a>
+                                       <div class='makeThemSeperate' style='display: flex;
+                                          justify-content: space-between;'>
+                                          <div id='formsLink1' style='margin-top: 5px;' class='formsLink' >
+                                             <img src="{% static 'images/Frame.png' %}">
+                                             <a id='observationLink' href="" class="linkForm">Fill the data</a>
+                                          </div>
+                                          <div class="fileDisplay" id="fileDisplay4"
+                                             style="margin-right: 45px; align-items: center;">
+                                             <input class="fileName" id="fileName4"
+                                                style='font-size: 12px;' disabled></input>
+                                          </div>
                                        </div>
                                     </div>
                                     <div class="mb-3 " >
@@ -1010,9 +996,9 @@
                                              <label class="input-group-text uploadColor subForms" for="fileInput5"
                                                 id="fileInputLabel5" style='width: 107px;'>Upload File</label>
                                              <div class="fileDisplay" id="fileDisplay5"
-                                                style="display: none; align-items: center;">
-                                                <span class="fileName" id="fileName5"
-                                                   style='font-size: 12px; margin-left: 20px;'></span>
+                                                style="align-items: center;">
+                                                <input class="fileName" id="fileName5"
+                                                   style='font-size: 12px;' disabled></input>
                                              </div>
                                           </div>
                                        </div>
@@ -1038,9 +1024,9 @@
                                              <label class="input-group-text uploadColor subForms" for="fileInput6"
                                                 id="fileInputLabel6" style='width: 107px;'>Upload File</label>
                                              <div class="fileDisplay" id="fileDisplay6"
-                                                style="display: none; align-items: center;">
-                                                <span class="fileName" id="fileName6"
-                                                   style='font-size: 12px; margin-left: 20px;'></span>
+                                                style="align-items: center;">
+                                                <input class="fileName" id="fileName6"
+                                                   style='font-size: 12px;' disabled></input>
                                              </div>
                                           </div>
                                        </div>
@@ -1067,9 +1053,9 @@
                                              <label class="input-group-text uploadColor subForms" for="fileInput7"
                                                 id="fileInputLabel7" style='width: 107px;'>Upload File</label>
                                              <div class="fileDisplay" id="fileDisplay7"
-                                                style="display: none; align-items: center;">
-                                                <span class="fileName" id="fileName7"
-                                                   style='font-size: 12px; margin-left: 20px;'></span>
+                                                style="align-items: center;">
+                                                <input class="fileName" id="fileName7"
+                                                   style='font-size: 12px;' disabled></input>
                                              </div>
                                           </div>
                                        </div>
@@ -1209,9 +1195,9 @@
          let getDateElement = document.getElementById('viewingDate');
          let value = getDateElement.innerText;
          let formattedDate = convertDateToYYYYMMDD(value);
-
+      
          processDate()
-
+      
          let observationLink = document.getElementById('observationLink');
          observationLink.href = `/api/observation_form_/?plantcode=${selectedValue}&date=${formattedDate}`;
       
@@ -1368,7 +1354,7 @@
       
       
       
-        function initializeUploadButton(inputId, labelId, displayId, fileNameId) {
+       function initializeUploadButton(inputId, labelId, displayId, fileNameId) {
          const fileInput = document.getElementById(inputId);
          const uploadLabel = document.getElementById(labelId);
          const fileDisplay = document.getElementById(displayId);
@@ -1377,7 +1363,7 @@
          fileInput.addEventListener("change", function () {
             const file = fileInput.files[0];
             if (file) {
-               fileName.textContent = file.name;
+               fileName.value = file.name;
                fileDisplay.style.display = "flex";
             }
          });
@@ -1392,7 +1378,7 @@
       initializeUploadButton("fileInput6", "fileInputLabel6", "fileDisplay6", "fileName6");
       initializeUploadButton("fileInput7", "fileInputLabel7", "fileDisplay7", "fileName7");
       initializeUploadButton("extraFileInput1", "extrafileInputLabel1", "fileDisplay11", "fileName11");
-      initializeUploadButton("extraFileInput2", "extrafileInputLabel2", "fileDisplay22", "fileName22");  
+      initializeUploadButton("extraFileInput2", "extrafileInputLabel2", "fileDisplay22", "fileName22"); 
       
       
       
@@ -1605,7 +1591,7 @@
         window.location.reload();
       
       }
-
+      
        {% comment %} $.ajax({
          type: "GET",
          url: "/api/parent/",
@@ -1617,7 +1603,7 @@
          }
       });  {% endcomment %}
       processDate();
-
+      
       
       function getDateFromURL() {
          const urlParams = new URLSearchParams(window.location.search);
@@ -1671,26 +1657,26 @@
       function getWeekNumber(weekStartDate, weekEndDate) {
          // Get the first day of the month
          const firstDayOfMonth = new Date(weekStartDate.getFullYear(), weekStartDate.getMonth(), 1);
-     
+      
          // Calculate the day of the week for the first day of the month (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
          const dayOfWeekFirstDay = firstDayOfMonth.getDay();
-     
+      
          // Calculate the offset to align the first day with the week start (Saturday)
          const dayOffset = (6 - dayOfWeekFirstDay + 7) % 7;
-     
+      
          // Calculate the adjusted start date for the first week
          const adjustedWeekStartDate = new Date(weekStartDate.getFullYear(), weekStartDate.getMonth(), 1 + dayOffset);
-     
+      
          // Calculate the number of weeks between adjusted start date and end date
          const weeks = Math.ceil((weekEndDate - adjustedWeekStartDate) / (7 * 24 * 60 * 60 * 1000));
-     
+      
          return weeks;
-     }
-   
-     
-   
-     const myWeek = document.getElementById('weekDisplay');
-     const weekNumber1 = getWeekNumber(weekStartDate, weekEndDate);
+      }
+      
+      
+      
+      const myWeek = document.getElementById('weekDisplay');
+      const weekNumber1 = getWeekNumber(weekStartDate, weekEndDate);
       myWeek.textContent = `Week ${weekNumber1}`;
       
       
@@ -1749,7 +1735,7 @@
          let dd = String(today.getDate()).padStart(2, '0');
       
          let todaysDate = yyyy + '-' + mm + '-' + dd;
-
+      
          console.log(`todays date is ${todaysDate}`)
       
          if (formattedDate > todaysDate) {
@@ -1793,7 +1779,7 @@
             console.log('smaller date')
       
            DisablingSmallerDate()
-
+      
       
          }
       
@@ -1887,29 +1873,39 @@
       
                fieldIds.forEach((fieldId, index) => {
                   const fieldName = fieldNames[index];
-                  const fieldData = categoryData[fieldName];
+                  let fieldData = categoryData[fieldName];
+                  //console.log(fieldData)
+      
+              
+                  // Check if fieldData is a string and contains the "media/uploads/" prefix
+                  if (typeof fieldData === 'string') {
+                     // Remove the "media/uploads/" prefix
+                     fieldData = fieldData.substring('/media/uploads/'.length);
+                     console.log(fieldData)
+                  }
+              
                   document.getElementById(fieldId).value = fieldData;
-               });
+              });
             }
          }
       }
       
       
-      const generalHSEFieldsID = ['input1', 'input2', 'input3', 'input4', 'extraInput1', 'extraInput2', 'extraInput3',];
+      const generalHSEFieldsID = ['input1', 'input2', 'input3', 'input4', 'extraInput1', 'extraInput2', 'extraInput3','fileName1','fileName11','fileName22'];
       const generalHSEFields = ['total_man_days_worked', 'total_safe_man_hours', 'no_of_person_inducted_site',
-         'no_of_toolbox_attendees', 'toolbox_talk_manhours', 'promotional_activities', 'committe_meetings',
+         'no_of_toolbox_attendees', 'toolbox_talk_manhours', 'promotional_activities', 'committe_meetings','today_day_worked_file','toolbox_talk_manhours_file','promotional_activities_file'
       ];
-      const hseTrainingFieldsID = ['input5', 'input6', 'input7', 'input8', 'extraInput4', 'extraInput5',];
+      const hseTrainingFieldsID = ['input5', 'input6', 'input7', 'input8', 'extraInput4', 'extraInput5','fileName2','fileName3'];
       const hseTrainingFields = ['hse_training_attendees', 'duration_of_trainee', 'hse_training_contractor',
-         'duration_of_contractor', 'amplus_hse_trainings', 'contractor_hse_trainings',
+         'duration_of_contractor', 'amplus_hse_trainings', 'contractor_hse_trainings','no_of_attendees_amplus','no_of_attendees_contractor'
       ];
-      const hseObservationFieldsID = ['input9', 'input10', 'input11', 'input12'];
+      const hseObservationFieldsID = ['input9', 'input10', 'input11', 'input12','fileName4'];
       const hseObservationFields = ['daily_hse_observation', 'stop_work_notice', 'violation_memo_issued',
-         'complaint_from_customer'
+         'complaint_from_customer','hse_observation'
       ];
-      const managementVisitsFieldsID = ['input13', 'input14', 'input15', 'input16'];
+      const managementVisitsFieldsID = ['input13', 'input14', 'input15', 'input16','fileName5','fileName6','fileName7'];
       const managementVisitsFields = ['no_of_management_visits', 'total_findings', 'no_of_compilance_done',
-         'observation_pending'
+         'observation_pending','no_of_management_visits_file','total_findings_file','no_of_compilance_done_file'
       ];
       const incidentsFieldsID = ['input17', 'input18', 'input19'];
       const incidentsFields = ['no_of_incidents', 'no_of_occupation_illness', 'no_of_environment_illness'];
@@ -1996,83 +1992,87 @@
          }
       });
       
-   
+      
       function handleFormSubmission(formId, url, toUpdateId) {
          const form = document.getElementById(formId);
          form.addEventListener("submit", function (event) {
-            event.preventDefault();
+             event.preventDefault();
       
-            const formData = new FormData(this);
-            const csrftoken = getCookie('csrftoken');
-            const existingID = formData.get("toBeUpdatedId");
-         
-            const methodValue = existingID ? "PUT" : "POST";
-           
+             const formData = new FormData(this);
+             console.log('FormData entries:', Array.from(formData.entries()));
       
-            fetch(url, {
-                  method: methodValue,
-                  body: formData,
-                  headers: {
+             // Create a new FormData object and append only non-null values
+             const filteredFormData = new FormData();
+             formData.forEach((value, key) => {
+               // Check if the value is a File and its size is greater than 0
+               if (!(value instanceof File) || value.size > 0) {
+                   filteredFormData.append(key, value);
+               }
+           });
+             
+             console.log('Filtered FormData entries:', Array.from(filteredFormData.entries()));
+      
+             const csrftoken = getCookie('csrftoken');
+             const existingID = formData.get("toBeUpdatedId");
+      
+             const methodValue = existingID ? "PUT" : "POST";
+      
+             fetch(url, {
+                 method: methodValue,
+                 body: filteredFormData,
+                 headers: {
                      "X-CSRFToken": csrftoken,
-                  },
-               })
-               .then(response => {
-                  console.log(response);
-                     if (response.status === 201 || response.status === 200) {
-                        // Success handling
-                        $('#successModal').modal('show');
+                 },
+             })
+             .then(response => {
+                 console.log(response);
+                 if (response.status === 201 || response.status === 200) {
+                     // Success handling
+                     $('#successModal').modal('show');
       
-                        setTimeout(function () {
-                           $('#successModal').modal('hide');
-                        }, 1000);
-                     } 
-                     else if (response.status === 400) {
-                        console.log('plant does not exists')
-                        Swal.fire({
-                           icon: 'error',
-                           title: 'Cannot Submit the form ',
-                           confirmButtonColor: '#3085d6',
-                           confirmButtonText: 'Cancel',
-                           customClass: {
-                              popup: 'small-popup'
-                           }
-                        });
-                        return Promise.reject(`HTTP error! Status: ${response.status}`);
-      
-                     }
-                     else if (response.status === 500) {
-                        Swal.fire({
-                           icon: 'error',
-                           title: 'Select the plant code ',
-                           confirmButtonColor: '#3085d6',
-                           confirmButtonText: 'Cancel',
-                           customClass: {
-                              popup: 'small-popup'
-                           }
-                        });
-                        return Promise.reject(`HTTP error! Status: ${response.status}`);
-      
-                     }
-      
-                  else {
+                     setTimeout(function () {
+                         $('#successModal').modal('hide');
+                     }, 1000);
+                 } else if (response.status === 400) {
+                     console.log('Plant does not exist');
+                     Swal.fire({
+                         icon: 'error',
+                         title: 'Cannot Submit the form ',
+                         confirmButtonColor: '#3085d6',
+                         confirmButtonText: 'Cancel',
+                         customClass: {
+                             popup: 'small-popup'
+                         }
+                     });
+                     return Promise.reject(`HTTP error! Status: ${response.status}`);
+                 } else if (response.status === 500) {
+                     Swal.fire({
+                         icon: 'error',
+                         title: 'Select the plant code ',
+                         confirmButtonColor: '#3085d6',
+                         confirmButtonText: 'Cancel',
+                         customClass: {
+                             popup: 'small-popup'
+                         }
+                     });
+                     return Promise.reject(`HTTP error! Status: ${response.status}`);
+                 } else {
                      throw new Error("Network error during form submission");
-                  }
-                  return response.json()
-               })
-               .then(data => {
-                  console.log(data)
-                  const id = data.id; 
-                  document.getElementById(toUpdateId).value = id;
-                  console.log(id)
-                 
-
-               })
-               
-               .catch(error => {
-                  console.error("Error:", error);
-               });
+                 }
+                 return response.json();
+             })
+             .then(data => {
+                 console.log(data);
+                 const id = data.id;
+                 document.getElementById(toUpdateId).value = id;
+                 console.log(id);
+             })
+             .catch(error => {
+                 console.error("Error:", error);
+             });
          });
       }
+      
       
       function getCookie(name) {
          const value = `; ${document.cookie}`;

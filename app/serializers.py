@@ -8,6 +8,7 @@ class GeneralHSESerializer(serializers.ModelSerializer):
     class Meta:
         model=GeneralHse
         fields='__all__'
+
     
     
     

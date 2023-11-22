@@ -15,41 +15,36 @@ from datetime import datetime
 from django.db.models import Q
 
 
-
-
-
-class MyTemplateView(APIView):
+class TemplateView(APIView):
     def get(self, request):
         return TemplateResponse(request, "index.html")
     
-class MyFormView(APIView):
+class ObservationFormView(APIView):
     def get(self, request):
         return TemplateResponse(request, "observation.html")
     
-class MyStopWork(APIView):
+class StopWorkFormView(APIView):
     def get(self, request):
         return TemplateResponse(request, "stopwork.html")
 
-class MyViolationMemo(APIView):
+class ViolationMemoFormView(APIView):
     def get(self, request):
         return TemplateResponse(request, "violationForm.html")
 
-class MyIncidentForm(APIView):
+class IncidentFormView(APIView):
     def get(self, request):
         return TemplateResponse(request, "incidentForm.html")
 
-class MyListObservers(APIView):
+class ListObservers(APIView):
      def get(self, request):
         return TemplateResponse(request, "mockDrill.html")
 
-class DataTable(APIView):
-    def get(self, request):
-        return TemplateResponse(request, "dataTable.html")
+
     
 
 
 
-class GeneralHSEAPI(APIView):
+class GeneralHseAPI(APIView):
     def get(self, request): 
         obj = GeneralHse.objects.all()
         serializer = GeneralHSESerializer(obj, many=True)
@@ -102,15 +97,22 @@ class GeneralHSEAPI(APIView):
     #     data = request.data
     #     plant_code = data.get("plant_id")
     #     id = data.get("toBeUpdatedId")
-    #     submitted_date = data.get('submitted_date')
-    #     print(data.get('today_day_worked_file'))
-    #     print(data.get('toolbox_talk_manhours_file'))
-    #     print(data.get('promotional_activities_file'))
-
-
+    #     form_Submit_date = data.get("formSubmitDate")
+    #     file1=data.get('today_day_worked_file')
+    #     print(form_Submit_date)
+    #     print(file1)
+        
+       
     #     try:
     #         existing_instance = GeneralHse.objects.get(id=id)
     #         print(existing_instance.hse.form_status)
+
+    #         if(file1):
+    #           print('Hello its none')
+    #         else:
+            
+    #           print('it does not exists')
+
 
     #         if existing_instance.hse.form_status == 1:
     #             return Response('Form has already been submitted', status=status.HTTP_400_BAD_REQUEST)
@@ -129,36 +131,40 @@ class GeneralHSEAPI(APIView):
     #     else:
     #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
     def put(self, request):
         data = request.data
         plant_code = data.get("plant_id")
         id = data.get("toBeUpdatedId")
-      
+        form_Submit_date = data.get("formSubmitDate")
+        print(form_Submit_date)
+        
         try:
             existing_instance = GeneralHse.objects.get(id=id)
+            print(existing_instance.hse.form_status)
 
             if existing_instance.hse.form_status == 1:
                 return Response('Form has already been submitted', status=status.HTTP_400_BAD_REQUEST)
 
         except GeneralHse.DoesNotExist:
             return Response('GeneralHse instance does not exist', status=status.HTTP_400_BAD_REQUEST)
-        
 
 
+        print(data)
         serializer = GeneralHSESerializer(existing_instance, data=data, partial=True)
 
         if serializer.is_valid():
             instance = serializer.save()
+
             instance.formSubmitted = True
             instance.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
         
 
-class HSETrainingsAPI(APIView):
+
+       
+class HseTrainingsAPI(APIView):
     def get(self, request):
         obj = HSETrainingsModel.objects.all()
         serializer = HSETrainingsSerializer(obj, many=True)
@@ -233,7 +239,7 @@ class HSETrainingsAPI(APIView):
 
 
 
-class HSEObservationAPI(APIView):
+class HseObservationAPI(APIView):
     def get(self, request):
         obj = HSEObservation.objects.all()
         serializer = HSEObservationSerializer(obj, many=True)
@@ -630,10 +636,6 @@ class HSEObservationFormAPI(APIView):
             hse_observation_form.save()
 
             
-            redirect_url = f"/api/observation_form_/?date={form_Submit_date}"
-            # redirect_url = f"/api/my_html/?date={form_Submit_date}"
-
-            # return HttpResponseRedirect(redirect_url)
             return Response({'data': serializer.data}, status=status.HTTP_201_CREATED)
 
         
@@ -651,9 +653,11 @@ class StopWorkFormAPI(APIView):
     
         if hse:
             hse_observation = HSEObservation.objects.filter(hse=hse).first()
+            print(hse_observation)
             
             if hse_observation:
                 stop_work_forms = StopWorkForm.objects.filter(hse_observation=hse_observation)
+                print(stop_work_forms)
 
                 if stop_work_forms:
                     serializer = StopWorkFormSerializer(stop_work_forms, many=True)
@@ -701,8 +705,6 @@ class StopWorkFormAPI(APIView):
             hse_observation_form.save()
 
             
-            redirect_url = f"/api/stopwork_form_/?date={form_Submit_date}"
-            # return HttpResponseRedirect(redirect_url)
             return Response({'data': serializer.data}, status=status.HTTP_201_CREATED)
 
         
@@ -771,8 +773,6 @@ class ViolationMemoAPI(APIView):
             hse_observation_form.save()
 
             
-            redirect_url = f"/api/violation_memo_/?date={form_Submit_date}"
-            # return HttpResponseRedirect(redirect_url)
             return Response({'data': serializer.data}, status=status.HTTP_201_CREATED)
 
         
@@ -839,9 +839,7 @@ class IncidentFormAPI(APIView):
             hse_incident_from.incidents = hse_incident
             hse_incident_from.save()
 
-            redirect_url = f"/api/incident_form_/?date={form_Submit_date}"
 
-            # return HttpResponseRedirect(redirect_url)
             return Response({'data': serializer.data}, status=status.HTTP_201_CREATED)
 
         else:
