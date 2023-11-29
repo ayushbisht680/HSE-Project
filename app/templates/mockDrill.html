@@ -1,544 +1,67 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-   <head>
-      <meta charset="utf-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <title>Mock Drill </title>
-      <meta name="description" content="">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link rel="stylesheet" href="">
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-   </head>
-   <style>
-      .heading{
-      margin-left: 30px;
-      margin-top: 12px;
-      }
-      .maincontainer{
-      width:1165px;
-      height:319px;
-      border:1px solid gray;
-      margin-left: 30px;
-      margin-top: 20px;
-      }
-      .upperContainer{
-      display:flex;
-      margin-bottom: 2px;
-      }
-      .projectName{
-      width:240px;
-      height:83px;
-      margin-left: 16px;
-      margin-top: 26px;
-      }
-      .MockDrillNo{
-      width:177px;
-      height:83px;
-      margin-left: 16px;
-      margin-top: 26px;
-      }
-      .ItsDate{
-      width:210px;
-      height:83px;
-      margin-left: 15px;
-      margin-top: 26px;
-      }
-      .Description{
-      width:556px;
-      height:227px;
-      margin-left: 16px;
-      }
-      .lowerContainer{
-      margin-top: 25px;
-      display:flex;
-      }
-      .mockInput{
-      width: 158px;
-      height: 37px;
-      font-size: 14px;
-      font-weight: 500;
-      }
-      .inputMock{
-      height: 37px;
-      width: 220px;
-      font-size: 14px;
-      font-weight: 500;
-      }
-      .inputDate{
-      width: 200px;
-      height: 37px;
-      font-size: 14px;
-      font-weight: 500;
-      }
-      p{
-      font-size: 16px;
-      font-weight: 600;
-      margin:0;
-      }
-      .AccordianDiv{
-      width:1165px;
-      height:319px;
-      margin-left: 30px;
-      margin-top: 20px;
-      }
-      .accordion-item {
-      margin-top: 25px;
-      border: 1px solid lightgrey !important;
-      }
-      .accordion-button{
-      font-size: 16px;
-      font-weight: 500;
-      color: grey;
-      }
-      .accordion-container{
-      background-color:red;
-      width:1261px
-      height:83px
-      }
-      .Tableheading{
-      display:flex;
-      background-color: rgba(62, 159, 254, 0.3);
-      border: 1px solid lightblue;
-      border-radius: 5px;
-      margin-top: 20px;
-      align-items: center;
-      }
-      .Srno{
-      width: 80px;
-      display:flex;
-      align-items:center;
-      height: 40px;
-      justify-content: center;
-      padding-right: 20px;
-      }
-      .nameofPerson{
-      width:350px;
-      display:flex;
-      align-items:center;
-      height: 40px;
-      }
-      .Designation{
-      width:350px;
-      display:flex;
-      align-items:center;
-      height: 40px;
-      }
-      .Location{
-      width:350px;
-      display:flex;
-      align-items:center;
-      height: 40px;
-      }
-      .inputCommonClass{
-      width:350px;
-      display:flex;
-      }
-      .rowTable1{
-      display:flex;
-      height: 40px;
-      border-bottom: 1px solid lightgray;
-      align-items: center;
-      }
-      .valueSrno{
-      width: 46px;
-      border: none;
-      outline: none;
-      }
-      .valueCommon{
-      width: 340px;
-      border: none;
-      outline: none;
-      }
-      .SrnoDiv{
-      width: 80px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      }
-      .addrowBtn{
-      display: flex;
-      flex-flow: row-reverse;
-      margin-top: 10px;
-      }
-      .submitBtn{
-      display: flex;
-      flex-flow: row-reverse;
-      margin-top: 70px;
-      }
-      .btn-success{
-      background-color: #10B981;
-      font-size: 11px;
-      border: 1px solid #10B981;
-      font-weight: 500;
-      width: 87px;
-      height: 30px;
-      }
-      .observation{
-      width:202px;
-      }
-      .rootCause{
-      width:190px;
-      }
-      .Recommendations{
-      width:230px;
-      }
-      .Responsibility{
-      width:230px;
-      }
-      .byWhen{
-      width:190px;
-      }
-      .srnoinput{
-      width:77px;
-      padding-left: 12px
-      }
-      .valueInput{
-      border:none;
-      outline:none;
-      }
-      .compiObservation{
-      width: 300px;
-      }
-      .ActionTaken{
-      width: 300px;
-      }
-      .evidence{
-      width: 270px;
-      }
-      .status{
-      width: 170px;
-      }
-      .uploadbtn{
-      margin-left: 70px;
-      font-size: 11px;
-      height: 31px;
-      width: 87px;
-      border: 1.5px solid #2c8ff1 !important;
-      color: #2c8ff1 !important;
-      font-weight: 500;
-      }
-      .CLassdropdown{
-      width: 110px;
-      height: 28px;
-      font-size: 13px;
-      padding: 0px;
-      margin-left: 15px;
-      border: 1.5px solid #2c8ff1 !important;
-      color: #2c8ff1 !important;
-      border-radius: 6px;
-      }
-      .rowTable2{
-      display:flex;
-      height: 50px;
-      border-bottom: 1px solid lightgray;
-      align-items: center;
-      }
-      .accordion-button:not(.collapsed) {
-      background-color: white !important;
-      box-shadow: none !important;
-      color: grey !important;
-      font-size: 16px;
-      font-weight: 500;
-      }
-      .accordion-header{
-      border: 1px solid #fbf7f7;
-      }
-      .accordion-button{
-      font-size: 16px !important;
-      color: grey !important;
-      font-weight: 500 !important;
-      }
-      #addRowButton{
-      color: #3E9FFE;
-      background-color: rgba(62, 159, 254, 0.1);
-      font-size: 13px;
-      }
-      .addrowImage{
-      width: 10px;
-      height: 10px;
-      margin-right: 1px;
-      margin-bottom: 2px;
-      }
-   </style>
-   <body>
-      <div class="heading">
-         <h5>Mock Drill Form Details</h5>
-      </div>
-      <div class="maincontainer">
-         <div class="upperContainer">
-            <div class='projectName'>
-               <p>Project Name</p>
-               <input type="text" class="inputMock" placeholder="Project Name" > 
-            </div>
-            <div class='projectName'>
-               <p>Location </p>
-               <input type="text" class="inputMock" placeholder="Location " > 
-            </div>
-            <div class='MockDrillNo'>
-               <p>Mock drill No.</p>
-               <input type="text" class="mockInput " placeholder="Mock Drill No." > 
-            </div>
-            <div class='ItsDate'>
-               <p>Date</p>
-               <input type="date" class="inputDate" placeholder="Date" > 
-            </div>
-            <div class='ItsDate'>
-               <p>Time</p>
-               <input type="text" class="inputDate" placeholder="Time" > 
-            </div>
-         </div>
-         <div class='lowerContainer'>
-            <div class='Description'>
-               <p>Description</p>
-               <textarea name="message" id="message" rows="5" cols="72"></textarea>
-            </div>
-            <div class='Description'>
-               <p>Objective of mock drill planned</p>
-               <textarea name="message" id="message" rows="5" cols="72"></textarea>
-            </div>
-         </div>
-      </div>
-      <div class="AccordianDiv">
-         <div class="accordion"id="accordionExample" >
-            <div class="accordion-item">
-               <h2 class="accordion-header">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
-                  List of observers & their location at the time of emergency
-                  </button>
-               </h2>
-               <div id="collapse1" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
-                  <div class="accordion-body">
-                     <div class='addrowBtn'>
-                        <button type="button" class="btn " id="addRowButton">
-                        <img src="{% static 'images/buttonImage.png' %}" alt="Image Description" class='addrowImage'>
-                        Add Row
-                        </button>
-                     </div>
-                     <div class='Tableheading'>
-                        <div class='Srno'>
-                           <p class='accorianPtag'>S.No</p>
-                        </div>
-                        <div class='nameofPerson'>
-                           <p>Name of the Person</p>
-                        </div>
-                        <div class='Designation'>
-                           <p>Designation</p>
-                        </div>
-                        <div class='Location'>
-                           <p>Exact Location</p>
-                        </div>
-                     </div>
-                     <div id="formContainer"></div>
-                     <template id="formRowTemplate">
-                        <div class="rowTable1" >
-                           <div class='SrnoDiv'><input type='text' class='valueSrno valueInput'  placeholder="Sr.No" name="SrNo" disabled></div>
-                           <div class='inputCommonClass'><input type='text' class='valueCommon valueInput' placeholder="Name of the person" name="nameOfPerson" disabled></div>
-                           <div class='inputCommonClass'><input type='text' class='valueCommon valueInput' placeholder="Designation" name="designation" disabled></div>
-                           <div class='inputCommonClass'><input type='text' class='valueCommon valueInput' placeholder="Exact Location" name="exactLocation" disabled></div>
-                        </div>
-                     </template>
-                     <form method="POST" action="{% url 'listOfObservers_form' %}" enctype="multipart/form-data" id="form" autocomplete="off" style="display: none;">
-                        {% csrf_token %}
-                        <div class="rowTable1" >
-                           <div class='SrnoDiv'><input type='text' class='valueSrno valueInput'  placeholder="Sr.No" name="SrNo"   required ></div>
-                           <div class='inputCommonClass'><input type='text' class='valueCommon valueInput' placeholder="Name of the person" name="nameOfPerson"   required></div>
-                           <div class='inputCommonClass'><input type='text' class='valueCommon valueInput' placeholder="Designation" name="designation"   required></div>
-                           <div class='inputCommonClass'><input type='text' class='valueCommon valueInput' placeholder="Exact Location" name="exactLocation"   required></div>
-                        </div>
-                        <div class='submitBtn'>
-                           <button type="submit" class="btn btn-success">Save & Next</button>
-                        </div>
-                     </form>
-                  </div>
-               </div>
-            </div>
-            <div class="accordion-item">
-               <h2 class="accordion-header" id="headingTwo2">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
-                  Sequence of events & key observations
-                  </button>
-               </h2>
-               <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                  <div class="accordion-body">
-                  </div>
-               </div>
-            </div>
-            <div class="accordion-item">
-               <h2 class="accordion-header">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
-                  Recommendation of observers & CAPA
-                  </button>
-               </h2>
-               <div id="collapse3" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                  <div class="accordion-body">
-                     <div class='addrowBtn'>
-                        <button type="button" class="btn " id="addRowButton">
-                        <img src="{% static 'images/buttonImage.png' %}" alt="Image Description" class='addrowImage'>
-                        Add Row
-                        </button>
-                     </div>
-                     <div class='Tableheading'>
-                        <div class='Srno'>
-                           <p>S.No</p>
-                        </div>
-                        <div class='observation'>
-                           <p>Observations</p>
-                        </div>
-                        <div class='rootCause'>
-                           <p>Root Cause</p>
-                        </div>
-                        <div class='Recommendations'>
-                           <p>Recommendations</p>
-                        </div>
-                        <div class='Responsibility'>
-                           <p>Responsibility</p>
-                        </div>
-                        <div class='byWhen'>
-                           <p>By When</p>
-                        </div>
-                     </div>
-                     <div class="rowTable1" >
-                        <div class='SrnoDiv'><input type='text' class='srnoinput valueInput'  placeholder="Sr.No" name=""   required ></div>
-                        <div ><input type='text' class='observation valueInput' placeholder="Observation" name=""   required></div>
-                        <div ><input type='text' class='rootCause valueInput' placeholder="Root Cause" name=""   required></div>
-                        <div ><input type='text' class='Recommendations valueInput' placeholder="Recommendation" name=""   required></div>
-                        <div ><input type='text' class='Responsibility valueInput' placeholder="Responsibility" name=""   required></div>
-                        <div ><input type='text' class='byWhen valueInput' placeholder="By when" name=""   required></div>
-                     </div>
-                     <div id="formContainer"></div>
-                     <template id="formRowTemplate">
-                        <div class="rowTable1" >
-                           <div class='SrnoDiv'><input type='text' class='valueSrno valueInput'  placeholder="Sr.No" name="SrNo" disabled></div>
-                           <div class='inputCommonClass'><input type='text' class='valueCommon valueInput' placeholder="Name of the person" name="nameOfPerson" disabled></div>
-                           <div class='inputCommonClass'><input type='text' class='valueCommon valueInput' placeholder="Designation" name="designation" disabled></div>
-                           <div class='inputCommonClass'><input type='text' class='valueCommon valueInput' placeholder="Exact Location" name="exactLocation" disabled></div>
-                        </div>
-                     </template>
-                  </div>
-               </div>
-            </div>
-            <div class="accordion-item">
-               <h2 class="accordion-header">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4" aria-expanded="true" aria-controls="collapse4">
-                  Compilance of observation of mock drill
-                  </button>
-               </h2>
-               <div id="collapse4" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
-                  <div class="accordion-body">
-                     <div class='addrowBtn'>
-                        <button type="button" class="btn " id="addRowButton">
-                        <img src="{% static 'images/buttonImage.png' %}" alt="Image Description" class='addrowImage'>
-                        Add Row
-                        </button>
-                     </div>
-                     <div class='Tableheading'>
-                        <div class='Srno'>
-                           <p>S.No</p>
-                        </div>
-                        <div class='compiObservation'>
-                           <p>Observation</p>
-                        </div>
-                        <div class='ActionTaken'>
-                           <p>Action Taken</p>
-                        </div>
-                        <div class='evidence'>
-                           <p>Ojective-evidence/recorded</p>
-                        </div>
-                        <div class='status'>
-                           <p>Status</p>
-                        </div>
-                     </div>
-                     <div class="rowTable2" >
-                        <div class='SrnoDiv'><input type='text' class='srnoinput valueInput'  placeholder="Sr.No" name=""   required ></div>
-                        <div ><input type='text' class='compiObservation valueInput' placeholder="Observation" name=""   required></div>
-                        <div ><input type='text' class='ActionTaken valueInput' placeholder="Root Cause" name=""   required></div>
-                        <div class="evidence">
-                           <div class="input-group">
-                              <div class="custom-file">
-                                 <input type="file" class="custom-file-input" name="OpenEvidence" id="OpenEvidence"
-                                    aria-describedby="openEvidenceAddon" style="display: none;">
-                                 <label class="custom-file-label" for="openEvidenceInput" id="fileInputLabel"></label>
-                              </div>
-                              <div class="input-group-append">
-                                 <button class="btn btn-outline-secondary uploadbtn" type="button"
-                                    onclick="document.getElementById('OpenEvidence').click()">Upload File</button>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="status">
-                           <select class="CLassdropdown" required>
-                              <option value="Open">Open</option>
-                              <option value="Closed">Closed</option>
-                           </select>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-      </div>
-      <script src="" async defer></script>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-      <script>
-         populateInputField()
-         
-         
-         function populateInputField() {
-                    
-            
-         fetch(`/api/listObservers/`)
-         .then(response => response.json())
-         .then(data => {
-           console.log(data)
-           console.log(data.length)
-           if(data.length >=5){
-             document.getElementById("addRowButton").style.display = "none";
-         
-           }
-            
-            createAndPopulateFormRows(data);
-         
-           
-         })
-         .catch(error => {
-             console.error('Error:', error);
-         });
-         }
-         
-         function createAndPopulateFormRow(dataItem) {
-             const template = document.getElementById('formRowTemplate');
-             const newRow = document.importNode(template.content, true);
-             
-             
-             const inputFields = newRow.querySelectorAll('.valueInput');
-             for (const field of inputFields) {
-              const fieldName = field.getAttribute('name');
-              field.value = dataItem[fieldName] || '';
-             }
-             
-             const formContainer = document.getElementById('formContainer');
-             formContainer.appendChild(newRow);
-             
-             
-             
-             }
-             
-             function createAndPopulateFormRows(data) {
-             for (const dataItem of data) {  
-             createAndPopulateFormRow(dataItem);
-             }
-             }
-         
-             document.getElementById("addRowButton").addEventListener("click", function() {
-                 // Hide the button
-                 this.style.display = "none";
-         
-                 // Show the form
-                 document.getElementById("form").style.display = "block";
-           });  
-         
-      </script>
-   </body>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Calendar</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+    <base href="{% static '/' %}">
+    
+    <link rel="stylesheet" href="{% static 'css/mobiscroll.javascript.min.css' %}">
+    <style>
+        .basic { display: none; }
+    </style>
+
+</head>
+<body>
+   
+    <!-- Your HTML content -->
+    <div id="week-select"></div>
+
+    <!-- Load MobiScroll JavaScript from the static folder -->
+    <script src="{% static 'js/mobiscroll.javascript.min.js' %}"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            mobiscroll.setOptions({
+                theme: 'windows',
+                themeVariant: 'light'
+            });
+
+            mobiscroll.datepicker('#week-select', {
+                controls: ['calendar'],
+                select: 'preset-range',
+                display: 'inline',
+                firstSelectDay: 6,
+                selectSize: 7
+            });
+
+            var calendarCells = $('.mbsc-calendar-cell');
+            console.log('Number of elements with class mbsc-calendar-cell:', calendarCells.length);
+
+            calendarCells.each(function () {
+                var innerDiv = $(this).find('div > div');
+                if (innerDiv.length > 0) {
+                    innerDiv.addClass('basic');
+                }
+            });
+        });
+
+        {% comment %} var calendarCells = document.querySelectorAll('.mbsc-calendar-cell');
+ 
+        // Iterate over each element
+        calendarCells.forEach(function (calendarCell) {
+            // Find the inner div element and add the 'basic' class
+            var innerDiv = calendarCell.querySelector('div > div');
+            if (innerDiv) {
+                innerDiv.classList.add('basic');
+            }
+        }); {% endcomment %}
+    </script>
+</body>
 </html>

@@ -13,6 +13,7 @@ admin.site.register(ManagementVisits)
 admin.site.register(ViolationMemoForm)
 admin.site.register(Incidents)
 admin.site.register(IncidentForm)
+admin.site.register(HSEUsers)
 
 
 # @admin.register(GeneralHse)

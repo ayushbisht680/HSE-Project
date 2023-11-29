@@ -1,9 +1,9 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
+from rest_framework.views import APIView 
+from rest_framework.response import Response 
 from .models import *
-from .serializers import *
+from .serializers import * 
 from rest_framework import status
-from django.template.response import TemplateResponse
+from django.template.response import TemplateResponse  
 from django.http import HttpResponse
 from rest_framework import generics
 from django.shortcuts import render
@@ -13,6 +13,8 @@ from django.shortcuts import redirect
 from django.utils import timezone
 from datetime import datetime
 from django.db.models import Q
+from datetime import datetime, timedelta
+
 
 
 class TemplateView(APIView):
@@ -21,7 +23,15 @@ class TemplateView(APIView):
     
 class ObservationFormView(APIView):
     def get(self, request):
-        return TemplateResponse(request, "observation.html")
+        category_choices = HSEObservationForm.CATEGORY_CHOICES
+        status_choices = HSEObservationForm.STATUS_CHOICES
+
+        context = {
+        'category_choices': category_choices,
+        'status_choices': status_choices,
+
+        }
+        return TemplateResponse(request, "observation.html",context)
     
 class StopWorkFormView(APIView):
     def get(self, request):
@@ -40,9 +50,14 @@ class ListObservers(APIView):
         return TemplateResponse(request, "mockDrill.html")
 
 
+class PlantAPI(APIView):
+
+    def get(self, request): 
+        obj = Plant.objects.all()
+        serializer = PlantSerializer(obj, many=True)
     
-
-
+        return Response(serializer.data, status=status.HTTP_200_OK)  
+          
 
 class GeneralHseAPI(APIView):
     def get(self, request): 
@@ -52,29 +67,39 @@ class GeneralHseAPI(APIView):
         
 
     def post(self, request):
-        data = request.data
+        data = request.data.copy()
         plant_code = data.get("plant_id")
         form_Submit_date = data.get("formSubmitDate")
         general_hse_instance = None
 
-        form_submit_date = datetime.strptime(form_Submit_date, "%Y-%m-%d")
-        start_range = datetime.strptime(data.get("startRange"), "%Y-%m-%d")
-        end_range = datetime.strptime(data.get("endRange"), "%Y-%m-%d")
+        
+        try:
+            hse_user = HSEUsers.objects.get(user=request.user, hse_permission=True)
+        except HSEUsers.DoesNotExist:
+            return Response('User does not have permission', status=status.HTTP_403_FORBIDDEN)
+        
+    
+        # form_submit_date = datetime.strptime(form_Submit_date, "%Y-%m-%d")
+        # start_range = datetime.strptime(data.get("startRange"), "%Y-%m-%d")
+        # end_range = datetime.strptime(data.get("endRange"), "%Y-%m-%d")
 
-        if form_submit_date < start_range or form_submit_date > end_range:
-            return Response({'Cannot submit the form for this date'}, status=status.HTTP_400_BAD_REQUEST)
+        # if form_submit_date < start_range or form_submit_date > end_range:
+        #     return Response({'Cannot submit the form for this date'}, status=status.HTTP_400_BAD_REQUEST)
 
         plant = Plant.objects.filter(id=plant_code).first()
         if not plant:
             return Response('No such plant exists', status=status.HTTP_400_BAD_REQUEST)
 
 
-
         hse_instance, created = HSE.objects.get_or_create(
             plant_code=plant,
             formSubmittedDate=form_Submit_date,
             defaults={"form_status": 0},
+
         )
+        if created:
+            hse_instance.created_by = request.user
+            hse_instance.save()
 
         if hse_instance.form_status == 1:
             return Response('Form already submitted', status=status.HTTP_400_BAD_REQUEST)
@@ -85,6 +110,8 @@ class GeneralHseAPI(APIView):
         if serializer.is_valid():
             instance = serializer.save()
             
+            instance.created_by=request.user
+            print(instance)
             instance.formSubmitted = True
             instance.save()
 
@@ -92,55 +119,23 @@ class GeneralHseAPI(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        
-    # def put(self, request):
-    #     data = request.data
-    #     plant_code = data.get("plant_id")
-    #     id = data.get("toBeUpdatedId")
-    #     form_Submit_date = data.get("formSubmitDate")
-    #     file1=data.get('today_day_worked_file')
-    #     print(form_Submit_date)
-    #     print(file1)
-        
-       
-    #     try:
-    #         existing_instance = GeneralHse.objects.get(id=id)
-    #         print(existing_instance.hse.form_status)
-
-    #         if(file1):
-    #           print('Hello its none')
-    #         else:
-            
-    #           print('it does not exists')
-
-
-    #         if existing_instance.hse.form_status == 1:
-    #             return Response('Form has already been submitted', status=status.HTTP_400_BAD_REQUEST)
-
-    #     except GeneralHse.DoesNotExist:
-    #         return Response('GeneralHse instance does not exist', status=status.HTTP_400_BAD_REQUEST)
-
-    #     serializer = GeneralHSESerializer(existing_instance, data=data, partial=True)
-
-    #     if serializer.is_valid():
-    #         instance = serializer.save()
-
-    #         instance.formSubmitted = True
-    #         instance.save()
-    #         return Response(serializer.data, status=status.HTTP_200_OK)
-    #     else:
-    #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request):
-        data = request.data
+        data = request.data.copy()
         plant_code = data.get("plant_id")
         id = data.get("toBeUpdatedId")
         form_Submit_date = data.get("formSubmitDate")
-        print(form_Submit_date)
-        
+
+        data['updated_by'] = request.user.id
+
+        try:
+            hse_user = HSEUsers.objects.get(user=request.user, hse_permission=True)
+            print(hse_user)
+        except HSEUsers.DoesNotExist:
+            return Response('User does not have permission', status=status.HTTP_403_FORBIDDEN)
+
         try:
             existing_instance = GeneralHse.objects.get(id=id)
-            print(existing_instance.hse.form_status)
 
             if existing_instance.hse.form_status == 1:
                 return Response('Form has already been submitted', status=status.HTTP_400_BAD_REQUEST)
@@ -149,11 +144,11 @@ class GeneralHseAPI(APIView):
             return Response('GeneralHse instance does not exist', status=status.HTTP_400_BAD_REQUEST)
 
 
-        print(data)
         serializer = GeneralHSESerializer(existing_instance, data=data, partial=True)
 
         if serializer.is_valid():
             instance = serializer.save()
+            instance.updated_at = timezone.now()
 
             instance.formSubmitted = True
             instance.save()
@@ -171,19 +166,24 @@ class HseTrainingsAPI(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request):
-        data = request.data
+        data = request.data.copy()
         plant_code = data.get("plant_id")
         hse_training_instance = None
         form_Submit_date=data.get("formSubmitDate")
 
-        form_submit_date = datetime.strptime(data.get("formSubmitDate"), "%Y-%m-%d")
-        start_range = datetime.strptime(data.get("startRange"), "%Y-%m-%d")
-        end_range = datetime.strptime(data.get("endRange"), "%Y-%m-%d")
+        try:
+            hse_user = HSEUsers.objects.get(user=request.user, hse_permission=True)
+        except HSEUsers.DoesNotExist:
+            return Response('User does not have permission', status=status.HTTP_403_FORBIDDEN)
+
+        # form_submit_date = datetime.strptime(data.get("formSubmitDate"), "%Y-%m-%d")
+        # start_range = datetime.strptime(data.get("startRange"), "%Y-%m-%d")
+        # end_range = datetime.strptime(data.get("endRange"), "%Y-%m-%d")
         
 
 
-        if form_submit_date < start_range or form_submit_date > end_range:
-           return Response({'Cannot submit the form for this date'}, status=status.HTTP_400_BAD_REQUEST)
+        # if form_submit_date < start_range or form_submit_date > end_range:
+        #    return Response({'Cannot submit the form for this date'}, status=status.HTTP_400_BAD_REQUEST)
 
 
         plant = Plant.objects.filter(id=plant_code).first()
@@ -196,6 +196,10 @@ class HseTrainingsAPI(APIView):
             defaults={"form_status": 0},
         )
 
+        if created:
+            hse_instance.created_by = request.user
+            hse_instance.save()
+
         if hse_instance.form_status == 1:
             return Response('Form already submitted', status=status.HTTP_400_BAD_REQUEST)
 
@@ -204,7 +208,8 @@ class HseTrainingsAPI(APIView):
 
         if serializer.is_valid():
             instance = serializer.save()
-            
+            instance.created_by=request.user
+
             instance.formSubmitted = True
             instance.save()
             return Response({'id': instance.id, 'data': serializer.data}, status=status.HTTP_201_CREATED)
@@ -213,8 +218,16 @@ class HseTrainingsAPI(APIView):
         
     
     def put(self, request):
-        data = request.data
+        data = request.data.copy()
         id = data.get("toBeUpdatedId") 
+
+        data['updated_by'] = request.user.id
+
+
+        try:
+            hse_user = HSEUsers.objects.get(user=request.user, hse_permission=True)
+        except HSEUsers.DoesNotExist:
+            return Response('User does not have permission', status=status.HTTP_403_FORBIDDEN)
         
         try:
             existing_instance = HSETrainingsModel.objects.get(id=id)
@@ -230,7 +243,9 @@ class HseTrainingsAPI(APIView):
 
         if serializer.is_valid():
             instance = serializer.save()
-            
+            instance.updated_at = timezone.now()
+            print(instance.updated_at)
+
             instance.formSubmitted = True
             instance.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -246,19 +261,24 @@ class HseObservationAPI(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request):
-        data = request.data
+        data = request.data.copy()
         plant_code = data.get("plant_id")
         form_Submit_date=data.get("formSubmitDate")
         hse_observation_instance = None
 
-        form_submit_date = datetime.strptime(data.get("formSubmitDate"), "%Y-%m-%d")
-        start_range = datetime.strptime(data.get("startRange"), "%Y-%m-%d")
-        end_range = datetime.strptime(data.get("endRange"), "%Y-%m-%d")
+        try:
+            hse_user = HSEUsers.objects.get(user=request.user, hse_permission=True)
+        except HSEUsers.DoesNotExist:
+            return Response('User does not have permission', status=status.HTTP_403_FORBIDDEN)
+
+        # form_submit_date = datetime.strptime(data.get("formSubmitDate"), "%Y-%m-%d")
+        # start_range = datetime.strptime(data.get("startRange"), "%Y-%m-%d")
+        # end_range = datetime.strptime(data.get("endRange"), "%Y-%m-%d")
         
 
 
-        if form_submit_date < start_range or form_submit_date > end_range:
-           return Response({'Cannot submit the form for this date'}, status=status.HTTP_400_BAD_REQUEST)
+        # if form_submit_date < start_range or form_submit_date > end_range:
+        #    return Response({'Cannot submit the form for this date'}, status=status.HTTP_400_BAD_REQUEST)
 
         plant = Plant.objects.filter(id=plant_code).first()
         if not plant:
@@ -269,6 +289,9 @@ class HseObservationAPI(APIView):
             formSubmittedDate=form_Submit_date,
             defaults={"form_status": 0},
         )
+        if created:
+            hse_instance.created_by = request.user
+            hse_instance.save()
 
         if hse_instance.form_status == 1:
             return Response('Form already submitted', status=status.HTTP_400_BAD_REQUEST)
@@ -283,7 +306,8 @@ class HseObservationAPI(APIView):
 
         if serializer.is_valid():
             instance = serializer.save()
-            
+            instance.created_by=request.user
+
             instance.formSubmitted = True
             instance.save()
             return Response({'id': instance.id, 'data': serializer.data}, status=status.HTTP_201_CREATED)
@@ -292,8 +316,16 @@ class HseObservationAPI(APIView):
         
 
     def put(self, request):
-        data = request.data
+        data = request.data.copy()
         id = data.get("toBeUpdatedId") 
+
+        data['updated_by'] = request.user.id
+
+
+        try:
+            hse_user = HSEUsers.objects.get(user=request.user, hse_permission=True)
+        except HSEUsers.DoesNotExist:
+            return Response('User does not have permission', status=status.HTTP_403_FORBIDDEN)
         
         try:
             existing_instance = HSEObservation.objects.get(id=id)
@@ -309,7 +341,8 @@ class HseObservationAPI(APIView):
 
         if serializer.is_valid():
             instance = serializer.save()
-            
+            instance.updated_at = timezone.now()
+
             instance.formSubmitted = True
             instance.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -326,19 +359,23 @@ class ManagementAPI(APIView):
  
 
     def post(self, request):
-        data = request.data
+        data = request.data.copy()
         plant_code = data.get("plant_id")
         management_instance = None
         form_Submit_date=data.get("formSubmitDate")
 
-        form_submit_date = datetime.strptime(data.get("formSubmitDate"), "%Y-%m-%d")
-        start_range = datetime.strptime(data.get("startRange"), "%Y-%m-%d")
-        end_range = datetime.strptime(data.get("endRange"), "%Y-%m-%d")
+        try:
+            hse_user = HSEUsers.objects.get(user=request.user, hse_permission=True)
+        except HSEUsers.DoesNotExist:
+            return Response('User does not have permission', status=status.HTTP_403_FORBIDDEN)
+
+        # form_submit_date = datetime.strptime(data.get("formSubmitDate"), "%Y-%m-%d")
+        # start_range = datetime.strptime(data.get("startRange"), "%Y-%m-%d")
+        # end_range = datetime.strptime(data.get("endRange"), "%Y-%m-%d")
         
 
-
-        if form_submit_date < start_range or form_submit_date > end_range:
-           return Response({'Cannot submit the form for this date'}, status=status.HTTP_400_BAD_REQUEST)
+        # if form_submit_date < start_range or form_submit_date > end_range:
+        #    return Response({'Cannot submit the form for this date'}, status=status.HTTP_400_BAD_REQUEST)
 
 
         plant = Plant.objects.filter(id=plant_code).first()
@@ -351,6 +388,9 @@ class ManagementAPI(APIView):
 
             defaults={"form_status": 0},
         )
+        if created:
+            hse_instance.created_by = request.user
+            hse_instance.save()
 
         if hse_instance.form_status == 1:
             return Response('Form already submitted', status=status.HTTP_400_BAD_REQUEST)
@@ -360,6 +400,8 @@ class ManagementAPI(APIView):
 
         if serializer.is_valid():
             instance = serializer.save()
+            instance.created_by=request.user
+
             
             instance.formSubmitted = True
             instance.save()
@@ -368,10 +410,17 @@ class ManagementAPI(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request):
-        data = request.data
+        data = request.data.copy()
         id = data.get("toBeUpdatedId") 
 
-        
+        data['updated_by'] = request.user.id
+
+
+        try:
+            hse_user = HSEUsers.objects.get(user=request.user, hse_permission=True)
+        except HSEUsers.DoesNotExist:
+            return Response('User does not have permission', status=status.HTTP_403_FORBIDDEN)
+  
         try:
             existing_instance = ManagementVisits.objects.get(id=id)
             print(existing_instance.hse.form_status)
@@ -386,7 +435,8 @@ class ManagementAPI(APIView):
 
         if serializer.is_valid():
             instance = serializer.save()
-            
+            instance.updated_at = timezone.now()
+
             instance.formSubmitted = True
             instance.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -403,18 +453,25 @@ class IncidentsAPI(APIView):
 
     
     def post(self, request):
-        data = request.data
+        data = request.data.copy()
         plant_code = data.get("plant_id")
         incident_instance = None
         form_Submit_date=data.get("formSubmitDate")
-        form_submit_date = datetime.strptime(data.get("formSubmitDate"), "%Y-%m-%d")
-        start_range = datetime.strptime(data.get("startRange"), "%Y-%m-%d")
-        end_range = datetime.strptime(data.get("endRange"), "%Y-%m-%d")
+
+        try:
+            hse_user = HSEUsers.objects.get(user=request.user, hse_permission=True)
+        except HSEUsers.DoesNotExist:
+            return Response('User does not have permission', status=status.HTTP_403_FORBIDDEN)
+        
+
+        # form_submit_date = datetime.strptime(data.get("formSubmitDate"), "%Y-%m-%d")
+        # start_range = datetime.strptime(data.get("startRange"), "%Y-%m-%d")
+        # end_range = datetime.strptime(data.get("endRange"), "%Y-%m-%d")
         
 
 
-        if form_submit_date < start_range or form_submit_date > end_range:
-           return Response({'Cannot submit the form for this date'}, status=status.HTTP_400_BAD_REQUEST)
+        # if form_submit_date < start_range or form_submit_date > end_range:
+        #    return Response({'Cannot submit the form for this date'}, status=status.HTTP_400_BAD_REQUEST)
 
 
         plant = Plant.objects.filter(id=plant_code).first()
@@ -426,6 +483,10 @@ class IncidentsAPI(APIView):
             formSubmittedDate=form_Submit_date,
             defaults={"form_status": 0},
         )
+
+        if created:
+            hse_instance.created_by = request.user
+            hse_instance.save()
 
         if hse_instance.form_status == 1:
             return Response('Form already submitted', status=status.HTTP_400_BAD_REQUEST)
@@ -440,6 +501,7 @@ class IncidentsAPI(APIView):
 
         if serializer.is_valid():
             instance = serializer.save()
+            instance.created_by=request.user
             
             instance.formSubmitted = True
             instance.save()
@@ -448,10 +510,16 @@ class IncidentsAPI(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-
     def put(self, request):
-        data = request.data
+        data = request.data.copy()
         id = data.get("toBeUpdatedId") 
+        data['updated_by'] = request.user.id
+
+
+        try:
+            hse_user = HSEUsers.objects.get(user=request.user, hse_permission=True)
+        except HSEUsers.DoesNotExist:
+            return Response('User does not have permission', status=status.HTTP_403_FORBIDDEN)
 
         
         try:
@@ -468,7 +536,8 @@ class IncidentsAPI(APIView):
 
         if serializer.is_valid():
             instance = serializer.save()
-            
+            instance.updated_at = timezone.now()
+
             instance.formSubmitted = True
             instance.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -477,7 +546,7 @@ class IncidentsAPI(APIView):
 
 
 
-class HSEAPI(APIView):
+class HSEView(APIView):
 
 
     def get(self, request): 
@@ -492,9 +561,14 @@ class HSEAPI(APIView):
         end_range = datetime.strptime(data.get("endRange"), "%Y-%m-%d")
         plant_code=data.get('plant_id')
 
-        print(plant_code)
-        print(start_range)
-        print(end_range)
+        try:
+            hse_user = HSEUsers.objects.get(user=request.user, hse_permission=True)
+        except HSEUsers.DoesNotExist:
+            return Response('User does not have permission', status=status.HTTP_403_FORBIDDEN)
+
+        # print(plant_code)
+        # print(start_range)
+        # print(end_range)
 
         hse_queryset = HSE.objects.filter(
             Q(formSubmittedDate__gte=start_range) &
@@ -533,8 +607,7 @@ class HSEAPI(APIView):
 
 
         return Response(response_data, status=status.HTTP_200_OK)
-
-    
+   
 
 class AllModelsListView(generics.ListAPIView):
     def get(self, request):
@@ -600,11 +673,25 @@ class HSEObservationFormAPI(APIView):
 
 
     def post(self, request):
-        data = request.data
+        data = request.data.copy()
         plant_code = data.get("plant_id")
         form_Submit_date=data.get("formSubmitDate")
 
-        print(form_Submit_date)
+        date_value=data.get('date')
+        time_value=data.get('time')
+      
+
+        combined_datetime = datetime.strptime(f'{date_value} {time_value}', '%Y-%m-%d %H:%M')
+
+        fixed_timezone_offset = '+05:30'
+        datetime_format = combined_datetime.strftime(f'%Y-%m-%dT%H:%M:%S{fixed_timezone_offset}')
+
+
+        try:
+            hse_user = HSEUsers.objects.get(user=request.user, hse_permission=True)
+        except HSEUsers.DoesNotExist:
+            return Response('User does not have permission', status=status.HTTP_403_FORBIDDEN)
+
 
         plant = Plant.objects.filter(id=plant_code).first()
         if not plant:
@@ -624,18 +711,20 @@ class HSEObservationFormAPI(APIView):
         hse_observation = HSEObservation.objects.filter(hse=hse,submittedDate=form_Submit_date).first()
 
         if not hse_observation:
-            # check if my this line of code is correct
             hse_observation = HSEObservation(hse=hse,submittedDate=form_Submit_date)
             hse_observation.save()
+
+        data['datetime_observation']=datetime_format
+        data['created_by']=request.user.id
+        data['hse_observation']=hse_observation.id
 
         serializer = HSEObservationFormSerializer(data=data)
 
         if serializer.is_valid():
-            hse_observation_form = serializer.save()
-            hse_observation_form.hse_observation = hse_observation
-            hse_observation_form.save()
+            hse_observation_form =serializer.save()
+            # hse_observation_form.hse_observation = hse_observation
+            # hse_observation_form.save()
 
-            
             return Response({'data': serializer.data}, status=status.HTTP_201_CREATED)
 
         
@@ -674,7 +763,12 @@ class StopWorkFormAPI(APIView):
         data = request.data
         plant_code = data.get("plant_id")
         form_Submit_date=data.get("formSubmitDate")
-        print(form_Submit_date)
+        
+
+        try:
+            hse_user = HSEUsers.objects.get(user=request.user, hse_permission=True)
+        except HSEUsers.DoesNotExist:
+            return Response('User does not have permission', status=status.HTTP_403_FORBIDDEN)
 
         plant = Plant.objects.filter(id=plant_code).first()
         if not plant:
@@ -711,7 +805,6 @@ class StopWorkFormAPI(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        
     
 class ViolationMemoAPI(APIView):
 
@@ -743,6 +836,11 @@ class ViolationMemoAPI(APIView):
         data = request.data
         plant_code = data.get("plant_id")
         form_Submit_date=data.get("formSubmitDate")
+
+        try:
+            hse_user = HSEUsers.objects.get(user=request.user, hse_permission=True)
+        except HSEUsers.DoesNotExist:
+            return Response('User does not have permission', status=status.HTTP_403_FORBIDDEN)
 
         plant = Plant.objects.filter(id=plant_code).first()
         if not plant:
@@ -807,9 +905,26 @@ class IncidentFormAPI(APIView):
         
 
     def post(self, request):
-        data = request.data
+        data = request.data.copy()
         plant_code = data.get("plant_id")
         form_Submit_date=data.get("formSubmitDate")
+
+        date_value=data.get('incident_date')
+        time_value=data.get('incident_time')
+        print(date_value)
+        print(time_value)
+      
+
+        combined_datetime = datetime.strptime(f'{date_value} {time_value}', '%Y-%m-%d %H:%M')
+
+        fixed_timezone_offset = '+05:30'
+        datetime_format = combined_datetime.strftime(f'%Y-%m-%dT%H:%M:%S{fixed_timezone_offset}')
+
+
+        try:
+            hse_user = HSEUsers.objects.get(user=request.user, hse_permission=True)
+        except HSEUsers.DoesNotExist:
+            return Response('User does not have permission', status=status.HTTP_403_FORBIDDEN)
 
         plant = Plant.objects.filter(id=plant_code).first()
         if not plant:
@@ -833,18 +948,22 @@ class IncidentFormAPI(APIView):
             hse_incident.save()
 
         serializer = IncidentFormSerializer(data=data)
+        print(datetime_format)
+
+        data['datetime_observation']=datetime_format
+        data['created_by']=request.user.id
+        data['incidents']=hse_incident.id
 
         if serializer.is_valid():
             hse_incident_from = serializer.save()
-            hse_incident_from.incidents = hse_incident
-            hse_incident_from.save()
+            # hse_incident_from.incidents = hse_incident
+            # hse_incident_from.save()
 
 
             return Response({'data': serializer.data}, status=status.HTTP_201_CREATED)
 
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 
 

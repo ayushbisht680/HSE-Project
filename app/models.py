@@ -1,6 +1,20 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
+
+
+
+class HSEUsers(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    hse_permission = models.BooleanField()
+    
+    class Meta:
+        verbose_name = "HSE Users" 
+        verbose_name_plural = "HSE Users"
+
+    def __str__(self):
+        return self.user.username
 
 
 class Plant(models.Model):
@@ -14,10 +28,17 @@ class Plant(models.Model):
     country = models.CharField(max_length=200,null=True, blank=True)
     address = models.TextField(null=True, blank=True)
 
+    def __str__(self):
+        return f" Plant- ID: {self.id}"
+
+
 class HSE(models.Model):
     plant_code=models.ForeignKey(Plant, on_delete=models.CASCADE,null=True)
     created_at = models.DateTimeField(default=timezone.now, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE,related_name='created_hse_records',null=True,blank=True)
+    updated_by = models.ForeignKey(User, on_delete=models.CASCADE,related_name='updated_hse_records',null=True,blank=True)
+
     formSubmittedDate = models.DateField(default=None, null=True)
 
     form_status=models.IntegerField()
@@ -25,8 +46,11 @@ class HSE(models.Model):
     class Meta:
         verbose_name = "HSE" 
         verbose_name_plural = "HSE"
+    
+    def __str__(self):
+        return f"HSE- ID: {self.id}, formSubmittedDate: {self.formSubmittedDate}"
+    
 
-   
 class GeneralHse(models.Model):
     today_day_worked_file = models.FileField(upload_to='uploads/', null=True,blank=True)
     total_man_days_worked = models.IntegerField()
@@ -40,6 +64,10 @@ class GeneralHse(models.Model):
     committe_meetings=models.IntegerField()
     submittedDate = models.DateField(default=None, null=True)
     formSubmitted = models.BooleanField(default=False)  
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE,related_name='created_general_hse_records',null=True,blank=True)
+    updated_by = models.ForeignKey(User, on_delete=models.CASCADE,related_name='updated_general_hse_records',null=True,blank=True)
+    created_at = models.DateTimeField(default=timezone.now, editable=True)
+    updated_at = models.DateTimeField(default=timezone.now, editable=True)
 
     hse = models.ForeignKey(HSE, on_delete=models.CASCADE,null=True)
 
@@ -47,6 +75,9 @@ class GeneralHse(models.Model):
     class Meta:
         verbose_name = "General HSE"
         verbose_name_plural = "General HSE"
+
+    def __str__(self):
+        return f"General HSE - ID: {self.id}, Submitted Date: {self.submittedDate}"
 
 
 class HSETrainingsModel(models.Model):
@@ -60,6 +91,10 @@ class HSETrainingsModel(models.Model):
     contractor_hse_trainings=models.IntegerField()
     submittedDate = models.DateField(default=None, null=True)
     formSubmitted = models.BooleanField(default=False)  
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE,related_name='created_hse_training_records',null=True,blank=True)
+    updated_by = models.ForeignKey(User, on_delete=models.CASCADE,related_name='updated_hse_training_records',null=True,blank=True)
+    created_at = models.DateTimeField(default=timezone.now, editable=True)
+    updated_at = models.DateTimeField(default=timezone.now, editable=True)
 
     hse = models.ForeignKey(HSE, on_delete=models.CASCADE,null=True)
 
@@ -68,6 +103,9 @@ class HSETrainingsModel(models.Model):
     class Meta:
         verbose_name = "HSE Trainings" 
         verbose_name_plural = "HSE Trainings"
+    
+    def __str__(self):
+        return f"HSE Training - ID: {self.id}, Submitted Date: {self.submittedDate}"
 
     
 class HSEObservation(models.Model):
@@ -78,6 +116,10 @@ class HSEObservation(models.Model):
     complaint_from_customer=models.IntegerField(null=True,blank=True)
     submittedDate = models.DateField(default=None, null=True)
     formSubmitted = models.BooleanField(default=False)  
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE,related_name='created_hse_observation_records',null=True,blank=True)
+    updated_by = models.ForeignKey(User, on_delete=models.CASCADE,related_name='updated_hse_observation_records',null=True,blank=True)
+    created_at = models.DateTimeField(default=timezone.now, editable=True)
+    updated_at = models.DateTimeField(default=timezone.now, editable=True)
 
     hse = models.ForeignKey(HSE, on_delete=models.CASCADE,null=True,blank=True)
      
@@ -85,6 +127,10 @@ class HSEObservation(models.Model):
     class Meta:
         verbose_name = "HSE Observation" 
         verbose_name_plural = "HSE Observation"
+    
+    def __str__(self):
+        return f"HSE Observation - ID: {self.id}, Submitted Date: {self.submittedDate}"
+
 
 class ManagementVisits(models.Model):
     no_of_management_visits=models.IntegerField()
@@ -96,6 +142,10 @@ class ManagementVisits(models.Model):
     observation_pending=models.IntegerField()
     submittedDate = models.DateField(default=None, null=True)
     formSubmitted = models.BooleanField(default=False)  
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE,related_name='created_management_visits_records',null=True,blank=True)
+    updated_by = models.ForeignKey(User, on_delete=models.CASCADE,related_name='updated_management_visits_records',null=True,blank=True)
+    created_at = models.DateTimeField(default=timezone.now, editable=True)
+    updated_at = models.DateTimeField(default=timezone.now, editable=True)
 
     hse = models.ForeignKey(HSE, on_delete=models.CASCADE,null=True)
 
@@ -103,6 +153,9 @@ class ManagementVisits(models.Model):
     class Meta:
         verbose_name = "Management Visits" 
         verbose_name_plural = "Management Visits"
+
+    def __str__(self):
+        return f"Management Visists - ID: {self.id}, Submitted Date: {self.submittedDate}"
         
 
 class Incidents(models.Model):
@@ -111,6 +164,10 @@ class Incidents(models.Model):
     no_of_environment_illness=models.IntegerField(null=True,blank=True)
     submittedDate = models.DateField(default=None, null=True)
     formSubmitted = models.BooleanField(default=False)  
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE,related_name='created_incidents_records',null=True,blank=True)
+    updated_by = models.ForeignKey(User, on_delete=models.CASCADE,related_name='updated_incidents_records',null=True,blank=True)
+    created_at = models.DateTimeField(default=timezone.now, editable=True)
+    updated_at = models.DateTimeField(default=timezone.now, editable=True)
 
     hse = models.ForeignKey(HSE, on_delete=models.CASCADE,null=True,blank=True)
 
@@ -120,104 +177,163 @@ class Incidents(models.Model):
         verbose_name = "Incidents" 
         verbose_name_plural = "Incidents"
 
+    def __str__(self):
+        return f"Incidents - ID: {self.id}, Submitted Date: {self.submittedDate}"
+
 
 class HSEObservationForm(models.Model):
-    SrNo=models.IntegerField()
-    Date=models.TextField(max_length=100)
-    Time=models.TextField(max_length=100)
-    Location=models.TextField(max_length=100)
-    PlantSite=models.TextField(max_length=100)
-    Observation=models.TextField(max_length=100)
-    UnsafeCondition=models.TextField(max_length=100)
-    Cateogry=models.TextField(max_length=100)
-    CorrrectiveActionTAken=models.TextField(max_length=100)
-    ResponsiblePerson=models.TextField(max_length=100)
-    ClosureDate=models.TextField(max_length=100)
-    Status=models.TextField(max_length=100)
-    StopWork=models.TextField(max_length=100)
-    OpenEvidence=models.FileField(upload_to='formUploads',null=True)
-    ClosedEvidence=models.FileField(upload_to='formUploads',null=True)
-    Remark=models.TextField(max_length=200)
-    created_at = models.DateTimeField(default=timezone.now, editable=False)
-    hse_observation = models.ForeignKey(HSEObservation, on_delete=models.CASCADE,null=True)
+    CATEGORY_CHOICES = [
+    ('Category', 'Category'),
+    ('Legal Requirement', 'Legal Requirement'),
+    ('Permit to Work', 'Permit to Work'),
+    ('Electrical Work', 'Electrical Work'),
+    ('Working at Height', 'Working at Height'),
+    ('Lifting Operation', 'Lifting Operation'),
+    ('Excavation', 'Excavation'),
+    ('Hot Work', 'Hot Work'),
+    ('Confined Space Work', 'Confined Space Work'),
+    ('Manual Handling', 'Manual Handling'),
+    ('Houskeeping', 'Houskeeping'),
+    ('Chemical Handling', 'Chemical Handling'),
+    ('SOP and Procedure Violation', 'SOP and Procedure Violation'),
+    ('Medical Examination', 'Medical Examination'),
+    ('PPE', 'PPE'),
+    ('Vehicle Movment', 'Vehicle Movment'),
+    ('Waste Management', 'Waste Management'),
+    ('Welfare Facility', 'Welfare Facility'),
+    ('General - Signage, Access, Walkway', 'General - Signage, Access, Walkway'),
+    ('Emergency Preparedness', 'Emergency Preparedness'),
+    ]
+
+    STATUS_CHOICES = [
+        ('Yes', 'Yes'),
+        ('No', 'No'),
+        ('NA', 'NA'),
+    ]
+    datetime_observation = models.DateTimeField()
+    location = models.CharField(max_length=300)
+    plant_site = models.CharField(max_length=300)
+    observation = models.TextField()
+    unsafe_condition = models.CharField(max_length=300)
+    category = models.CharField(max_length=100,choices=CATEGORY_CHOICES,default='Category')
+    corrective_action_taken = models.TextField()
+    responsible_person = models.CharField(max_length=300)
+    form_closure_date=models.DateField(blank=True,null=True)
+    status = models.CharField(max_length=3,choices=STATUS_CHOICES,default='Yes')
+    stop_work = models.CharField(max_length=300)
+    open_evidence = models.FileField(upload_to='form_uploads', null=True)
+    closed_evidence = models.FileField(upload_to='form_uploads', null=True)
+    remark = models.CharField(max_length=300)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_observation_form_records', null=True, blank=True)
+    updated_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='updated_observation_form_records', null=True, blank=True)
+    created_at = models.DateTimeField(default=timezone.now, editable=True)
+    updated_at = models.DateTimeField(default=timezone.now, editable=True)
+    hse_observation = models.ForeignKey(HSEObservation, on_delete=models.CASCADE, null=True)
 
     class Meta:
-        verbose_name = "Observation Form" 
-        verbose_name_plural = "Observation Form"
+        verbose_name = "Observation Form"
+        verbose_name_plural = "Observation Forms"
+
+    def __str__(self):
+        return f"Observation Form - ID: {self.id}"
+
+
     
 
 class StopWorkForm(models.Model):
-    SrNo=models.IntegerField()
-    Date=models.TextField(max_length=100)
-    Time=models.TextField(max_length=100)
-    Location=models.TextField(max_length=100)
-    PlantSite=models.TextField(max_length=100)
-    DescriptionOfIssue=models.TextField(max_length=100)
-    UnsafeAct=models.TextField(max_length=100)
-    Cateogry=models.TextField(max_length=100)
-    CorrrectiveActionTAken=models.TextField(max_length=100)
-    RemainingHazard=models.TextField(max_length=100)
-    ResponsiblePerson=models.TextField(max_length=100)
-    ClosureDate=models.TextField(max_length=100)
-    Status=models.TextField(max_length=100)
-    OpenEvidence=models.FileField(upload_to='formUploads',null=True)
-    ClosedEvidence=models.FileField(upload_to='formUploads',null=True)
-    Remark=models.TextField(max_length=200)
-    created_at = models.DateTimeField(default=timezone.now, editable=False)
+    sr_no = models.IntegerField()
+    date = models.CharField(max_length=300)
+    time = models.CharField(max_length=300)
+    location = models.CharField(max_length=300)
+    plant_site = models.CharField(max_length=300)
+    description_of_issue = models.CharField(max_length=300)
+    unsafe_act = models.CharField(max_length=300)
+    category = models.CharField(max_length=300)
+    corrective_action_taken = models.CharField(max_length=300)
+    remaining_hazard = models.CharField(max_length=300)
+    responsible_person = models.CharField(max_length=300)
+    closure_date = models.CharField(max_length=300)
+    status = models.CharField(max_length=300)
+    open_evidence = models.CharField(max_length=300, null=True)
+    closed_evidence = models.CharField(max_length=300, null=True)
+    remark = models.CharField(max_length=300)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_stopwork_form_records', null=True, blank=True)
+    updated_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='updated_stopwork_form_records', null=True, blank=True)
+    created_at = models.DateTimeField(default=timezone.now, editable=True)
+    updated_at = models.DateTimeField(default=timezone.now, editable=True)
 
-    hse_observation = models.ForeignKey(HSEObservation, on_delete=models.CASCADE,null=True)
+    hse_observation = models.ForeignKey(HSEObservation, on_delete=models.CASCADE, null=True)
 
     class Meta:
-        verbose_name = "Stop Work Form" 
-        verbose_name_plural = "Stop Work Form"
+        verbose_name = "Stop Work Form"
+        verbose_name_plural = "Stop Work Forms"
+
+    def __str__(self):
+        return f"Stop Work Form - ID: {self.id}"
+
+
 
 
 class ViolationMemoForm(models.Model):
-    SrNo=models.IntegerField()
-    Date=models.TextField(max_length=100)
-    ProjectName=models.TextField(max_length=100)
-    ProjectCode=models.TextField(max_length=100)
-    BusinessSegment=models.TextField(max_length=100)
-    MemoNo=models.TextField(max_length=100)
-    Description=models.TextField(max_length=100)
-    ActionTaken=models.TextField(max_length=100)
-    IssuedBy=models.TextField(max_length=100)
-    IssuedTo=models.TextField(max_length=100)
-    PenaltyImposed=models.TextField(max_length=100)
-    Amount=models.IntegerField()
-    created_at = models.DateTimeField(default=timezone.now, editable=False)
-    hse_observation = models.ForeignKey(HSEObservation, on_delete=models.CASCADE,null=True)
+    sr_no = models.IntegerField()
+    date = models.TextField(max_length=100)
+    project_name = models.TextField(max_length=100)
+    project_code = models.TextField(max_length=100)
+    business_segment = models.TextField(max_length=100)
+    memo_no = models.TextField(max_length=100)
+    description = models.TextField(max_length=100)
+    action_taken = models.TextField(max_length=100)
+    issued_by = models.TextField(max_length=100)
+    issued_to = models.TextField(max_length=100)
+    penalty_imposed = models.TextField(max_length=100)
+    amount = models.IntegerField()
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE,related_name='created_violationMemo_form_records',null=True,blank=True)
+    updated_by = models.ForeignKey(User, on_delete=models.CASCADE,related_name='updated_violationMemo_form_records',null=True,blank=True)
+    created_at = models.DateTimeField(default=timezone.now, editable=True)
+    updated_at = models.DateTimeField(default=timezone.now, editable=True)
+
+    hse_observation = models.ForeignKey(HSEObservation, on_delete=models.CASCADE, null=True)
 
     class Meta:
-        verbose_name = "Violation Memo Form" 
-        verbose_name_plural = "Violation Memo Form"
+        verbose_name = "Violation Memo Form"
+        verbose_name_plural = "Violation Memo Forms"
+
+    def __str__(self):
+        return f"Violation Memo Form - ID: {self.id}"
+
 
 
 class IncidentForm(models.Model):
-    SrNo=models.IntegerField()
-    IncidentDate=models.TextField(max_length=100)
-    IncidentTime=models.TextField(max_length=100)
-    Location=models.TextField(max_length=100)
-    ExactLocation=models.TextField(max_length=100)
-    PlantSite=models.TextField(max_length=100)
-    ProjectCode=models.TextField(max_length=100)
-    DescriptionOfIncident=models.TextField(max_length=100)
-    RootCause=models.TextField(max_length=100)
-    TypeOfIncident=models.TextField(max_length=100)
-    HiPotentialIncident=models.TextField(max_length=100)
-    Cateogry=models.TextField(max_length=100)
-    ImmediateActionTaken=models.TextField(max_length=100)
-    CorrectiveAction=models.TextField(max_length=100)
-    PreventionAction=models.TextField(max_length=100)
-    ResponsiblePerson=models.TextField(max_length=100)
-    InvestigationStatus=models.TextField(max_length=100)
-    AttachReport=models.FileField(upload_to='formUploads',null=True)
-    created_at = models.DateTimeField(default=timezone.now, editable=False)
-    incidents = models.ForeignKey(Incidents, on_delete=models.CASCADE,null=True)
+    datetime_observation = models.DateTimeField()
+    location = models.TextField(max_length=100)
+    exact_location = models.TextField(max_length=100)
+    plant_site = models.TextField(max_length=100)
+    project_code = models.TextField(max_length=100)
+    description_of_incident = models.TextField()
+    root_cause = models.TextField()
+    type_of_incident = models.TextField(max_length=100)
+    high_potential_incident = models.TextField(max_length=100)
+    category = models.TextField(max_length=100)
+    immediate_action_taken =models.TextField()
+    corrective_action = models.TextField()
+    prevention_action = models.TextField()
+    responsible_person = models.TextField(max_length=100)
+    investigation_status = models.TextField(max_length=100)
+    attach_report = models.FileField(upload_to='form_uploads', null=True)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE,related_name='created_incident_form_records',null=True,blank=True)
+    updated_by = models.ForeignKey(User, on_delete=models.CASCADE,related_name='updated_incident_form_records',null=True,blank=True)
+    created_at = models.DateTimeField(default=timezone.now, editable=True)
+    updated_at = models.DateTimeField(default=timezone.now, editable=True)
+
+    incidents = models.ForeignKey(Incidents, on_delete=models.CASCADE, null=True)
 
     class Meta:
-        verbose_name = "Incident Form" 
-        verbose_name_plural = "Incident Form"
+        verbose_name = "Incident Form"
+        verbose_name_plural = "Incident Forms"
+
+    def __str__(self):
+        return f"Incident Form - ID: {self.id}"
+
 
 
 

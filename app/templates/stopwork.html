@@ -29,7 +29,7 @@
       .commonWidth{
       display: flex;
       align-items: center;
-      width:203px;
+      width: 199px;
       height: 60px;
       }
       .chnWidth{
@@ -46,6 +46,7 @@
       font-size:13px;
       }
       .valueInput{
+      width: 215px;
       height:43px;
       margin-left: 15px;
       background-color: rgba(62, 159, 254, 0);
@@ -144,6 +145,23 @@
             flex-direction: column;
             align-items: center;
       }
+      .cateogryDropdown{
+         width: 233px;
+         height: 28px;
+         font-size: 13px;
+         padding: 2px;
+         margin-left: 15px;
+         border: 1.5px solid #2c8ff1 !important;
+         color: #2c8ff1 !important;
+         border-radius: 6px;
+      }
+      .cateogryWidth{
+         display: flex;
+         align-items: center;
+         width: 256px;
+         height: 60px;
+   
+         }
         
    </style>
    <body>
@@ -158,7 +176,6 @@
       </div>
       
       <div class="heading">
-         {% comment %} <button type="button" class="btn btn-info" id="redirectButton">Back</button> {% endcomment %}
          <img src='{% static 'images/Frame.svg' %}' alt="Image Description" id="redirectButton" >
 
 
@@ -194,7 +211,7 @@
          <div class='commonWidth'>
             <p>Unsafe Act</p>
          </div>
-         <div class='commonWidth'>
+         <div class='cateogryWidth'>
             <p>Cateogry</p>
          </div>
          <div class='chnWidth'>
@@ -231,26 +248,44 @@
             <input type="hidden" name="plant_id" id="plant_id" >
             <input type="hidden" name="formSubmitDate" id="formSubmitDate" >
 
-            <div class="Srno"><input type="text" class="srWidth valueInput1" placeholder="Sr.No" name="SrNo" id='Srno' value='1'></div>
-            <div class="commonWidth"><input type="date" class="valueInput1" placeholder="Date" name="Date" required></div>
-            <div class="commonWidth "><input type="time" class="valueInput1" placeholder="Time" name="Time" required></div>
-            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Location" name="Location" required></div>
-            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Plant/Site" name="PlantSite" required></div>
-            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Description" name="DescriptionOfIssue" required></div>
-            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Unsafe Act" name="UnsafeAct" required></div>
-            <div class="commonWidth">
-               <select class="CLassdropdown" name="Cateogry" required>
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
-                  <option value="NA">NA</option>
+            <div class="Srno"><input type="text" class="srWidth valueInput1" placeholder="Sr.No" name="sr_no" id='Srno' value='1'></div>
+            <div class="commonWidth"><input type="date" class="valueInput1" placeholder="Date" name="date" required></div>
+            <div class="commonWidth "><input type="time" class="valueInput1" placeholder="Time" name="time" required></div>
+            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Location" name="location" required></div>
+            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Plant/Site" name="plant_site" required></div>
+            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Description" name="description_of_issue" required></div>
+            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Unsafe Act" name="unsafe_act" required></div>
+            <div class="cateogryWidth">
+               <select class="cateogryDropdown" name="category" id="Cateogry" required>
+                  <option value="Category">Category</option>
+                  <option value="Legal Requirement">Legal Requirement</option>
+                  <option value="Permit to Work">Permit to Work</option>
+                  <option value="Electrical Work">Electrical Work</option>
+                  <option value="Working at Height">Working at Height</option>
+                  <option value="Lifting Operation">Lifting Operation</option>
+                  <option value="Excavation">Excavation</option>
+                  <option value="Hot Work">Hot Work</option>
+                  <option value="Confined Space Work">Confined Space Work</option>
+                  <option value="Manual Handling">Manual Handling</option>
+                  <option value="Houskeeping">Houskeeping</option>
+                  <option value="Chemical Handling">Chemical Handling</option>
+                  <option value="SOP and Procedure Violation">SOP and Procedure Violation</option>
+                  <option value="Medical Examination">Medical Examination</option>
+                  <option value="PPE">PPE</option>
+                  <option value="Vehicle Movment">Vehicle Movment</option>
+                  <option value="Waste Management">Waste Management</option>
+                  <option value="Welfare Facility">Welfare Facility</option>
+                  <option value="General - Signage, Access, Walkway">General - Signage, Access, Walkway</option>
+                  <option value="Emergency Preparedness">Emergency Preparedness</option>
+                  
                </select>
             </div>
-            <div class="chnWidth"><input type="text" class="extraspace valueInput1" placeholder="Corrective Action Taken" name="CorrrectiveActionTAken" required></div>
-            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Remaining Hazard" name="RemainingHazard" required></div>
-            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Responsible Person" name="ResponsiblePerson" required></div>
-            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Closure Date" name="ClosureDate" required></div>
+            <div class="chnWidth"><input type="text" class="extraspace valueInput1" placeholder="Corrective Action Taken" name="corrective_action_taken" required></div>
+            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Remaining Hazard" name="remaining_hazard" required></div>
+            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Responsible Person" name="responsible_person" required></div>
+            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Closure Date" name="closure_date" required></div>
             <div class="commonWidth">
-               <select class="CLassdropdown" name="Status" required>
+               <select class="CLassdropdown" name="status" required>
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
                   <option value="NA">NA</option>
@@ -261,7 +296,7 @@
             <div class="commonWidth">
                <div class="input-group">
                   <div class="custom-file">
-                     <input type="file" class="custom-file-input" name="OpenEvidence" id="OpenEvidence"
+                     <input type="file" class="custom-file-input" name="open_evidence" id="OpenEvidence"
                         aria-describedby="openEvidenceAddon" style="display: none;">
                      <label class="custom-file-label" for="openEvidenceInput" id="fileInputLabel1"></label>
                   </div>
@@ -277,7 +312,7 @@
             <div class="commonWidth">
                <div class="input-group">
                   <div class="custom-file">
-                     <input type="file" class="custom-file-input" name="ClosedEvidence" id="ClosedEvidence"
+                     <input type="file" class="custom-file-input" name="closed_evidence" id="ClosedEvidence"
                         aria-describedby="openEvidenceAddon" style="display: none;">
                      <label class="custom-file-label" for="closedEvidenceInput" id="fileInputLabel2"></label>
                   </div>
@@ -290,7 +325,7 @@
             </div>
 
             <div class="chnWidth">
-               <input type="text" placeholder="Remark" class=" extraspace valueInput1" name="Remark" required>
+               <input type="text" placeholder="Remark" class=" extraspace valueInput1" name="remark" required>
             </div>
             <div class="" >
                <button type="submit" class="btn submitBUtton" id="submitButton">Submit</button>
@@ -300,25 +335,23 @@
       <div id="formContainer"></div>
       <template id="formRowTemplate">
          <div class="rowTable1">
-            <input type="hidden" name="week_number" id="week_number_Form1" value="">
-            <input type="hidden" name="year" id="year_form1" value="">
-            <div class="Srno"><input type="text" class="srWidth valueInput" placeholder="Sr.No" name="SrNo" disabled></div>
-            <div class="commonWidth "><input type="text" class="valueInput" placeholder="Date" name="Date" disabled></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Time" name="Time" disabled></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Location" name="Location" disabled></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Plant/Site" name="PlantSite" disabled></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Description" name="DescriptionOfIssue" disabled></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Unsafe Act" name="UnsafeAct" disabled></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Cateogry" name="Cateogry" disabled></div>
-            <div class="chnWidth"><input type="text" class="extraspace valueInput" placeholder="Corrective Action Taken" name="CorrrectiveActionTAken" disabled></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Remaining Hazard" name="RemainingHazard" disabled></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Responsible Person" name="ResponsiblePerson" disabled></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Closure Date" name="ClosureDate" disabled></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Status" name="Status" disabled></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="OpenEvidence" name="OpenEvidence" id="OpenEvidence" disabled></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="ClosedEvidence" name="ClosedEvidence" id="ClosedEvidence" disabled></div>
+            <div class="Srno"><input type="text" class="srWidth valueInput" placeholder="Sr.No" name="sr_no" disabled></div>
+            <div class="commonWidth "><input type="text" class="valueInput" placeholder="Date" name="date" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Time" name="time" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Location" name="location" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Plant/Site" name="plant_site" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Description" name="description_of_issue" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Unsafe Act" name="unsafe_act" disabled></div>
+            <div class="cateogryWidth"><input type="text" class="valueInput" placeholder="Cateogry" name="category" disabled></div>
+            <div class="chnWidth"><input type="text" class="extraspace valueInput" placeholder="Corrective Action Taken" name="corrective_action_taken" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Remaining Hazard" name="remaining_hazard" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Responsible Person" name="responsible_person" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Closure Date" name="closure_date" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Status" name="status" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="OpenEvidence" name="open_evidence" id="OpenEvidence" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="ClosedEvidence" name="closed_evidence" id="ClosedEvidence" disabled></div>
             <div class="chnWidth">
-               <input type="text" placeholder="Remark" class=" extraspace valueInput" name="Remark" disabled>
+               <input type="text" placeholder="Remark" class=" extraspace valueInput" name="remark" disabled>
             </div>
          </div>
       </template>
@@ -401,8 +434,7 @@
                document.getElementById('addRowButton').style.display='none'
 
             }
-
-            document.getElementById('Srno').value=dataArray[dataArray.length-1].SrNo+1
+            document.getElementById('Srno').value=dataArray[dataArray.length-1].sr_no+1
             createAndPopulateFormRows(dataArray); 
          } 
       

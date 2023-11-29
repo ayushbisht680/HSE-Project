@@ -1,47 +1,99 @@
-<div class="uploadBtn">
-   <input type="file" class="form-control-file disableIt" id="fileInput1"
-      style='display:none' name="today_day_worked_file">
-   <label class="input-group-text uploadColor subForms" for="fileInput1"
-      id="fileInputLabel1" style='width: 107px;'>Upload File</label>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
 
-  <div class="fileDisplay" id="fileDisplay1"
-      style=" align-items: center;">
-      <span class="fileName" id="fileName1"
-         style='font-size: 12px;margin-left: 20px;'></span>
-   </div> 
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 10px;
+      margin-top: 20px;
+    }
 
-</div>
+    .day {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+      cursor: pointer;
+    }
 
+    .day-name {
+      text-align: center;
+      font-weight: bold;
+      padding: 10px;
+    }
 
-<div class="uploadBtn">
-   <input type="file" class="form-control-file disableIt disableBefore"
-      id="extraFileInput1" style="display: none"
-      name="toolbox_talk_manhours_file">
-   <label class="input-group-text uploadColor subForms" for="extraFileInput1"
-      id="extrafileInputLabel1" style='width: 107px;'>Upload File</label>
+    .highlight {
+      background-color: #7af5f5;
+    }
+  </style>
+</head>
+<body>
+  <div id="calendar" class="calendar"></div>
 
-    <div class="fileDisplay" id="fileDisplay11"
-      style="display: none; align-items: center;">
-      <span class="fileName" id="fileName11"
-         style='font-size: 12px; margin-left: 20px;'></span>
-   </div>
+  <script>
+    // Get the current date
+    const currentDate = new Date();
 
-</div>
+    // Create a calendar for the current month
+    function createCalendar(year, month) {
+      const calendarElement = document.getElementById('calendar');
+      calendarElement.innerHTML = '';
 
+      // Add week day names
+      const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      for (const dayName of weekDays) {
+        const dayNameElement = document.createElement('div');
+        dayNameElement.classList.add('day-name');
+        dayNameElement.textContent = dayName;
+        calendarElement.appendChild(dayNameElement);
+      }
 
-<div class="commonWidth">
-   <div class="input-group">
-      <div class="custom-file">
-         <input type="file" class="custom-file-input" name="OpenEvidence" id="OpenEvidence"
-            aria-describedby="openEvidenceAddon" style="display: none;">
-         <label class="custom-file-label" for="openEvidenceInput" id="fileInputLabel1"></label>
-      </div>
-      <div class="input-group-append" id='openEvidenveBtn'>
-         <button class="btn btn-outline-secondary" type="button"
-            onclick="document.getElementById('OpenEvidence').click()" id='OpenEvidenceBtn'>Upload File</button>
-            <span style='font-size:10px;' id='uploadedFileName1'></span>
+      const firstDay = new Date(year, month, 1);
+      const lastDay = new Date(year, month + 1, 0);
 
-      </div>
-   </div>
-</div>
+      for (let day = firstDay; day <= lastDay; day.setDate(day.getDate() + 1)) {
+        const dayElement = document.createElement('div');
+        dayElement.classList.add('day');
+        dayElement.textContent = day.getDate();
 
+        dayElement.addEventListener('click', function() {
+          highlightWeek(day);
+        });
+
+        calendarElement.appendChild(dayElement);
+      }
+    }
+
+    // Highlight the entire week from Saturday to Friday
+    function highlightWeek(selectedDate) {
+      const calendarDays = document.querySelectorAll('.day');
+      const selectedDay = selectedDate.getDay();
+
+      // Calculate the start and end of the week
+      const startOfWeek = new Date(selectedDate);
+      startOfWeek.setDate(selectedDate.getDate() - selectedDay + 1); 
+
+      const endOfWeek = new Date(selectedDate);
+      endOfWeek.setDate(selectedDate.getDate() + (5 - selectedDay) + 1); 
+
+      // Remove existing highlights
+      calendarDays.forEach(day => day.classList.remove('highlight'));
+
+      // Add highlight to the entire week
+      for (let day = startOfWeek; day <= endOfWeek; day.setDate(day.getDate() + 1)) {
+        const dayIndex = day.getDay();
+        calendarDays[dayIndex].classList.add('highlight');
+      }
+    }
+
+    // Initialize the calendar
+    createCalendar(currentDate.getFullYear(), currentDate.getMonth());
+  </script>
+</body>
+</html>

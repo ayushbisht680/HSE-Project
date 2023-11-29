@@ -29,8 +29,10 @@
       .commonWidth{
       display: flex;
       align-items: center;
-      width:203px;
-      height: 60px;;
+      height: 60px;
+      {% comment %} width: 182px; {% endcomment %}
+      width: 160px;
+
       }
       .chnWidth{
       display: flex;
@@ -85,7 +87,7 @@
       .rowTable1{
       display:flex;
       width:3745px;
-      height: 60px;
+      height: 70px;
       align-items: center;
       }
       .srWidth{
@@ -141,6 +143,29 @@
          flex-direction: column;
          align-items: center;
       }
+
+      .commonTextArea{
+         display: flex;
+         align-items: center;
+         width: 335px;
+         height: 60px;
+         {% comment %} background-color: aqua; {% endcomment %}
+        }
+        .valueText{
+            margin-left: 15px;
+            font-size: 15px;
+            font-weight: 400;
+            font-size: 12px;
+            outline:none;
+            width: 296px;
+   
+        }
+
+        .valueForm{
+         width: 290px;
+   
+        }
+
    </style>
    <body>
       <!-- Success Modal -->
@@ -191,28 +216,28 @@
          <div class='commonWidth'>
             <p>Project Code</p>
          </div>
-         <div class='chnWidth'>
+         <div class='commonTextArea'>
             <p>Description of Incident</p>
          </div>
-         <div class='commonWidth'>
+         <div class='commonTextArea'>
             <p>Root Cause</p>
          </div>
          <div class='commonWidth'>
             <p>Type of Incident</p>
          </div>
          <div class='commonWidth'>
-            <p>Hi-Potential Event</p>
+            <p>High Potential Event</p>
          </div>
          <div class='commonWidth'>
             <p>Cateogry</p>
          </div>
-         <div class='chnWidth'>
+         <div class='commonTextArea'>
             <p>Immediate Action Taken</p>
          </div>
-         <div class='commonWidth'>
+         <div class='commonTextArea'>
             <p>Corrective Action</p>
          </div>
-         <div class='commonWidth'>
+         <div class='commonTextArea'>
             <p>Preventive Action</p>
          </div>
          <div class='commonWidth'>
@@ -234,17 +259,23 @@
             <input type="hidden" name="plant_id" id="plant_id"  >
             <input type="hidden" name="formSubmitDate" id="formSubmitDate" >
 
-            <div class="Srno"><input type="text" class="srWidth valueInput1" placeholder="Sr.No" name="SrNo" id="Srno" value='1'></div>
-            <div class="commonWidth"><input type="date" class="valueInput1" placeholder="Incident Date" name="IncidentDate" required></div>
-            <div class="commonWidth"><input type="time" class="valueInput1" placeholder="Incident Time" name="IncidentTime" required></div>
-            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Location" name="Location" required></div>
-            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Exact Location" name="ExactLocation" required></div>
-            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Plant Site" name="PlantSite" required></div>
-            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Project Code" name="ProjectCode" required></div>
-            <div class="chnWidth"><input type="text" class=" extraspace valueInput1" placeholder="Description of Incident" name="DescriptionOfIncident" required></div>
-            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Root Cause" name="RootCause" required></div>
+            <div class="Srno"><input type="text" class="srWidth valueInput1" placeholder="Sr.No" name="sr_no" id="Srno" value='1'></div>
+            <div class="commonWidth"><input type="date" class="valueInput1" placeholder="Incident Date" name="incident_date" required></div>
+            <div class="commonWidth"><input type="time" class="valueInput1" placeholder="Incident Time" name="incident_time" required></div>
+            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Location" name="location" required></div>
+            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Exact Location" name="exact_location" required></div>
+            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Plant Site" name="plant_site" required></div>
+            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Project Code" name="project_code" required></div>
+
+            <div class="commonTextArea"><textarea rows="3" class="valueText" placeholder="Description of Incident" name="description_of_incident"  required></textarea>
+            </div>
+             
+            <div class="commonTextArea"><textarea rows="3" class="valueText" placeholder="Root Cause" name="root_cause"  required></textarea>
+            </div>
+
+
             <div class="commonWidth">
-               <select class="CLassdropdown" name="TypeOfIncident" required>
+               <select class="CLassdropdown" name="type_of_incident" required>
                   <option value="Near Miss">Near Miss</option>
                   <option value="LTI">LTI</option>
                   <option value="MTI">MTI</option>
@@ -256,29 +287,36 @@
                </select>
             </div>
             <div class="commonWidth">
-               <select class="CLassdropdown" name="HiPotentialIncident" required>
+               <select class="CLassdropdown" name="high_potential_incident" required>
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
                   <option value="NA">NA</option>
                </select>
             </div>
             <div class="commonWidth">
-               <select class="CLassdropdown" name="Cateogry" required>
+               <select class="CLassdropdown" name="category" required>
                   <option value="Recordable">Recordable</option>
                   <option value="Non Recordable">Non Recordable</option>
                </select>
             </div>
-            <div class="chnWidth"><input type="text" class=" extraspace valueInput1" placeholder="Immediate Action Taken" name="ImmediateActionTaken" required></div>
-            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Corrective Action" name="CorrectiveAction" required></div>
-            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Preventive Action" name="PreventionAction" required></div>
-            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Responsible Person" name="ResponsiblePerson" required></div>
-            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Investigation Status" name="InvestigationStatus" required></div>
+
+            <div class="commonTextArea"><textarea rows="3" class="valueText" placeholder="Immediate Action Taken" name="immediate_action_taken"  required></textarea>
+            </div>
+
+            <div class="commonTextArea"><textarea rows="3" class="valueText" placeholder="Corrective Action" name="corrective_action"  required></textarea>
+            </div>
+
+            <div class="commonTextArea"><textarea rows="3" class="valueText" placeholder="Preventive Action" name="prevention_action"  required></textarea>
+            </div>
+
+            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Responsible Person" name="responsible_person" required></div>
+            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Investigation Status" name="investigation_status" required></div>
 
 
             <div class="commonWidth">
                <div class="input-group">
                   <div class="custom-file">
-                     <input type="file" class="custom-file-input" name="AttachReport" id="AttachReport"
+                     <input type="file" class="custom-file-input" name="attach_report" id="AttachReport"
                         aria-describedby="openEvidenceAddon" style="display: none;">
                      <label class="custom-file-label" for="AttachReport" id="fileInputLabel1"></label>
                   </div>
@@ -290,7 +328,6 @@
                </div>
             </div>
 
-
             <div class="Srno">
                <button type="submit" class="btn submitBUtton" id="submitButton" >Submit</button>
             </div>
@@ -299,33 +336,34 @@
       <div id="formContainer"></div>
       <template id="formRowTemplate">
          <div class="rowTable1">
-         <input type="hidden" name="week_number" id="week_number_Form" value="">
-         <input type="hidden" name="year" id="year_form" value="">
-         <div class="Srno"><input type="text" class="srWidth valueInput" placeholder="Sr.No" name="SrNo" disabled></div>
-         <div class="commonWidth"><input type="text" class="valueInput" placeholder="Incident Date" name="IncidentDate" disabled></div>
-         <div class="commonWidth"><input type="text" class="valueInput" placeholder="Incident Time" name="IncidentTime" disabled></div>
-         <div class="commonWidth"><input type="text" class="valueInput" placeholder="Location" name="Location" disabled></div>
-         <div class="commonWidth"><input type="text" class="valueInput" placeholder="Exact Location" name="ExactLocation" disabled></div>
-         <div class="commonWidth"><input type="text" class="valueInput" placeholder="Plant Site" name="PlantSite" disabled></div>
-         <div class="commonWidth"><input type="text" class="valueInput" placeholder="Project Code" name="ProjectCode" disabled></div>
-         <div class="chnWidth"><input type="text" class=" extraspace valueInput" placeholder="Description of Incident" name="DescriptionOfIncident" disabled></div>
-         <div class="commonWidth"><input type="text" class="valueInput" placeholder="Root Cause" name="RootCause" disabled></div>
-         <div class="commonWidth"><input type="text" class="valueInput" placeholder="TypeOfIncident" name="TypeOfIncident" disabled></div>
-         <div class="commonWidth"><input type="text" class="valueInput" placeholder="HiPotentialIncident" name="HiPotentialIncident" disabled></div>
-         <div class="commonWidth"><input type="text" class="valueInput" placeholder="Cateogry" name="Cateogry" disabled></div>
-         <div class="chnWidth"><input type="text" class=" extraspace valueInput" placeholder="Immediate Action Taken" name="ImmediateActionTaken" disabled></div>
-         <div class="commonWidth"><input type="text" class="valueInput" placeholder="Corrective Action" name="CorrectiveAction" disabled></div>
-         <div class="commonWidth"><input type="text" class="valueInput" placeholder="Preventive Action" name="PreventionAction" disabled></div>
-         <div class="commonWidth"><input type="text" class="valueInput" placeholder="Responsible Person" name="ResponsiblePerson" disabled></div>
-         <div class="commonWidth"><input type="text" class="valueInput" placeholder="Investigation Status" name="InvestigationStatus" disabled></div>
-         <div class="commonWidth"><input type="text" class="valueInput" placeholder="AttachReport " name="AttachReport" id="AttachReport" disabled></div>
+         <div class="Srno"><input type="text" class="srWidth valueInput" placeholder="Sr.No" name="sr_no" disabled></div>
+         <div class="commonWidth"><input type="text" class="valueInput" placeholder="Incident Date" name="incident_date" disabled></div>
+         <div class="commonWidth"><input type="text" class="valueInput" placeholder="Incident Time" name="incident_time" disabled></div>
+         <div class="commonWidth"><input type="text" class="valueInput" placeholder="Location" name="location" disabled></div>
+         <div class="commonWidth"><input type="text" class="valueInput" placeholder="Exact Location" name="exact_location" disabled></div>
+         <div class="commonWidth"><input type="text" class="valueInput" placeholder="Plant Site" name="plant_site" disabled></div>
+         <div class="commonWidth"><input type="text" class="valueInput" placeholder="Project Code" name="project_code" disabled></div>
+
+         <div class="commonTextArea"><textarea rows="3" class="valueInput valueForm" placeholder="Description of Incident" name="description_of_incident" disabled></textarea></div>
+         <div class="commonTextArea"><textarea rows="3" class="valueInput valueForm" placeholder="Root Cause" name="root_cause" disabled></textarea></div>
+
+
+         <div class="commonWidth"><input type="text" class="valueInput" placeholder="TypeOfIncident" name="type_of_incident" disabled></div>
+         <div class="commonWidth"><input type="text" class="valueInput" placeholder="HiPotentialIncident" name="high_potential_incident" disabled></div>
+         <div class="commonWidth"><input type="text" class="valueInput" placeholder="Cateogry" name="category" disabled></div>
+
+         <div class="commonTextArea"><textarea rows="3" class="valueInput valueForm" placeholder="Immediate Action Taken" name="immediate_action_taken" disabled></textarea></div>
+         <div class="commonTextArea"><textarea rows="3" class="valueInput valueForm" placeholder="Corrective Action" name="corrective_action" disabled></textarea></div>
+         <div class="commonTextArea"><textarea rows="3" class="valueInput valueForm" placeholder="Preventive Action" name="prevention_action" disabled></textarea></div>
+
+
+         <div class="commonWidth"><input type="text" class="valueInput" placeholder="Responsible Person" name="responsible_person" disabled></div>
+         <div class="commonWidth"><input type="text" class="valueInput" placeholder="Investigation Status" name="investigation_status" disabled></div>
+         <div class="commonWidth"><input type="text" class="valueInput" placeholder="AttachReport " name="attach_report" id="AttachReport" disabled></div>
       </template>
 
 
-      <script>
-
-   
-      </script> 
+     
    </body>
    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -344,10 +382,10 @@
       if (fileInput.files.length > 0) {
          const fileName = fileInput.files[0].name;
          uploadedFileName.textContent = fileName;
-         uploadedFileName.style.display = 'inline'; // Show the span element
+         uploadedFileName.style.display = 'inline'; 
       } else {
-         uploadedFileName.textContent = ''; // Clear the span content
-         uploadedFileName.style.display = 'none'; // Hide the span element
+         uploadedFileName.textContent = ''; 
+         uploadedFileName.style.display = 'none'; 
       }
      }
 
@@ -397,7 +435,7 @@
 
             }
 
-            document.getElementById('Srno').value=dataArray[dataArray.length-1].SrNo+1
+            document.getElementById('Srno').value=dataArray.length+1;
             createAndPopulateFormRows(dataArray); 
          }
       })
@@ -416,28 +454,53 @@
       
       
       
-      function createAndPopulateFormRow(dataItem) {
-      const template = document.getElementById('formRowTemplate');
-      const newRow = document.importNode(template.content, true);
+      function createAndPopulateFormRow(dataItem,no_of_entries) {
+         console.log(dataItem);
+         console.log(`number of entries are ${no_of_entries}`)
+       
+         // Separate date and time
+         const template = document.getElementById('formRowTemplate');
+         const newRow = document.importNode(template.content, true);
+       
+         let parsedDatetime = dataItem.datetime_observation;
+         let [datePart, timeWithOffset] = parsedDatetime.split('T');
+
+         let timePart = timeWithOffset.split('+')[0];
+         
+         let [year, month, day] = datePart.split('-');
+         
+         let formattedDate = `${day}-${month}-${year}`;
+         
+         console.log('Date:', formattedDate); // Output: 24-11-2023
+         console.log('Time:', timePart); // Output: 18:47
+       
+         const inputFields = newRow.querySelectorAll('.valueInput');
+         for (const field of inputFields) {
+           const fieldName = field.getAttribute('name');
+       
+           field.value = dataItem[fieldName] || '';
+         }
+         
+         const SrNo=newRow.querySelector('[name="sr_no"]')
+         const dateField = newRow.querySelector('[name="incident_date"]');
+         const timeField = newRow.querySelector('[name="incident_time"]');
+         dateField.value = formattedDate;
+         timeField.value = timePart;
+         SrNo.value=no_of_entries
+
+       
+         const formContainer = document.getElementById('formContainer');
+         formContainer.appendChild(newRow);
+       }
       
-      
-      const inputFields = newRow.querySelectorAll('.valueInput');
-      for (const field of inputFields) {
-       const fieldName = field.getAttribute('name');
-       field.value = dataItem[fieldName] || '';
-      }
-      
-      const formContainer = document.getElementById('formContainer');
-      formContainer.appendChild(newRow);
-      
-      
-      }
-      
-      function createAndPopulateFormRows(data) {
-      for (const dataItem of data) {      
-      createAndPopulateFormRow(dataItem);
-      }
-      }
+       function createAndPopulateFormRows(data) {
+         console.log(data)
+         counter=0
+         for (const dataItem of data) {     
+              console.log(counter++)
+         createAndPopulateFormRow(dataItem,counter);
+         }
+         }
 
       
       function handleFormSubmission(formId, url) {

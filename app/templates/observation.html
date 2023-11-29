@@ -29,8 +29,15 @@
       .commonWidth{
       display: flex;
       align-items: center;
-      width:203px;
-      height: 60px;;
+      width: 180px;
+      height: 60px;
+      }
+      .cateogryWidth{
+      display: flex;
+      align-items: center;
+      width: 256px;
+      height: 60px;
+
       }
       .chnWidth{
       display: flex;
@@ -46,6 +53,7 @@
       font-size: 13px;
       }
       .valueInput{
+      width: 215px;
       height:43px;
       margin-left: 15px;
       background-color: rgba(62, 159, 254, 0);
@@ -85,7 +93,7 @@
       .rowTable1{
       display:flex;
       width:3340px;
-      height: 60px;
+      height: 70px;
       align-items: center;
       }
       .srWidth{
@@ -143,7 +151,36 @@
          flex-direction: column;
          align-items: center;
       }
-     
+      .cateogryDropdown{
+         width: 233px;
+         height: 28px;
+         font-size: 13px;
+         padding: 2px;
+         margin-left: 15px;
+         border: 1.5px solid #2c8ff1 !important;
+         color: #2c8ff1 !important;
+         border-radius: 6px;
+      }
+     .commonTextArea{
+      display: flex;
+      align-items: center;
+      width: 335px;
+      height: 60px;
+      {% comment %} background-color: aqua; {% endcomment %}
+     }
+     .valueText{
+         margin-left: 15px;
+         font-size: 15px;
+         font-weight: 400;
+         font-size: 12px;
+         outline:none;
+         width: 296px;
+
+     }
+     .valueForm{
+      width: 290px;
+
+     }
    </style>
    <body>
       
@@ -188,16 +225,16 @@
          <div class='commonWidth'>
             <p>Plant/Site</p>
          </div>
-         <div class='commonWidth'>
+         <div class='commonTextArea'>
             <p>Observation</p>
          </div>
          <div class='commonWidth'>
             <p>Unsafe Condition</p>
          </div>
-         <div class='commonWidth'>
+         <div class='cateogryWidth'>
             <p>Cateogry</p>
          </div>
-         <div class='chnWidth'>
+         <div class='commonTextArea'>
             <p>Corrective Action Taken</p>
          </div>
          <div class='commonWidth'>
@@ -231,42 +268,75 @@
             <input type="hidden" name="plant_id" id="plant_id" >
             <input type="hidden" name="formSubmitDate" id="formSubmitDate" >
 
-            <div class="Srno"><input type="text" class="srWidth valueInput1" placeholder="Sr.No" name="SrNo" id="Srno" value='1'></div>
-            <div class="commonWidth"><input type="date" class="valueInput1" placeholder="Date" name="Date" required></div>
-            <div class="commonWidth"><input type="time" class="valueInput1" placeholder="Time" name="Time" required></div>
-            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Location" name="Location" id="Location" required></div>
-            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Plant/Site" name="PlantSite" id="PlantSite" required></div>
-            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Observation" name="Observation" id="Observation" required></div>
-            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Unsafe Condition" name="UnsafeCondition" id="UnsafeCondition" required></div>
-            <div class="commonWidth">
-               <select class="CLassdropdown" name="Cateogry" id="Cateogry" required>
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
-                  <option value="NA">NA</option>
+            <div class="Srno"><input type="text" class="srWidth valueInput1" placeholder="Sr.No" name="sr_no" id="Srno" value='1'></div>
+            <div class="commonWidth"><input type="date" class="valueInput1" placeholder="Date" name="date" id='date' required></div>
+            <div class="commonWidth"><input type="time" class="valueInput1" placeholder="Time" name="time"id='time' required></div>
+            <input type="hidden"  name="datetime_observation" >
+            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Location" name="location" id="Location" required></div>
+            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Plant/Site" name="plant_site" id="PlantSite" required></div>
+            <div class="commonTextArea"><textarea rows="3" class="valueText" placeholder="Observation" name="observation" id="Observation" required></textarea>
+            </div>
+            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Unsafe Condition" name="unsafe_condition" id="UnsafeCondition" required></div>
+            <div class="cateogryWidth">
+               <select class="cateogryDropdown" name="category" id="Cateogry" required>
+
+                  {% for choice in category_choices %}
+                 <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                 {% endfor %}
+                  {% comment %} <option value="Category">Category</option>
+                  <option value="Legal Requirement">Legal Requirement</option>
+                  <option value="Permit to Work">Permit to Work</option>
+                  <option value="Electrical Work">Electrical Work</option>
+                  <option value="Working at Height">Working at Height</option>
+                  <option value="Lifting Operation">Lifting Operation</option>
+                  <option value="Excavation">Excavation</option>
+                  <option value="Hot Work">Hot Work</option>
+                  <option value="Confined Space Work">Confined Space Work</option>
+                  <option value="Manual Handling">Manual Handling</option>
+                  <option value="Houskeeping">Houskeeping</option>
+                  <option value="Chemical Handling">Chemical Handling</option>
+                  <option value="SOP and Procedure Violation">SOP and Procedure Violation</option>
+                  <option value="Medical Examination">Medical Examination</option>
+                  <option value="PPE">PPE</option>
+                  <option value="Vehicle Movment">Vehicle Movment</option>
+                  <option value="Waste Management">Waste Management</option>
+                  <option value="Welfare Facility">Welfare Facility</option>
+                  <option value="General - Signage, Access, Walkway">General - Signage, Access, Walkway</option>
+                  <option value="Emergency Preparedness">Emergency Preparedness</option> {% endcomment %}
+                  
                </select>
             </div>
-            <div class="chnWidth"><input type="text" class="valueInput1" placeholder="Corrective Action Taken" name="CorrrectiveActionTAken" id="CorrrectiveActionTAken" required></div>
-            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Responsible Person" name="ResponsiblePerson" id="ResponsiblePerson" required></div>
-            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Closure Date" name="ClosureDate" id="ClosureDate" required></div>
+           
+            <div class="commonTextArea"><textarea rows="3" class="valueText" placeholder="Corrective Action Taken" name="corrective_action_taken" id="CorrrectiveActionTAken" required></textarea>
+            </div>
+            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Responsible Person" name="responsible_person" id="ResponsiblePerson" required></div>
+            <div class="commonWidth"><input type="date" class="valueInput1" placeholder="Closure Date" name="form_closure_date" id="ClosureDate" required></div>
             <div class="commonWidth">
-               <select class="CLassdropdown" name="Status" id="Status" required>
-                  <option value="Yes">Yes</option>
+               <select class="CLassdropdown" name="status" id="Status" required>
+                  {% for choice in status_choices %}
+                  <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                 {% endfor %}
+                  {% comment %} <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <option value="NA">NA</option>
+                  <option value="NA">NA</option> {% endcomment %}
+
                </select>
             </div>
             <div class="commonWidth">
-               <select class="CLassdropdown" name="StopWork" id="StopWork" required>
-                  <option value="Yes">Yes</option>
+               <select class="CLassdropdown" name="stop_work" id="StopWork" required>
+                  {% for choice in status_choices %}
+                  <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                 {% endfor %}
+                  {% comment %} <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <option value="NA">NA</option>
+                  <option value="NA">NA</option> {% endcomment %}
                </select>
             </div>
             
             <div class="commonWidth">
                <div class="input-group">
                   <div class="custom-file">
-                     <input type="file" class="custom-file-input" name="OpenEvidence" id="OpenEvidence"
+                     <input type="file" class="custom-file-input" name="open_evidence" id="OpenEvidence"
                         aria-describedby="openEvidenceAddon" style="display: none;">
                      <label class="custom-file-label" for="openEvidenceInput" id="fileInputLabel1"></label>
                   </div>
@@ -282,7 +352,7 @@
             <div class="commonWidth">
                <div class="input-group">
                   <div class="custom-file">
-                     <input type="file" class="custom-file-input" name="ClosedEvidence" id="ClosedEvidence"
+                     <input type="file" class="custom-file-input" name="closed_evidence" id="ClosedEvidence"
                         aria-describedby="openEvidenceAddon" style="display: none;">
                      <label class="custom-file-label" for="closedEvidenceInput" id="fileInputLabel2"></label>
                   </div>
@@ -295,7 +365,7 @@
             </div>
 
             <div class="chnWidth">
-               <input type="text" placeholder="Remark" class=" extraspace valueInput1" name="Remark" id="Remark" required>
+               <input type="text" placeholder="Remark" class=" extraspace valueInput1" name="remark" id="Remark" required>
             </div>
             <div >
                <button type="submit" class="btn submitBUtton" id="submitButton">Submit</button>
@@ -305,25 +375,27 @@
       <div id="formContainer"></div>
       <template id="formRowTemplate">
          <div class="rowTable1">
-            <input type="hidden" name="week_number" id="week_number_Form" value="">
-            <input type="hidden" name="year" id="year_form" value="">
-            <div class="Srno"><input type="text" class="srWidth valueInput" placeholder="Sr.No" name="SrNo" disabled></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Date" name="Date" disabled></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Time" name="Time" disabled></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Location" name="Location" id="Location" disabled></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Plant/Site" name="PlantSite" id="PlantSite" disabled></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Observation" name="Observation" id="Observation" disabled></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Unsafe Condition" name="UnsafeCondition" id="UnsafeCondition" disabled></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Cateogry" name="Cateogry" id="Cateogry" disabled></div>
-            <div class="chnWidth"><input type="text" class="valueInput" placeholder="Corrective Action Taken" name="CorrrectiveActionTAken" id="CorrrectiveActionTAken" disabled></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Responsible Person" name="ResponsiblePerson" id="ResponsiblePerson" disabled></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Closure Date" name="ClosureDate" id="ClosureDate" disabled></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Status" name="Status" id="Status" disabled></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="StopWork" name="StopWork" id="StopWork" disabled></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="OpenEvidence" name="OpenEvidence" id="OpenEvidence" disabled></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="ClosedEvidence" name="ClosedEvidence" id="ClosedEvidence" disabled></div>
+            <div class="Srno"><input type="text" class="srWidth valueInput" placeholder="Sr.No" name="sr_no" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Date" name="date" id='date' disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Time" name="time" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Location" name="location" id="Location" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Plant/Site" name="plant_site" id="PlantSite" disabled></div>
+            <div class="commonTextArea"><textarea rows="3" class="valueInput valueForm " placeholder="Observation" name="observation" id="Observation" disabled></textarea></div>
+
+            
+
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Unsafe Condition" name="unsafe_condition" id="UnsafeCondition" disabled></div>
+            <div class="cateogryWidth"><input type="text" class="valueInput" placeholder="Cateogry" name="category" id="Cateogry" disabled></div>
+            <div class="commonTextArea"><textarea rows="3" class="valueInput valueForm" placeholder="Corrective Action Taken" name="corrective_action_taken" id="CorrrectiveActionTAken"  disabled></textarea></div>
+
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Responsible Person" name="responsible_person" id="ResponsiblePerson"  disabled ></div>
+            <div class="commonWidth"><input type="date" class="valueInput" placeholder="Closure Date" name="form_closure_date" id="ClosureDate" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Status" name="status" id="Status" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="StopWork" name="stop_work" id="StopWork" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="OpenEvidence" name="open_evidence" id="OpenEvidence" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="ClosedEvidence" name="closed_evidence" id="ClosedEvidence" disabled></div>
             <div class="chnWidth">
-               <input type="text" placeholder="Remark" class=" extraspace valueInput" name="Remark" id="Remark" disabled>
+               <input type="text" placeholder="Remark" class=" extraspace valueInput" name="remark" id="Remark" disabled>
             </div>
          </div>
       </template>
@@ -350,15 +422,13 @@
       if (fileInput.files.length > 0) {
          const fileName = fileInput.files[0].name;
          uploadedFileName.textContent = fileName;
-         uploadedFileName.style.display = 'inline'; // Show the span element
+         uploadedFileName.style.display = 'inline';
       } else {
-         uploadedFileName.textContent = ''; // Clear the span content
-         uploadedFileName.style.display = 'none'; // Hide the span element
+         uploadedFileName.textContent = ''; 
+         uploadedFileName.style.display = 'none'; 
       }
      }
 
-   
-     
 
       function getQueryString() {
          const url = window.location.href;
@@ -370,12 +440,12 @@
 
 
       const queryParams = getQueryString();
-      console.log(queryParams.date); // This will log the "date" parameter
+      console.log(queryParams.date); 
       console.log(queryParams.plantcode);
 
        document.getElementById("redirectButton").addEventListener("click", function() {
        // window.location.href = `/api/my_html/?date=${queryParams.date}`; 
-        window.history.back(-1);
+        window.history.back();
 
        });
       
@@ -397,15 +467,15 @@
             const dataArray = data.data;
             const formStatus = data.status;
 
-            console.log('Data Array:', dataArray);
-            console.log('Form Status:', formStatus);
+            //console.log('Data Array:', dataArray);
+            //console.log('Form Status:', formStatus);
 
             if(formStatus==1){
                document.getElementById('addRowButton').style.display='none'
 
             }
 
-            document.getElementById('Srno').value=dataArray[dataArray.length-1].SrNo+1
+            document.getElementById('Srno').value=dataArray.length+1;
             createAndPopulateFormRows(dataArray); 
          }
          
@@ -424,26 +494,51 @@
          document.getElementById("form").style.display = "block";
       });  
       
-      function createAndPopulateFormRow(dataItem) {
-      const template = document.getElementById('formRowTemplate');
-      const newRow = document.importNode(template.content, true);
-      
-      
-      const inputFields = newRow.querySelectorAll('.valueInput');
-      for (const field of inputFields) {
-       const fieldName = field.getAttribute('name');
-       field.value = dataItem[fieldName] || '';
-      }
-      
-      const formContainer = document.getElementById('formContainer');
-      formContainer.appendChild(newRow);
-      
-      
-      }
+      function createAndPopulateFormRow(dataItem,no_of_entries) {
+         console.log(dataItem);
+         console.log(`number of entries are ${no_of_entries}`)
+       
+         // Separate date and time
+         const template = document.getElementById('formRowTemplate');
+         const newRow = document.importNode(template.content, true);
+       
+         let parsedDatetime = dataItem.datetime_observation;
+         let [datePart, timeWithOffset] = parsedDatetime.split('T');
+
+         let timePart = timeWithOffset.split('+')[0];
+         
+         let [year, month, day] = datePart.split('-');
+         
+         let formattedDate = `${day}-${month}-${year}`;
+         
+         console.log('Date:', formattedDate); // Output: 24-11-2023
+         console.log('Time:', timePart); // Output: 18:47
+       
+         const inputFields = newRow.querySelectorAll('.valueInput');
+         for (const field of inputFields) {
+           const fieldName = field.getAttribute('name');
+       
+           field.value = dataItem[fieldName] || '';
+         }
+         
+         const SrNo=newRow.querySelector('[name="sr_no"]')
+         const dateField = newRow.querySelector('[name="date"]');
+         const timeField = newRow.querySelector('[name="time"]');
+         dateField.value = formattedDate;
+         timeField.value = timePart;
+         SrNo.value=no_of_entries
+
+       
+         const formContainer = document.getElementById('formContainer');
+         formContainer.appendChild(newRow);
+       }
+       
       
       function createAndPopulateFormRows(data) {
-      for (const dataItem of data) {      
-      createAndPopulateFormRow(dataItem);
+      counter=0
+      for (const dataItem of data) {     
+           console.log(counter++)
+      createAndPopulateFormRow(dataItem,counter);
       }
       }
 
@@ -502,8 +597,7 @@
                setTimeout(function() {
                   window.location.reload();
                 }, 1000);
-
-               
+ 
              })
              .catch(error => {
                  console.error("Error:", error);
@@ -511,17 +605,13 @@
          });
          } 
          
-         
-         
-         
          function getCookie(name) {
          const value = `; ${document.cookie}`; 
          const parts = value.split(`; ${name}=`);
          if (parts.length === 2) return parts.pop().split(';').shift();
          }
          
-         
-         
+
          handleFormSubmission("form", "{% url 'observation_form' %}");
 
 
