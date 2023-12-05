@@ -29,7 +29,7 @@
       .commonWidth{
       display: flex;
       align-items: center;
-      width:203px;
+      width: 170px;
       height: 60px;;
       }
       .chnWidth{
@@ -85,7 +85,7 @@
       .rowTable1{
       display:flex;
       width:2448px;
-      height: 60px;
+      height: 70px;
       align-items: center;
       }
       .srWidth{
@@ -156,6 +156,27 @@
             height:36px;
             margin-left:16px;
          }
+
+         .commonTextArea{
+            display: flex;
+            align-items: center;
+            width: 335px;
+            height: 60px;
+            {% comment %} background-color: aqua; {% endcomment %}
+           }
+           .valueText{
+               margin-left: 15px;
+               font-size: 15px;
+               font-weight: 400;
+               font-size: 12px;
+               outline:none;
+               width: 296px;
+      
+           }
+           .valueForm{
+            width: 290px;
+      
+           }
    </style>
    
    <body>
@@ -205,10 +226,10 @@
             <div class='commonWidth'>
                <p>Memo No.</p>
             </div>
-            <div class='commonWidth'>
+            <div class='commonTextArea'>
                <p>Description</p>
             </div>
-            <div class='commonWidth'>
+            <div class='commonTextArea'>
                <p>Action Taken</p>
             </div>
             <div class='commonWidth'>
@@ -233,21 +254,29 @@
                <input type="hidden" name="plant_id" id="plant_id"  >
                <input type="hidden" name="formSubmitDate" id="formSubmitDate" >
 
-               <div class="Srno"><input type="text" class="srWidth valueInput1" placeholder="Enter Here" name="sr_no" id="Srno" value='1'></div>
+               <div class="Srno"><input type="text" class="srWidth valueInput1" placeholder="Enter Here" name="sr_no" id="Srno" value='1' style='border: none;' disabled></div>
                <div class="commonWidth"><input type="date" class="valueInput1" placeholder="Enter Here" name="date" required></div>
                <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Enter Here" name="project_name" required></div>
                <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Enter Here" name="project_code" required></div>
                <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Enter Here" name="business_segment" required></div>
                <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Enter Here" name="memo_no" required></div>
-               <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Enter Here" name="description" required></div>
-               <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Enter Here" name="action_taken" required></div>
+
+               <div class="commonTextArea"><textarea rows="3" class="valueText" placeholder="Enter Here" name="description" required></textarea>
+               </div>
+
+               <div class="commonTextArea"><textarea rows="3" class="valueText" placeholder="Enter Here" name="action_taken" required></textarea>
+               </div>
+
                <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Enter Here " name="issued_by" required></div>
                <div class="chnWidth"><input type="text" class=" extraspace valueInput1" placeholder="Enter Here" name="issued_to" required></div>
                <div class="commonWidth">
                   <select class="CLassdropdown" name="penalty_imposed" required>
-                     <option value="Yes">Yes</option>
+                     {% comment %} <option value="Yes">Yes</option>
                      <option value="No">No</option>
-                     <option value="NA">NA</option>
+                     <option value="NA">NA</option> {% endcomment %}
+                     {% for choice in penalty_choices %}
+                     <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                    {% endfor %}
                   </select>
                </div>
                <div class="commonWidth"><input type="number" class="valueInput1" placeholder="Enter Here" name="amount" required ></div>
@@ -268,8 +297,10 @@
             <div class="commonWidth"><input type="text" class="valueInput" placeholder="Project Code" name="project_code" disabled></div>
             <div class="commonWidth"><input type="text" class="valueInput" placeholder="Business Segment" name="business_segment" disabled></div>
             <div class="commonWidth"><input type="text" class="valueInput" placeholder="Memo No." name="memo_no" disabled></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Description" name="description" disabled></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Action Taken" name="action_taken" disabled></div>
+
+            <div class="commonTextArea"><textarea rows="3" class="valueInput valueForm" placeholder="Description" name="description"  disabled></textarea></div>
+            <div class="commonTextArea"><textarea rows="3" class="valueInput valueForm" placeholder="Action Taken" name="action_taken"  disabled></textarea></div>
+
             <div class="commonWidth"><input type="text" class="valueInput" placeholder="Issued By" name="issued_by" disabled></div>
             <div class="chnWidth"><input type="text" class=" extraspace valueInput" placeholder="Issued To" name="issued_to" disabled></div>
             <div class="commonWidth"><input type="text" class="valueInput" placeholder="Issued By" name="penalty_imposed" disabled></div>
@@ -331,7 +362,7 @@
 
             }
 
-            document.getElementById('Srno').value=dataArray[dataArray.length-1].sr_no+1
+            document.getElementById('Srno').value=dataArray.length+1;
             createAndPopulateFormRows(dataArray); 
          } 
       
@@ -353,29 +384,47 @@
       
       
       
-      function createAndPopulateFormRow(dataItem) {
-      const template = document.getElementById('formRowTemplate');
-      const newRow = document.importNode(template.content, true);
+      function createAndPopulateFormRow(dataItem, no_of_entries) {
+         console.log(dataItem);
+         console.log(`number of entries are ${no_of_entries}`);
+     
+         // Separate date and time
+         const template = document.getElementById('formRowTemplate');
+         const newRow = document.importNode(template.content, true);
+     
+         let parsedDatetime = dataItem.date_field;
+     
+         let [year, month, day] = parsedDatetime.split('-');
+     
+         let formattedDate = `${day}-${month}-${year}`;
+     
+         console.log('Date:', formattedDate); // Output: 21-11-2023
+     
+         const inputFields = newRow.querySelectorAll('.valueInput');
+         for (const field of inputFields) {
+             const fieldName = field.getAttribute('name');
+     
+             field.value = dataItem[fieldName] || '';
+         }
+     
+         const SrNo = newRow.querySelector('[name="sr_no"]');
+         const dateField = newRow.querySelector('[name="date"]');
+         dateField.value = formattedDate;
+         SrNo.value = no_of_entries;
+     
+         const formContainer = document.getElementById('formContainer');
+         formContainer.appendChild(newRow);
+     }
+     
       
       
-      const inputFields = newRow.querySelectorAll('.valueInput');
-      for (const field of inputFields) {
-       const fieldName = field.getAttribute('name');
-       field.value = dataItem[fieldName] || '';
-      }
-      
-      const formContainer = document.getElementById('formContainer');
-      formContainer.appendChild(newRow);
-      
-      
-      
-      }
-      
-      function createAndPopulateFormRows(data) {
-      for (const dataItem of data) {      
-      createAndPopulateFormRow(dataItem);
-      }
-      }
+       function createAndPopulateFormRows(data) {
+         counter=0
+         for (const dataItem of data) {     
+              console.log(counter++)
+         createAndPopulateFormRow(dataItem,counter);
+         }
+         }
 
       function handleFormSubmission(formId, url) {
          const form = document.getElementById(formId);

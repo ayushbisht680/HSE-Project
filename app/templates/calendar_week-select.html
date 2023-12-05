@@ -1,92 +1,102 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Calendar</title>
+    <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <script>
-        // Ignore this in your implementation
-        window.isMbscDemo = true;
-    </script>
-
-    <title>
-        Week selection
-    </title>
-
-    <!-- Mobiscroll JS and CSS Includes -->
-    <link rel="stylesheet" href="css/mobiscroll.javascript.min.css">
-    <script src="js/mobiscroll.javascript.min.js"></script>
-
-    <style type="text/css">
-            body {
-        margin: 0;
-        padding: 0;
-    }
-
-    button {
-        display: inline-block;
-        margin: 5px 5px 0 0;
-        padding: 10px 30px;
-        outline: 0;
-        border: 0;
-        cursor: pointer;
-        background: #5185a8;
-        color: #fff;
-        text-decoration: none;
-        font-family: arial, verdana, sans-serif;
-        font-size: 14px;
-        font-weight: 100;
-    }
-
-    input {
-        width: 100%;
-        margin: 0 0 5px 0;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 0;
-        font-family: arial, verdana, sans-serif;
-        font-size: 14px;
-        box-sizing: border-box;
-        -webkit-appearance: none;
-    }
-
-    .mbsc-page {
-        padding: 1em;
-    }
-
+  
+    <base href="{% static '/' %}">
+    
+    <link rel="stylesheet" href="{% static 'css/mobiscroll.javascript.min.css' %}">
+    <style>
+        .basic { display: none !important }
     </style>
-
+   {% comment %} <script> 
+    var calendarCells =document.getElementsByClassName('mbsc-calendar-cell')
+      console.log(calendarCells);
+    console.log('Number of elements with class mbsc-calendar-cell:', calendarCells.length);
+    calendarCells.forEach(function () {
+        var innerDiv = $(this).find('div > div');
+        if (innerDiv.length > 0) {
+            innerDiv.addClass('basic');
+        }
+    });
+</script> {% endcomment %}
 </head>
-
 <body>
+   
+    <!-- Your HTML content -->
+    <div id="week-select"></div>
 
-    <div mbsc-page class="demo-week-select">
-        <div style="height:100%">
-                <div id="demo-week-select"></div>
-        </div>
-    </div>
+    <!-- Load MobiScroll JavaScript from the static folder -->
+    <script src="{% static 'js/mobiscroll.javascript.min.js' %}"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
     <script>
+        {% comment %} $(document).ready(function () {
+            mobiscroll.setOptions({
+                theme: 'windows',
+                themeVariant: 'light'
+            });
         
+            mobiscroll.datepicker('#week-select', {
+                controls: ['calendar'],
+                select: 'preset-range',
+                display: 'inline',
+                firstSelectDay: 6,
+                selectSize: 7
+            });
+        
+            var calendarCells = $('.mbsc-calendar-cell'); // Use jQuery selector
+        
+            console.log('Number of elements with class mbsc-calendar-cell:', calendarCells);
+        
+            $.each(calendarCells, function () { // Use $.each instead of each
+                console.log('hello')
+                var innerDiv = $(this).find('div > div');
+                if (innerDiv.length > 0) {
+                    innerDiv.addClass('basic');
+                }
+            });
+        }); {% endcomment %}
+
         mobiscroll.setOptions({
-        locale: mobiscroll.localeEn,  // Specify language like: locale: mobiscroll.localePl or omit setting to use default
-        theme: 'windows',             // Specify theme like: theme: 'ios' or omit setting to use default
-        themeVariant: 'light'         // More info about themeVariant: https://docs.mobiscroll.com/5-27-3/javascript/calendar#opt-themeVariant
-    });
-
-    mobiscroll.datepicker('#demo-week-select', {
-      controls: ['calendar'],         // More info about controls: https://docs.mobiscroll.com/5-27-3/javascript/calendar#opt-controls
-            select: 'preset-range',   // More info about select: https://docs.mobiscroll.com/5-27-3/javascript/calendar#opt-select
-            display: 'inline',        // Specify display mode like: display: 'bottom' or omit setting to use default
-            firstSelectDay: 6,        // More info about firstSelectDay: https://docs.mobiscroll.com/5-27-3/javascript/calendar#opt-firstSelectDay
+            theme: 'windows',
+            themeVariant: 'light'
+        });
+    
+        mobiscroll.datepicker('#week-select', {
+            controls: ['calendar'],
+            select: 'preset-range',
+            display: 'inline',
+            firstSelectDay: 6,
             selectSize: 7
-    });
-
-
+        });
         
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendarCells = document.getElementsByClassName('mbsc-calendar-cell');
+           // var innerDiv = calendarCells.querySelector('div');
+
+            console.log('Number of elements with class mbsc-calendar-cell:', calendarCells);
+        
+            // Convert HTMLCollection to an array and iterate over each element
+            Array.from(calendarCells).forEach(function (calendarCell) {
+                // Find the inner div element and add the 'basic' class
+                console.log('hello');
+                var innerDiv = calendarCell.querySelector('div > div');
+                if (innerDiv) {
+                    innerDiv.classList.add('basic');
+                }
+            });
+
+        });
+        
+
     </script>
-
 </body>
-
 </html>

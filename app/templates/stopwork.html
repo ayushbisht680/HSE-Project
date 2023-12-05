@@ -29,7 +29,7 @@
       .commonWidth{
       display: flex;
       align-items: center;
-      width: 199px;
+      width: 180px;
       height: 60px;
       }
       .chnWidth{
@@ -86,7 +86,7 @@
       .rowTable1{
       display:flex;
       width:3338px;
-      height: 60px;
+      height: 70px;
       align-items: center;
       }
       .srWidth{
@@ -162,6 +162,26 @@
          height: 60px;
    
          }
+         .commonTextArea{
+            display: flex;
+            align-items: center;
+            width: 335px;
+            height: 60px;
+            {% comment %} background-color: aqua; {% endcomment %}
+           }
+           .valueText{
+               margin-left: 15px;
+               font-size: 15px;
+               font-weight: 400;
+               font-size: 12px;
+               outline:none;
+               width: 296px;
+      
+           }
+           .valueForm{
+            width: 290px;
+      
+           }
         
    </style>
    <body>
@@ -205,7 +225,7 @@
          <div class='commonWidth'>
             <p>Plant/Site</p>
          </div>
-         <div class='commonWidth'>
+         <div class='commonTextArea'>
             <p>Description of Issue</p>
          </div>
          <div class='commonWidth'>
@@ -214,7 +234,7 @@
          <div class='cateogryWidth'>
             <p>Cateogry</p>
          </div>
-         <div class='chnWidth'>
+         <div class='commonTextArea'>
             <p>Corrective Action Taken</p>
          </div>
          <div class='commonWidth'>
@@ -248,16 +268,22 @@
             <input type="hidden" name="plant_id" id="plant_id" >
             <input type="hidden" name="formSubmitDate" id="formSubmitDate" >
 
-            <div class="Srno"><input type="text" class="srWidth valueInput1" placeholder="Sr.No" name="sr_no" id='Srno' value='1'></div>
+            <div class="Srno"><input type="text" class="srWidth valueInput1" placeholder="Sr.No" name="sr_no" id='Srno' value='1' style='border: none;' disabled></div>
             <div class="commonWidth"><input type="date" class="valueInput1" placeholder="Date" name="date" required></div>
             <div class="commonWidth "><input type="time" class="valueInput1" placeholder="Time" name="time" required></div>
             <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Location" name="location" required></div>
             <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Plant/Site" name="plant_site" required></div>
-            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Description" name="description_of_issue" required></div>
+
+            <div class="commonTextArea"><textarea rows="3" class="valueText" placeholder="Description" name="description_of_issue"  required></textarea>
+            </div>
+
             <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Unsafe Act" name="unsafe_act" required></div>
             <div class="cateogryWidth">
                <select class="cateogryDropdown" name="category" id="Cateogry" required>
-                  <option value="Category">Category</option>
+                  {% for choice in category_choices %}
+                  <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                  {% endfor %}
+                  {% comment %} <option value="Category">Category</option>
                   <option value="Legal Requirement">Legal Requirement</option>
                   <option value="Permit to Work">Permit to Work</option>
                   <option value="Electrical Work">Electrical Work</option>
@@ -276,19 +302,25 @@
                   <option value="Waste Management">Waste Management</option>
                   <option value="Welfare Facility">Welfare Facility</option>
                   <option value="General - Signage, Access, Walkway">General - Signage, Access, Walkway</option>
-                  <option value="Emergency Preparedness">Emergency Preparedness</option>
+                  <option value="Emergency Preparedness">Emergency Preparedness</option> {% endcomment %}
                   
                </select>
             </div>
-            <div class="chnWidth"><input type="text" class="extraspace valueInput1" placeholder="Corrective Action Taken" name="corrective_action_taken" required></div>
+
+            <div class="commonTextArea"><textarea rows="3" class="valueText" placeholder="Corrective Action Taken" name="corrective_action_taken"  required></textarea>
+            </div>
+
             <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Remaining Hazard" name="remaining_hazard" required></div>
             <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Responsible Person" name="responsible_person" required></div>
-            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Closure Date" name="closure_date" required></div>
+            <div class="commonWidth"><input type="date" class="valueInput1" placeholder="Closure Date" name="form_closure_date" required></div>
             <div class="commonWidth">
                <select class="CLassdropdown" name="status" required>
-                  <option value="Yes">Yes</option>
+                  {% for choice in status_choices %}
+                  <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                 {% endfor %}
+                  {% comment %} <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <option value="NA">NA</option>
+                  <option value="NA">NA</option> {% endcomment %}
                </select>
             </div>
 
@@ -340,13 +372,17 @@
             <div class="commonWidth"><input type="text" class="valueInput" placeholder="Time" name="time" disabled></div>
             <div class="commonWidth"><input type="text" class="valueInput" placeholder="Location" name="location" disabled></div>
             <div class="commonWidth"><input type="text" class="valueInput" placeholder="Plant/Site" name="plant_site" disabled></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Description" name="description_of_issue" disabled></div>
+
+            <div class="commonTextArea"><textarea rows="3" class="valueInput valueForm" placeholder="Description" name="description_of_issue"  disabled></textarea></div>
+
             <div class="commonWidth"><input type="text" class="valueInput" placeholder="Unsafe Act" name="unsafe_act" disabled></div>
             <div class="cateogryWidth"><input type="text" class="valueInput" placeholder="Cateogry" name="category" disabled></div>
-            <div class="chnWidth"><input type="text" class="extraspace valueInput" placeholder="Corrective Action Taken" name="corrective_action_taken" disabled></div>
+
+            <div class="commonTextArea"><textarea rows="3" class="valueInput valueForm" placeholder="Corrective Action Taken" name="corrective_action_taken"   disabled></textarea></div>
+
             <div class="commonWidth"><input type="text" class="valueInput" placeholder="Remaining Hazard" name="remaining_hazard" disabled></div>
             <div class="commonWidth"><input type="text" class="valueInput" placeholder="Responsible Person" name="responsible_person" disabled></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Closure Date" name="closure_date" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="Closure Date" name="form_closure_date" disabled></div>
             <div class="commonWidth"><input type="text" class="valueInput" placeholder="Status" name="status" disabled></div>
             <div class="commonWidth"><input type="text" class="valueInput" placeholder="OpenEvidence" name="open_evidence" id="OpenEvidence" disabled></div>
             <div class="commonWidth"><input type="text" class="valueInput" placeholder="ClosedEvidence" name="closed_evidence" id="ClosedEvidence" disabled></div>
@@ -434,7 +470,7 @@
                document.getElementById('addRowButton').style.display='none'
 
             }
-            document.getElementById('Srno').value=dataArray[dataArray.length-1].sr_no+1
+            document.getElementById('Srno').value=dataArray.length+1;
             createAndPopulateFormRows(dataArray); 
          } 
       
@@ -454,28 +490,53 @@
       
       
       
-      function createAndPopulateFormRow(dataItem) {
-      const template = document.getElementById('formRowTemplate');
-      const newRow = document.importNode(template.content, true);
+      function createAndPopulateFormRow(dataItem,no_of_entries) {
+         console.log(dataItem);
+         console.log(`number of entries are ${no_of_entries}`)
+       
+         // Separate date and time
+         const template = document.getElementById('formRowTemplate');
+         const newRow = document.importNode(template.content, true);
+       
+         let parsedDatetime = dataItem.datetime_observation;
+         let [datePart, timeWithOffset] = parsedDatetime.split('T');
+
+         let timePart = timeWithOffset.split('+')[0];
+         
+         let [year, month, day] = datePart.split('-');
+         
+         let formattedDate = `${day}-${month}-${year}`;
+         
+         console.log('Date:', formattedDate); // Output: 24-11-2023
+         console.log('Time:', timePart); // Output: 18:47
+       
+         const inputFields = newRow.querySelectorAll('.valueInput');
+         for (const field of inputFields) {
+           const fieldName = field.getAttribute('name');
+       
+           field.value = dataItem[fieldName] || '';
+         }
+         
+         const SrNo=newRow.querySelector('[name="sr_no"]')
+         const dateField = newRow.querySelector('[name="date"]');
+         const timeField = newRow.querySelector('[name="time"]');
+         dateField.value = formattedDate;
+         timeField.value = timePart;
+         SrNo.value=no_of_entries
+
+       
+         const formContainer = document.getElementById('formContainer');
+         formContainer.appendChild(newRow);
+       }
       
       
-      const inputFields = newRow.querySelectorAll('.valueInput');
-      for (const field of inputFields) {
-       const fieldName = field.getAttribute('name');
-       field.value = dataItem[fieldName] || '';
-      }
-      
-      const formContainer = document.getElementById('formContainer');
-      formContainer.appendChild(newRow);
-      
-      
-      }
-      
-      function createAndPopulateFormRows(data) {
-      for (const dataItem of data) {      
-      createAndPopulateFormRow(dataItem);
-      }
-      }
+       function createAndPopulateFormRows(data) {
+         counter=0
+         for (const dataItem of data) {     
+              console.log(counter++)
+         createAndPopulateFormRow(dataItem,counter);
+         }
+         }
 
       function handleFormSubmission(formId, url) {
          const form = document.getElementById(formId);

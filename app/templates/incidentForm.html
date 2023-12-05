@@ -259,7 +259,7 @@
             <input type="hidden" name="plant_id" id="plant_id"  >
             <input type="hidden" name="formSubmitDate" id="formSubmitDate" >
 
-            <div class="Srno"><input type="text" class="srWidth valueInput1" placeholder="Sr.No" name="sr_no" id="Srno" value='1'></div>
+            <div class="Srno"><input type="text" class="srWidth valueInput1" placeholder="Sr.No" name="sr_no" id="Srno" value='1' style='border: none;' disabled></div>
             <div class="commonWidth"><input type="date" class="valueInput1" placeholder="Incident Date" name="incident_date" required></div>
             <div class="commonWidth"><input type="time" class="valueInput1" placeholder="Incident Time" name="incident_time" required></div>
             <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Location" name="location" required></div>
@@ -276,27 +276,36 @@
 
             <div class="commonWidth">
                <select class="CLassdropdown" name="type_of_incident" required>
-                  <option value="Near Miss">Near Miss</option>
+                  {% for choice in incident_choices %}
+                  <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                 {% endfor %}
+                  {% comment %} <option value="Near Miss">Near Miss</option>
                   <option value="LTI">LTI</option>
                   <option value="MTI">MTI</option>
                   <option value="Fatal">Fatal</option>
                   <option value="Property Damage">Property Damage</option>
                   <option value="Flash Over">Flash Over</option>
                   <option value="Arc Flash">Arc Flash</option>
-                  <option value="Fire">Fire</option>
+                  <option value="Fire">Fire</option> {% endcomment %}
                </select>
             </div>
             <div class="commonWidth">
                <select class="CLassdropdown" name="high_potential_incident" required>
-                  <option value="Yes">Yes</option>
+                  {% for choice in potential_incident %}
+                  <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                 {% endfor %}
+                  {% comment %} <option value="Yes">Yes</option>
                   <option value="No">No</option>
-                  <option value="NA">NA</option>
+                  <option value="NA">NA</option> {% endcomment %}
                </select>
             </div>
             <div class="commonWidth">
                <select class="CLassdropdown" name="category" required>
-                  <option value="Recordable">Recordable</option>
-                  <option value="Non Recordable">Non Recordable</option>
+                  {% for choice in cateogries %}
+                  <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                 {% endfor %}
+                  {% comment %} <option value="Recordable">Recordable</option>
+                  <option value="Non Recordable">Non Recordable</option> {% endcomment %}
                </select>
             </div>
 

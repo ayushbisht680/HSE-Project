@@ -14,6 +14,7 @@ from django.utils import timezone
 from datetime import datetime
 from django.db.models import Q
 from datetime import datetime, timedelta
+from .models import CATEGORY_CHOICES,STATUS_CHOICES,INCIDENT_TYPE_CHOICES,CATEOGRIES
 
 
 
@@ -23,27 +24,46 @@ class TemplateView(APIView):
     
 class ObservationFormView(APIView):
     def get(self, request):
-        category_choices = HSEObservationForm.CATEGORY_CHOICES
-        status_choices = HSEObservationForm.STATUS_CHOICES
 
         context = {
-        'category_choices': category_choices,
-        'status_choices': status_choices,
+        'category_choices': CATEGORY_CHOICES,
+        'status_choices': STATUS_CHOICES,
 
         }
         return TemplateResponse(request, "observation.html",context)
     
 class StopWorkFormView(APIView):
     def get(self, request):
-        return TemplateResponse(request, "stopwork.html")
+
+        context = {
+        'category_choices': CATEGORY_CHOICES,
+        'status_choices': STATUS_CHOICES,
+
+        }
+
+        return TemplateResponse(request, "stopwork.html",context)
 
 class ViolationMemoFormView(APIView):
     def get(self, request):
-        return TemplateResponse(request, "violationForm.html")
+
+        context = {
+        'penalty_choices': STATUS_CHOICES,
+
+        }
+
+        return TemplateResponse(request, "violationForm.html",context)
 
 class IncidentFormView(APIView):
     def get(self, request):
-        return TemplateResponse(request, "incidentForm.html")
+        
+
+        context = {
+        'incident_choices': INCIDENT_TYPE_CHOICES,
+        'cateogries':CATEOGRIES,
+        'potential_incident':STATUS_CHOICES
+
+        }
+        return TemplateResponse(request, "incidentForm.html",context)
 
 class ListObservers(APIView):
      def get(self, request):
@@ -68,6 +88,7 @@ class GeneralHseAPI(APIView):
 
     def post(self, request):
         data = request.data.copy()
+        print(data)
         plant_code = data.get("plant_id")
         form_Submit_date = data.get("formSubmitDate")
         general_hse_instance = None
@@ -760,9 +781,18 @@ class StopWorkFormAPI(APIView):
             return Response({"detail": "hse data not found"}, status=status.HTTP_404_NOT_FOUND)
     
     def post(self, request):
-        data = request.data
+        data = request.data.copy()
         plant_code = data.get("plant_id")
         form_Submit_date=data.get("formSubmitDate")
+
+        date_value=data.get('date')
+        time_value=data.get('time')
+      
+
+        combined_datetime = datetime.strptime(f'{date_value} {time_value}', '%Y-%m-%d %H:%M')
+
+        fixed_timezone_offset = '+05:30'
+        datetime_format = combined_datetime.strftime(f'%Y-%m-%dT%H:%M:%S{fixed_timezone_offset}')
         
 
         try:
@@ -793,10 +823,14 @@ class StopWorkFormAPI(APIView):
 
         serializer = StopWorkFormSerializer(data=data)
 
+        data['datetime_observation']=datetime_format
+        data['created_by']=request.user.id
+        data['hse_observation']=hse_observation.id
+
         if serializer.is_valid():
             hse_observation_form = serializer.save()
-            hse_observation_form.hse_observation = hse_observation
-            hse_observation_form.save()
+            # hse_observation_form.hse_observation = hse_observation
+            # hse_observation_form.save()
 
             
             return Response({'data': serializer.data}, status=status.HTTP_201_CREATED)
@@ -811,6 +845,8 @@ class ViolationMemoAPI(APIView):
     def get(self, request):
         plant_code = self.request.query_params.get("plant_code")
         form_Submit_date=self.request.query_params.get("formSubmitDate")
+
+
 
         hse = HSE.objects.filter(formSubmittedDate=form_Submit_date,plant_code=plant_code).first()
     
@@ -833,9 +869,12 @@ class ViolationMemoAPI(APIView):
    
 
     def post(self, request):
-        data = request.data
+        data = request.data.copy()
         plant_code = data.get("plant_id")
         form_Submit_date=data.get("formSubmitDate")
+
+        date_value=data.get('date')
+        print(date_value)
 
         try:
             hse_user = HSEUsers.objects.get(user=request.user, hse_permission=True)
@@ -864,11 +903,14 @@ class ViolationMemoAPI(APIView):
             hse_observation.save()
 
         serializer = ViolationFormSerializer(data=data)
+        data['date_field']=date_value
+        data['created_by']=request.user.id
+        data['hse_observation']=hse_observation.id
 
         if serializer.is_valid():
             hse_observation_form = serializer.save()
-            hse_observation_form.hse_observation = hse_observation
-            hse_observation_form.save()
+            # hse_observation_form.hse_observation = hse_observation
+            # hse_observation_form.save()
 
             
             return Response({'data': serializer.data}, status=status.HTTP_201_CREATED)

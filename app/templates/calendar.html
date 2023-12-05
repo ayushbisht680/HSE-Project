@@ -1,99 +1,84 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-    }
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.min.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/base/jquery-ui.css">
+    <style>
+        .week-picker {
+            width: 10px; /* Adjust the width as needed */
+            font-size: 12px; /* Adjust the font size as needed */
+        }
+       
+        .ui-datepicker {
+            width: 14em !important;
+        }
+       
+    </style>
+    <script type="text/javascript">
+        $(function() {
+            var startDate;
+            var endDate;
 
-    .calendar {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 10px;
-      margin-top: 20px;
-    }
+            var selectCurrentWeek = function() {
+                window.setTimeout(function () {
+                    $('.week-picker').find('.ui-datepicker-current-day a').addClass('ui-state-active');
+                }, 1);
+            };
 
-    .day {
-      border: 1px solid #ccc;
-      padding: 10px;
-      text-align: center;
-      cursor: pointer;
-    }
+            // Function to set default values to the current week
+            var setDefaultWeek = function() {
+                var today = new Date();
+                startDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay());
+                endDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay() + 6);
+            };
 
-    .day-name {
-      text-align: center;
-      font-weight: bold;
-      padding: 10px;
-    }
+            // Call the function to set default values
+            setDefaultWeek();
 
-    .highlight {
-      background-color: #7af5f5;
-    }
-  </style>
+            // Event listener for page load
+            $(document).ready(function() {
+                // Log start and end dates on page load
+                console.log("Start Date on Page Load: ", startDate);
+                console.log("End Date on Page Load: ", endDate);
+            });
+
+            $('.week-picker').datepicker({
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                defaultDate: startDate, // Set default date to startDate
+                onSelect: function(dateText, inst) {
+                    var date = $(this).datepicker('getDate');
+                    startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - (date.getDay() + 1) % 7 + 0);
+                    endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - (date.getDay() + 1) % 7 + 6);
+                    var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
+
+                    $('#startDate').text($.datepicker.formatDate(dateFormat, startDate, inst.settings));
+                    $('#endDate').text($.datepicker.formatDate(dateFormat, endDate, inst.settings));
+                    console.log('hello')
+
+                    selectCurrentWeek();
+                },
+                beforeShowDay: function(date) {
+                    var cssClass = '';
+                    if(date >= startDate && date <= endDate)
+                        cssClass = 'ui-datepicker-current-day';
+                    return [true, cssClass];
+                },
+                onChangeMonthYear: function(year, month, inst) {
+                    selectCurrentWeek();
+                }
+            });
+
+            $('.week-picker .ui-datepicker-calendar tr').live('mousemove', function() { $(this).find('td a').addClass('ui-state-hover'); });
+            $('.week-picker .ui-datepicker-calendar tr').live('mouseleave', function() { $(this).find('td a').removeClass('ui-state-hover'); });
+            
+        });
+    </script>
 </head>
 <body>
-  <div id="calendar" class="calendar"></div>
-
-  <script>
-    // Get the current date
-    const currentDate = new Date();
-
-    // Create a calendar for the current month
-    function createCalendar(year, month) {
-      const calendarElement = document.getElementById('calendar');
-      calendarElement.innerHTML = '';
-
-      // Add week day names
-      const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-      for (const dayName of weekDays) {
-        const dayNameElement = document.createElement('div');
-        dayNameElement.classList.add('day-name');
-        dayNameElement.textContent = dayName;
-        calendarElement.appendChild(dayNameElement);
-      }
-
-      const firstDay = new Date(year, month, 1);
-      const lastDay = new Date(year, month + 1, 0);
-
-      for (let day = firstDay; day <= lastDay; day.setDate(day.getDate() + 1)) {
-        const dayElement = document.createElement('div');
-        dayElement.classList.add('day');
-        dayElement.textContent = day.getDate();
-
-        dayElement.addEventListener('click', function() {
-          highlightWeek(day);
-        });
-
-        calendarElement.appendChild(dayElement);
-      }
-    }
-
-    // Highlight the entire week from Saturday to Friday
-    function highlightWeek(selectedDate) {
-      const calendarDays = document.querySelectorAll('.day');
-      const selectedDay = selectedDate.getDay();
-
-      // Calculate the start and end of the week
-      const startOfWeek = new Date(selectedDate);
-      startOfWeek.setDate(selectedDate.getDate() - selectedDay + 1); 
-
-      const endOfWeek = new Date(selectedDate);
-      endOfWeek.setDate(selectedDate.getDate() + (5 - selectedDay) + 1); 
-
-      // Remove existing highlights
-      calendarDays.forEach(day => day.classList.remove('highlight'));
-
-      // Add highlight to the entire week
-      for (let day = startOfWeek; day <= endOfWeek; day.setDate(day.getDate() + 1)) {
-        const dayIndex = day.getDay();
-        calendarDays[dayIndex].classList.add('highlight');
-      }
-    }
-
-    // Initialize the calendar
-    createCalendar(currentDate.getFullYear(), currentDate.getMonth());
-  </script>
+    <div class="week-picker"></div>
+    <br /><br />
+    <label>Week :</label> <span id="startDate"></span> - <span id="endDate"></span>
 </body>
 </html>

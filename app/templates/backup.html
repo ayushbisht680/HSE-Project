@@ -4,16 +4,41 @@
    <head>
       <title>HSE Project</title>
       <style>
-
          .row>* {
-            padding-right: 0px !important;
-            padding-left: 0px !important;
-            }
-       
-         a{
-         text-decoration:none !important;
+         padding-right: 0px !important;
+         padding-left: 0px !important;
          }
-       
+         
+         th,
+         td {
+         border: 1px solid #ddd;
+         text-align: center;
+         color: white;
+         }
+
+         th {
+         color: darkgrey;
+         width: 35px;
+         font-size: 11px;
+         font-weight: 500;
+         text-align: center !important;
+         }
+
+         tr {
+         font-size: 11px;
+         }
+
+         a {
+         text-decoration: none !important;
+         color: white !important;
+         font-size: 13px;
+         font-weight: 500;
+         }
+
+         .highlight {
+         background-color: #3E9FFE;
+         }
+
          .date-range {
          color: white;
          font-size: 12px;
@@ -58,15 +83,13 @@
          display: flex;
          }
          .cont {
-         display: flex;
-         justify-content: space-between;
          text-align: left;
          margin-top: 4px;
          background-color: rgba(62, 159, 254, 0.1);
          margin-left: 14px;
          margin-right: 14px;
          border-radius: 7px;
-         {% comment %} height: 11vw; {% endcomment %}
+         height: 11vw;
          }
          .date-cont {
          display: flex;
@@ -74,7 +97,6 @@
          justify-content: left;
          font-size: 18px;
          padding: 10px;
-         margin-top: 10px;
          }
          .viewDate {
          margin: 0 10px;
@@ -108,14 +130,14 @@
          margin-top: 15px;
          }
          .outer-container {
+         text-align: left;
          display: flex;
          flex-direction: row;
-         margin-top: 9px;
-         height: 34px;
-         margin-left: 12px;
-         width: fit-content;
          border: 1px solid #3E9FFE;
          border-radius: 4px;
+         margin-top: 9px;
+         margin-right: 10px;
+         height: 34px;
          }
          .showWeek {
          font-size: 13px;
@@ -125,20 +147,19 @@
          .showDate {
          font-size: 13px;
          margin-top: 7px;
+         margin-right: 14px;
          margin-bottom: 0px;
          font-weight: 500;
-         margin-left:3px
          }
          .display-outer-container2 {
-         justify-content: center;
-         display: flex;   
-         align-items: center; 
+         margin: initial;
          }
          .display-outer-container1 {
+         margin-right: 9px;
          background-color: #3E9FFE;
          width: 71px;
          justify-content: center;
-         display: flex;   
+         display: flex;
          }
          .sideView {
          display: flex;
@@ -418,47 +439,70 @@
          .accordion-button::after {
          background-image: url('/static/images/accordianImg.svg') !important;
          } {% endcomment %}
-         .ui-datepicker .ui-datepicker-title {
-         margin: 0 !important;
-         line-height: 1.3em !important;
-         }
-         .ui-datepicker-month,.ui-datepicker-year{
-         font-size:12px;
-         }
-         .ui-datepicker th {
-         font-size: 11px;
-         }
-         .ui-widget-header{
-         border:none !important;
-         }
-         .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
-         background: white !important;
-         }
-         .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
-         background: #3E9FFE !important;
-         color:#f8f5f5 !important;
-         }
-         .ui-priority-secondary, .ui-widget-content .ui-priority-secondary, .ui-widget-header .ui-priority-secondary {
-         font-size: 12px !important;
-         }
-         .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
-         font-size: 10px !important;
-         border:none !important;
-         }
-         .week-picker{
-         margin-top:7px;
-         margin-bottom:7px;
-         margin-right:7px;
-         }
       </style>
+
       <link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/base/jquery-ui.css">
+
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
    </head>
    <body>
+
       <div class="container-fluid">
          <div class="row">
+            <div class="col-md-2 ">
+
+          
+
+               <div class="my-cont ">
+                  <div class="centerDates">
+                     <p><span class="date-range"></span></p>
+                  </div>
+                  <div id="calendar"></div>
+                  
+
+                  <div class="horizontal-line"></div>
+                  <h6 class="menu">Menu</h6>
+                  <div id='clickMainDiv1'>
+                     <div id='backcolorDiv1' style='display:flex ; height:60px align-items:center;margin-top:10px'>
+                        <div class="myNavi">
+                           <a href="#" for="name" id="toggle-accordion1">General HSE</a>
+                        </div>
+                     </div>
+                  </div>
+                  <div id='clickMainDiv2'>
+                     <div id='backcolorDiv2' style='display:flex ; height:60px; align-items:center; margin-top:10px'>
+                        <div class="myNavi">
+                           <a href="#" for="age" id="toggle-accordion2">HSE Trainings</a>
+                        </div>
+                     </div>
+                  </div>
+                  <div id='clickMainDiv3'>
+                     <div id='backcolorDiv3' style='display:flex ; height:60px; align-items:center;margin-top:10px'>
+                        <div class="myNavi">
+                           <a href="#" for="class" id="toggle-accordion3">HSE Observations</a>
+                        </div>
+                     </div>
+                  </div>
+                  <div id='clickMainDiv4'>
+                     <div id='backcolorDiv4' style='display:flex ; height:60px ;align-items:center;margin-top:10px'>
+                        <div class="myNavi">
+                           <a href="#" for="sec" id="toggle-accordion4">Management Visits</a>
+                        </div>
+                     </div>
+                  </div>
+                  <div id='clickMainDiv5'>
+                     <div id='backcolorDiv5' style='display:flex ; height:60px; align-items:center;margin-top:10px'>
+                        <div class="myNavi">
+                           <a href="#" for="sec" id="toggle-accordion5">Incidents</a>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-md-10">
                <div class="modal fade" tabindex="-1" id="successModal" role="dialog">
                   <div class="modal-dialog modal-dialog-centered" role="document">
                      <div class="modal-content">
@@ -469,45 +513,68 @@
                   </div>
                </div>
                <div class='myNavbar'>
-                  <div class="cont">
-                     <div >
-                        <div class="outer-container">
-                           <div class="display-outer-container1">
-                              <p class="showWeek" id="weekDisplay">Week</p>
-                           </div>
-                           <div class="display-outer-container2">
-                              <div style='margin-left: 8px; margin-right:4px; '><span class='showDate' id="startDate" ></span></div>
-                              -
-                              <div><span class='showDate' style='margin-left:4px ;margin-right:10px' id="endDate"></span> </div>
-                           </div>
+                  {% comment %} <div class="week-picker"></div>
+                  <br /><br />
+                  <label>Week :</label> <span id="startDate"></span> - <span id="endDate"></span> {% endcomment %}
+
+
+                  <nav class="navbar">
+                     <div class="imageAlign">
+                        <div class="hamburger">
+                           <img src="{% static 'images/hamburger.svg' %}" alt="Description of the image" width="20px"
+                              height="20px">
                         </div>
-                        <div class="sideView">
-                           <div class="date-cont">
-                              <div class="messageDisplay">The form is filled for :</div>
-                              <div class="viewDate" id="viewingDate"></div>
-                              <div class='clickArrow'>
-                                 <div onclick="changeDate(-1)" style="display: flex;" id='oneDateBack'>
-                                    <img src=" {% static 'images/left_date.svg' %} " class="arrow"> </img>
-                                 </div>
-                                 <div onclick="changeDate(1)" style="display: flex;" id='oneDateAhead'>
-                                    <img src=" {% static 'images/right_date.svg' %}" class="arrow"> </img>
-                                 </div>
+                        <div class="amplusLogo">
+                           <img src="{% static 'images/amplus_logo.svg' %}" alt="Description of the image" width="30px"
+                              height="30px">
+                        </div>
+                     </div>
+                     <div class='dateandpic'>
+                        <div class="date-cont1">
+                           <div class="theDate1">17th September - Today - Sunday</div>
+                        </div>
+                        <div class="round-image">
+                           <img src=" {% static 'images/photo-jpeg-example.jpg' %}" alt="Description of the image">
+                        </div>
+                     </div>
+                  </nav>
+                  <div class="cont">
+                     <div class="sideView">
+                        <div class="date-cont">
+                           <div class="messageDisplay">The form is filled for :</div>
+                           <div class="viewDate" id="viewingDate"></div>
+                           <div class='clickArrow'>
+                              <div onclick="changeDate(-1)" style="display: flex;" id='oneDateBack'>
+                                 <img src=" {% static 'images/left_date.svg' %} " class="arrow"> </img>
+                              </div>
+                              <div onclick="changeDate(1)" style="display: flex;" id='oneDateAhead'>
+                                 <img src=" {% static 'images/right_date.svg' %}" class="arrow"> </img>
                               </div>
                            </div>
                         </div>
-                        <div class='dropDown' style='margin-left: 12px; margin-top: 12px;'>
-                           <div>
-                              <label for="plantDropdown" style='font-size: 15px; font-weight: 500;'>Select the Plant</label>
+                        <div class="outer-container">
+                           <!-- Week Display Container -->
+                           <div class="display-outer-container1">
+                              <p class="showWeek" id="weekDisplay"></p>
                            </div>
-                           <div>
-                              <select id="plantDropdown" class='dropdown'>
-                                 <option value="" disabled selected>Select a plant</option>
-                              </select>
+                           <!-- Date Display Container -->
+                           <div class="display-outer-container2">
+                              <p class="showDate" id="dateDisplay"></p>
                            </div>
                         </div>
                      </div>
-                     <div class='mainCalendar'>
-                        <div class="week-picker"></div>
+                     <div class='dropDown' style='margin-left: 12px;'>
+                        <div>
+                           <label for="plantDropdown" style='font-size: 15px; font-weight: 500;'>Select the Plant</label>
+                        </div>
+                        <div>
+                           <select id="plantDropdown" class='dropdown'>
+                              <option value="" disabled selected>Select a plant</option>
+                              {% comment %} <option value="10000">10000</option>
+                              <option value="20000">20000</option>
+                              <option value="30000">30000</option> {% endcomment %}
+                           </select>
+                        </div>
                      </div>
                   </div>
                   <div class="maincontainer">
@@ -534,9 +601,11 @@
                                        <label for="input1" class="form-label ">Total man days worked</label>
                                        <div class='seperateAllElement' style='display: flex' >
                                           <div class="input-group" id="adjustWidth">
+
                                              <input type="number"  class="form-control disableIt" id="input1"
                                                 placeholder="Total man days worked" name="total_man_days_worked"  required>
                                              <div class=" btnMargin"  >
+
                                                 <button class="btn  valueButton disableBtn" type="button"
                                                    id="increment1"><img src="{% static 'images/plus-circle.svg' %}"
                                                    class="plusIcon"></button>
@@ -840,8 +909,7 @@
                                              <a id='observationLink' href="" class="linkForm">Fill the data</a>
                                           </div>
                                           <div class="fileDisplay" id="fileDisplay4"
-                                             style=" margin-right: 95px;
-                                             ; align-items: center;">
+                                             style="margin-right: 45px; align-items: center;">
                                              <input class="fileName" id="fileName4"
                                                 style='font-size: 12px;' disabled></input>
                                           </div>
@@ -1118,410 +1186,98 @@
                   </div>
                </div>
                <!--main Acc-->
-            <!--main container-->
             </div>
+            <!--main container-->
+         </div>
          <!--mynavbar-->
       </div>
-    
-   
+      <!--col-->
+      <!--row-->
+      </div>
+      </div>
+      
+      <!--container fluid-->
    </body>
+  
+
    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.js"></script>
-   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.min.js"></script>
+<script type="text/javascript">  
+    $(function() {
+        var startDate;
+        var endDate;
+        
+        var selectCurrentWeek = function() {
+            window.setTimeout(function () {
+                $('.week-picker').find('.ui-datepicker-current-day a').addClass('ui-state-active')
+            }, 1);
+        }
+        
+        $('.week-picker').datepicker( {
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            onSelect: function(dateText, inst) {
+                var date = $(this).datepicker('getDate');
+                startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - (date.getDay() + 1) % 7 + 0);
+                endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - (date.getDay() + 1) % 7 + 6);
+                var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
+                $('#startDate').text($.datepicker.formatDate( dateFormat, startDate, inst.settings ));
+                $('#endDate').text($.datepicker.formatDate( dateFormat, endDate, inst.settings ));
+            
+                selectCurrentWeek();
+            },
+            
+            
+            beforeShowDay: function(date) {
+                var cssClass = '';
+                if(date >= startDate && date <= endDate)
+                    cssClass = 'ui-datepicker-current-day';
+                return [true, cssClass];
+            },
+            onChangeMonthYear: function(year, month, inst) {
+                selectCurrentWeek();
+            }
+        });
+        
+        $('.week-picker .ui-datepicker-calendar tr').live('mousemove', function() { $(this).find('td a').addClass('ui-state-hover'); });
+        $('.week-picker .ui-datepicker-calendar tr').live('mouseleave', function() { $(this).find('td a').removeClass('ui-state-hover'); });
+    });
+    </script>
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-   <script type="text/javascript">
-      {% comment %} const formattedToday = getFormattedTodayDate();
-      const convertItas=formatToCustomDate(formattedToday)
-      $('#viewingDate').text(convertItas); {% endcomment %}
-      
-      function getFormattedTodayDate() {
-         const today = new Date();
-         const day = String(today.getDate()).padStart(2, '0');
-         const month = String(today.getMonth() + 1).padStart(2, '0'); 
-         const year = today.getFullYear();
-       
-         return `${day}/${month}/${year}`;
-       }
-      
-      
-      function formatDateToDDMMYY(inputDate) {
-         const date = new Date(inputDate);
-      
-         const day = String(date.getDate()).padStart(2, '0');
-         const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-         const year = date.getFullYear();
-      
-         return `${day}/${month}/${year}`;
-      }
-      
-      function formatToCustomDate(inputDate) {
-      const parts = inputDate.split('/');
-      const day = parseInt(parts[0], 10);
-      const month = parseInt(parts[1], 10) - 1; // Months are zero-based
-      const year = parseInt(parts[2], 10);
-      
-      initialDate = `${month}/${day}/${year}`
-      console.log('initialDate', initialDate)
-      
-      const dateObject = new Date(year, month, day);
-      
-      const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-      
-      const dayOfWeek = daysOfWeek[dateObject.getDay()];
-      const dayOfMonth = dateObject.getDate();
-      const ordinalSuffix = getOrdinalSuffix(dayOfMonth); // Function to get the ordinal suffix
-      const monthName = months[dateObject.getMonth()];
-      
-      return `${dayOfWeek}, ${dayOfMonth}${ordinalSuffix}, ${monthName}`;
-      }
-      
-      function getOrdinalSuffix(day) {
-         if (day >= 11 && day <= 13) {
-            return 'th';
-         }
-         switch (day % 10) {
-            case 1:
-               return 'st';
-            case 2:
-               return 'nd';
-            case 3:
-               return 'rd';
-            default:
-               return 'th';
-         }
-      }
-      function convertDateFormatToDDMMYY(dateString) {
-         const parts = dateString.split('/');
-         const month = parts[0];
-         const day = parts[1];
-         const year = parts[2];
-         return `${day}/${month}/${year}`;
-      }
-
-      function getTodayDate() {
-         const today = new Date();
-         const dd = String(today.getDate()).padStart(2, '0');
-         const mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
-         const yyyy = today.getFullYear();
-     
-         return `${dd}/${mm}/${yyyy}`;
-     }
-
-     function compareDates(dateString1, dateString2) {
-      // Convert date strings to Date objects
-      const date1Parts = dateString1.split('/');
-      const date2Parts = dateString2.split('/');
-      
-      const date1 = new Date(date1Parts[2], date1Parts[1] - 1, date1Parts[0]); // Month is zero-based
-      const date2 = new Date(date2Parts[2], date2Parts[1] - 1, date2Parts[0]);
-  
-      // Compare Date objects
-      if (date1 < date2) {
-          return -1;
-      } else if (date1 > date2) {
-          return 1;
-      } else {
-          return 0; // Dates are equal
-      }
-      }
-  
-
-
-       $(function() {
-         
-         var startDate;
-         var endDate;
-      
-         const urlSearchParams = new URLSearchParams(window.location.search);
-         const hasDateParameter = urlSearchParams.has('date');
-            
-         if (hasDateParameter) {
-      
-            const dateParameterValue = urlSearchParams.get('date');
-            console.log('Date parameter is present. Value:', dateParameterValue);
-      
-            const parts = dateParameterValue.split('/');
-            const day = parseInt(parts[0], 10);
-            const month = parseInt(parts[1], 10) - 1; 
-            const year = parseInt(parts[2], 10);
-      
-            //initialDate = `${month}/${day}/${year}`
-            initialDate = new Date(year, month, day)
-            console.log('initialDate', initialDate)
-      
-            //console.log(`${day},${month},${year}`)
-      
-            startDate = new Date(year, month, day);  
-            endDate = new Date(year, month, day);  
-         }
-         else{
-            initialDate = new Date()
-      
-            startDate=new Date()
-            endDate=new Date()
-         }
-      
-           startDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() - (startDate.getDay() + 1) % 7 + 0);
-           endDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() - (startDate.getDay() + 1) % 7 + 6);
-      
-           $('#startDate').text($.datepicker.formatDate('mm/dd/yy', startDate));
-           $('#endDate').text($.datepicker.formatDate('mm/dd/yy', endDate));
-      
-      
-          var selectCurrentWeek = function() {
-              window.setTimeout(function() {
-                  $('.week-picker').find('.ui-datepicker-current-day a').addClass('ui-state-active');
-              }, 1);
-          };
-      
-      
-          $('.week-picker').datepicker({
-      
-              showOtherMonths: true,
-              selectOtherMonths: true,
-              defaultDate: startDate,
-              dateFormat: 'mm/dd/yy',
-              changedFormat: 'dd/mm/yy',
-      
-              onSelect: function(dateText, inst) {
-      
-               const parts = dateText.split('/');
-               const month = parts[0];
-               const day = parts[1];
-               const year = parts[2];
-               console.log(`${day},${month},${year}`)
-      
-               const dateFormatChanged = `${day}/${month}/${year}`;
-               const dateFormatForAPI= `${year}-${month}-${day}`
-
-               const todayDate = getTodayDate();
-
-                 // Example usage
-               const result = compareDates(dateFormatChanged, todayDate);
-               if(result==1){
-                  console.log(`the date is greater`)
-                  DisablingFields()
-      
-                  let disableFormsLink = document.querySelectorAll('.formsLink');
-                  for (let i = 0; i < disableFormsLink.length; i++) {
-                     disableFormsLink[i].style.display = 'none';
-                  }
-               }
-               else{
-                  EnablingFields()
-                  let disableFormsLink = document.querySelectorAll('.formsLink');
-                  for (let i = 0; i < disableFormsLink.length; i++) {
-                     disableFormsLink[i].style.display = 'block';
-                  }
-
-               }
-               //console.log(result); // Output: 1 (means the first date is greater)
-               
-
-               //console.log(`dateText is ${dateText}`)
-               //console.log(`Date format changed is ${dateFormatChanged}`)
-              
-                  var date = $(this).datepicker('getDate');
-                  startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - (date.getDay() + 1) % 7 + 0);
-                  endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - (date.getDay() + 1) % 7 + 6);
-                  var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
-                 
-                  const formattedStartDate = $.datepicker.formatDate(dateFormat, startDate, inst.settings);
-                  const formattedEndDate = $.datepicker.formatDate(dateFormat, endDate, inst.settings);
-              
-                  // Store values in variables
-                  const startDateText = convertDateFormatToDDMMYY(formattedStartDate);
-                  const endDateText = convertDateFormatToDDMMYY(formattedEndDate);
-              
-                  // Update elements
-                  $('#startDate').text(startDateText);
-                  $('#endDate').text(endDateText);
-
-                  selectCurrentWeek();
-                  
-      
-                  let changedDate=date;
-      
-                  const convertedDate = formatDateToDDMMYY(date);
-                  //console.log(`converted Date is ${convertedDate}`)
-      
-                  var formattedDate = formatToCustomDate(convertedDate);
-                  $('#viewingDate').text(formattedDate);
-      
-                  const newUrl = `${window.location.origin}${window.location.pathname}?date=${dateFormatChanged}`;
-                  window.history.pushState({}, '', newUrl);
-      
-                  const plantValue = document.getElementById('plantDropdown').value
-                  if(plantValue){
-                       
-                  //console.log(`the value of plant is ${plantValue}`)
-                 // console.log(`the value of date for a plant is ${dateFormatForAPI}`)
-      
-                  let observationLink = document.getElementById('observationLink');
-                  observationLink.href = `/api/observations/?plantcode=${plantValue}&date=${dateFormatForAPI}`;
-               
-                  let stopWorkLink = document.getElementById('stopWorkLink');
-                  stopWorkLink.href = `/api/stopworks/?plantcode=${plantValue}&date=${dateFormatForAPI}`;
-               
-                  let violationLink = document.getElementById('violationLink');
-                  violationLink.href = `/api/violations/?plantcode=${plantValue}&date=${dateFormatForAPI}`;
-               
-                  let incidentLink = document.getElementById('incidentLink');
-                  incidentLink.href = `/api/Incidents/?plantcode=${plantValue}&date=${dateFormatForAPI}`;
-      
-                  let getStartRangeInputs = document.querySelectorAll('.startRange');
-                  for (let i = 0; i < getStartRangeInputs.length; i++) {
-                     getStartRangeInputs[i].value = startDateText;
-                  }
-               
-                  let getEndRangeInputs = document.querySelectorAll('.endRange');
-                  for (let i = 0; i < getEndRangeInputs.length; i++) {
-                     getEndRangeInputs[i].value = endDateText;
-                  }
-               
-                  let getDateFormatInputs = document.querySelectorAll('.getDateFormat');
-                  for (let i = 0; i < getDateFormatInputs.length; i++) {
-                     getDateFormatInputs[i].value = dateFormatForAPI;
-                  }
-               
-                  let getDateSubmitttedInputs = document.querySelectorAll('.formSubmitDate');
-                  for (let i = 0; i < getDateSubmitttedInputs.length; i++) {
-                     getDateSubmitttedInputs[i].value = dateFormatForAPI;
-                  }
-      
-                  const apiURL = `/api/child-models/?plantcode=${plantValue}&date=${dateFormatForAPI}`;
-      
-                  fetch(apiURL)
-                  .then(response => {
-                     if (!response.ok) {
-                        if (response.status === 404) {
-                           // If status is 404, make all input fields empty
-                           console.log(response.status);
-                           clearInputFields();
-                           // Stop further execution by returning a rejected Promise
-                          return Promise.reject(`HTTP error! Status: ${response.status}`);
-                        } else {
-                           throw new Error(`HTTP error! Status: ${response.status}`);
-                        }
-                     }
-                     return response.json();
-                  })
-                  .then(data => {
-                     // Continue with the .then block even after handling 404
-                     console.log(data);
-                     console.log(data.hse_status);
-               
-                     if (data.hse_status && data.hse_status === 1) {
-                        // only view the data 
-                        // DisablingSmallerDate()
-                     }
-               
-                     populateInputFields('General HSE', generalHSEFieldsID, generalHSEFields, 1, data);
-                     populateInputFields('HSE Training', hseTrainingFieldsID, hseTrainingFields, 2, data);
-                     populateInputFields('HSE Observation', hseObservationFieldsID, hseObservationFields, 3, data);
-                     populateInputFields('Incidents', incidentsFieldsID, incidentsFields, 5, data);
-                     populateInputFields('Management Visits', managementVisitsFieldsID, managementVisitsFields, 4, data);
-                  })
-                  .catch(error => {
-                     console.error('API request failed:', error);
-                  });
-      
-                  }
-                  else{
-                     //alert('select plant code')
-      
-                  }
-      
-      
-      
-              },
-              beforeShowDay: function(date) {
-                  var cssClass = '';
-      
-                  if (date >= startDate && date <= endDate)
-                      cssClass = 'ui-datepicker-current-day';
-                  
-      
-                  return [true, cssClass];
-              },
-              onChangeMonthYear: function(year, month, inst) {
-                  selectCurrentWeek();
-              }
-          });
-      
-          $('.week-picker').datepicker('setDate',initialDate );
-          $('.week-picker').datepicker('option', 'onSelect').call($('.week-picker').get(0), $.datepicker.formatDate('mm/dd/yy', initialDate), { settings: $('.week-picker').datepicker('option') });
-      
-      });
-      
-      function changeDate(day) {
-         const urlSearchParams = new URLSearchParams(window.location.search);
-         const hasDateParameter = urlSearchParams.has('date');
-      
-         if (hasDateParameter) {
-             const dateParameterValue = urlSearchParams.get('date');
-      
-             const parts = dateParameterValue.split('/');
-             const originalDay = parseInt(parts[0], 10);
-             const month = parseInt(parts[1], 10) - 1; 
-             const year = parseInt(parts[2], 10);
-      
-             const originalDate = new Date(year, month, originalDay);
-      
-             if (day === -1) {
-                 // Decrement the date by 1 day
-                 originalDate.setDate(originalDate.getDate() - 1);
-             } else if (day===1){
-                 // Increment the date by 1 day
-                 originalDate.setDate(originalDate.getDate() + 1);
-             }
-      
-             const modifiedDate = `${String(originalDate.getMonth() + 1).padStart(2, '0')}/${String(originalDate.getDate()).padStart(2, '0')}/${originalDate.getFullYear()}`;
-             console.log(`modified date is ${modifiedDate}`);
-      
-             $('.week-picker').datepicker('setDate', modifiedDate);
-      
-             const onSelectFunction = $('.week-picker').datepicker('option', 'onSelect');
-             onSelectFunction.call($('.week-picker').get(0), modifiedDate, { settings: $('.week-picker').datepicker('option') });
-         }
-      }
-      
-         
-      
-   </script>
    <script>
+
       let formChanged = false;
-      
+
       document.getElementById('form1').addEventListener('input', function () {
           formChanged = true;
       });
-      
+
       document.getElementById('form2').addEventListener('input', function () {
          formChanged = true;
-      });
-      
-      document.getElementById('form3').addEventListener('input', function () {
+     });
+
+     document.getElementById('form3').addEventListener('input', function () {
       formChanged = true;
-      });
-      
-      document.getElementById('form4').addEventListener('input', function () {
+    });
+
+    document.getElementById('form4').addEventListener('input', function () {
       formChanged = true;
-      });
-      
-      document.getElementById('final-form').addEventListener('input', function () {
+    });
+
+    document.getElementById('final-form').addEventListener('input', function () {
       formChanged = true;
-      });
-      
-      
+    });
+
+    
       function saveChanges() {
-      
+ 
           formChanged = false;
       }
-      
+ 
       {% comment %} window.addEventListener('beforeunload', function (event) {
           if (formChanged) {
               const message = 'You have unsaved changes. Are you sure you want to leave?';
@@ -1529,11 +1285,11 @@
               return message; 
           }
       });   {% endcomment %}
-      
-      
+     
+     
       document.addEventListener('DOMContentLoaded', function () {
          const dropdown = document.getElementById('plantDropdown');
-      
+ 
          fetch('/api/plant/')
              .then(response => response.json())
              .then(data => {
@@ -1550,8 +1306,8 @@
                  }
              })
              .catch(error => console.error('Error fetching data:', error));
-      });
-      
+     });
+
       var plantDropdown = document.getElementById("plantDropdown");
       var plantCodeInputs = document.querySelectorAll(".plantcode");
       
@@ -1564,11 +1320,166 @@
               input.value = selectedValue;
       
           });
-
-          changeDate(0)
-
+         let getDateElement = document.getElementById('viewingDate');
+         let value = getDateElement.innerText;
+         let formattedDate = convertDateToYYYYMMDD(value);
+      
+         processDate()
+      
+         let observationLink = document.getElementById('observationLink');
+         observationLink.href = `/api/observations/?plantcode=${selectedValue}&date=${formattedDate}`;
+      
+         let stopWorkLink = document.getElementById('stopWorkLink');
+         stopWorkLink.href = `/api/stopworks/?plantcode=${selectedValue}&date=${formattedDate}`;
+      
+         let violationLink = document.getElementById('violationLink');
+         violationLink.href = `/api/violations/?plantcode=${selectedValue}&date=${formattedDate}`;
+      
+         let incidentLink = document.getElementById('incidentLink');
+         incidentLink.href = `/api/Incidents/?plantcode=${selectedValue}&date=${formattedDate}`;
+      
+      
+         const apiURL = `/api/child-models/?plantcode=${selectedValue}&date=${formattedDate}`;
+      
+         fetch(apiURL)
+            .then(response => {
+               if (!response.ok) {
+                  if (response.status === 404) {
+                     // If status is 404, make all input fields empty
+                     console.log(response.status);
+                     clearInputFields();
+                     // Stop further execution by returning a rejected Promise
+                    return Promise.reject(`HTTP error! Status: ${response.status}`);
+                  } else {
+                     throw new Error(`HTTP error! Status: ${response.status}`);
+                  }
+               }
+               return response.json();
+            })
+            .then(data => {
+               // Continue with the .then block even after handling 404
+               console.log(data);
+               console.log(data.hse_status);
+         
+               if (data.hse_status && data.hse_status === 1) {
+                  // only view the data 
+                  // DisablingSmallerDate()
+               }
+         
+               populateInputFields('General HSE', generalHSEFieldsID, generalHSEFields, 1, data);
+               populateInputFields('HSE Training', hseTrainingFieldsID, hseTrainingFields, 2, data);
+               populateInputFields('HSE Observation', hseObservationFieldsID, hseObservationFields, 3, data);
+               populateInputFields('Incidents', incidentsFieldsID, incidentsFields, 5, data);
+               populateInputFields('Management Visits', managementVisitsFieldsID, managementVisitsFields, 4, data);
+            })
+            .catch(error => {
+               console.error('API request failed:', error);
+            });
                   
       });
+      
+      const today = new Date();
+      //const year = today.getFullYear();
+      // const month = today.getMonth();
+      
+      
+      const updateCalendar = () => {
+         const today = new Date();
+         const year = today.getFullYear();
+         const month = today.getMonth();
+         const firstDayOfMonth = new Date(year, month, 1);
+         const lastDayOfMonth = new Date(year, month + 1, 0);
+         const daysFromPrevMonth = firstDayOfMonth.getDay();
+         const daysInMonth = lastDayOfMonth.getDate();
+      
+         const getWeekDates = () => {
+            const now = new Date();
+            const weekStartDate = new Date(now);
+            const weekEndDate = new Date(now);
+      
+            // Calculate the previous Saturday
+            weekStartDate.setDate(now.getDate() - (now.getDay() + 1) % 7);
+      
+            // Calculate the following Friday
+            weekEndDate.setDate(weekStartDate.getDate() + 6);
+      
+            // Check if both weekend date and today's date have passed
+            if (now > weekEndDate) {
+               // Adjust for the next week
+               weekStartDate.setDate(weekStartDate.getDate() + 7);
+               weekEndDate.setDate(weekEndDate.getDate() + 7);
+            }
+      
+            return [weekStartDate, weekEndDate];
+         };
+      
+      
+      
+         [weekStartDate, weekEndDate] = getWeekDates();
+         console.log(weekStartDate)
+         console.log(weekEndDate)
+      
+         const startMonth = weekStartDate.getMonth();
+         const endMonth = weekEndDate.getMonth();
+      
+      
+         let firstDayOfEndMonth;
+         let daysInSecondMonth;
+      
+         if (startMonth !== endMonth) {
+            const lastDayOfStartMonth = new Date(weekStartDate.getFullYear(), startMonth + 1, 0);
+            const daysInFirstMonth = lastDayOfStartMonth.getDate() - weekStartDate.getDate() + 1;
+      
+            firstDayOfEndMonth = new Date(weekEndDate.getFullYear(), endMonth, 1);
+            daysInSecondMonth = weekEndDate.getDate();
+            console.log(`last day of month ${lastDayOfStartMonth}`)
+            console.log(` day in first month ${daysInFirstMonth}`)
+         }
+      
+         let calendarHTML =
+            '<table class="myTable"><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr><tr>';
+      
+         let day = 1;
+      
+         for (let i = 0; i < 6; i++) {
+            calendarHTML += '<tr>';
+            for (let j = 0; j < 7; j++) {
+               if (i === 0 && j < daysFromPrevMonth) {
+                  const prevMonthDay = new Date(year, month, 0).getDate() - daysFromPrevMonth + j + 1;
+                  calendarHTML += `<td class="other-month">${prevMonthDay}</td>`;
+               } else if (day <= daysInMonth) {
+                  const isToday = year === today.getFullYear() && month === today.getMonth() && day === today.getDate();
+                  const currentDate = new Date(year, month, day);
+      
+                  const isHighlight = currentDate >= weekStartDate && currentDate <= weekEndDate;
+      
+                  let cellClass = '';
+      
+                  if (currentDate.getDate() === weekStartDate.getDate()) {
+                     //cellClass = ' highlight';
+                  }
+                  if (isHighlight) {
+                     //cellClass = 'highlight';
+                  } else if (isToday) {
+                     //cellClass = 'highlight';
+                  }
+      
+                  calendarHTML += `<td class="${cellClass}">${day}</td>`;
+                  day++;
+               } else {
+                  calendarHTML += `<td class="other-month">${day - daysInMonth}</td>`;
+                  day++;
+               }
+            }
+            calendarHTML += '</tr>';
+         }
+      
+         calendarHTML += '</table>';
+         document.getElementById("calendar").innerHTML = calendarHTML;
+      };
+      
+      updateCalendar();
+      setInterval(updateCalendar, 1000 * 60 * 60);
       
       
       
@@ -1600,6 +1511,36 @@
       
       
       
+      {% comment %} const inputFields1 = document.querySelectorAll('.importantField');
+      const inputFields2 = document.querySelectorAll('.impField');
+      const submitButton1 = document.getElementById('observationBtn');
+      const submitButton2 = document.getElementById('incidentBtn');
+      
+      inputFields1.forEach((inputField) => {
+         inputField.addEventListener('input', function () {
+      
+            const allFieldsNonEmpty = Array.from(inputFields1).every(field => field.value.trim() !== '');
+      
+            if (allFieldsNonEmpty) {
+               submitButton1.removeAttribute('disabled');
+            } else {
+               submitButton1.setAttribute('disabled', 'disabled');
+            }
+         });
+      })
+      
+      inputFields2.forEach((inputField) => {
+         inputField.addEventListener('input', function () {
+      
+            const allFieldsNonEmpty = Array.from(inputFields2).every(field => field.value.trim() !== '');
+      
+            if (allFieldsNonEmpty) {
+               submitButton2.removeAttribute('disabled');
+            } else {
+               submitButton2.setAttribute('disabled', 'disabled');
+            }
+         });
+      }) {% endcomment %}
       
       $(document).ready(function() {
          var input9 = document.getElementById('input9');
@@ -1652,12 +1593,338 @@
          input17.addEventListener('input', toggleFormsLinksAndInputs);
       }); 
       
+      
+      
+      const dateRangeElement = document.querySelector('.date-range');
+      const startDateFormatted = weekStartDate.toLocaleDateString('en-US', {
+         month: 'short',
+         day: 'numeric',
+         year: 'numeric'
+      });
+      const endDateFormatted = weekEndDate.toLocaleDateString('en-US', {
+         month: 'short',
+         day: 'numeric',
+         year: 'numeric'
+      });
+      
+      dateRangeElement.textContent = `${startDateFormatted} - ${endDateFormatted}`;
+      
+      
+      const itsDateElement = document.querySelector(".viewDate");
+      const itsDateElement1 = document.querySelector(".theDate1");
+      
+      function formatDate(date) {
+         const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+         const months = ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
+      
+         const dayOfWeek = daysOfWeek[date.getDay()];
+         const dayOfMonth = date.getDate();
+         const month = months[date.getMonth()];
+      
+         const daySuffix = getDaySuffix(dayOfMonth);
+      
+         return `${dayOfWeek}, ${dayOfMonth}${daySuffix}, ${month}`;
+      }
+      
+      function formatDate1(date) {
+         const day = date.getDate();
+         const month = date.toLocaleString('default', {
+            month: 'long'
+         });
+         const daySuffix = getDaySuffix(day);
+         const dayOfWeek = date.toLocaleString('default', {
+            weekday: 'long'
+         });
+      
+         return `${day}${daySuffix} ${month} - Today- ${dayOfWeek} `;
+      }
+      
+      // Function to get the day suffix (e.g., 1st, 2nd, 3rd, 4th)
+      function getDaySuffix(day) {
+         if (day >= 11 && day <= 13) {
+            return "th";
+         }
+         switch (day % 10) {
+            case 1:
+               return "st";
+            case 2:
+               return "nd";
+            case 3:
+               return "rd";
+            default:
+               return "th";
+         }
+      }
+      
+      function getDateFromURL() {
+         const urlParams = new URLSearchParams(window.location.search);
+         return urlParams.get("date");
+      }
+      
+      let TodaysDate;
+      const dateFromURL = getDateFromURL();
+      
+      if (dateFromURL) {
+         TodaysDate = new Date(dateFromURL);
+         //console.log(`date from the url is ${dateFromURL}`)
+      } else {
+         TodaysDate = new Date();
+         console.log(`no date in url`)
+      
+      }
+      
+      function formatDateToYYYYMMDD(inputDate) {
+         // converts date to yyyy-mm-dd format
+         const date = new Date(inputDate);
+         const year = date.getFullYear();
+         const month = String(date.getMonth() + 1).padStart(2, "0");
+         const day = String(date.getDate()).padStart(2, "0");
+         return `${year}-${month}-${day}`;
+      }
+      
+      
+      // Get the current date
+      let TodaysDate2 = new Date();
+      
+      itsDateElement.textContent = formatDate(TodaysDate); // Initial value
+      itsDateElement1.textContent = formatDate1(TodaysDate2); // Initial value
+      
+      
+      
+      function changeDate(days) {
 
+         if(formChanged==true){
+            alert('Changes you made are not saved')
+         }
+      
+         TodaysDate.setDate(TodaysDate.getDate() + days);
+      
+      
+      
+         const startDate = itsDateElement.textContent = formatDate(weekStartDate);
+         const lastDate = itsDateElement.textContent = formatDate(weekEndDate);
+      
+      
+         itsDateElement.textContent = formatDate(TodaysDate);
+      
+      
+         const divElement = document.getElementById('viewingDate');
+         const value = divElement.innerText;
+         // console.log(value)
+         const ConvertedValue = convertDateToYYYYMMDD(value)
+         //console.log(` converted value is ${ConvertedValue}`)
+      
+      
+         const newUrl = `${window.location.origin}${window.location.pathname}?date=${ConvertedValue}`;
+         window.history.pushState({}, '', newUrl);
+      
+         window.location.reload();
+      
+      }
+      
+       {% comment %} $.ajax({
+         type: "GET",
+         url: "/api/plant/",
+         success: function (data) {
+            console.log(data)
+         },
+         error: function (xhr, status, error) {
+            console.error("Error:", status, error);
+         }
+      });  {% endcomment %}
+      processDate();
+      
+      
+      function getDateFromURL() {
+         const urlParams = new URLSearchParams(window.location.search);
+         return urlParams.get("date");
+      }
+      
+      if (performance.navigation.type === 1) {
+         const currentURL = window.location.href;
+         console.log('Page is reloaded, current URL:', currentURL);
+      
+         const dateValue = getDateFromURL();
+      
+         if (dateValue) {
+            // convert the 2023-11-02 to Thu, 2nd, Nov to this format 
+            const inputDate = dateValue;
+            const formattedDate = formatDateToCustomFormat(inputDate);
+            console.log(` formatted date for me is ${formattedDate}`);
+      
+            const divElement = document.getElementById('viewingDate');
+            divElement.innerText = formattedDate;
+      
+           console.log('Date parameter from URL:', dateValue);
+         } else {
+            console.log('Date parameter not found in the URL');
+         }
+      }
+      
+      function formatDateToCustomFormat(dateString) {
+         const date = new Date(dateString);
+         const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+         const months = [
+            'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+         ];
+         const day = date.getDate();
+         let daySuffix = 'th';
+      
+         if (day === 1 || day === 21 || day === 31) {
+            daySuffix = 'st';
+         } else if (day === 2 || day === 22) {
+            daySuffix = 'nd';
+         } else if (day === 3 || day === 23) {
+            daySuffix = 'rd';
+         }
+      
+         const formattedDate = `${days[date.getDay()]}, ${day}${daySuffix}, ${months[date.getMonth()]}`;
+         return formattedDate;
+      }
+      
+      
+      function getWeekNumber(weekStartDate, weekEndDate) {
+         // Get the first day of the month
+         const firstDayOfMonth = new Date(weekStartDate.getFullYear(), weekStartDate.getMonth(), 1);
+      
+         // Calculate the day of the week for the first day of the month (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+         const dayOfWeekFirstDay = firstDayOfMonth.getDay();
+      
+         // Calculate the offset to align the first day with the week start (Saturday)
+         const dayOffset = (6 - dayOfWeekFirstDay + 7) % 7;
+      
+         // Calculate the adjusted start date for the first week
+         const adjustedWeekStartDate = new Date(weekStartDate.getFullYear(), weekStartDate.getMonth(), 1 + dayOffset);
+      
+         // Calculate the number of weeks between adjusted start date and end date
+         const weeks = Math.ceil((weekEndDate - adjustedWeekStartDate) / (7 * 24 * 60 * 60 * 1000));
+      
+         return weeks;
+      }
+      
+      
+      const myWeek = document.getElementById('weekDisplay');
+      const weekNumber1 = getWeekNumber(weekStartDate, weekEndDate);
+      myWeek.textContent = `Week ${weekNumber1}`;
+      
+      
+      const itsDate = document.getElementById('dateDisplay');
+      itsDate.textContent = `${startDateFormatted}- ${endDateFormatted}`;
+      
+      
+      
+      function convertDateToYYYYMMDD(dateString) {
+         const monthMap = {
+            'Jan': '01',
+            'Feb': '02',
+            'Mar': '03',
+            'Apr': '04',
+            'May': '05',
+            'Jun': '06',
+            'Jul': '07',
+            'Aug': '08',
+            'Sep': '09',
+            'Oct': '10',
+            'Nov': '11',
+            'Dec': '12'
+         };
+      
+         const dateParts = dateString.split(", ");
+         const day = dateParts[1].replace(/\D/g, ''); // Remove non-digits (e.g., "st", "nd", "rd", "th")
+         const month = monthMap[dateParts[2]];
+         const year = new Date().getFullYear(); // Get the current year
+      
+         const formattedDay = day.padStart(2, '0'); // Ensure day is two digits
+      
+         const formattedDate = `${year}-${month}-${formattedDay}`;
+         return formattedDate;
+      }
+      
+      
+      function processDate() {
+         let getDateElement = document.getElementById('viewingDate');
+         let value = getDateElement.innerText;
+      
+      
+         let formattedDate = convertDateToYYYYMMDD(value);
+         let startRange = formatDateToYYYYMMDD(weekStartDate)
+         let EndRange = formatDateToYYYYMMDD(weekEndDate)
+
+         let weekStartDateObj = new Date(weekStartDate);
+         weekStartDateObj.setDate(weekStartDateObj.getDate() - 7);
+         let sevenDaysBeforeStartDate = formatDateToYYYYMMDD(weekStartDateObj);
+         console.log(`7 days befor ${sevenDaysBeforeStartDate}`)
+      
+         // dates are in the format of yyyy-mm-dd
+      
+         console.log(`formattedDate ${formattedDate}`)
+         console.log(`startRange ${startRange}`)
+         console.log(`EndRange ${EndRange}`)
+
+         let today = new Date();
+      
+         let yyyy = today.getFullYear();
+         let mm = String(today.getMonth() + 1).padStart(2, '0');
+         let dd = String(today.getDate()).padStart(2, '0');
+      
+         let todaysDate = yyyy + '-' + mm + '-' + dd;
+      
+         console.log(`todays date is ${todaysDate}`)
+      
+         if (formattedDate > todaysDate) {
+            DisablingGreaterDate()
+      
+            let disableFormsLink = document.querySelectorAll('.formsLink');
+            for (let i = 0; i < disableFormsLink.length; i++) {
+               disableFormsLink[i].style.display = 'none';
+            }
+            return;
+      
+         }
+         if(EndRange==todaysDate){
+            document.getElementById('finalSubmit').disabled=false;
+         }
+      
+      
+         let getStartRangeInputs = document.querySelectorAll('.startRange');
+         for (let i = 0; i < getStartRangeInputs.length; i++) {
+            getStartRangeInputs[i].value = startRange;
+         }
+      
+         let getEndRangeInputs = document.querySelectorAll('.endRange');
+         for (let i = 0; i < getEndRangeInputs.length; i++) {
+            getEndRangeInputs[i].value = EndRange;
+         }
+         // console.log(formattedDate); // Output: "2023-10-30"
+      
+         let getDateFormatInputs = document.querySelectorAll('.getDateFormat');
+         for (let i = 0; i < getDateFormatInputs.length; i++) {
+            getDateFormatInputs[i].value = formattedDate;
+         }
+      
+         let getDateSubmitttedInputs = document.querySelectorAll('.formSubmitDate');
+         for (let i = 0; i < getDateSubmitttedInputs.length; i++) {
+            getDateSubmitttedInputs[i].value = formattedDate;
+         }
+      
+         if (formattedDate < sevenDaysBeforeStartDate) {
+            console.log('smaller date')
+      
+           DisablingSmallerDate()
+      
+         }
+      
+         return formattedDate;
+      
+      }
+      
+      
       function setupIncrementDecrementButtons(decrementButtonId, incrementButtonId, inputFieldId) {
          const decrementButton = document.getElementById(decrementButtonId);
          const incrementButton = document.getElementById(incrementButtonId);
          const inputField = document.getElementById(inputFieldId);
-      
+     
          decrementButton.addEventListener("click", () => {
              const currentValue = parseFloat(inputField.value);
              if (!isNaN(currentValue)) {
@@ -1666,7 +1933,7 @@
                  inputField.value = formatValue(newValue);
              }
          });
-      
+     
          incrementButton.addEventListener("click", () => {
              const currentValue = parseFloat(inputField.value);
              if (!isNaN(currentValue)) {
@@ -1675,14 +1942,14 @@
                  inputField.value = formatValue(newValue);
              }
          });
-      
+     
          function formatValue(value) {
              // Remove ".0" for integer values
              return value % 1 === 0 ? String(value) : value.toFixed(1);
          }
-      }
-      
-      
+     }
+     
+     
       
       // Example usage:
       setupIncrementDecrementButtons("decrement1", "increment1", "input1");
@@ -1836,6 +2103,35 @@
          }
       }
       
+
+      document.addEventListener('DOMContentLoaded', function () {
+         function setupAccordion(accordionNumber) {
+            const toggleAccordionLink = document.getElementById(`toggle-accordion${accordionNumber}`);
+            const accordionContent = document.getElementById(`collapse${accordionNumber}`);
+            const backcolorDiv = document.getElementById(`backcolorDiv${accordionNumber}`);
+            const clickMainDiv = document.getElementById(`clickMainDiv${accordionNumber}`);
+      
+            let isAccordionOpen = false;
+      
+            clickMainDiv.addEventListener('click', function (e) {
+               e.preventDefault();
+               isAccordionOpen = !isAccordionOpen;
+               accordionContent.classList.toggle('show', isAccordionOpen);
+      
+               if (isAccordionOpen) {
+                  toggleAccordionLink.style.setProperty('color', '#3E9FFE', 'important');
+                  backcolorDiv.style.setProperty('background-color', 'rgba(62, 159, 254, 0.3)', 'important');
+               } else {
+                  toggleAccordionLink.style.removeProperty('color');
+                  backcolorDiv.style.removeProperty('background-color');
+               }
+            });
+         }
+      
+         for (let i = 1; i <= 5; i++) {
+            setupAccordion(i);
+         }
+      });
       
       
       function handleFormSubmission(formId, url, toUpdateId) {
@@ -1933,7 +2229,7 @@
       handleFormSubmission("final-form", "{% url 'incidents' %}", "toBeUpdatedId5");
       
       
-      function DisablingFields() {
+      function DisablingGreaterDate() {
          disableInputFields("disableIt");
          disableButtonFields("disableBtn");
          //document.querySelector('.lastPreview').style.display = 'none';
@@ -1943,18 +2239,6 @@
          subForms.forEach(subForm => {
             subForm.style.display = 'none';
          });
-      }
-
-      function EnablingFields() {
-         enableInputFields("disableIt");
-         enableButtonFields("disableBtn");
-         //document.querySelector('.lastPreview').style.display = 'none';
-         const subForms = document.querySelectorAll('.subForms');
-      
-         subForms.forEach(subForm => {
-            subForm.style.display = 'block';
-         });
-      
       }
       
       function DisablingSmallerDate() {
