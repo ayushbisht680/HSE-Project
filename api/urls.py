@@ -6,6 +6,9 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('plant/',PlantAPI.as_view(),name='Plant'),
+    path('homescape/',HomeScapeAPI.as_view(),name='HomeScape'),
+    path('warehouse/',WarehouseAPI.as_view(),name='Warehouse'),
+    path('segment/',HSESegmentAPI.as_view(),name='HSE Segment'),
     path('general_hse/',GeneralHseAPI.as_view(),name='General HSE'),
     path('hse_trainingModel/', HseTrainingsAPI.as_view(), name='HSE Trainings'),
     path('hse_observation/', HseObservationAPI.as_view(), name="HSE Observations"),

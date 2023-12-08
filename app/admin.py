@@ -2,8 +2,8 @@ from django.contrib import admin
 from .models import *
 
 # Register your models here.
-admin.site.register(Plant)
 admin.site.register(HSE)
+admin.site.register(HSESegment)
 admin.site.register(GeneralHse)
 admin.site.register(HSETrainingsModel)
 admin.site.register(HSEObservation)

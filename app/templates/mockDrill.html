@@ -1,60 +1,168 @@
-{% load static %}
+onSelect: function(dateText, inst) {
 
-<!DOCTYPE html>
-<html >
-<head>
-    
-<link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/base/jquery-ui.css">
+   const parts = dateText.split('/');
+   const month = parts[0];
+   const day = parts[1];
+   const year = parts[2];
 
-</head>
-<body>
-    <div class="week-picker"></div>
-    <br /><br />
-    <label>Week :</label> <span id="startDate"></span> - <span id="endDate"></span>
-</body>
+   const dateFormatChanged = `${day}/${month}/${year}`;
+   const dateFormatForAPI= `${year}-${month}-${day}`
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.js"></script>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.min.js"></script>
-<script type="text/javascript">  
-    $(function() {
-        var startDate;
-        var endDate;
-        
-        var selectCurrentWeek = function() {
-            window.setTimeout(function () {
-                $('.week-picker').find('.ui-datepicker-current-day a').addClass('ui-state-active')
-            }, 1);
-        }
-        
-        $('.week-picker').datepicker( {
-            showOtherMonths: true,
-            selectOtherMonths: true,
-            onSelect: function(dateText, inst) {
-                var date = $(this).datepicker('getDate');
-                startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - (date.getDay() + 1) % 7 + 0);
-                endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - (date.getDay() + 1) % 7 + 6);
-                var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
-                $('#startDate').text($.datepicker.formatDate( dateFormat, startDate, inst.settings ));
-                $('#endDate').text($.datepicker.formatDate( dateFormat, endDate, inst.settings ));
+   const todayDate = getTodayDate();
+
+     // Example usage
+   const result = compareDates(dateFormatChanged, todayDate);
+   if(result==1){
+      console.log(`the date is greater`)
+      DisablingFields()
+
+      let disableFormsLink = document.querySelectorAll('.formsLink');
+      for (let i = 0; i < disableFormsLink.length; i++) {
+         disableFormsLink[i].style.display = 'none';
+      }
+   }
+   else{
+      EnablingFields()
+      let disableFormsLink = document.querySelectorAll('.formsLink');
+      for (let i = 0; i < disableFormsLink.length; i++) {
+         disableFormsLink[i].style.display = 'block';
+      }
+
+   }
+ 
+     // selectedDate=$(this).datepicker('getDate');
+     // console.log(`selected date is ${selectedDate}`)
+
+      
+      var date = $(this).datepicker('getDate');
+      selectedDate=new Date(date.getFullYear(), date.getMonth(), date.getDate())
+
+      console.log(`the selected date  in onselect ${selectedDate}`)
+
+
+      startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - (date.getDay() + 1) % 7 + 0);
+      endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - (date.getDay() + 1) % 7 + 6);
+      var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
+     
+      const formattedStartDate = $.datepicker.formatDate(dateFormat, startDate, inst.settings);
+      const formattedEndDate = $.datepicker.formatDate(dateFormat, endDate, inst.settings);
+  
+      // Store values in variables
+      const startDateText = convertDateFormatToDDMMYY(formattedStartDate);
+      const endDateText = convertDateFormatToDDMMYY(formattedEndDate);
+  
+      // Update elements
+      $('#startDate').text(startDateText);
+      $('#endDate').text(endDateText);
+
+      selectCurrentWeek();
             
-                selectCurrentWeek();
-            },
-            
-            
-            beforeShowDay: function(date) {
-                var cssClass = '';
-                if(date >= startDate && date <= endDate)
-                    cssClass = 'ui-datepicker-current-day';
-                return [true, cssClass];
-            },
-            onChangeMonthYear: function(year, month, inst) {
-                selectCurrentWeek();
+      const convertedDate = formatDateToDDMMYY(date);
+      //console.log(`converted Date is ${convertedDate}`)
+
+      var formattedDate = formatToCustomDate(convertedDate);
+      $('#viewingDate').text(formattedDate);
+
+      const newUrl = `${window.location.origin}${window.location.pathname}?date=${dateFormatChanged}`;
+      window.history.pushState({}, '', newUrl);
+
+      const plantValue = document.getElementById('segmentDropdown').value
+      
+      if(! plantValue){
+         {% comment %} Swal.fire({
+            icon: 'info',
+            title: 'Select Plant Code  ',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Ok',
+            customClass: {
+                popup: 'small-popup'
             }
-        });
-        
-        $('.week-picker .ui-datepicker-calendar tr').live('mousemove', function() { $(this).find('td a').addClass('ui-state-hover'); });
-        $('.week-picker .ui-datepicker-calendar tr').live('mouseleave', function() { $(this).find('td a').removeClass('ui-state-hover'); });
-    });
-    </script>
-</html>
+        }) {% endcomment %}
+        return;
+      }
+           
+      //console.log(`the value of plant is ${plantValue}`)
+     // console.log(`the value of date for a plant is ${dateFormatForAPI}`)
+
+    //  let observationLink = document.getElementById('observationLink');
+    //  observationLink.href = `/api/observations/?plantcode=${plantValue}&date=${dateFormatForAPI}`;
+   
+    //  let stopWorkLink = document.getElementById('stopWorkLink');
+    //  stopWorkLink.href = `/api/stopworks/?plantcode=${plantValue}&date=${dateFormatForAPI}`;
+   
+   //   let violationLink = document.getElementById('violationLink');
+   //   violationLink.href = `/api/violations/?plantcode=${plantValue}&date=${dateFormatForAPI}`;
+   
+   //   let incidentLink = document.getElementById('incidentLink');
+   //   incidentLink.href = `/api/Incidents/?plantcode=${plantValue}&date=${dateFormatForAPI}`;
+
+      let getStartRangeInputs = document.querySelectorAll('.startRange');
+      for (let i = 0; i < getStartRangeInputs.length; i++) {
+         getStartRangeInputs[i].value = startDateText;
+      }
+   
+      let getEndRangeInputs = document.querySelectorAll('.endRange');
+      for (let i = 0; i < getEndRangeInputs.length; i++) {
+         getEndRangeInputs[i].value = endDateText;
+      }
+   
+      let getDateFormatInputs = document.querySelectorAll('.getDateFormat');
+      for (let i = 0; i < getDateFormatInputs.length; i++) {
+         getDateFormatInputs[i].value = dateFormatForAPI;
+      }
+   
+      let getDateSubmitttedInputs = document.querySelectorAll('.formSubmitDate');
+      for (let i = 0; i < getDateSubmitttedInputs.length; i++) {
+         getDateSubmitttedInputs[i].value = dateFormatForAPI;
+      }
+
+      const apiURL = `/api/child-models/?plantcode=${plantValue}&date=${dateFormatForAPI}`;
+
+      fetch(apiURL)
+      .then(response => {
+         if (!response.ok) {
+            if (response.status === 404) {
+               const checkboxes = document.querySelectorAll('.custom-checkbox');
+
+               // Loop through checkboxes and set their checked property to false
+               checkboxes.forEach(function (checkbox) {
+                 checkbox.checked = false;
+               });
+               // If status is 404, make all input fields empty
+               console.log(response.status);
+               //document.getElementById('accordionImage').style.display = 'none';
+
+               clearInputFields();
+               // Stop further execution by returning a rejected Promise
+              return Promise.reject(`HTTP error! Status: ${response.status}`);
+            } else {
+               throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+         }
+         return response.json();
+      })
+      .then(data => {
+         // Continue with the .then block even after handling 404
+         console.log(data);
+         console.log(data.hse_status);
+   
+         if (data.hse_status && data.hse_status === 1) {
+            // only view the data 
+            // DisablingSmallerDate()
+         }
+   
+         populateInputFields('General HSE', generalHSEFieldsID, generalHSEFields, 1, data,'chekbox1');
+         populateInputFields('HSE Training', hseTrainingFieldsID, hseTrainingFields, 2, data,'chekbox2');
+         populateInputFields('HSE Observation', hseObservationFieldsID, hseObservationFields, 3, data,'chekbox3');
+         populateInputFields('Management Visits', managementVisitsFieldsID, managementVisitsFields, 4, data,'chekbox4');
+         populateInputFields('Incidents', incidentsFieldsID, incidentsFields, 5, data,'chekbox5');
+      })
+      .catch(error => {
+         console.error('API request failed:', error);
+      });
+
+
+  },
+
+
 

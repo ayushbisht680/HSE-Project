@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from base.models import *
+
 
 
 CATEGORY_CHOICES = [
@@ -50,7 +52,6 @@ CATEOGRIES=[
     ]
 
 
-
 class HSEUsers(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     hse_permission = models.BooleanField()
@@ -62,30 +63,32 @@ class HSEUsers(models.Model):
     def __str__(self):
         return self.user.username
 
+ 
+    
+class HSESegment(models.Model):
+    segment = models.CharField(max_length=20)
+    plant = models.ForeignKey(Plant, on_delete=models.CASCADE, null=True, blank=True)
+    homescape = models.ForeignKey(HomeScape, on_delete=models.CASCADE, null=True, blank=True)
+    warehouse = models.ForeignKey(Warehouse, on_delete=models.CASCADE, null=True, blank=True)
 
-class Plant(models.Model):
-    id = models.IntegerField(primary_key=True, verbose_name='Plant code')
-    name = models.CharField(max_length=200)
-    latitude = models.FloatField(null=True, blank=True)
-    longitude = models.FloatField(null=True, blank=True)
-    pincode = models.IntegerField(null=True, blank=True)
-    city = models.CharField(max_length=200, null=True, blank=True)
-    state = models.CharField(max_length=200,  null=True, blank=True)
-    country = models.CharField(max_length=200,null=True, blank=True)
-    address = models.TextField(null=True, blank=True)
+    
+    class Meta:
+        verbose_name = "HSESegment" 
+        verbose_name_plural = "HSESegment"
 
+    
     def __str__(self):
-        return f" Plant- ID: {self.id}"
+        return f"{self.segment}"
 
 
 class HSE(models.Model):
-    plant_code=models.ForeignKey(Plant, on_delete=models.CASCADE,null=True)
+    hse_segment=models.ForeignKey(HSESegment, on_delete=models.CASCADE, null=True, blank=True)    
     created_at = models.DateTimeField(default=timezone.now, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE,related_name='created_hse_records',null=True,blank=True)
     updated_by = models.ForeignKey(User, on_delete=models.CASCADE,related_name='updated_hse_records',null=True,blank=True)
 
-    formSubmittedDate = models.DateField(default=None, null=True)
+    formSubmittedDate = models.DateField(default=None, null=True,blank=True)
 
     form_status=models.IntegerField()
 
@@ -108,7 +111,7 @@ class GeneralHse(models.Model):
     promotional_activities = models.PositiveIntegerField()
     promotional_activities_file = models.FileField(upload_to='uploads/', null=True, blank=True)
     committe_meetings = models.PositiveIntegerField()
-    submittedDate = models.DateField(default=None, null=True)
+    submittedDate = models.DateField(default=None, null=True,blank=True)
     formSubmitted = models.BooleanField(default=False)  
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_general_hse_records', null=True, blank=True)
     updated_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='updated_general_hse_records', null=True, blank=True)

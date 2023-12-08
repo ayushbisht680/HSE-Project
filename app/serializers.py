@@ -9,6 +9,27 @@ class PlantSerializer(serializers.ModelSerializer):
         # fields='__all__'
         fields = ['id']  # Add other fields as needed
 
+class HomeScapeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model=HomeScape
+        # fields='__all__'
+        fields = ['cluster']  
+
+class WarehouseSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model=Warehouse
+        # fields='__all__'
+        fields = ['code'] 
+
+class HSESegmentSerializer(serializers.ModelSerializer):
+     
+     class Meta:
+        model=HSESegment
+        fields='__all__'
+
+
 
 
 class GeneralHSESerializer(serializers.ModelSerializer):

@@ -265,7 +265,8 @@
       <form method="POST" action="{% url 'observation_form' %}" enctype="multipart/form-data" id="form" autocomplete="off" style="display: none;">
          {% csrf_token %}
          <div class="rowTable1">
-            <input type="hidden" name="plant_id" id="plant_id" >
+            <input type="hidden" name="category" id="category" >
+            <input type="hidden" name="categoryValue" id="categoryValue" >
             <input type="hidden" name="formSubmitDate" id="formSubmitDate" >
 
             <div class="Srno"><input type="text" class="srWidth valueInput1" placeholder="Sr.No" name="sr_no" id="Srno" value='1' style='border: none;' disabled></div>
@@ -434,14 +435,16 @@
          const url = window.location.href;
          const searchParams = new URL(url).searchParams;
          const date = searchParams.get("date");
-         const plantcode = searchParams.get("plantcode");
-         return { date, plantcode };
+         const category = searchParams.get("category");
+         const category_value = searchParams.get("category_value");
+         return { date, category,category_value };
      }
 
 
       const queryParams = getQueryString();
       console.log(queryParams.date); 
-      console.log(queryParams.plantcode);
+      console.log(queryParams.category);
+      console.log(queryParams.category_value);
 
        document.getElementById("redirectButton").addEventListener("click", function() {
        // window.location.href = `/api/my_html/?date=${queryParams.date}`; 
@@ -452,33 +455,36 @@
 
        if (queryParams.date) {
          document.getElementById('formSubmitDate').value = queryParams.date;
-         document.getElementById('plant_id').value = queryParams.plantcode;
+         document.getElementById('category').value = queryParams.category;
+         document.getElementById('categoryValue').value = queryParams.category_value;
        }
 
       populateInputField()
       
       function populateInputField() {        
          
-      fetch(`/api/observation_form/?plant_code=${queryParams.plantcode}&formSubmitDate=${queryParams.date}`)
+      fetch(`/api/observation_form/?category=${queryParams.category}&category_value=${queryParams.category_choices}&date=${queryParams.date}`)
       .then(response => response.json())
       .then(data => {
-         if (data && Array.isArray(data.data) && 'status' in data) {
-            // Access the data array and the form_status
-            const dataArray = data.data;
+         console.log(data)
+         if (data && typeof data === 'object' && 'status' in data) {
+            console.log('hello');
+        
+            // Extract the 'data' property from the data object
+            const dataArray = Array.isArray(data.data) ? data.data : [data.data];
+            console.log(dataArray);
+        
             const formStatus = data.status;
-
-            //console.log('Data Array:', dataArray);
-            //console.log('Form Status:', formStatus);
-
-            if(formStatus==1){
-               document.getElementById('addRowButton').style.display='none'
-
+            console.log('Form Status:', formStatus);
+        
+            if (formStatus === 1) {
+                document.getElementById('addRowButton').style.display = 'none';
             }
-
-            document.getElementById('Srno').value=dataArray.length+1;
-            createAndPopulateFormRows(dataArray); 
-         }
-         
+        
+            document.getElementById('Srno').value = dataArray.length + 1;
+            createAndPopulateFormRows(dataArray);
+        }
+           
       
       })
       .catch(error => {
@@ -511,8 +517,8 @@
          
          let formattedDate = `${day}-${month}-${year}`;
          
-         console.log('Date:', formattedDate); // Output: 24-11-2023
-         console.log('Time:', timePart); // Output: 18:47
+        // console.log('Date:', formattedDate); // Output: 24-11-2023
+         //console.log('Time:', timePart); // Output: 18:47
        
          const inputFields = newRow.querySelectorAll('.valueInput');
          for (const field of inputFields) {

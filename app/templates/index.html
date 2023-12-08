@@ -398,7 +398,8 @@
          display: flex;
          align-items: center;
          }
-         #plantDropdown{
+         #segmentDropdown{
+         padding: 4px;
          width: 200px;
          height: 36px;
          border: 1.5px solid #c9c4c4;
@@ -408,6 +409,19 @@
          outline: none;
          padding: 2px;
          }
+         #segmentName{
+            padding: 4px;
+            width: 200px;
+            height: 36px;
+            border: 1.5px solid #c9c4c4;
+            border-radius: 4px;
+            color: #867070;
+            font-size: 13px;
+            outline: none;
+            padding: 2px;
+
+         }
+
          .fileName{
          border:none;
          outline:none;
@@ -435,8 +449,7 @@
          background: white !important;
          }
          .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
-         background: #3E9FFE !important;
-         color:#f8f5f5 !important;
+         background: #3e9ffe96 !important;
          }
          .ui-priority-secondary, .ui-widget-content .ui-priority-secondary, .ui-widget-header .ui-priority-secondary {
          font-size: 12px !important;
@@ -444,12 +457,52 @@
          .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
          font-size: 10px !important;
          border:none !important;
+       
+
          }
          .week-picker{
          margin-top:7px;
          margin-bottom:7px;
          margin-right:7px;
          }
+    
+     .ui-datepicker-current-select{
+      background-color:black !important;
+      color:white !important;
+     }
+     .ui-datepicker td span, .ui-datepicker td a {
+      text-align: center !important;
+
+   }
+
+   .custom-checkbox-container {
+      display: inline-block;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .custom-checkbox {
+       appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      width: 12px;
+      height: 12px;
+      background-color: #fff;
+      border: 1px solid #4CAF50;
+      border-radius: 50%;
+      outline: none;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+
+    /* Style for the checkbox when checked */
+    .custom-checkbox:checked {
+      background-color: #4CAF50; /* Change background color when checked */
+      border: 2px solid #4CAF50; /* Change border color when checked */
+    }
+
+  
+     
       </style>
       <link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/base/jquery-ui.css">
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
@@ -468,7 +521,6 @@
                      </div>
                   </div>
                </div>
-               <div class='myNavbar'>
                   <div class="cont">
                      <div >
                         <div class="outer-container">
@@ -495,16 +547,39 @@
                               </div>
                            </div>
                         </div>
-                        <div class='dropDown' style='margin-left: 12px; margin-top: 12px;'>
+
+                        <div class='dropdownSection ' style='display: flex;'>
+
+                           
+                        <div class='dropDown'  style='margin-left: 12px; margin-top: 12px;margin-right: 12px;'>
                            <div>
-                              <label for="plantDropdown" style='font-size: 15px; font-weight: 500;'>Select the Plant</label>
+                              <label for="segmentDropdown" style='font-size: 15px; font-weight: 500;'>Select the Segment</label>
                            </div>
                            <div>
-                              <select id="plantDropdown" class='dropdown'>
-                                 <option value="" disabled selected>Select a plant</option>
+                              <select id="segmentDropdown" class='segmentDropdown'>
+                                 <option value="" selected>Select the segment</option>
+                                 {% for choice in segment_choices %}
+                                 <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                {% endfor %}
                               </select>
                            </div>
                         </div>
+
+                        <div class='dropDown' id='segmentDiv' style='margin-left: 20px; margin-top: 12px ; display:none;' >
+                           <div>
+                              <label for="segmentName" style='font-size: 15px; font-weight: 500;'>Segment Cateogry</label>
+                           </div>
+                           <div>
+                              <select id="segmentName" class='segmentName'>
+
+                              </select>
+                           </div>
+                        </div>
+
+                        </div>
+
+
+
                      </div>
                      <div class='mainCalendar'>
                         <div class="week-picker"></div>
@@ -515,8 +590,11 @@
                         <div class="accordion-item">
                            <h2 class="accordion-header">
                               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                 data-bs-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
-                              General HSE
+                              data-bs-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+                              <label class="custom-checkbox-container" style='margin-bottom:0px'>
+                                 <input type="checkbox" class="custom-checkbox" id ='chekbox1' >
+                               </label>
+                                General HSE
                               </button>
                            </h2>
                            <div id="collapse1" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
@@ -524,12 +602,15 @@
                                  <form method="POST" action="{% url 'General HSE' %}" enctype="multipart/form-data"
                                     id="form1">
                                     {% csrf_token %}
-                                    <input type="hidden" name="plant_id" id="plant_id" class='plantcode' >
                                     <input type="hidden" name="toBeUpdatedId" id="toBeUpdatedId1">
                                     <input type="hidden" name="formSubmitDate" class="formSubmitDate">
                                     <input type="hidden" name="submittedDate" class="getDateFormat">
                                     <input type="hidden" name="startRange" class="startRange">
                                     <input type="hidden" name="endRange" class="endRange">
+                                    <input type="hidden" name="category" class="category">
+                                    <input type="hidden" name="categoryValue" class="categoryValue">
+
+
                                     <div class="mb-3">
                                        <label for="input1" class="form-label ">Total man days worked</label>
                                        <div class='seperateAllElement' style='display: flex' >
@@ -683,6 +764,9 @@
                            <h2 class="accordion-header" id="headingTwo2">
                               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                  data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
+                                 <label class="custom-checkbox-container" style='margin-bottom:0px'>
+                                    <input type="checkbox" class="custom-checkbox" id ='chekbox2' >
+                                  </label>
                               HSE Trainings
                               </button>
                            </h2>
@@ -693,10 +777,13 @@
                                     {% csrf_token %}
                                     <input type="hidden" name="submittedDate" class="getDateFormat">
                                     <input type="hidden" name="formSubmitDate" class="formSubmitDate">
-                                    <input type="hidden" name="plant_id" id="plant_id" class='plantcode'>
                                     <input type="hidden" name="toBeUpdatedId" id="toBeUpdatedId2">
                                     <input type="hidden" name="startRange" class="startRange">
                                     <input type="hidden" name="endRange" class="endRange">
+                                    <input type="hidden" name="category" class="category">
+                                    <input type="hidden" name="categoryValue" class="categoryValue">
+
+
                                     <div class="mb-3">
                                        <label for="input5" class="form-label ">HSE Trainings (no. of attendees from
                                        Amplus)</label>
@@ -796,6 +883,9 @@
                            <h2 class="accordion-header">
                               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                  data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
+                                 <label class="custom-checkbox-container" style='margin-bottom:0px'>
+                                    <input type="checkbox" class="custom-checkbox" id ='chekbox3' >
+                                  </label>
                               HSE Observations
                               </button>
                            </h2>
@@ -810,6 +900,9 @@
                                     <input type="hidden" name="plant_id" id="plant_id" class='plantcode'>
                                     <input type="hidden" name="startRange" class="startRange">
                                     <input type="hidden" name="endRange" class="endRange">
+                                    <input type="hidden" name="category" class="category">
+                                    <input type="hidden" name="categoryValue" class="categoryValue">
+
                                     <div class="mb-3">
                                        <label for="input9" class="form-label ">Number of daily HSE observations</label>
                                        <div class='seperateAllElement' style='display: flex'>
@@ -915,6 +1008,9 @@
                            <h2 class="accordion-header">
                               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                  data-bs-target="#collapse4" aria-expanded="true" aria-controls="collapse4">
+                                 <label class="custom-checkbox-container" style='margin-bottom:0px'>
+                                    <input type="checkbox" class="custom-checkbox" id ='chekbox4' >
+                                  </label>
                               Management Visits
                               </button>
                            </h2>
@@ -929,6 +1025,9 @@
                                     <input type="hidden" name="toBeUpdatedId" id="toBeUpdatedId4">
                                     <input type="hidden" name="startRange" class="startRange">
                                     <input type="hidden" name="endRange" class="endRange">
+                                    <input type="hidden" name="category" class="category">
+                                    <input type="hidden" name="categoryValue" class="categoryValue">
+
                                     <div class="mb-3">
                                        <label for="input13" class="form-label ">Number of Management HSE Visits</label>
                                        <div class='seperateAllElement' style='display: flex'>
@@ -1034,6 +1133,9 @@
                            <h2 class="accordion-header">
                               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                  data-bs-target="#collapse5" aria-expanded="true" aria-controls="collapse5">
+                                 <label class="custom-checkbox-container" style='margin-bottom:0px'>
+                                    <input type="checkbox" class="custom-checkbox" id ='chekbox5' >
+                                  </label>
                               Incidents
                               </button>
                            </h2>
@@ -1048,6 +1150,9 @@
                                     <input type="hidden" name="toBeUpdatedId" id="toBeUpdatedId5" value="">
                                     <input type="hidden" name="startRange" class="startRange">
                                     <input type="hidden" name="endRange" class="endRange">
+                                    <input type="hidden" name="category" class="category">
+                                    <input type="hidden" name="categoryValue" class="categoryValue">
+
                                     <div class="mb-3">
                                        <label for="input17" class="form-label ">Number of Incidents</label>
                                        <div class="input-group">
@@ -1116,7 +1221,6 @@
                         </form>
                      </div>
                   </div>
-               </div>
                <!--main Acc-->
             <!--main container-->
             </div>
@@ -1136,6 +1240,8 @@
       {% comment %} const formattedToday = getFormattedTodayDate();
       const convertItas=formatToCustomDate(formattedToday)
       $('#viewingDate').text(convertItas); {% endcomment %}
+
+   
       
       function getFormattedTodayDate() {
          const today = new Date();
@@ -1228,43 +1334,42 @@
           return 0; // Dates are equal
       }
       }
-  
 
+     
 
        $(function() {
          
          var startDate;
          var endDate;
-      
+         var selectedDate;
+
          const urlSearchParams = new URLSearchParams(window.location.search);
          const hasDateParameter = urlSearchParams.has('date');
             
          if (hasDateParameter) {
       
             const dateParameterValue = urlSearchParams.get('date');
-            console.log('Date parameter is present. Value:', dateParameterValue);
+            //console.log('Date parameter is present. Value:', dateParameterValue);
       
             const parts = dateParameterValue.split('/');
             const day = parseInt(parts[0], 10);
             const month = parseInt(parts[1], 10) - 1; 
             const year = parseInt(parts[2], 10);
       
-            //initialDate = `${month}/${day}/${year}`
             initialDate = new Date(year, month, day)
-            console.log('initialDate', initialDate)
-      
-            //console.log(`${day},${month},${year}`)
-      
+            //console.log('initialDate', initialDate)
+   
+            selectedDate=new Date(year,month,day)
             startDate = new Date(year, month, day);  
             endDate = new Date(year, month, day);  
          }
          else{
             initialDate = new Date()
-      
+            selectedDate=new Date()
             startDate=new Date()
             endDate=new Date()
          }
-      
+           selectedDate=new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate())
            startDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() - (startDate.getDay() + 1) % 7 + 0);
            endDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() - (startDate.getDay() + 1) % 7 + 6);
       
@@ -1278,7 +1383,7 @@
               }, 1);
           };
       
-      
+
           $('.week-picker').datepicker({
       
               showOtherMonths: true,
@@ -1287,13 +1392,13 @@
               dateFormat: 'mm/dd/yy',
               changedFormat: 'dd/mm/yy',
       
-              onSelect: function(dateText, inst) {
       
+              onSelect: function(dateText, inst) {
+
                const parts = dateText.split('/');
                const month = parts[0];
                const day = parts[1];
                const year = parts[2];
-               console.log(`${day},${month},${year}`)
       
                const dateFormatChanged = `${day}/${month}/${year}`;
                const dateFormatForAPI= `${year}-${month}-${day}`
@@ -1319,13 +1424,17 @@
                   }
 
                }
-               //console.log(result); // Output: 1 (means the first date is greater)
-               
+             
+                 // selectedDate=$(this).datepicker('getDate');
+                 // console.log(`selected date is ${selectedDate}`)
 
-               //console.log(`dateText is ${dateText}`)
-               //console.log(`Date format changed is ${dateFormatChanged}`)
-              
+                  
                   var date = $(this).datepicker('getDate');
+                  selectedDate=new Date(date.getFullYear(), date.getMonth(), date.getDate())
+
+                  console.log(`the selected date  in onselect ${selectedDate}`)
+
+
                   startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - (date.getDay() + 1) % 7 + 0);
                   endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - (date.getDay() + 1) % 7 + 6);
                   var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
@@ -1342,10 +1451,7 @@
                   $('#endDate').text(endDateText);
 
                   selectCurrentWeek();
-                  
-      
-                  let changedDate=date;
-      
+                        
                   const convertedDate = formatDateToDDMMYY(date);
                   //console.log(`converted Date is ${convertedDate}`)
       
@@ -1355,24 +1461,7 @@
                   const newUrl = `${window.location.origin}${window.location.pathname}?date=${dateFormatChanged}`;
                   window.history.pushState({}, '', newUrl);
       
-                  const plantValue = document.getElementById('plantDropdown').value
-                  if(plantValue){
-                       
-                  //console.log(`the value of plant is ${plantValue}`)
-                 // console.log(`the value of date for a plant is ${dateFormatForAPI}`)
-      
-                  let observationLink = document.getElementById('observationLink');
-                  observationLink.href = `/api/observations/?plantcode=${plantValue}&date=${dateFormatForAPI}`;
-               
-                  let stopWorkLink = document.getElementById('stopWorkLink');
-                  stopWorkLink.href = `/api/stopworks/?plantcode=${plantValue}&date=${dateFormatForAPI}`;
-               
-                  let violationLink = document.getElementById('violationLink');
-                  violationLink.href = `/api/violations/?plantcode=${plantValue}&date=${dateFormatForAPI}`;
-               
-                  let incidentLink = document.getElementById('incidentLink');
-                  incidentLink.href = `/api/Incidents/?plantcode=${plantValue}&date=${dateFormatForAPI}`;
-      
+                 
                   let getStartRangeInputs = document.querySelectorAll('.startRange');
                   for (let i = 0; i < getStartRangeInputs.length; i++) {
                      getStartRangeInputs[i].value = startDateText;
@@ -1392,15 +1481,33 @@
                   for (let i = 0; i < getDateSubmitttedInputs.length; i++) {
                      getDateSubmitttedInputs[i].value = dateFormatForAPI;
                   }
-      
-                  const apiURL = `/api/child-models/?plantcode=${plantValue}&date=${dateFormatForAPI}`;
-      
+
+               
+               const segment = document.getElementById('segmentDropdown').value
+               const segmentValue = document.getElementById('segmentName').value
+               //console.log(`segment is ${segment}`)
+               //console.log(`segment value is ${segmentValue}`)
+
+               let observationLink = document.getElementById('observationLink');
+               observationLink.href = `/api/observations/?category=${segment}&category_value=${segmentValue}&date=${dateFormatForAPI}`; 
+
+            
+               const apiURL = `/api/child-models/?category=${segment}&category_value=${segmentValue}&date=${dateFormatForAPI}`;
+
                   fetch(apiURL)
                   .then(response => {
                      if (!response.ok) {
                         if (response.status === 404) {
+                           const checkboxes = document.querySelectorAll('.custom-checkbox');
+            
+                           // Loop through checkboxes and set their checked property to false
+                           checkboxes.forEach(function (checkbox) {
+                             checkbox.checked = false;
+                           });
                            // If status is 404, make all input fields empty
                            console.log(response.status);
+                           //document.getElementById('accordionImage').style.display = 'none';
+            
                            clearInputFields();
                            // Stop further execution by returning a rejected Promise
                           return Promise.reject(`HTTP error! Status: ${response.status}`);
@@ -1420,37 +1527,43 @@
                         // DisablingSmallerDate()
                      }
                
-                     populateInputFields('General HSE', generalHSEFieldsID, generalHSEFields, 1, data);
-                     populateInputFields('HSE Training', hseTrainingFieldsID, hseTrainingFields, 2, data);
-                     populateInputFields('HSE Observation', hseObservationFieldsID, hseObservationFields, 3, data);
-                     populateInputFields('Incidents', incidentsFieldsID, incidentsFields, 5, data);
-                     populateInputFields('Management Visits', managementVisitsFieldsID, managementVisitsFields, 4, data);
+                     populateInputFields('General HSE', generalHSEFieldsID, generalHSEFields, 1, data,'chekbox1');
+                     populateInputFields('HSE Training', hseTrainingFieldsID, hseTrainingFields, 2, data,'chekbox2');
+                     populateInputFields('HSE Observation', hseObservationFieldsID, hseObservationFields, 3, data,'chekbox3');
+                     populateInputFields('Management Visits', managementVisitsFieldsID, managementVisitsFields, 4, data,'chekbox4');
+                     populateInputFields('Incidents', incidentsFieldsID, incidentsFields, 5, data,'chekbox5');
                   })
                   .catch(error => {
                      console.error('API request failed:', error);
                   });
-      
-                  }
-                  else{
-                     //alert('select plant code')
-      
-                  }
-      
-      
+         
       
               },
               beforeShowDay: function(date) {
-                  var cssClass = '';
-      
-                  if (date >= startDate && date <= endDate)
-                      cssClass = 'ui-datepicker-current-day';
-                  
-      
-                  return [true, cssClass];
-              },
-              onChangeMonthYear: function(year, month, inst) {
+               var cssClass = '';
+
+               if (date >= startDate && date <= endDate) {
+                 cssClass += ' ui-datepicker-current-day';
+               }
+
+                if (date && selectedDate && date instanceof Date) {
+                   if (selectedDate.getTime() === date.getTime()) {
+                     console.log(`selected date in before show is ${selectedDate}`);
+                   //console.log("The dates are equal.");
+                   //console.log(selectedDate)
+                   cssClass += ' ui-datepicker-current-select';
+                 }
+               } 
+        
+             
+               return [true, cssClass];
+             },
+             
+           onChangeMonthYear: function(year, month, inst) {
                   selectCurrentWeek();
-              }
+              },
+           
+
           });
       
           $('.week-picker').datepicker('setDate',initialDate );
@@ -1531,45 +1644,119 @@
       });   {% endcomment %}
       
       
-      document.addEventListener('DOMContentLoaded', function () {
-         const dropdown = document.getElementById('plantDropdown');
-      
-         fetch('/api/plant/')
-             .then(response => response.json())
-             .then(data => {
-               console.log(data)
-                 
-                 if (Array.isArray(data) && data.length > 0) {
-                     const plant = data[0]; 
-                     const option = document.createElement('option');
-                     option.value = plant.id; 
-                     option.text = `Plant ${plant.id}`; 
-                     dropdown.appendChild(option);
-                 } else {
-                     console.error('Invalid or empty data received from the API');
-                 }
-             })
-             .catch(error => console.error('Error fetching data:', error));
-      });
-      
-      var plantDropdown = document.getElementById("plantDropdown");
-      var plantCodeInputs = document.querySelectorAll(".plantcode");
-      
-      
-      // Add an event listener to the select element
-      plantDropdown.addEventListener("change", function () {
+      document.getElementById('segmentDropdown').addEventListener('change', function () {
+         var selectedValue = this.value;
+
+         let getCategoryInputs = document.querySelectorAll('.category');
+         for (let i = 0; i < getCategoryInputs.length; i++) {
+            getCategoryInputs[i].value = selectedValue;
+         }
+
+     
+         var segmentNameDropdown = document.getElementById('segmentDiv');
+         var segmentValues = document.getElementById('segmentName');
+
+
+         if (selectedValue !== "") {
+
+             segmentNameDropdown.style.display = 'block'; 
+         } else {
+             segmentNameDropdown.style.display = 'none';
+         }
+
+     
+         if(selectedValue=='hawkai'){
+            segmentValues.innerHTML = "<option value='' disabled selected>Select the Plant</option>";
+
+                  fetch('/api/plant/')
+                  .then(response => response.json())
+                  .then(data => {
+                  console.log(data)   
+                     if (Array.isArray(data) && data.length > 0) {
+                        const plant = data[0]; 
+                        const option = document.createElement('option');
+                        option.value = plant.id; 
+                        option.text = `Plant ${plant.id}`; 
+                        segmentValues.appendChild(option);
+
+
+                     } else {
+                        console.error('Invalid or empty data received from the API');
+                     }
+                  })
+                  .catch(error => console.error('Error fetching data:', error));
+
          
-          var selectedValue = plantDropdown.value;
-          plantCodeInputs.forEach(function (input) {
-              input.value = selectedValue;
-      
-          });
 
-          changeDate(0)
+            console.log(`selected value is hawkai`)
+         }
+         else if(selectedValue=='homescape'){
 
-                  
-      });
-      
+            segmentValues.innerHTML = "<option value='' disabled selected>Select the Cluster</option>";
+
+            fetch('/api/homescape/')
+            .then(response => response.json())
+            .then(data => {
+            console.log(data)   
+               if (Array.isArray(data) && data.length > 0) {
+                  const homescapeCluster = data[0]; 
+                  const option = document.createElement('option');
+                  option.value = homescapeCluster.cluster;
+                  option.text = `${homescapeCluster.cluster}`;
+ 
+                  segmentValues.appendChild(option);
+               } else {
+                  console.error('Invalid or empty data received from the API');
+               }
+            })
+            .catch(error => console.error('Error fetching data:', error));
+         
+
+            console.log(`selected value is homescape`)
+
+         }
+         else if(selectedValue=='warehouse'){
+
+            segmentValues.innerHTML = "<option value='' disabled selected>Select the Code</option>";
+
+            fetch('/api/warehouse/')
+            .then(response => response.json())
+            .then(data => {
+            console.log(data)   
+               if (Array.isArray(data) && data.length > 0) {
+                  const warehouseCode = data[0]; 
+                  const option = document.createElement('option');
+                  option.value = warehouseCode.code;
+                  option.text = `Code ${warehouseCode.code}`;
+ 
+                  segmentValues.appendChild(option);
+               } else {
+                  console.error('Invalid or empty data received from the API');
+               }
+            })
+            .catch(error => console.error('Error fetching data:', error));
+
+            console.log(`selected value is warehouse`)
+
+         }  
+         
+         document.getElementById('segmentName').addEventListener('change',function(){
+            var codeValue=this.value;
+            console.log(`codevalue is ${codeValue}`)
+
+            let getCategoryValueInputs = document.querySelectorAll('.categoryValue');
+            for (let i = 0; i < getCategoryValueInputs.length; i++) {
+               getCategoryValueInputs[i].value = codeValue;
+            }
+            changeDate(0);
+
+
+         })
+
+   
+     });
+     
+     
       
       
        function initializeUploadButton(inputId, labelId, displayId, fileNameId) {
@@ -1733,18 +1920,41 @@
       
       
       
-      function populateInputFields(category, fieldIds, fieldNames, oldId, data) {
+      function populateInputFields(category, fieldIds, fieldNames, oldId, data,checkBoxId) {
          if (data) {
+            //console.log(data)
             const categoryData = data[category][data[category].length - 1];
+            console.log('cateogry data is undefined')
       
             if (categoryData === undefined) {
                fieldIds.forEach((fieldId) => {
                   document.getElementById(fieldId).value = '';
+                  
                });
                document.getElementById(`toBeUpdatedId${oldId}`).value = '';
+               const checkbox = document.getElementById(checkBoxId);
+    
+               if (checkbox) {
+                  console.log('hello inside the checkbox')
+                 checkbox.checked = false;
+               }
+
             } else {
+
                const categoryId = categoryData['id'];
-      
+
+               const formSubmitted=categoryData['formSubmitted']
+               console.log(`form submitted is ${formSubmitted}`)
+               const checkbox = document.getElementById(checkBoxId);
+    
+               if (formSubmitted === true && checkbox) {
+                 checkbox.checked = true;
+               }
+               else if(formSubmitted === false && checkbox){
+                  checkbox.checked = false;
+
+               }
+               
                document.getElementById(`toBeUpdatedId${oldId}`).value = categoryId;
       
                fieldIds.forEach((fieldId, index) => {
@@ -1838,7 +2048,7 @@
       
       
       
-      function handleFormSubmission(formId, url, toUpdateId) {
+      function handleFormSubmission(formId, url, toUpdateId,checkBoxId) {
          const form = document.getElementById(formId);
          form.addEventListener("submit", function (event) {
              event.preventDefault();
@@ -1872,12 +2082,14 @@
              .then(response => {
                  console.log(response);
                  if (response.status === 201 || response.status === 200) {
+            
                      // Success handling
-                     $('#successModal').modal('show');
-      
-                     setTimeout(function () {
-                         $('#successModal').modal('hide');
-                     }, 1000);
+                  $('#successModal').modal('show');
+                
+                  setTimeout(function () {
+                     $('#successModal').modal('hide');
+                  }, 1000);
+            
                  } else if (response.status === 400) {
                      console.log('Plant does not exist');
                      Swal.fire({
@@ -1907,10 +2119,11 @@
                  return response.json();
              })
              .then(data => {
-                 console.log(data);
                  const id = data.id;
                  document.getElementById(toUpdateId).value = id;
-                 console.log(id);
+                 const checkbox = document.getElementById(checkBoxId);
+                 checkbox.checked=true;
+               
              })
              .catch(error => {
                  console.error("Error:", error);
@@ -1926,11 +2139,11 @@
       }
       
       
-      handleFormSubmission("form1", "{% url 'General HSE' %}", "toBeUpdatedId1");
-      handleFormSubmission("form2", "{% url 'HSE Trainings' %}", "toBeUpdatedId2");
-      handleFormSubmission("form3", "{% url 'HSE Observations' %}", "toBeUpdatedId3");
-      handleFormSubmission("form4", "{% url 'Management Visits' %}", "toBeUpdatedId4");
-      handleFormSubmission("final-form", "{% url 'incidents' %}", "toBeUpdatedId5");
+      handleFormSubmission("form1", "{% url 'General HSE' %}", "toBeUpdatedId1",'checkbox1');
+      handleFormSubmission("form2", "{% url 'HSE Trainings' %}", "toBeUpdatedId2",'checkbox2');
+      handleFormSubmission("form3", "{% url 'HSE Observations' %}", "toBeUpdatedId3",'checkbox3');
+      handleFormSubmission("form4", "{% url 'Management Visits' %}", "toBeUpdatedId4",'checkbox4');
+      handleFormSubmission("final-form", "{% url 'incidents' %}", "toBeUpdatedId5",'checkbox5');
       
       
       function DisablingFields() {
