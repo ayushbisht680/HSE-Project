@@ -229,7 +229,7 @@
             <p>Observation</p>
          </div>
          <div class='commonWidth'>
-            <p>Unsafe Condition</p>
+            <p>Unsafe(Condition/Act)</p>
          </div>
          <div class='cateogryWidth'>
             <p>Cateogry</p>
@@ -265,7 +265,7 @@
       <form method="POST" action="{% url 'observation_form' %}" enctype="multipart/form-data" id="form" autocomplete="off" style="display: none;">
          {% csrf_token %}
          <div class="rowTable1">
-            <input type="hidden" name="category" id="category" >
+            <input type="hidden" name="segment_category" id="segment_category" >
             <input type="hidden" name="categoryValue" id="categoryValue" >
             <input type="hidden" name="formSubmitDate" id="formSubmitDate" >
 
@@ -274,37 +274,35 @@
             <div class="commonWidth"><input type="time" class="valueInput1" placeholder="Time" name="time"id='time' required></div>
             <input type="hidden"  name="datetime_observation" >
             <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Location" name="location" id="Location" required></div>
-            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Plant/Site" name="plant_site" id="PlantSite" required></div>
+            
+            <div class="commonWidth">
+               <select class="CLassdropdown" name="plant_site" id="PlantSite" required>
+                  {% for choice in plant_site %}
+                  <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                 {% endfor %}
+
+               </select>
+            </div>
+
             <div class="commonTextArea"><textarea rows="3" class="valueText" placeholder="Observation" name="observation" id="Observation" required></textarea>
             </div>
-            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Unsafe Condition" name="unsafe_condition" id="UnsafeCondition" required></div>
+              <div class="commonWidth" >
+               <select class="CLassdropdown" name="unsafe_condition" id="unsafe_condition" required>
+                  {% for choice in unsafe_act %}
+                  <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                 {% endfor %}
+
+               </select>
+            </div>
+
+
             <div class="cateogryWidth">
                <select class="cateogryDropdown" name="category" id="Cateogry" required>
 
                   {% for choice in category_choices %}
                  <option value="{{ choice.0 }}">{{ choice.1 }}</option>
                  {% endfor %}
-                  {% comment %} <option value="Category">Category</option>
-                  <option value="Legal Requirement">Legal Requirement</option>
-                  <option value="Permit to Work">Permit to Work</option>
-                  <option value="Electrical Work">Electrical Work</option>
-                  <option value="Working at Height">Working at Height</option>
-                  <option value="Lifting Operation">Lifting Operation</option>
-                  <option value="Excavation">Excavation</option>
-                  <option value="Hot Work">Hot Work</option>
-                  <option value="Confined Space Work">Confined Space Work</option>
-                  <option value="Manual Handling">Manual Handling</option>
-                  <option value="Houskeeping">Houskeeping</option>
-                  <option value="Chemical Handling">Chemical Handling</option>
-                  <option value="SOP and Procedure Violation">SOP and Procedure Violation</option>
-                  <option value="Medical Examination">Medical Examination</option>
-                  <option value="PPE">PPE</option>
-                  <option value="Vehicle Movment">Vehicle Movment</option>
-                  <option value="Waste Management">Waste Management</option>
-                  <option value="Welfare Facility">Welfare Facility</option>
-                  <option value="General - Signage, Access, Walkway">General - Signage, Access, Walkway</option>
-                  <option value="Emergency Preparedness">Emergency Preparedness</option> {% endcomment %}
-                  
+                   
                </select>
             </div>
            
@@ -317,9 +315,6 @@
                   {% for choice in status_choices %}
                   <option value="{{ choice.0 }}">{{ choice.1 }}</option>
                  {% endfor %}
-                  {% comment %} <option value="Yes">Yes</option>
-                  <option value="No">No</option>
-                  <option value="NA">NA</option> {% endcomment %}
 
                </select>
             </div>
@@ -337,7 +332,7 @@
             <div class="commonWidth">
                <div class="input-group">
                   <div class="custom-file">
-                     <input type="file" class="custom-file-input" name="open_evidence" id="OpenEvidence"
+                     <input type="file" class="custom-file-input" name="open_evidence_file" id="OpenEvidence"
                         aria-describedby="openEvidenceAddon" style="display: none;">
                      <label class="custom-file-label" for="openEvidenceInput" id="fileInputLabel1"></label>
                   </div>
@@ -353,7 +348,7 @@
             <div class="commonWidth">
                <div class="input-group">
                   <div class="custom-file">
-                     <input type="file" class="custom-file-input" name="closed_evidence" id="ClosedEvidence"
+                     <input type="file" class="custom-file-input" name="closed_evidence_file" id="ClosedEvidence"
                         aria-describedby="openEvidenceAddon" style="display: none;">
                      <label class="custom-file-label" for="closedEvidenceInput" id="fileInputLabel2"></label>
                   </div>
@@ -393,8 +388,8 @@
             <div class="commonWidth"><input type="date" class="valueInput" placeholder="Closure Date" name="form_closure_date" id="ClosureDate" disabled></div>
             <div class="commonWidth"><input type="text" class="valueInput" placeholder="Status" name="status" id="Status" disabled></div>
             <div class="commonWidth"><input type="text" class="valueInput" placeholder="StopWork" name="stop_work" id="StopWork" disabled></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="OpenEvidence" name="open_evidence" id="OpenEvidence" disabled></div>
-            <div class="commonWidth"><input type="text" class="valueInput" placeholder="ClosedEvidence" name="closed_evidence" id="ClosedEvidence" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="OpenEvidence" name="open_evidence_file" id="OpenEvidence" disabled></div>
+            <div class="commonWidth"><input type="text" class="valueInput" placeholder="ClosedEvidence" name="closed_evidence_file" id="ClosedEvidence" disabled></div>
             <div class="chnWidth">
                <input type="text" placeholder="Remark" class=" extraspace valueInput" name="remark" id="Remark" disabled>
             </div>
@@ -455,7 +450,7 @@
 
        if (queryParams.date) {
          document.getElementById('formSubmitDate').value = queryParams.date;
-         document.getElementById('category').value = queryParams.category;
+         document.getElementById('segment_category').value = queryParams.category;
          document.getElementById('categoryValue').value = queryParams.category_value;
        }
 
@@ -463,12 +458,11 @@
       
       function populateInputField() {        
          
-      fetch(`/api/observation_form/?category=${queryParams.category}&category_value=${queryParams.category_choices}&date=${queryParams.date}`)
+      fetch(`/api/observation_form/?category=${queryParams.category}&category_value=${queryParams.category_value}&date=${queryParams.date}`)
       .then(response => response.json())
       .then(data => {
          console.log(data)
          if (data && typeof data === 'object' && 'status' in data) {
-            console.log('hello');
         
             // Extract the 'data' property from the data object
             const dataArray = Array.isArray(data.data) ? data.data : [data.data];
@@ -507,15 +501,18 @@
          // Separate date and time
          const template = document.getElementById('formRowTemplate');
          const newRow = document.importNode(template.content, true);
-       
-         let parsedDatetime = dataItem.datetime_observation;
+         
+         let parsedDatetime = dataItem.observation_datetime;
          let [datePart, timeWithOffset] = parsedDatetime.split('T');
-
+         
          let timePart = timeWithOffset.split('+')[0];
+         console.log(`time part is ${timePart}`)
          
          let [year, month, day] = datePart.split('-');
          
          let formattedDate = `${day}-${month}-${year}`;
+         console.log(`formatted date is ${formattedDate}`);
+         
          
         // console.log('Date:', formattedDate); // Output: 24-11-2023
          //console.log('Time:', timePart); // Output: 18:47

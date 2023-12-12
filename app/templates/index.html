@@ -442,9 +442,10 @@
          .ui-datepicker th {
          font-size: 11px;
          }
-         .ui-widget-header{
-         border:none !important;
-         }
+         .ui-widget-header {
+            border: none !important;
+            background: #cccccc4a !important;
+        }
          .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
          background: white !important;
          }
@@ -465,11 +466,10 @@
          margin-bottom:7px;
          margin-right:7px;
          }
-    
      .ui-datepicker-current-select{
       background-color:black !important;
       color:white !important;
-     }
+     } 
      .ui-datepicker td span, .ui-datepicker td a {
       text-align: center !important;
 
@@ -495,11 +495,20 @@
       margin-right: 10px;
     }
 
-    /* Style for the checkbox when checked */
     .custom-checkbox:checked {
-      background-color: #4CAF50; /* Change background color when checked */
-      border: 2px solid #4CAF50; /* Change border color when checked */
-    }
+      background-color: #4CAF50; 
+      border: 2px solid #4CAF50; 
+       }
+
+    .swal2-popup.swal2-modal.small-popup.hello.swal2-show {
+      font-size: 11px !important;
+  }
+  .ui-widget-content{
+   border:none !important;
+  }
+  a.ui-state-default.ui-state-active {
+   color: white !important;
+}
 
   
      
@@ -740,7 +749,7 @@
                                        meetings</label>
                                        <div class="input-group">
                                           <input type="number" class="form-control disableIt" id="extraInput3"
-                                             placeholder="Number of HSE committee meetings" name="committe_meetings"
+                                             placeholder="Number of HSE committee meetings" name="committee_meetings"
                                              required>
                                           <div class=" btnMargin">
                                              <button class="btn  valueButton disableBtn" type="button"
@@ -803,7 +812,7 @@
                                           </div>
                                           <div class="uploadBtn">
                                              <input type="file" class="form-control-file disableIt" id="fileInput2"
-                                                style="display: none" name="no_of_attendees_amplus">
+                                                style="display: none" name="attendees_amplus_file">
                                              <label class="input-group-text uploadColor subForms" for="fileInput2"
                                                 id="fileInputLabel2" style='width: 107px;'>Upload File</label>
                                              <div class="fileDisplay" id="fileDisplay2"
@@ -841,7 +850,7 @@
                                           </div>
                                           <div class="uploadBtn">
                                              <input type="file" class="form-control-file disableIt disableBefore"
-                                                id="fileInput3" style="display: none" name="no_of_attendees_contractor">
+                                                id="fileInput3" style="display: none" name="attendees_contractor_file">
                                              <label class="input-group-text uploadColor subForms" for="fileInput3"
                                                 id="fileInputLabel3" style='width: 107px;'>Upload File</label>
                                              <div class="fileDisplay" id="fileDisplay3"
@@ -921,7 +930,7 @@
                                           </div>
                                           <div class="uploadBtn">
                                              <input type="file" class="form-control-file disableIt" id="fileInput4"
-                                                style="display: none" name="hse_observation">
+                                                style="display: none" name="hse_observation_file">
                                              <label class="input-group-text uploadColor subForms" for="fileInput4"
                                                 id="fileInputLabel4" style='width: 107px;'>Upload File</label>
                                           </div>
@@ -1034,7 +1043,7 @@
                                           <div class="input-group" id="adjustWidth">
                                              <input type="number" class="form-control disableIt" id="input13"
                                                 placeholder="Number of Management HSE Visits"
-                                                name="no_of_management_visits" required>
+                                                name="no_of_management_visit" required>
                                              <div class=" btnMargin">
                                                 <button class="btn  valueButton disableBtn " type="button"
                                                    id="increment13"><img src="{% static 'images/plus-circle.svg' %}"
@@ -1046,7 +1055,7 @@
                                           </div>
                                           <div class="uploadBtn">
                                              <input type="file" class="form-control-file disableIt" id="fileInput5"
-                                                style="display: none" name="no_of_management_visits_file">
+                                                style="display: none" name="no_of_management_visit_file">
                                              <label class="input-group-text uploadColor subForms" for="fileInput5"
                                                 id="fileInputLabel5" style='width: 107px;'>Upload File</label>
                                              <div class="fileDisplay" id="fileDisplay5"
@@ -1062,7 +1071,7 @@
                                        <div class='seperateAllElement' style='display: flex'>
                                           <div class="input-group" id="adjustWidth">
                                              <input type="number" class="form-control disableIt" id="input14"
-                                                placeholder="Total Findings" name="total_findings" required>
+                                                placeholder="Total Findings" name="total_finding" required>
                                              <div class=" btnMargin">
                                                 <button class="btn  valueButton disableBtn " type="button"
                                                    id="increment14"><img src="{% static 'images/plus-circle.svg' %}"
@@ -1074,7 +1083,7 @@
                                           </div>
                                           <div class="uploadBtn">
                                              <input type="file" class="form-control-file disableIt" id="fileInput6"
-                                                style="display: none" name="total_findings_file">
+                                                style="display: none" name="total_finding_file">
                                              <label class="input-group-text uploadColor subForms" for="fileInput6"
                                                 id="fileInputLabel6" style='width: 107px;'>Upload File</label>
                                              <div class="fileDisplay" id="fileDisplay6"
@@ -1157,7 +1166,7 @@
                                        <label for="input17" class="form-label ">Number of Incidents</label>
                                        <div class="input-group">
                                           <input type="number" class="form-control disableIt impField" id="input17"
-                                             placeholder="Number of Incidents" name="no_of_incidents" required>
+                                             placeholder="Number of Incidents" name="no_of_incident" required>
                                           <div class=" btnMargin">
                                              <button class="btn  valueButton disableBtn " type="button"
                                                 id="increment17"><img src="{% static 'images/plus-circle.svg' %}"
@@ -1237,12 +1246,50 @@
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
    <script type="text/javascript">
-      {% comment %} const formattedToday = getFormattedTodayDate();
-      const convertItas=formatToCustomDate(formattedToday)
-      $('#viewingDate').text(convertItas); {% endcomment %}
 
-   
+      let formChanged = false;
+      let modifiedDate;
+      const urlSearchParams = new URLSearchParams(window.location.search);
+      const dateParameterValue = urlSearchParams.get('date');
+
+      // Convert the date format if it exists
+      if (dateParameterValue) {
+         const parts = dateParameterValue.split('/');
+         if (parts.length === 3) {
+            // Rearrange the parts to mm/dd/yyyy format
+            modifiedDate = `${parts[1]}/${parts[0]}/${parts[2]}`;
+         }
+      }
+
+
       
+      document.getElementById('form1').addEventListener('input', function () {
+          formChanged = true;
+      });
+      
+      document.getElementById('form2').addEventListener('input', function () {
+         formChanged = true;
+      });
+      
+      document.getElementById('form3').addEventListener('input', function () {
+      formChanged = true;
+      });
+      
+      document.getElementById('form4').addEventListener('input', function () {
+      formChanged = true;
+      });
+      
+      document.getElementById('final-form').addEventListener('input', function () {
+      formChanged = true;
+      });
+      
+      
+      function saveChanges() {
+      
+          formChanged = false;
+      }
+      
+  
       function getFormattedTodayDate() {
          const today = new Date();
          const day = String(today.getDate()).padStart(2, '0');
@@ -1318,14 +1365,12 @@
      }
 
      function compareDates(dateString1, dateString2) {
-      // Convert date strings to Date objects
       const date1Parts = dateString1.split('/');
       const date2Parts = dateString2.split('/');
       
       const date1 = new Date(date1Parts[2], date1Parts[1] - 1, date1Parts[0]); // Month is zero-based
       const date2 = new Date(date2Parts[2], date2Parts[1] - 1, date2Parts[0]);
   
-      // Compare Date objects
       if (date1 < date2) {
           return -1;
       } else if (date1 > date2) {
@@ -1334,8 +1379,6 @@
           return 0; // Dates are equal
       }
       }
-
-     
 
        $(function() {
          
@@ -1394,7 +1437,8 @@
       
       
               onSelect: function(dateText, inst) {
-
+               modifiedDate=dateText
+               
                const parts = dateText.split('/');
                const month = parts[0];
                const day = parts[1];
@@ -1403,54 +1447,89 @@
                const dateFormatChanged = `${day}/${month}/${year}`;
                const dateFormatForAPI= `${year}-${month}-${day}`
 
-               const todayDate = getTodayDate();
 
-                 // Example usage
-               const result = compareDates(dateFormatChanged, todayDate);
-               if(result==1){
-                  console.log(`the date is greater`)
-                  DisablingFields()
-      
-                  let disableFormsLink = document.querySelectorAll('.formsLink');
-                  for (let i = 0; i < disableFormsLink.length; i++) {
-                     disableFormsLink[i].style.display = 'none';
-                  }
-               }
-               else{
-                  EnablingFields()
-                  let disableFormsLink = document.querySelectorAll('.formsLink');
-                  for (let i = 0; i < disableFormsLink.length; i++) {
-                     disableFormsLink[i].style.display = 'block';
-                  }
+               // console.log(`selected date is ${selectedDate}`)
 
-               }
-             
-                 // selectedDate=$(this).datepicker('getDate');
-                 // console.log(`selected date is ${selectedDate}`)
+               var date = $(this).datepicker('getDate');
+               startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - (date.getDay() + 1) % 7 + 0);
+               endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - (date.getDay() + 1) % 7 + 6);
+               var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
 
-                  
-                  var date = $(this).datepicker('getDate');
-                  selectedDate=new Date(date.getFullYear(), date.getMonth(), date.getDate())
+            
+               const formattedStartDate = $.datepicker.formatDate(dateFormat, startDate, inst.settings);
+               const formattedEndDate = $.datepicker.formatDate(dateFormat, endDate, inst.settings);
 
-                  console.log(`the selected date  in onselect ${selectedDate}`)
-
-
-                  startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - (date.getDay() + 1) % 7 + 0);
-                  endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - (date.getDay() + 1) % 7 + 6);
-                  var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
                  
-                  const formattedStartDate = $.datepicker.formatDate(dateFormat, startDate, inst.settings);
-                  const formattedEndDate = $.datepicker.formatDate(dateFormat, endDate, inst.settings);
-              
                   // Store values in variables
                   const startDateText = convertDateFormatToDDMMYY(formattedStartDate);
                   const endDateText = convertDateFormatToDDMMYY(formattedEndDate);
-              
+
+
+                  const todayDate = new Date(); 
+
+                  const startDateRange = new Date(`${startDateText.split("/")[2]}-${startDateText.split("/")[1]}-${startDateText.split("/")[0]}`);
+                  const endDateRange = new Date(`${endDateText.split("/")[2]}-${endDateText.split("/")[1]}-${endDateText.split("/")[0]}`);
+
+                  console.log(`todays date is ${todayDate}`)
+                  console.log(`the statdateRange is ${startDateRange}`)
+                  console.log(`the enddateRange is ${endDateRange}`)
+
+                  const endDatePlus2 = new Date(endDateRange);
+                  endDatePlus2.setDate(endDatePlus2.getDate() + 2);
+
+                  if ((todayDate <= endDatePlus2)|| (todayDate >= startDateRange && todayDate <= endDateRange)) {
+                     // can fill the form
+                     console.log("Can fill the form");
+
+                     const getTheTodayDate = getTodayDate();
+                     const result = compareDates(dateFormatChanged, getTheTodayDate);
+                     if(result==1){
+                        console.log(`the date is greater`)
+                        DisablingFields()
+            
+                        let disableFormsLink = document.querySelectorAll('.formsLink');
+                        for (let i = 0; i < disableFormsLink.length; i++) {
+                           disableFormsLink[i].style.display = 'none';
+                        }
+                     }
+                     else{
+                        EnablingFields()
+                        let disableFormsLink = document.querySelectorAll('.formsLink');
+                        for (let i = 0; i < disableFormsLink.length; i++) {
+                           disableFormsLink[i].style.display = 'block';
+                        }
+      
+                     }
+
+                  }
+                   else {
+                     // can only view the form 
+                     DisablingFields()
+                    
+                     console.log("Cannot fill the form");
+                     let disableFormsLink = document.querySelectorAll('.formsLink');
+                     for (let i = 0; i < disableFormsLink.length; i++) {
+                        disableFormsLink[i].style.display = 'block';
+                     }
+                  }
+             
                   // Update elements
                   $('#startDate').text(startDateText);
                   $('#endDate').text(endDateText);
 
                   selectCurrentWeek();
+                  
+                  {% comment %} if(formChanged==true){
+                     Swal.fire({
+                        title: 'You have some unsaved changes ',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Cancel',
+                        customClass: {
+                            popup: 'small-popup hello'
+                        }
+                    });
+                     return;
+                  } {% endcomment %}
                         
                   const convertedDate = formatDateToDDMMYY(date);
                   //console.log(`converted Date is ${convertedDate}`)
@@ -1482,17 +1561,27 @@
                      getDateSubmitttedInputs[i].value = dateFormatForAPI;
                   }
 
+
                
                const segment = document.getElementById('segmentDropdown').value
                const segmentValue = document.getElementById('segmentName').value
-               //console.log(`segment is ${segment}`)
-               //console.log(`segment value is ${segmentValue}`)
+             
 
                let observationLink = document.getElementById('observationLink');
                observationLink.href = `/api/observations/?category=${segment}&category_value=${segmentValue}&date=${dateFormatForAPI}`; 
 
+               let stopWorkLink=document.getElementById('stopWorkLink')
+               stopWorkLink.href=`/api/stopworks/?category=${segment}&category_value=${segmentValue}&date=${dateFormatForAPI}`
+
+               let violationLink=document.getElementById('violationLink')
+               violationLink.href=`/api/violations/?category=${segment}&category_value=${segmentValue}&date=${dateFormatForAPI}`
+
+               let incidentLink=document.getElementById('incidentLink')
+               incidentLink.href=`/api/Incidents/?category=${segment}&category_value=${segmentValue}&date=${dateFormatForAPI}`
+
             
                const apiURL = `/api/child-models/?category=${segment}&category_value=${segmentValue}&date=${dateFormatForAPI}`;
+
 
                   fetch(apiURL)
                   .then(response => {
@@ -1519,8 +1608,8 @@
                   })
                   .then(data => {
                      // Continue with the .then block even after handling 404
-                     console.log(data);
-                     console.log(data.hse_status);
+                     //console.log(data);
+                     //console.log(data.hse_status);
                
                      if (data.hse_status && data.hse_status === 1) {
                         // only view the data 
@@ -1540,21 +1629,18 @@
       
               },
               beforeShowDay: function(date) {
+               const formattedDate = $.datepicker.formatDate('mm/dd/yy', date);
+
                var cssClass = '';
 
                if (date >= startDate && date <= endDate) {
                  cssClass += ' ui-datepicker-current-day';
                }
 
-                if (date && selectedDate && date instanceof Date) {
-                   if (selectedDate.getTime() === date.getTime()) {
-                     console.log(`selected date in before show is ${selectedDate}`);
-                   //console.log("The dates are equal.");
-                   //console.log(selectedDate)
-                   cssClass += ' ui-datepicker-current-select';
-                 }
-               } 
-        
+               if(modifiedDate==formattedDate){
+                  cssClass += ' ui-datepicker-current-select';
+               }
+
              
                return [true, cssClass];
              },
@@ -1570,78 +1656,48 @@
           $('.week-picker').datepicker('option', 'onSelect').call($('.week-picker').get(0), $.datepicker.formatDate('mm/dd/yy', initialDate), { settings: $('.week-picker').datepicker('option') });
       
       });
-      
+
       function changeDate(day) {
          const urlSearchParams = new URLSearchParams(window.location.search);
          const hasDateParameter = urlSearchParams.has('date');
-      
+     
          if (hasDateParameter) {
              const dateParameterValue = urlSearchParams.get('date');
-      
+     
              const parts = dateParameterValue.split('/');
              const originalDay = parseInt(parts[0], 10);
-             const month = parseInt(parts[1], 10) - 1; 
+             const month = parseInt(parts[1], 10) - 1;
              const year = parseInt(parts[2], 10);
-      
+     
              const originalDate = new Date(year, month, originalDay);
-      
+     
              if (day === -1) {
                  // Decrement the date by 1 day
                  originalDate.setDate(originalDate.getDate() - 1);
-             } else if (day===1){
+             } else if (day === 1) {
                  // Increment the date by 1 day
                  originalDate.setDate(originalDate.getDate() + 1);
              }
-      
-             const modifiedDate = `${String(originalDate.getMonth() + 1).padStart(2, '0')}/${String(originalDate.getDate()).padStart(2, '0')}/${originalDate.getFullYear()}`;
+     
+             modifiedDate = `${String(originalDate.getMonth() + 1).padStart(2, '0')}/${String(originalDate.getDate()).padStart(2, '0')}/${originalDate.getFullYear()}`;
              console.log(`modified date is ${modifiedDate}`);
-      
+     
+             // Set the date and call onSelect directly
              $('.week-picker').datepicker('setDate', modifiedDate);
-      
+             
+             // Call onSelect with the modified date
              const onSelectFunction = $('.week-picker').datepicker('option', 'onSelect');
              onSelectFunction.call($('.week-picker').get(0), modifiedDate, { settings: $('.week-picker').datepicker('option') });
          }
-      }
+     }
+     
+     
       
          
       
    </script>
    <script>
-      let formChanged = false;
-      
-      document.getElementById('form1').addEventListener('input', function () {
-          formChanged = true;
-      });
-      
-      document.getElementById('form2').addEventListener('input', function () {
-         formChanged = true;
-      });
-      
-      document.getElementById('form3').addEventListener('input', function () {
-      formChanged = true;
-      });
-      
-      document.getElementById('form4').addEventListener('input', function () {
-      formChanged = true;
-      });
-      
-      document.getElementById('final-form').addEventListener('input', function () {
-      formChanged = true;
-      });
-      
-      
-      function saveChanges() {
-      
-          formChanged = false;
-      }
-      
-      {% comment %} window.addEventListener('beforeunload', function (event) {
-          if (formChanged) {
-              const message = 'You have unsaved changes. Are you sure you want to leave?';
-              event.returnValue = message;
-              return message; 
-          }
-      });   {% endcomment %}
+     
       
       
       document.getElementById('segmentDropdown').addEventListener('change', function () {
@@ -1978,22 +2034,22 @@
       
       const generalHSEFieldsID = ['input1', 'input2', 'input3', 'input4', 'extraInput1', 'extraInput2', 'extraInput3','fileName1','fileName11','fileName22'];
       const generalHSEFields = ['total_man_days_worked', 'total_safe_man_hours', 'no_of_person_inducted_site',
-         'no_of_toolbox_attendees', 'toolbox_talk_manhours', 'promotional_activities', 'committe_meetings','today_day_worked_file','toolbox_talk_manhours_file','promotional_activities_file'
+         'no_of_toolbox_attendees', 'toolbox_talk_manhours', 'promotional_activities', 'committee_meetings','today_day_worked_file','toolbox_talk_manhours_file','promotional_activities_file'
       ];
       const hseTrainingFieldsID = ['input5', 'input6', 'input7', 'input8', 'extraInput4', 'extraInput5','fileName2','fileName3'];
       const hseTrainingFields = ['hse_training_attendees', 'duration_of_trainee', 'hse_training_contractor',
-         'duration_of_contractor', 'amplus_hse_trainings', 'contractor_hse_trainings','no_of_attendees_amplus','no_of_attendees_contractor'
+         'duration_of_contractor', 'amplus_hse_trainings', 'contractor_hse_trainings','attendees_amplus_file','attendees_contractor_file'
       ];
       const hseObservationFieldsID = ['input9', 'input10', 'input11', 'input12','fileName4'];
       const hseObservationFields = ['daily_hse_observation', 'stop_work_notice', 'violation_memo_issued',
-         'complaint_from_customer','hse_observation'
+         'complaint_from_customer','hse_observation_file'
       ];
       const managementVisitsFieldsID = ['input13', 'input14', 'input15', 'input16','fileName5','fileName6','fileName7'];
-      const managementVisitsFields = ['no_of_management_visits', 'total_findings', 'no_of_compilance_done',
-         'observation_pending','no_of_management_visits_file','total_findings_file','no_of_compilance_done_file'
+      const managementVisitsFields = ['no_of_management_visit', 'total_finding', 'no_of_compilance_done',
+         'observation_pending','no_of_management_visit_file','total_finding_file','no_of_compilance_done_file'
       ];
       const incidentsFieldsID = ['input17', 'input18', 'input19'];
-      const incidentsFields = ['no_of_incidents', 'no_of_occupation_illness', 'no_of_environment_illness'];
+      const incidentsFields = ['no_of_incident', 'no_of_occupation_illness', 'no_of_environment_illness'];
       
       
       function clearInputFields() {
@@ -2082,6 +2138,8 @@
              .then(response => {
                  console.log(response);
                  if (response.status === 201 || response.status === 200) {
+
+               
             
                      // Success handling
                   $('#successModal').modal('show');
@@ -2089,6 +2147,8 @@
                   setTimeout(function () {
                      $('#successModal').modal('hide');
                   }, 1000);
+                  
+                
             
                  } else if (response.status === 400) {
                      console.log('Plant does not exist');
@@ -2113,7 +2173,11 @@
                          }
                      });
                      return Promise.reject(`HTTP error! Status: ${response.status}`);
-                 } else {
+                 }
+
+             
+
+                  else {
                      throw new Error("Network error during form submission");
                  }
                  return response.json();

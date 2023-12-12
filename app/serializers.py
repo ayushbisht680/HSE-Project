@@ -43,7 +43,7 @@ class GeneralHSESerializer(serializers.ModelSerializer):
     
 class HSETrainingsSerializer(serializers.ModelSerializer):
     class Meta:
-        model=HSETrainingsModel
+        model=HSETraining
         fields='__all__'
 
     
@@ -57,7 +57,7 @@ class HSEObservationSerializer(serializers.ModelSerializer):
     
 class ManagementSerializer(serializers.ModelSerializer):
     class Meta:
-        model=ManagementVisits
+        model=ManagementVisit
         fields='__all__'
 
 
@@ -76,27 +76,27 @@ class HSESerializer(serializers.ModelSerializer):
 
 
 
-class HSEObservationFormSerializer(serializers.ModelSerializer):
+class SubObservationSerializer(serializers.ModelSerializer):
     class Meta:
-        model=HSEObservationForm
+        model=SubObservation
         fields='__all__'
 
 
-class StopWorkFormSerializer(serializers.ModelSerializer):
+class StopWorkSerializer(serializers.ModelSerializer):
     class Meta:
-        model=StopWorkForm
+        model=StopWork
         fields='__all__'
 
 
-class ViolationFormSerializer(serializers.ModelSerializer):
+class ViolationMemoSerializer(serializers.ModelSerializer):
     class Meta:
-        model=ViolationMemoForm
+        model=ViolationMemo
         fields='__all__'
         
 
-class IncidentFormSerializer(serializers.ModelSerializer):
+class SubIncidentSerializer(serializers.ModelSerializer):
     class Meta:
-        model=IncidentForm
+        model=SubIncident
         fields='__all__'
 
 

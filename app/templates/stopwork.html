@@ -265,19 +265,36 @@
       <form method="POST" action="{% url 'stopWork_form' %}" enctype="multipart/form-data" id="form" autocomplete="off" style="display: none;">
          {% csrf_token %}
          <div class="rowTable1">
-            <input type="hidden" name="plant_id" id="plant_id" >
+            <input type="hidden" name="segment_category" id="segment_category" >
+            <input type="hidden" name="categoryValue" id="categoryValue" >
             <input type="hidden" name="formSubmitDate" id="formSubmitDate" >
 
             <div class="Srno"><input type="text" class="srWidth valueInput1" placeholder="Sr.No" name="sr_no" id='Srno' value='1' style='border: none;' disabled></div>
             <div class="commonWidth"><input type="date" class="valueInput1" placeholder="Date" name="date" required></div>
             <div class="commonWidth "><input type="time" class="valueInput1" placeholder="Time" name="time" required></div>
             <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Location" name="location" required></div>
-            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Plant/Site" name="plant_site" required></div>
+
+            <div class="commonWidth">
+               <select class="CLassdropdown" name="plant_site" id="PlantSite" required>
+                  {% for choice in plant_site %}
+                  <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                 {% endfor %}
+
+               </select>
+            </div>
 
             <div class="commonTextArea"><textarea rows="3" class="valueText" placeholder="Description" name="description_of_issue"  required></textarea>
             </div>
 
-            <div class="commonWidth"><input type="text" class="valueInput1" placeholder="Unsafe Act" name="unsafe_act" required></div>
+            <div class="commonWidth" >
+               <select class="CLassdropdown" name="unsafe_condition" id="unsafe_condition" required>
+                  {% for choice in unsafe_act %}
+                  <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                 {% endfor %}
+
+               </select>
+            </div>
+
             <div class="cateogryWidth">
                <select class="cateogryDropdown" name="category" id="Cateogry" required>
                   {% for choice in category_choices %}
@@ -419,19 +436,20 @@
       }
      }
 
-
-      function getQueryString() {
-         const url = window.location.href;
-         const searchParams = new URL(url).searchParams;
-         const date = searchParams.get("date");
-         const plantcode = searchParams.get("plantcode");
-         return { date, plantcode };
-     }
+     function getQueryString() {
+      const url = window.location.href;
+      const searchParams = new URL(url).searchParams;
+      const date = searchParams.get("date");
+      const category = searchParams.get("category");
+      const category_value = searchParams.get("category_value");
+      return { date, category,category_value };
+   }
 
 
       const queryParams = getQueryString();
-      console.log(queryParams.date); // This will log the "date" parameter
-      console.log(queryParams.plantcode);
+      console.log(queryParams.date); 
+      console.log(queryParams.category);
+      console.log(queryParams.category_value);
 
        document.getElementById("redirectButton").addEventListener("click", function() {
        // window.location.href = `/api/my_html/?date=${queryParams.date}`; 
@@ -442,9 +460,9 @@
 
        if (queryParams.date) {
          document.getElementById('formSubmitDate').value = queryParams.date;
-         document.getElementById('plant_id').value = queryParams.plantcode;
+         const a= document.getElementById('segment_category').value = queryParams.category;
+         document.getElementById('categoryValue').value = queryParams.category_value;
        }
-
 
     
 
@@ -454,23 +472,26 @@
       function populateInputField() {
          const today = new Date();        
          
-      fetch(`/api/stopWork_form/?plant_code=${queryParams.plantcode}&formSubmitDate=${queryParams.date}`)
+      fetch(`/api/stopWork_form/?category=${queryParams.category}&category_value=${queryParams.category_value}&date=${queryParams.date}`)
       .then(response => response.json())
       .then(data => {
 
-         if (data && Array.isArray(data.data) && 'status' in data) {
-            // Access the data array and the form_status
-            const dataArray = data.data;
+         console.log(data)
+         if (data && typeof data === 'object' && 'status' in data) {
+            console.log('hello');
+        
+            // Extract the 'data' property from the data object
+            const dataArray = Array.isArray(data.data) ? data.data : [data.data];
+            console.log(dataArray);
+        
             const formStatus = data.status;
-
-            console.log('Data Array:', dataArray);
             console.log('Form Status:', formStatus);
-
-            if(formStatus==1){
-               document.getElementById('addRowButton').style.display='none'
-
+        
+            if (formStatus === 1) {
+                document.getElementById('addRowButton').style.display = 'none';
             }
-            document.getElementById('Srno').value=dataArray.length+1;
+        
+            document.getElementById('Srno').value = dataArray.length + 1;
             createAndPopulateFormRows(dataArray); 
          } 
       
@@ -498,7 +519,7 @@
          const template = document.getElementById('formRowTemplate');
          const newRow = document.importNode(template.content, true);
        
-         let parsedDatetime = dataItem.datetime_observation;
+         let parsedDatetime = dataItem.stopwork_datetime;
          let [datePart, timeWithOffset] = parsedDatetime.split('T');
 
          let timePart = timeWithOffset.split('+')[0];

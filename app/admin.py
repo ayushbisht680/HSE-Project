@@ -5,22 +5,22 @@ from .models import *
 admin.site.register(HSE)
 admin.site.register(HSESegment)
 admin.site.register(GeneralHse)
-admin.site.register(HSETrainingsModel)
+admin.site.register(HSETraining)
 admin.site.register(HSEObservation)
-admin.site.register(HSEObservationForm)
-admin.site.register(StopWorkForm)
-admin.site.register(ManagementVisits)
-admin.site.register(ViolationMemoForm)
+admin.site.register(SubObservation)
+admin.site.register(StopWork)
+admin.site.register(ManagementVisit)
+admin.site.register(ViolationMemo)
 admin.site.register(Incidents)
-admin.site.register(IncidentForm)
-admin.site.register(HSEUsers)
+admin.site.register(SubIncident)
+admin.site.register(HSEUser)
 
 
 # @admin.register(GeneralHse)
 # class YourModelAdmin(admin.ModelAdmin):
 #     list_display = ('created_at', 'no_of_toolbox_attendees','no_of_person_inducted_site','total_safe_man_hours','total_man_days_worked')
 
-# @admin.register(HSETrainingsModel)
+# @admin.register(HSETraining)
 # class YourModelAdmin(admin.ModelAdmin):
 #     list_display = ('created_at', 'duration_of_contractor','hse_training_contractor','hse_training_attendees','duration_of_trainee')
 

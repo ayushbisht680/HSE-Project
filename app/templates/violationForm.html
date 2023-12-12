@@ -251,7 +251,8 @@
          <form method="POST" action="{% url 'violation_form' %}" enctype="multipart/form-data" id="form" autocomplete="off" style="display: none;" >
             {% csrf_token %}
             <div class="rowTable1">
-               <input type="hidden" name="plant_id" id="plant_id"  >
+               <input type="hidden" name="segment_category" id="segment_category" >
+               <input type="hidden" name="categoryValue" id="categoryValue" >
                <input type="hidden" name="formSubmitDate" id="formSubmitDate" >
 
                <div class="Srno"><input type="text" class="srWidth valueInput1" placeholder="Enter Here" name="sr_no" id="Srno" value='1' style='border: none;' disabled></div>
@@ -271,9 +272,7 @@
                <div class="chnWidth"><input type="text" class=" extraspace valueInput1" placeholder="Enter Here" name="issued_to" required></div>
                <div class="commonWidth">
                   <select class="CLassdropdown" name="penalty_imposed" required>
-                     {% comment %} <option value="Yes">Yes</option>
-                     <option value="No">No</option>
-                     <option value="NA">NA</option> {% endcomment %}
+                     
                      {% for choice in penalty_choices %}
                      <option value="{{ choice.0 }}">{{ choice.1 }}</option>
                     {% endfor %}
@@ -320,14 +319,16 @@
          const url = window.location.href;
          const searchParams = new URL(url).searchParams;
          const date = searchParams.get("date");
-         const plantcode = searchParams.get("plantcode");
-         return { date, plantcode };
+         const category = searchParams.get("category");
+         const category_value = searchParams.get("category_value");
+         return { date, category,category_value };
      }
 
 
-      const queryParams = getQueryString();
-      console.log(queryParams.date); // This will log the "date" parameter
-      console.log(queryParams.plantcode);
+     const queryParams = getQueryString();
+     console.log(queryParams.date); 
+     console.log(queryParams.category);
+     console.log(queryParams.category_value);
 
        document.getElementById("redirectButton").addEventListener("click", function() {
         //window.location.href = `/api/my_html/?date=${queryParams.date}`; 
@@ -338,33 +339,37 @@
 
        if (queryParams.date) {
          document.getElementById('formSubmitDate').value = queryParams.date;
-         document.getElementById('plant_id').value = queryParams.plantcode;
+         document.getElementById('segment_category').value = queryParams.category;
+         document.getElementById('categoryValue').value = queryParams.category_value;
        }
+
       
       populateInputField()
       
       
       function populateInputField() {
          
-      fetch(`/api/violation_form/?plant_code=${queryParams.plantcode}&formSubmitDate=${queryParams.date}`)
+      fetch(`/api/violation_form/?category=${queryParams.category}&category_value=${queryParams.category_value}&date=${queryParams.date}`)
       .then(response => response.json())
       .then(data => {
-         if (data && Array.isArray(data.data) && 'status' in data) {
-            // Access the data array and the form_status
-            const dataArray = data.data;
+         console.log(data)
+         if (data && typeof data === 'object' && 'status' in data) {
+            console.log('hello');
+        
+            // Extract the 'data' property from the data object
+            const dataArray = Array.isArray(data.data) ? data.data : [data.data];
+            console.log(dataArray);
+        
             const formStatus = data.status;
-
-            console.log('Data Array:', dataArray);
             console.log('Form Status:', formStatus);
-
-            if(formStatus==1){
-               document.getElementById('addRowButton').style.display='none'
-
+        
+            if (formStatus === 1) {
+                document.getElementById('addRowButton').style.display = 'none';
             }
-
-            document.getElementById('Srno').value=dataArray.length+1;
-            createAndPopulateFormRows(dataArray); 
-         } 
+        
+            document.getElementById('Srno').value = dataArray.length + 1;
+            createAndPopulateFormRows(dataArray);
+        }
       
          
       })
@@ -392,7 +397,7 @@
          const template = document.getElementById('formRowTemplate');
          const newRow = document.importNode(template.content, true);
      
-         let parsedDatetime = dataItem.date_field;
+         let parsedDatetime = dataItem.stopwork_date;
      
          let [year, month, day] = parsedDatetime.split('-');
      
@@ -502,68 +507,6 @@
          
          
          handleFormSubmission("form", "{% url 'violation_form' %}");
-
-
-      
-       
-      {% comment %} $(document).ready(function() {
-      let submitted = false; 
-      
-      $('#submitButton').click(function(event) {
-      event.preventDefault(); 
-      
-      
-      $('#successModal').modal('show');
-      
-      setTimeout(function() {
-       $('#successModal').modal('hide'); 
-       if (!submitted) {
-         submitted = true;
-         $('form').submit(); 
-       }
-      }, 1000);
-      });
-      
-      }); {% endcomment %}
-
-     {% comment %} 
-      $.ajax({
-         type: "GET",
-         url: "/api/parent/",
-         success: function (data) {
-             const today = new Date();
-             const weekNumber = getWeekNumber(today);
-             const year = today.getFullYear();
-             const buttonClicked = localStorage.getItem('buttonClicked');
-
-             if (buttonClicked === 'true') {
-                 // Hide the "add row" button
-                 document.getElementById('addRowButton').style.display = 'none';
-             }
-      
-      
-             // Search for an item with matching week_number and year
-             const foundItem = data.find(item => item.week_number === weekNumber && item.year === year); 
-
-      
-             if (foundItem) {
-                 const fieldData = foundItem.form_status;
-                 if (fieldData == 1) {
-                  document.getElementById('addRowButton').style.display='none';
-                  
-                 }
-             } 
-             else {
-                 console.log(`No data found for week ${weekNumber} and year ${year}`);
-             }
-         },
-         error: function (xhr, status, error) {
-             console.error("Error:", status, error);
-         }
-      });  {% endcomment %}
-
   
-      
-      
    </script>
 </html>
