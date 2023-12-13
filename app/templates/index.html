@@ -63,8 +63,6 @@
          text-align: left;
          margin-top: 4px;
          background-color: rgba(62, 159, 254, 0.1);
-         margin-left: 14px;
-         margin-right: 14px;
          border-radius: 7px;
          {% comment %} height: 11vw; {% endcomment %}
          }
@@ -185,10 +183,7 @@
          font-size: 13px;
          color: lightgrey
          }
-         .maincontainer {
-         margin-left: 14px;
-         margin-right: 14px;
-         }
+       
          .changeInput {
          height: 39px !important;
          margin-right: auto;
@@ -292,7 +287,7 @@
          border: none !important;
          }
          .accordion-item {
-         margin-top: 15px;
+         margin-top: 10px;
          border: 1px solid lightgrey !important;
          }
          .accordion-button:not(.collapsed) {
@@ -1155,7 +1150,6 @@
                                     {% csrf_token %}
                                     <input type="hidden" name="submittedDate" class="getDateFormat">
                                     <input type="hidden" name="formSubmitDate" class="formSubmitDate">
-                                    <input type="hidden" name="plant_id" id="plant_id" class='plantcode'>
                                     <input type="hidden" name="toBeUpdatedId" id="toBeUpdatedId5" value="">
                                     <input type="hidden" name="startRange" class="startRange">
                                     <input type="hidden" name="endRange" class="endRange">
@@ -1223,10 +1217,12 @@
                         <form method="POST" action="{% url 'Parent' %}" enctype="multipart/form-data" id='lastForm'>
                            {% csrf_token %}
                            <input type="hidden" name="formSubmitDate" class="formSubmitDate">
-                           <input type="hidden" name="startRange" class="startRange"> 
-                           <input type="hidden" name="endRange" class="endRange">
-                           <input type="hidden" name="plant_id" id="plant_id" class='plantcode'>
-                           <button type="submit" class="btn" id="finalSubmit" disabled>Submit</button>
+                           <input type="hidden" name="startRange" class="startRange" id='startRange'> 
+                           <input type="hidden" name="endRange" class="endRange" id='endRange'>
+                           <input type="hidden" name="category" class="category">
+                           <input type="hidden" name="categoryValue" class="categoryValue">
+
+                           <button type="submit" class="btn" id="finalSubmit" disabled >Submit</button>
                         </form>
                      </div>
                   </div>
@@ -1474,13 +1470,19 @@
                   console.log(`the statdateRange is ${startDateRange}`)
                   console.log(`the enddateRange is ${endDateRange}`)
 
+                  const endDatePlus1 = new Date(endDateRange);
+                  endDatePlus1.setDate(endDatePlus1.getDate() + 1);
+
                   const endDatePlus2 = new Date(endDateRange);
                   endDatePlus2.setDate(endDatePlus2.getDate() + 2);
+
+               
+
 
                   if ((todayDate <= endDatePlus2)|| (todayDate >= startDateRange && todayDate <= endDateRange)) {
                      // can fill the form
                      console.log("Can fill the form");
-
+               
                      const getTheTodayDate = getTodayDate();
                      const result = compareDates(dateFormatChanged, getTheTodayDate);
                      if(result==1){
@@ -1494,14 +1496,20 @@
                      }
                      else{
                         EnablingFields()
+                       
                         let disableFormsLink = document.querySelectorAll('.formsLink');
                         for (let i = 0; i < disableFormsLink.length; i++) {
                            disableFormsLink[i].style.display = 'block';
+                        }
+
+                        if(todayDate==endDateRange){
+                           document.getElementById('finalSubmit').disabled=false;
                         }
       
                      }
 
                   }
+                  
                    else {
                      // can only view the form 
                      DisablingFields()
@@ -1513,7 +1521,6 @@
                      }
                   }
              
-                  // Update elements
                   $('#startDate').text(startDateText);
                   $('#endDate').text(endDateText);
 
@@ -1536,6 +1543,7 @@
       
                   var formattedDate = formatToCustomDate(convertedDate);
                   $('#viewingDate').text(formattedDate);
+
       
                   const newUrl = `${window.location.origin}${window.location.pathname}?date=${dateFormatChanged}`;
                   window.history.pushState({}, '', newUrl);
@@ -1727,20 +1735,18 @@
                   fetch('/api/plant/')
                   .then(response => response.json())
                   .then(data => {
-                  console.log(data)   
-                     if (Array.isArray(data) && data.length > 0) {
-                        const plant = data[0]; 
+                     console.log(data)   
+                     data.forEach(plantCode => {
+                      
                         const option = document.createElement('option');
-                        option.value = plant.id; 
-                        option.text = `Plant ${plant.id}`; 
+                        option.value = plantCode.id;
+                        console.log(option.value)
+                        option.text = `Plant ${plantCode.id}`;
+                      
                         segmentValues.appendChild(option);
-
-
-                     } else {
-                        console.error('Invalid or empty data received from the API');
-                     }
-                  })
-                  .catch(error => console.error('Error fetching data:', error));
+                      });
+                     })
+                     .catch(error => console.error('Error fetching data:', error));
 
          
 
@@ -1754,16 +1760,15 @@
             .then(response => response.json())
             .then(data => {
             console.log(data)   
-               if (Array.isArray(data) && data.length > 0) {
-                  const homescapeCluster = data[0]; 
-                  const option = document.createElement('option');
-                  option.value = homescapeCluster.cluster;
-                  option.text = `${homescapeCluster.cluster}`;
- 
-                  segmentValues.appendChild(option);
-               } else {
-                  console.error('Invalid or empty data received from the API');
-               }
+            data.forEach(homeScapeCode => {
+             
+               const option = document.createElement('option');
+               option.value = homeScapeCode.cluster;
+               console.log(option.value)
+               option.text = `${homeScapeCode.cluster}`;
+             
+               segmentValues.appendChild(option);
+             });
             })
             .catch(error => console.error('Error fetching data:', error));
          
@@ -1778,17 +1783,16 @@
             fetch('/api/warehouse/')
             .then(response => response.json())
             .then(data => {
-            console.log(data)   
-               if (Array.isArray(data) && data.length > 0) {
-                  const warehouseCode = data[0]; 
-                  const option = document.createElement('option');
-                  option.value = warehouseCode.code;
-                  option.text = `Code ${warehouseCode.code}`;
- 
-                  segmentValues.appendChild(option);
-               } else {
-                  console.error('Invalid or empty data received from the API');
-               }
+            console.log(data)     
+            data.forEach(warehouseCode => {
+             
+               const option = document.createElement('option');
+               option.value = warehouseCode.code;
+               console.log(option.value)
+               option.text = `Code ${warehouseCode.code}`;
+             
+               segmentValues.appendChild(option);
+             });
             })
             .catch(error => console.error('Error fetching data:', error));
 

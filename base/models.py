@@ -28,7 +28,7 @@ class HomeScape(models.Model):
         verbose_name_plural = "HomeScape"
        
     def __str__(self):
-        return f" {self.id}, Cluster {self.cluster}"
+        return f" Cluster {self.cluster}"
 
 
 
@@ -40,7 +40,7 @@ class Warehouse(models.Model):
         verbose_name_plural = "Warehouse"
   
     def __str__(self):
-        return f" {self.id}, Warehouse Code {self.code}"
+        return f" Warehouse {self.code}"
 
  
 

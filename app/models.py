@@ -81,18 +81,26 @@ class HSESegment(models.Model):
     homescape = models.ForeignKey(HomeScape, on_delete=models.CASCADE, null=True, blank=True)
     warehouse = models.ForeignKey(Warehouse, on_delete=models.CASCADE, null=True, blank=True)
 
-    
     class Meta:
         verbose_name = "HSESegment" 
-        verbose_name_plural = "HSESegment"
+        verbose_name_plural = "HSESegments"
 
-    
     def __str__(self):
-        return f"{self.segment}"
+        if self.plant:
+            return f"{self.segment} - {self.plant}"
+        elif self.homescape:
+            return f"{self.segment} - {self.homescape}"
+        elif self.warehouse:
+            return f"{self.segment} - {self.warehouse}"
+        else:
+            return f"{self.segment}"
+
+
 
 
 class HSE(models.Model):
-    hse_segment=models.ForeignKey(HSESegment, on_delete=models.CASCADE, null=True, blank=True)    
+    hse_segment=models.ForeignKey(HSESegment, on_delete=models.CASCADE, null=True, blank=True) 
+       
     created_at = models.DateTimeField(default=timezone.now, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE,related_name='created_by_hse_records',null=True,blank=True)

@@ -4,16 +4,13 @@ from .models import *
 from .serializers import * 
 from rest_framework import status
 from django.template.response import TemplateResponse  
-from django.http import HttpResponse
 from rest_framework import generics
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
-from django.contrib import messages
 from django.shortcuts import redirect
 from django.utils import timezone
 from datetime import datetime
 from django.db.models import Q
-from datetime import datetime, timedelta
+from datetime import datetime
 from .models import CATEGORY_CHOICES,STATUS_CHOICES,INCIDENT_TYPE_CHOICES,CATEOGRIES
 
 SEGMENTS=[
@@ -22,9 +19,62 @@ SEGMENTS=[
     ('warehouse','Warehouse')
 ]
 
+def get_or_create_segment(category, category_value):
+    segment_instance = None
+
+    if category == 'hawkai':
+        plant_instance = Plant.objects.filter(id=category_value)
+        hawkai_obj = plant_instance.first()
+        segment_instance, _ = HSESegment.objects.get_or_create(
+            segment=category,
+            plant=hawkai_obj
+        )
+    elif category == 'homescape':
+        homescape_instance = HomeScape.objects.filter(cluster=category_value)
+        homescape_obj = homescape_instance.first()
+        segment_instance, _ = HSESegment.objects.get_or_create(
+            segment=category,
+            homescape=homescape_obj
+        )
+    elif category == 'warehouse':
+        warehouse_instance = Warehouse.objects.filter(code=category_value)
+        warehouse_obj = warehouse_instance.first()
+        segment_instance, _ = HSESegment.objects.get_or_create(
+            segment=category,
+            warehouse=warehouse_obj
+        )
+
+    return segment_instance
+
+def get_hse_instance(category, category_value, date):
+    hse_instance=None
+
+    if(category=='hawkai'):
+        hse_instance=HSE.objects.filter(
+            hse_segment__segment=category,
+            hse_segment__plant=category_value,
+            formSubmittedDate=date
+
+        )
+    elif(category=='homescape'):
+         hse_instance=HSE.objects.filter(
+            hse_segment__segment=category,
+            hse_segment__homescape=category_value,
+            formSubmittedDate=date
+
+        )
+    elif(category=='warehouse'):
+         hse_instance=HSE.objects.filter(
+            hse_segment__segment=category,
+            hse_segment__warehouse=category_value,
+            formSubmittedDate=date
+
+        )
+    return hse_instance
 
 
-class TemplateView(APIView):
+
+class HSEHomePageView(APIView):
     def get(self, request):
         context = {
         'segment_choices': SEGMENTS
@@ -81,10 +131,6 @@ class IncidentView(APIView):
         }
         return TemplateResponse(request, "incidentForm.html",context)
 
-class ListObservers(APIView):
-     def get(self, request):
-        return TemplateResponse(request, "mockDrill.html")
-
 
 class PlantAPI(APIView):
 
@@ -140,50 +186,17 @@ class GeneralHseAPI(APIView):
             return Response({'error': 'User does not have permission'}, status=status.HTTP_403_FORBIDDEN)
 
         try:
-            segment_instance = None
 
-            if category == 'hawkai':
-                plant_instance = Plant.objects.filter(id=category_value)
-                hawkai_obj= plant_instance.first()
-
-                segment_instance, _ = HSESegment.objects.get_or_create(
-                    segment=category,
-                    plant=hawkai_obj
-                )
-
-            elif category == 'homescape':
-                homescape_instance = HomeScape.objects.filter(cluster=category_value)
-                homescape_obj=homescape_instance.first()
-
-                segment_instance, _ = HSESegment.objects.get_or_create(
-                    segment=category,
-                    homescape=homescape_obj
-                )
-                
-
-            elif category == 'warehouse':
-                warehouse_instance = Warehouse.objects.filter(code=category_value)
-                warehouse_obj=warehouse_instance.first()
-
-                segment_instance, _ = HSESegment.objects.get_or_create(
-                    segment=category,
-                    warehouse=warehouse_obj
-                )
-
-            # if segment_instance and not segment_instance.segment:
-            #     segment_instance.segment = category
-            #     segment_instance.save()
+            segment_instance = get_or_create_segment(category, category_value)
 
             hse_instance, created = HSE.objects.get_or_create(
                 hse_segment=segment_instance,
                 formSubmittedDate=form_submit_date,
                 defaults={"form_status": 0},
+                created_by=request.user
             )
 
-            if created:
-                hse_instance.created_by = request.user
-                hse_instance.save()
-
+          
             if hse_instance.form_status == 1:
                 return Response({'error': 'Form already submitted'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -212,7 +225,6 @@ class GeneralHseAPI(APIView):
 
         try:
             hse_user = HSEUser.objects.get(user=request.user, hse_permission=True)
-            print(hse_user)
         except HSEUser.DoesNotExist:
             return Response('User does not have permission', status=status.HTTP_403_FORBIDDEN)
 
@@ -239,7 +251,7 @@ class GeneralHseAPI(APIView):
         
 
        
-class HseTrainingsAPI(APIView):
+class HseTrainingAPI(APIView):
     def get(self, request):
         obj = HSETraining.objects.all()
         serializer = HSETrainingsSerializer(obj, many=True)
@@ -258,49 +270,15 @@ class HseTrainingsAPI(APIView):
             return Response({'error': 'User does not have permission'}, status=status.HTTP_403_FORBIDDEN)
         
         try:
-            segment_instance = None
-
-            if category == 'hawkai':
-                plant_instance = Plant.objects.filter(id=category_value)
-                hawkai_obj= plant_instance.first()
-
-                segment_instance, _ = HSESegment.objects.get_or_create(
-                    segment=category,
-                    plant=hawkai_obj
-                )
-
-            elif category == 'homescape':
-                homescape_instance = HomeScape.objects.filter(cluster=category_value)
-                homescape_obj=homescape_instance.first()
-
-                segment_instance, _ = HSESegment.objects.get_or_create(
-                    segment=category,
-                    homescape=homescape_obj
-                )
-                
-
-            elif category == 'warehouse':
-                warehouse_instance = Warehouse.objects.filter(code=category_value)
-                warehouse_obj=warehouse_instance.first()
-
-                segment_instance, _ = HSESegment.objects.get_or_create(
-                    segment=category,
-                    warehouse=warehouse_obj
-                )
-
-            if segment_instance and not segment_instance.segment:
-                segment_instance.segment = category
-                segment_instance.save()
+           
+            segment_instance = get_or_create_segment(category, category_value)
 
             hse_instance, created = HSE.objects.get_or_create(
                 hse_segment=segment_instance,
                 formSubmittedDate=form_submit_date,
                 defaults={"form_status": 0},
+                created_by=request.user
             )
-
-            if created:
-                hse_instance.created_by = request.user
-                hse_instance.save()
 
             if hse_instance.form_status == 1:
                 return Response({'error': 'Form already submitted'}, status=status.HTTP_400_BAD_REQUEST)
@@ -376,58 +354,21 @@ class HseObservationAPI(APIView):
             return Response({'error': 'User does not have permission'}, status=status.HTTP_403_FORBIDDEN)
 
         try:
-            segment_instance = None
 
-            if category == 'hawkai':
-                plant_instance = Plant.objects.filter(id=category_value)
-                hawkai_obj= plant_instance.first()
+            segment_instance = get_or_create_segment(category, category_value)
 
-                segment_instance, _ = HSESegment.objects.get_or_create(
-                    segment=category,
-                    plant=hawkai_obj
-                )
-
-            elif category == 'homescape':
-                homescape_instance = HomeScape.objects.filter(cluster=category_value)
-                homescape_obj=homescape_instance.first()
-
-                segment_instance, _ = HSESegment.objects.get_or_create(
-                    segment=category,
-                    homescape=homescape_obj
-                )
-                
-
-            elif category == 'warehouse':
-                warehouse_instance = Warehouse.objects.filter(code=category_value)
-                warehouse_obj=warehouse_instance.first()
-
-                segment_instance, _ = HSESegment.objects.get_or_create(
-                    segment=category,
-                    warehouse=warehouse_obj
-                )
-
-            if segment_instance and not segment_instance.segment:
-                segment_instance.segment = category
-                segment_instance.save()
-
-            hse_instance, created = HSE.objects.get_or_create(
+            hse_instance, created= HSE.objects.get_or_create(
                 hse_segment=segment_instance,
                 formSubmittedDate=form_submit_date,
                 defaults={"form_status": 0},
+                created_by=request.user
             )
 
-            if created:
-                hse_instance.created_by = request.user
-                hse_instance.save()
-
+          
             if hse_instance.form_status == 1:
                 return Response({'error': 'Form already submitted'}, status=status.HTTP_400_BAD_REQUEST)
             
-            hse_observation_instance,created=HSEObservation.objects.get_or_create(
-                hse=hse_instance
-
-            )
-
+            hse_observation_instance=HSEObservation(hse=hse_instance )
             serializer = HSEObservationSerializer(hse_observation_instance, data=data)
 
             if serializer.is_valid():
@@ -470,9 +411,9 @@ class HseObservationAPI(APIView):
         if serializer.is_valid():
             instance = serializer.save()
             instance.updated_at = timezone.now()
-
             instance.formSubmitted = True
             instance.save()
+
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -499,50 +440,14 @@ class ManagementAPI(APIView):
             return Response({'error': 'User does not have permission'}, status=status.HTTP_403_FORBIDDEN)
 
         try:
-            segment_instance = None
-
-            if category == 'hawkai':
-                plant_instance = Plant.objects.filter(id=category_value)
-                hawkai_obj= plant_instance.first()
-
-                segment_instance, _ = HSESegment.objects.get_or_create(
-                    segment=category,
-                    plant=hawkai_obj
-                )
-
-            elif category == 'homescape':
-                homescape_instance = HomeScape.objects.filter(cluster=category_value)
-                homescape_obj=homescape_instance.first()
-
-                segment_instance, _ = HSESegment.objects.get_or_create(
-                    segment=category,
-                    homescape=homescape_obj
-                )
-                
-
-            elif category == 'warehouse':
-                warehouse_instance = Warehouse.objects.filter(code=category_value)
-                warehouse_obj=warehouse_instance.first()
-
-                segment_instance, _ = HSESegment.objects.get_or_create(
-                    segment=category,
-                    warehouse=warehouse_obj
-                )
-
-
-            if segment_instance and not segment_instance.segment:
-                segment_instance.segment = category
-                segment_instance.save()
+            segment_instance = get_or_create_segment(category, category_value)
 
             hse_instance, created = HSE.objects.get_or_create(
                 hse_segment=segment_instance,
                 formSubmittedDate=form_submit_date,
                 defaults={"form_status": 0},
+                created_by=request.user
             )
-
-            if created:
-                hse_instance.created_by = request.user
-                hse_instance.save()
 
             if hse_instance.form_status == 1:
                 return Response({'error': 'Form already submitted'}, status=status.HTTP_400_BAD_REQUEST)
@@ -569,7 +474,6 @@ class ManagementAPI(APIView):
 
         data['updated_by'] = request.user.id
 
-
         try:
             hse_user = HSEUser.objects.get(user=request.user, hse_permission=True)
         except HSEUser.DoesNotExist:
@@ -589,7 +493,6 @@ class ManagementAPI(APIView):
         if serializer.is_valid():
             instance = serializer.save()
             instance.updated_at = timezone.now()
-
             instance.formSubmitted = True
             instance.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -627,50 +530,15 @@ class IncidentsAPI(APIView):
             return Response({'error': 'User does not have permission'}, status=status.HTTP_403_FORBIDDEN)
 
         try:
-            segment_instance = None
-
-            if category == 'hawkai':
-                plant_instance = Plant.objects.filter(id=category_value)
-                hawkai_obj= plant_instance.first()
-
-                segment_instance, _ = HSESegment.objects.get_or_create(
-                    segment=category,
-                    plant=hawkai_obj
-                )
-
-            elif category == 'homescape':
-                homescape_instance = HomeScape.objects.filter(cluster=category_value)
-                homescape_obj=homescape_instance.first()
-
-                segment_instance, _ = HSESegment.objects.get_or_create(
-                    segment=category,
-                    homescape=homescape_obj
-                )
-                
-
-            elif category == 'warehouse':
-                warehouse_instance = Warehouse.objects.filter(code=category_value)
-                warehouse_obj=warehouse_instance.first()
-
-                segment_instance, _ = HSESegment.objects.get_or_create(
-                    segment=category,
-                    warehouse=warehouse_obj
-                )
-
-
-            if segment_instance and not segment_instance.segment:
-                segment_instance.segment = category
-                segment_instance.save()
+            segment_instance = get_or_create_segment(category, category_value)
 
             hse_instance, created = HSE.objects.get_or_create(
                 hse_segment=segment_instance,
                 formSubmittedDate=form_submit_date,
                 defaults={"form_status": 0},
+                created_by=request.user
             )
 
-            if created:
-                hse_instance.created_by = request.user
-                hse_instance.save()
 
             if hse_instance.form_status == 1:
                 return Response({'error': 'Form already submitted'}, status=status.HTTP_400_BAD_REQUEST)
@@ -719,9 +587,9 @@ class IncidentsAPI(APIView):
         if serializer.is_valid():
             instance = serializer.save()
             instance.updated_at = timezone.now()
-
             instance.formSubmitted = True
             instance.save()
+
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -738,55 +606,58 @@ class HSEView(APIView):
             
 
     def post(self, request):
-        data = request.data
-        start_range = datetime.strptime(data.get("startRange"), "%Y-%m-%d")
-        end_range = datetime.strptime(data.get("endRange"), "%Y-%m-%d")
-        plant_code=data.get('plant_id')
+        data = request.data.copy()
+        start_range = data.get('startRange')
+        end_range = data.get('endRange')
+
+        start_date = datetime.strptime(start_range, '%d/%m/%Y')
+        end_date = datetime.strptime(end_range, '%d/%m/%Y')
+
+        data['startRange'] = start_date.strftime('%Y-%m-%d')
+        data['endRange'] = end_date.strftime('%Y-%m-%d')
+
+        category = data.get('category')
+        category_value = data.get('categoryValue')
+     
 
         try:
             hse_user = HSEUser.objects.get(user=request.user, hse_permission=True)
         except HSEUser.DoesNotExist:
             return Response('User does not have permission', status=status.HTTP_403_FORBIDDEN)
+        
 
-        # print(plant_code)
-        # print(start_range)
-        # print(end_range)
-
+        hse_segment=get_or_create_segment(category,category_value)
+        print(hse_segment)
+        
         hse_queryset = HSE.objects.filter(
-            Q(formSubmittedDate__gte=start_range) &
-            Q(formSubmittedDate__lte=end_range) &
-            Q(plant_code=plant_code)
+            Q(formSubmittedDate__gte=data['startRange']) &
+            Q(formSubmittedDate__lte=data['endRange']) &
+            Q(hse_segment=hse_segment)
         )
+        print(hse_queryset)
+        if len(hse_queryset) < 7:
+            return Response("HSE Object is not created for some days in this week", status=status.HTTP_400_BAD_REQUEST)
 
-        # Iterate through each HSE object and check the formSubmitted status of related instances
         general_hse_statuses = []
-        hse_trainings_statuses = []
-        hse_observation_statuses = []
-        management_visits_statuses = []
-        incidents_statuses = []
+       
 
         for hse_object in hse_queryset:
+            if not hse_object.generalhse_set.exists():
+                return Response("Please fill all the forms for the HSE Object first", status=status.HTTP_400_BAD_REQUEST)
+            
             general_hse_statuses.extend(hse_object.generalhse_set.values_list('formSubmitted', flat=True))
-            hse_trainings_statuses.extend(hse_object.hsetrainingsmodel_set.values_list('formSubmitted', flat=True))
-            hse_observation_statuses.extend(hse_object.hseobservation_set.values_list('formSubmitted', flat=True))
-            management_visits_statuses.extend(hse_object.ManagementVisit_set.values_list('formSubmitted', flat=True))
-            incidents_statuses.extend(hse_object.incidents_set.values_list('formSubmitted', flat=True))
-
-        # Check if any formSubmitted is False
-        if False in general_hse_statuses or False in hse_trainings_statuses or False in hse_observation_statuses or False in management_visits_statuses or False in incidents_statuses:
+     
+        if False in general_hse_statuses:
             return Response("Form not submitted for all instances", status=status.HTTP_400_BAD_REQUEST)
         
         hse_queryset.update(form_status=1)
+        hse_queryset.update(updated_by=request.user)
 
 
         response_data = {
             "general_hse_statuses": general_hse_statuses,
-            "hse_trainings_statuses": hse_trainings_statuses,
-            "hse_observation_statuses": hse_observation_statuses,
-            "management_visits_statuses": management_visits_statuses,
-            "incidents_statuses": incidents_statuses,
+           
         }
-
 
         return Response(response_data, status=status.HTTP_200_OK)
    
@@ -798,14 +669,19 @@ class AllModelsListView(generics.ListAPIView):
         category_value = request.query_params.get('category_value', None)
         hse_segment = None
 
-        if category == 'hawkai':
-            hse_segment = HSESegment.objects.filter(segment=category)
-        elif category == 'homescape':
-            hse_segment = HSESegment.objects.filter(segment=category)
-        elif category == 'warehouse':
-            hse_segment = HSESegment.objects.filter(segment=category)
 
-        if not hse_segment.exists():
+        if category == 'hawkai':
+            plant_instance=Plant.objects.filter(id=category_value).first()
+            hse_segment = HSESegment.objects.filter(segment=category,plant=plant_instance)
+        elif category == 'homescape':
+            homescape_instance=HomeScape.objects.filter(cluster=category_value).first()
+            hse_segment = HSESegment.objects.filter(segment=category,homescape=homescape_instance)
+        elif category == 'warehouse':
+            warehouse_instance=Warehouse.objects.filter(code=category_value).first()
+            hse_segment = HSESegment.objects.filter(segment=category,warehouse=warehouse_instance)
+
+
+        if hse_segment is None:
             return Response({'error': 'No matching segment found'}, status=400)
         
         hse_segment_obj = hse_segment.first()
@@ -842,8 +718,8 @@ class AllModelsListView(generics.ListAPIView):
         else:
             return Response('Data does not exists ', status=status.HTTP_404_NOT_FOUND)
 
-                                       
-       
+
+                              
 class SubObservationAPI(APIView):
 
     def get(self, request):
@@ -851,29 +727,21 @@ class SubObservationAPI(APIView):
         category = request.query_params.get('category', None)
         category_value = request.query_params.get('category_value', None)
 
-        hse_segment = HSESegment.objects.filter(segment=category).first()
+        hse_instance=get_hse_instance(category,category_value,date).first()
 
-        if not hse_segment:
-            return Response({'error': 'No matching segment found'}, status=400)
+        hse_observation_forms = SubObservation.objects.filter(
+            hse_observation__hse=hse_instance
 
-        hse_instance = HSE.objects.filter(formSubmittedDate=date, hse_segment=hse_segment).first()
-
-        if not hse_instance:
-            return Response({'error': 'No matching HSE instances found'}, status=404)
-
-        hse_observation = HSEObservation.objects.filter(hse=hse_instance).first()
-
-        if not hse_observation:
-            return Response({'error': 'HSE Observation does not exist'}, status=status.HTTP_404_NOT_FOUND)
-
-        hse_observation_forms = SubObservation.objects.filter(hse_observation=hse_observation)
-
-        if hse_observation_forms.exists():
+        )
+        
+        if hse_observation_forms is not None:
             serializer = SubObservationSerializer(hse_observation_forms, many=True)
-            return Response({'data': serializer.data, 'status': hse_instance.form_status})
-        else:
-            return Response({"detail": "HSEObservationForm not found", 'form_status': hse_instance.form_status}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'data': serializer.data,'status':hse_instance.form_status},status=status.HTTP_201_CREATED)
 
+        
+        else:
+            return Response({"detail": "HSEObservationForm not found"}, status=status.HTTP_404_NOT_FOUND)
+        
 
 
     def post(self, request):
@@ -897,50 +765,15 @@ class SubObservationAPI(APIView):
 
        
         try:
-            segment_instance = None
 
-            if category == 'hawkai':
-                plant_instance = Plant.objects.filter(id=category_value)
-                hawkai_obj= plant_instance.first()
-
-                segment_instance, _ = HSESegment.objects.get_or_create(
-                    segment=category,
-                    plant=hawkai_obj
-                )
-
-            elif category == 'homescape':
-                homescape_instance = HomeScape.objects.filter(cluster=category_value)
-                homescape_obj=homescape_instance.first()
-
-                segment_instance, _ = HSESegment.objects.get_or_create(
-                    segment=category,
-                    homescape=homescape_obj
-                )
-                
-
-            elif category == 'warehouse':
-                warehouse_instance = Warehouse.objects.filter(code=category_value)
-                warehouse_obj=warehouse_instance.first()
-
-                segment_instance, _ = HSESegment.objects.get_or_create(
-                    segment=category,
-                    warehouse=warehouse_obj
-                )
-
-
-            if segment_instance and not segment_instance.segment:
-                segment_instance.segment = category
-                segment_instance.save()
+            segment_instance = get_or_create_segment(category, category_value)
 
             hse_instance, created = HSE.objects.get_or_create(
                 hse_segment=segment_instance,
                 formSubmittedDate=form_Submit_date,
                 defaults={"form_status": 0},
+                created_by=request.user
             )
-
-            if created:
-                hse_instance.created_by = request.user
-                hse_instance.save()
 
             if hse_instance.form_status == 1:
                 return Response({'error': 'Form already submitted'}, status=status.HTTP_400_BAD_REQUEST)
@@ -958,9 +791,8 @@ class SubObservationAPI(APIView):
             serializer = SubObservationSerializer(data=data)
 
             if serializer.is_valid():
-                hse_observation_form =serializer.save()
+                serializer.save()
                
-
                 return Response({'data': serializer.data}, status=status.HTTP_201_CREATED)
 
 
@@ -975,28 +807,20 @@ class StopWorkAPI(APIView):
         category = request.query_params.get('category', None)
         category_value = request.query_params.get('category_value', None)
 
-        hse_segment = HSESegment.objects.filter(segment=category).first()
+        hse_instance=get_hse_instance(category,category_value,date).first()
 
-        if not hse_segment:
-            return Response({'error': 'No matching segment found'}, status=400)
+        hse_observation_forms = StopWork.objects.filter(
+            hse_observation__hse=hse_instance
 
-        hse_instance = HSE.objects.filter(formSubmittedDate=date, hse_segment=hse_segment).first()
-
-        if not hse_instance:
-            return Response({'error': 'No matching HSE instances found'}, status=404)
-
-        hse_observation = HSEObservation.objects.filter(hse=hse_instance).first()
-
-        if not hse_observation:
-            return Response({'error': 'HSE Observation does not exist'}, status=status.HTTP_404_NOT_FOUND)
-
-        hse_observation_forms = StopWork.objects.filter(hse_observation=hse_observation)
-
-        if hse_observation_forms.exists():
+        )
+        
+        if hse_observation_forms is not None:
             serializer = StopWorkSerializer(hse_observation_forms, many=True)
-            return Response({'data': serializer.data, 'status': hse_instance.form_status})
+            return Response({'data': serializer.data,'status':hse_instance.form_status},status=status.HTTP_201_CREATED)
+
+        
         else:
-            return Response({"detail": "StopWork Form not found", 'form_status': hse_instance.form_status}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"detail": "HSEObservationForm not found"}, status=status.HTTP_404_NOT_FOUND)
 
     
   
@@ -1020,50 +844,15 @@ class StopWorkAPI(APIView):
             return Response({'error': 'User does not have permission'}, status=status.HTTP_403_FORBIDDEN)
 
         try:
-            segment_instance = None
-
-            if category == 'hawkai':
-                plant_instance = Plant.objects.filter(id=category_value)
-                hawkai_obj= plant_instance.first()
-
-                segment_instance, _ = HSESegment.objects.get_or_create(
-                    segment=category,
-                    plant=hawkai_obj
-                )
-
-            elif category == 'homescape':
-                homescape_instance = HomeScape.objects.filter(cluster=category_value)
-                homescape_obj=homescape_instance.first()
-
-                segment_instance, _ = HSESegment.objects.get_or_create(
-                    segment=category,
-                    homescape=homescape_obj
-                )
-                
-
-            elif category == 'warehouse':
-                warehouse_instance = Warehouse.objects.filter(code=category_value)
-                warehouse_obj=warehouse_instance.first()
-
-                segment_instance, _ = HSESegment.objects.get_or_create(
-                    segment=category,
-                    warehouse=warehouse_obj
-                )
-
-
-            if segment_instance and not segment_instance.segment:
-                segment_instance.segment = category
-                segment_instance.save()
+            segment_instance = get_or_create_segment(category, category_value)
 
             hse_instance, created = HSE.objects.get_or_create(
                 hse_segment=segment_instance,
                 formSubmittedDate=form_Submit_date,
                 defaults={"form_status": 0},
-            )
+                created_by=request.user
 
-            if created:
-                hse_instance.created_by = request.user
-                hse_instance.save()
+            )
 
             if hse_instance.form_status == 1:
                 return Response({'error': 'Form already submitted'}, status=status.HTTP_400_BAD_REQUEST)
@@ -1081,9 +870,8 @@ class StopWorkAPI(APIView):
             serializer = StopWorkSerializer(data=data)
 
             if serializer.is_valid():
-                hse_observation_form =serializer.save()
-                # hse_observation_form.hse_observation = hse_observation
-                # hse_observation_form.save()
+                serializer.save()
+           
 
                 return Response({'data': serializer.data}, status=status.HTTP_201_CREATED)
 
@@ -1099,28 +887,20 @@ class ViolationMemoAPI(APIView):
         category = request.query_params.get('category', None)
         category_value = request.query_params.get('category_value', None)
 
-        hse_segment = HSESegment.objects.filter(segment=category).first()
+        hse_instance=get_hse_instance(category,category_value,date).first()
 
-        if not hse_segment:
-            return Response({'error': 'No matching segment found'}, status=400)
+        hse_observation_forms = ViolationMemo.objects.filter(
+            hse_observation__hse=hse_instance
 
-        hse_instance = HSE.objects.filter(formSubmittedDate=date, hse_segment=hse_segment).first()
-
-        if not hse_instance:
-            return Response({'error': 'No matching HSE instances found'}, status=404)
-
-        hse_observation = HSEObservation.objects.filter(hse=hse_instance).first()
-
-        if not hse_observation:
-            return Response({'error': 'HSE Observation does not exist'}, status=status.HTTP_404_NOT_FOUND)
-
-        hse_observation_forms = ViolationMemo.objects.filter(hse_observation=hse_observation)
-
-        if hse_observation_forms.exists():
+        )
+        
+        if hse_observation_forms is not None:
             serializer = ViolationMemoSerializer(hse_observation_forms, many=True)
-            return Response({'data': serializer.data, 'status': hse_instance.form_status})
+            return Response({'data': serializer.data,'status':hse_instance.form_status},status=status.HTTP_201_CREATED)
+
+        
         else:
-            return Response({"detail": "Violation Form not found", 'form_status': hse_instance.form_status}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"detail": "HSEObservationForm not found"}, status=status.HTTP_404_NOT_FOUND)  
    
 
  
@@ -1140,50 +920,14 @@ class ViolationMemoAPI(APIView):
             return Response({'error': 'User does not have permission'}, status=status.HTTP_403_FORBIDDEN)
 
         try:
-            segment_instance = None
-
-            if category == 'hawkai':
-                plant_instance = Plant.objects.filter(id=category_value)
-                hawkai_obj= plant_instance.first()
-
-                segment_instance, _ = HSESegment.objects.get_or_create(
-                    segment=category,
-                    plant=hawkai_obj
-                )
-
-            elif category == 'homescape':
-                homescape_instance = HomeScape.objects.filter(cluster=category_value)
-                homescape_obj=homescape_instance.first()
-
-                segment_instance, _ = HSESegment.objects.get_or_create(
-                    segment=category,
-                    homescape=homescape_obj
-                )
-                
-
-            elif category == 'warehouse':
-                warehouse_instance = Warehouse.objects.filter(code=category_value)
-                warehouse_obj=warehouse_instance.first()
-
-                segment_instance, _ = HSESegment.objects.get_or_create(
-                    segment=category,
-                    warehouse=warehouse_obj
-                )
-
-
-            if segment_instance and not segment_instance.segment:
-                segment_instance.segment = category
-                segment_instance.save()
+            segment_instance = get_or_create_segment(category, category_value)
 
             hse_instance, created = HSE.objects.get_or_create(
                 hse_segment=segment_instance,
                 formSubmittedDate=form_Submit_date,
                 defaults={"form_status": 0},
+                created_by=request.user
             )
-
-            if created:
-                hse_instance.created_by = request.user
-                hse_instance.save()
 
             if hse_instance.form_status == 1:
                 return Response({'error': 'Form already submitted'}, status=status.HTTP_400_BAD_REQUEST)
@@ -1201,7 +945,7 @@ class ViolationMemoAPI(APIView):
             serializer = ViolationMemoSerializer(data=data)
 
             if serializer.is_valid():
-               hse_observation_form =serializer.save()
+               serializer.save()
 
             return Response({'data': serializer.data}, status=status.HTTP_201_CREATED)
 
@@ -1217,28 +961,20 @@ class IncidentAPI(APIView):
         category = request.query_params.get('category', None)
         category_value = request.query_params.get('category_value', None)
 
-        hse_segment = HSESegment.objects.filter(segment=category).first()
+        hse_instance=get_hse_instance(category,category_value,date).first()
 
-        if not hse_segment:
-            return Response({'error': 'No matching segment found'}, status=400)
+        hse_incident_form = SubIncident.objects.filter(
+            incidents__hse=hse_instance
 
-        hse_instance = HSE.objects.filter(formSubmittedDate=date, hse_segment=hse_segment).first()
-
-        if not hse_instance:
-            return Response({'error': 'No matching HSE instances found'}, status=404)
-
-        hse_incident = Incidents.objects.filter(hse=hse_instance).first()
-
-        if not hse_incident:
-            return Response({'error': 'Incident object does not exist'}, status=status.HTTP_404_NOT_FOUND)
-
-        hse_incident_form = SubIncident.objects.filter(incidents=hse_incident)
-
-        if hse_incident_form.exists():
+        )
+        
+        if hse_incident_form is not None:
             serializer = SubIncidentSerializer(hse_incident_form, many=True)
-            return Response({'data': serializer.data, 'status': hse_instance.form_status})
+            return Response({'data': serializer.data,'status':hse_instance.form_status},status=status.HTTP_201_CREATED)
+
+        
         else:
-            return Response({"detail": "Incident Form not found", 'form_status': hse_instance.form_status}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"detail": "Incident Form not found"}, status=status.HTTP_404_NOT_FOUND)  
         
 
     def post(self, request):
@@ -1262,50 +998,16 @@ class IncidentAPI(APIView):
 
        
         try:
-            segment_instance = None
+            segment_instance = get_or_create_segment(category, category_value)
 
-            if category == 'hawkai':
-                plant_instance = Plant.objects.filter(id=category_value)
-                hawkai_obj= plant_instance.first()
-
-                segment_instance, _ = HSESegment.objects.get_or_create(
-                    segment=category,
-                    plant=hawkai_obj
-                )
-
-            elif category == 'homescape':
-                homescape_instance = HomeScape.objects.filter(cluster=category_value)
-                homescape_obj=homescape_instance.first()
-
-                segment_instance, _ = HSESegment.objects.get_or_create(
-                    segment=category,
-                    homescape=homescape_obj
-                )
-                
-
-            elif category == 'warehouse':
-                warehouse_instance = Warehouse.objects.filter(code=category_value)
-                warehouse_obj=warehouse_instance.first()
-
-                segment_instance, _ = HSESegment.objects.get_or_create(
-                    segment=category,
-                    warehouse=warehouse_obj
-                )
-
-
-            if segment_instance and not segment_instance.segment:
-                segment_instance.segment = category
-                segment_instance.save()
 
             hse_instance, created = HSE.objects.get_or_create(
                 hse_segment=segment_instance,
                 formSubmittedDate=form_Submit_date,
                 defaults={"form_status": 0},
+                created_by=request.user
             )
 
-            if created:
-                hse_instance.created_by = request.user
-                hse_instance.save()
 
             if hse_instance.form_status == 1:
                 return Response({'error': 'Form already submitted'}, status=status.HTTP_400_BAD_REQUEST)
@@ -1323,9 +1025,8 @@ class IncidentAPI(APIView):
             serializer = SubIncidentSerializer(data=data)
 
             if serializer.is_valid():
-                hse_incident_form =serializer.save()
+                serializer.save()
                
-
                 return Response({'data': serializer.data}, status=status.HTTP_201_CREATED)
 
 
