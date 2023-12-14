@@ -452,7 +452,6 @@
       console.log(queryParams.category_value);
 
        document.getElementById("redirectButton").addEventListener("click", function() {
-       // window.location.href = `/api/my_html/?date=${queryParams.date}`; 
         window.history.back();
 
        });
@@ -472,7 +471,7 @@
       function populateInputField() {
          const today = new Date();        
          
-      fetch(`/api/stopWork_form/?category=${queryParams.category}&category_value=${queryParams.category_value}&date=${queryParams.date}`)
+      fetch(`/stopWork_form/?category=${queryParams.category}&category_value=${queryParams.category_value}&date=${queryParams.date}`)
       .then(response => response.json())
       .then(data => {
 

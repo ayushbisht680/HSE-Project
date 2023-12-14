@@ -571,7 +571,7 @@
 
                         <div class='dropDown' id='segmentDiv' style='margin-left: 20px; margin-top: 12px ; display:none;' >
                            <div>
-                              <label for="segmentName" style='font-size: 15px; font-weight: 500;'>Segment Cateogry</label>
+                              <label for="segmentName" style='font-size: 15px; font-weight: 500;' id='segmentCodeValue'></label>
                            </div>
                            <div>
                               <select id="segmentName" class='segmentName'>
@@ -590,642 +590,644 @@
                      </div>
                   </div>
                   <div class="maincontainer">
-                     <div class="accordion" id="accordionExample">
-                        <div class="accordion-item">
-                           <h2 class="accordion-header">
-                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                              data-bs-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
-                              <label class="custom-checkbox-container" style='margin-bottom:0px'>
-                                 <input type="checkbox" class="custom-checkbox" id ='chekbox1' >
-                               </label>
-                                General HSE
-                              </button>
-                           </h2>
-                           <div id="collapse1" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
-                              <div class="accordion-body">
-                                 <form method="POST" action="{% url 'General HSE' %}" enctype="multipart/form-data"
-                                    id="form1">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="toBeUpdatedId" id="toBeUpdatedId1">
-                                    <input type="hidden" name="formSubmitDate" class="formSubmitDate">
-                                    <input type="hidden" name="submittedDate" class="getDateFormat">
-                                    <input type="hidden" name="startRange" class="startRange">
-                                    <input type="hidden" name="endRange" class="endRange">
-                                    <input type="hidden" name="category" class="category">
-                                    <input type="hidden" name="categoryValue" class="categoryValue">
-
-
-                                    <div class="mb-3">
-                                       <label for="input1" class="form-label ">Total man days worked</label>
-                                       <div class='seperateAllElement' style='display: flex' >
-                                          <div class="input-group" id="adjustWidth">
-                                             <input type="number"  class="form-control disableIt" id="input1"
-                                                placeholder="Total man days worked" name="total_man_days_worked"  required>
-                                             <div class=" btnMargin"  >
-                                                <button class="btn  valueButton disableBtn" type="button"
-                                                   id="increment1"><img src="{% static 'images/plus-circle.svg' %}"
-                                                   class="plusIcon"></button>
-                                                <button class="btn  valueButton decBtn disableBtn" type="button"
-                                                   id="decrement1"><img
-                                                   src="{% static 'images/minusButton.svg' %}"></button>
-                                             </div>
-                                          </div>
-                                          <div class="uploadBtn">
-                                             <input type="file" class="form-control-file disableIt" id="fileInput1"
-                                                style='display:none' name="today_day_worked_file">
-                                             <label class="input-group-text uploadColor subForms" for="fileInput1"
-                                                id="fileInputLabel1" style='width: 107px;'>Upload File</label>
-                                             <div class="fileDisplay" id="fileDisplay1"
-                                                style=" align-items: center;">
-                                                <input class="fileName" id="fileName1"
-                                                   style='font-size: 12px;' disabled></input>
-                                             </div>
-                                          </div>
-                                       </div>
-                                    </div>
-                                    <div class="mb-3 changingWidth">
-                                       <label for="input2" class="form-label  ">Total safe man hours worked</label>
-                                       <input type="number" step='any' class="form-control disableIt incHeight" id="input2"
-                                          placeholder="Total safe man hours worked" name="total_safe_man_hours" min='0' required>
-                                    </div>
-                                    <div class="mb-3 ">
-                                       <label for="input3" class="form-label ">Number of persons inducted in the
-                                       site</label>
-                                       <div class="input-group">
-                                          <input type="number" class="form-control disableIt " id="input3"
-                                             placeholder="Number of persons inducted in the site"
-                                             name="no_of_person_inducted_site" required>
-                                          <div class=" btnMargin">
-                                             <button class="btn  valueButton disableBtn" type="button" id="increment3"><img
-                                                src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
-                                             <button class="btn  valueButton decBtn disableBtn" type="button"
-                                                id="decrement3"><img src="{% static 'images/minusButton.svg' %}"></button>
-                                          </div>
-                                       </div>
-                                    </div>
-                                    <div class="mb-3 ">
-                                       <label for="input4" class="form-label ">Total number of toolbox talk
-                                       attendees</label>
-                                       <div class="input-group">
-                                          <input type="number" class="form-control disableIt" id="input4"
-                                             placeholder="Total number of toolbox talk attendees"
-                                             name="no_of_toolbox_attendees" required>
-                                          <div class=" btnMargin">
-                                             <button class="btn  valueButton disableBtn" type="button" id="increment4"><img
-                                                src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
-                                             <button class="btn  valueButton decBtn disableBtn" type="button"
-                                                id="decrement4"><img src="{% static 'images/minusButton.svg' %}"></button>
-                                          </div>
-                                       </div>
-                                    </div>
-                                    <div class="mb-3">
-                                       <label for="extraInput1" class="form-label ">Tool box talk (man-hours)</label>
-                                       <div class='seperateAllElement' style='display: flex'>
-                                          <div class="input-group" id="adjustWidth">
-                                             <input type="number" step='any' class="form-control disableIt disableBefore"
-                                                id="extraInput1" placeholder="Tool box talk (man-hours)"
-                                                name="toolbox_talk_manhours" min='0' required>
-                                             <div class=" btnMargin">
-                                                <button class="btn  valueButton disableBtn  " type="button"
-                                                   id="extraIncrement1"><img src="{% static 'images/plus-circle.svg' %}"
-                                                   class="plusIcon"></button>
-                                                <button class="btn  valueButton decBtn disableBtn" type="button"
-                                                   id="extraDecrement1"><img
-                                                   src="{% static 'images/minusButton.svg' %}"></button>
-                                             </div>
-                                          </div>
-                                          <div class="uploadBtn">
-                                             <input type="file" class="form-control-file disableIt disableBefore"
-                                                id="extraFileInput1" style="display: none"
-                                                name="toolbox_talk_manhours_file">
-                                             <label class="input-group-text uploadColor subForms" for="extraFileInput1"
-                                                id="extrafileInputLabel1" style='width: 107px;'>Upload File</label>
-                                             <div class="fileDisplay" id="fileDisplay11"
-                                                style=" align-items: center;">
-                                                <input class="fileName" id="fileName11"
-                                                   style='font-size: 12px; ' disabled></input>
-                                             </div>
-                                          </div>
-                                       </div>
-                                    </div>
-                                    <div class="mb-3">
-                                       <label for="extraInput2" class="form-label ">Number of HSE promotional
-                                       activities</label>
-                                       <div class='seperateAllElement' style='display: flex'>
-                                          <div class="input-group" id="adjustWidth">
-                                             <input type="number" class="form-control disableIt disableBefore"
-                                                id="extraInput2" placeholder="Number of HSE promotional activities"
-                                                name="promotional_activities" required>
-                                             <div class=" btnMargin">
-                                                <button class="btn  valueButton disableBtn  " type="button"
-                                                   id="extraIncrement2"><img src="{% static 'images/plus-circle.svg' %}"
-                                                   class="plusIcon"></button>
-                                                <button class="btn  valueButton decBtn disableBtn" type="button"
-                                                   id="extraDecrement2"><img
-                                                   src="{% static 'images/minusButton.svg' %}"></button>
-                                             </div>
-                                          </div>
-                                          <div class="uploadBtn">
-                                             <input type="file" class="form-control-file disableIt disableBefore"
-                                                id="extraFileInput2" style="display: none"
-                                                name="promotional_activities_file">
-                                             <label class="input-group-text uploadColor subForms" for="extraFileInput2"
-                                                id="extrafileInputLabel2" style='width: 107px;'>Upload File</label>
-                                             <div class="fileDisplay" id="fileDisplay22"
-                                                style=" align-items: center;">
-                                                <input class="fileName" id="fileName22"
-                                                   style='font-size: 12px;' disabled></input>
-                                             </div>
-                                          </div>
-                                       </div>
-                                    </div>
-                                    <div class="mb-3 ">
-                                       <label for="extraInput3" class="form-label ">Number of HSE committee
-                                       meetings</label>
-                                       <div class="input-group">
-                                          <input type="number" class="form-control disableIt" id="extraInput3"
-                                             placeholder="Number of HSE committee meetings" name="committee_meetings"
-                                             required>
-                                          <div class=" btnMargin">
-                                             <button class="btn  valueButton disableBtn" type="button"
-                                                id="extraIncrement3"><img src="{% static 'images/plus-circle.svg' %}"
-                                                class="plusIcon"></button>
-                                             <button class="btn  valueButton decBtn disableBtn" type="button"
-                                                id="extraDecrement3"><img
-                                                src="{% static 'images/minusButton.svg' %}"></button>
-                                          </div>
-                                       </div>
-                                    </div>
-                                    <div class="saveBtn">
-                                       <button type="submit" class="btn btn-success disableIt subForms"
-                                          id="SaveAndNext1" onclick="saveChanges()" >Save & Next</button>
-                                    </div>
-                                 </form>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="accordion-item">
-                           <h2 class="accordion-header" id="headingTwo2">
-                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                 data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
+                     <div class='content_container' style='display:none' id='content_container'>
+                        <div class="accordion" id="accordionExample">
+                           <div class="accordion-item">
+                              <h2 class="accordion-header">
+                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                 data-bs-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
                                  <label class="custom-checkbox-container" style='margin-bottom:0px'>
-                                    <input type="checkbox" class="custom-checkbox" id ='chekbox2' >
-                                  </label>
-                              HSE Trainings
-                              </button>
-                           </h2>
-                           <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                              <div class="accordion-body">
-                                 <form method="POST" action="{% url 'HSE Trainings' %}" enctype="multipart/form-data"
-                                    id="form2">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="submittedDate" class="getDateFormat">
-                                    <input type="hidden" name="formSubmitDate" class="formSubmitDate">
-                                    <input type="hidden" name="toBeUpdatedId" id="toBeUpdatedId2">
-                                    <input type="hidden" name="startRange" class="startRange">
-                                    <input type="hidden" name="endRange" class="endRange">
-                                    <input type="hidden" name="category" class="category">
-                                    <input type="hidden" name="categoryValue" class="categoryValue">
+                                    <input type="checkbox" class="custom-checkbox" id ='checkbox1' >
+                                 </label>
+                                 General HSE
+                                 </button>
+                              </h2>
+                              <div id="collapse1" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
+                                 <div class="accordion-body">
+                                    <form method="POST" action="{% url 'General HSE' %}" enctype="multipart/form-data"
+                                       id="form1">
+                                       {% csrf_token %}
+                                       <input type="hidden" name="toBeUpdatedId" id="toBeUpdatedId1">
+                                       <input type="hidden" name="formSubmitDate" class="formSubmitDate">
+                                       <input type="hidden" name="submittedDate" class="getDateFormat">
+                                       <input type="hidden" name="startRange" class="startRange">
+                                       <input type="hidden" name="endRange" class="endRange">
+                                       <input type="hidden" name="category" class="category">
+                                       <input type="hidden" name="categoryValue" class="categoryValue">
 
 
-                                    <div class="mb-3">
-                                       <label for="input5" class="form-label ">HSE Trainings (no. of attendees from
-                                       Amplus)</label>
-                                       <div class='seperateAllElement' style='display: flex'>
-                                          <div class="input-group" id="adjustWidth">
-                                             <input type="number" class="form-control disableIt disableBefore" id="input5"
-                                                placeholder="HSE Trainings (no. of attendees from Amplus)"
-                                                name="hse_training_attendees" required>
+                                       <div class="mb-3">
+                                          <label for="input1" class="form-label ">Total man days worked</label>
+                                          <div class='seperateAllElement' style='display: flex' >
+                                             <div class="input-group" id="adjustWidth">
+                                                <input type="number"  class="form-control disableIt" id="input1"
+                                                   placeholder="Total man days worked" name="total_man_days_worked"  required>
+                                                <div class=" btnMargin"  >
+                                                   <button class="btn  valueButton disableBtn" type="button"
+                                                      id="increment1"><img src="{% static 'images/plus-circle.svg' %}"
+                                                      class="plusIcon"></button>
+                                                   <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                      id="decrement1"><img
+                                                      src="{% static 'images/minusButton.svg' %}"></button>
+                                                </div>
+                                             </div>
+                                             <div class="uploadBtn">
+                                                <input type="file" class="form-control-file disableIt" id="fileInput1"
+                                                   style='display:none' name="today_day_worked_file">
+                                                <label class="input-group-text uploadColor subForms" for="fileInput1"
+                                                   id="fileInputLabel1" style='width: 107px;'>Upload File</label>
+                                                <div class="fileDisplay" id="fileDisplay1"
+                                                   style=" align-items: center;">
+                                                   <input class="fileName" id="fileName1"
+                                                      style='font-size: 12px;' disabled></input>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="mb-3 changingWidth">
+                                          <label for="input2" class="form-label  ">Total safe man hours worked</label>
+                                          <input type="number" step='any' class="form-control disableIt incHeight" id="input2"
+                                             placeholder="Total safe man hours worked" name="total_safe_man_hours" min='0' required>
+                                       </div>
+                                       <div class="mb-3 ">
+                                          <label for="input3" class="form-label ">Number of persons inducted in the
+                                          site</label>
+                                          <div class="input-group">
+                                             <input type="number" class="form-control disableIt " id="input3"
+                                                placeholder="Number of persons inducted in the site"
+                                                name="no_of_person_inducted_site" required>
                                              <div class=" btnMargin">
-                                                <button class="btn  valueButton disableBtn  " type="button"
-                                                   id="increment5"><img src="{% static 'images/plus-circle.svg' %}"
-                                                   class="plusIcon"></button>
+                                                <button class="btn  valueButton disableBtn" type="button" id="increment3"><img
+                                                   src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
                                                 <button class="btn  valueButton decBtn disableBtn" type="button"
-                                                   id="decrement5"><img
-                                                   src="{% static 'images/minusButton.svg' %}"></button>
-                                             </div>
-                                          </div>
-                                          <div class="uploadBtn">
-                                             <input type="file" class="form-control-file disableIt" id="fileInput2"
-                                                style="display: none" name="attendees_amplus_file">
-                                             <label class="input-group-text uploadColor subForms" for="fileInput2"
-                                                id="fileInputLabel2" style='width: 107px;'>Upload File</label>
-                                             <div class="fileDisplay" id="fileDisplay2"
-                                                style="align-items: center;">
-                                                <input class="fileName" id="fileName2"
-                                                   style='font-size: 12px;' disabled></input>
+                                                   id="decrement3"><img src="{% static 'images/minusButton.svg' %}"></button>
                                              </div>
                                           </div>
                                        </div>
-                                    </div>
-                                    <div class=" changingWidth">
-                                       <label for="input6" class="form-label ">Duration of training session (In
-                                       hours)</label>
-                                       <input type="number" step='any' class="form-control disableIt disableBefore incHeight "
-                                          id="input6" placeholder="Duration of training session (In hours)"
-                                          name="duration_of_trainee" min="1" required>
-                                    </div>
-                                    <span class="error-message" id="number-error1">Fill duration above 1hr</span>
-                                    <div class="mb-3">
-                                       <label for="input7" class="form-label ">HSE Trainings (no. of attendees from
-                                       Contractor)</label>
-                                       <div class='seperateAllElement' style='display: flex'>
-                                          <div class="input-group" id="adjustWidth">
-                                             <input type="number" class="form-control disableIt disableBefore" id="input7"
-                                                placeholder="HSE Trainings (no. of attendees from Contractor)"
-                                                name="hse_training_contractor" required>
+                                       <div class="mb-3 ">
+                                          <label for="input4" class="form-label ">Total number of toolbox talk
+                                          attendees</label>
+                                          <div class="input-group">
+                                             <input type="number" class="form-control disableIt" id="input4"
+                                                placeholder="Total number of toolbox talk attendees"
+                                                name="no_of_toolbox_attendees" required>
                                              <div class=" btnMargin">
-                                                <button class="btn  valueButton disableBtn" type="button"
-                                                   id="increment7"><img src="{% static 'images/plus-circle.svg' %}"
-                                                   class="plusIcon"></button>
+                                                <button class="btn  valueButton disableBtn" type="button" id="increment4"><img
+                                                   src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
                                                 <button class="btn  valueButton decBtn disableBtn" type="button"
-                                                   id="decrement7"><img
-                                                   src="{% static 'images/minusButton.svg' %}"></button>
-                                             </div>
-                                          </div>
-                                          <div class="uploadBtn">
-                                             <input type="file" class="form-control-file disableIt disableBefore"
-                                                id="fileInput3" style="display: none" name="attendees_contractor_file">
-                                             <label class="input-group-text uploadColor subForms" for="fileInput3"
-                                                id="fileInputLabel3" style='width: 107px;'>Upload File</label>
-                                             <div class="fileDisplay" id="fileDisplay3"
-                                                style="align-items: center;">
-                                                <input class="fileName" id="fileName3"
-                                                   style='font-size: 12px;' disabled></input>
+                                                   id="decrement4"><img src="{% static 'images/minusButton.svg' %}"></button>
                                              </div>
                                           </div>
                                        </div>
-                                    </div>
-                                    <div class="changingWidth">
-                                       <label for="input8" class="form-label">Duration of training session (In
-                                       hours)</label>
-                                       <input type="number" step='any' class="form-control disableIt disableBefore incHeight"
-                                          id="input8" placeholder="Duration of training session (In hours)"
-                                          name="duration_of_contractor" min="1" required>
-                                    </div>
-                                    <span class="error-message" id="number-error2">Fill duration above 1hr</span>
-                                    <div class="mb-3 changingWidth">
-                                       <label for="extraInput4" class="form-label">Amplus HSE training (man-hours)</label>
-                                       <input type="number" step='any' class="form-control disableIt incHeight" id="extraInput4"
-                                          placeholder="Amplus HSE training" name="amplus_hse_trainings" min='0' required>
-                                    </div>
-                                    <div class="mb-3 changingWidth">
-                                       <label for="extraInput5" class="form-label">Contractor HSE training
-                                       (man-hours)</label>
-                                       <input type="number" step='any' class="form-control disableIt incHeight" id="extraInput5"
-                                          placeholder="Contractor HSE training" name="contractor_hse_trainings" min='0' required>
-                                    </div>
-                                    <div class="saveBtn">
-                                       <button type="submit" class="btn btn-success disableIt disableBefore subForms"
-                                          id="SaveAndNext2" onclick="saveChanges()">Save & Next</button>
-                                    </div>
-                                 </form>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="accordion-item">
-                           <h2 class="accordion-header">
-                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                 data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
-                                 <label class="custom-checkbox-container" style='margin-bottom:0px'>
-                                    <input type="checkbox" class="custom-checkbox" id ='chekbox3' >
-                                  </label>
-                              HSE Observations
-                              </button>
-                           </h2>
-                           <div id="collapse3" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                              <div class="accordion-body">
-                                 <form method="POST" action="{% url 'HSE Observations' %}" enctype="multipart/form-data"
-                                    id="form3">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="submittedDate" class="getDateFormat">
-                                    <input type="hidden" name="formSubmitDate" class="formSubmitDate" id='formSubmitDate'>
-                                    <input type="hidden" name="toBeUpdatedId" id="toBeUpdatedId3" value="">
-                                    <input type="hidden" name="plant_id" id="plant_id" class='plantcode'>
-                                    <input type="hidden" name="startRange" class="startRange">
-                                    <input type="hidden" name="endRange" class="endRange">
-                                    <input type="hidden" name="category" class="category">
-                                    <input type="hidden" name="categoryValue" class="categoryValue">
-
-                                    <div class="mb-3">
-                                       <label for="input9" class="form-label ">Number of daily HSE observations</label>
-                                       <div class='seperateAllElement' style='display: flex'>
-                                          <div class="input-group" id="adjustWidth">
-                                             <input type="number" class="form-control disableIt importantField "
-                                                id="input9" placeholder="Number of daily HSE observations"
-                                                name="daily_hse_observation" required>
-                                             <div class=" btnMargin">
-                                                <button class="btn  valueButton disableBtn" type="button"
-                                                   id="increment9"><img src="{% static 'images/plus-circle.svg' %}"
-                                                   class="plusIcon"></button>
-                                                <button class="btn  valueButton decBtn disableBtn" type="button"
-                                                   id="decrement9"><img
-                                                   src="{% static 'images/minusButton.svg' %}"></button>
+                                       <div class="mb-3">
+                                          <label for="extraInput1" class="form-label ">Tool box talk (man-hours)</label>
+                                          <div class='seperateAllElement' style='display: flex'>
+                                             <div class="input-group" id="adjustWidth">
+                                                <input type="number" step='any' class="form-control disableIt disableBefore"
+                                                   id="extraInput1" placeholder="Tool box talk (man-hours)"
+                                                   name="toolbox_talk_manhours" min='0' required>
+                                                <div class=" btnMargin">
+                                                   <button class="btn  valueButton disableBtn  " type="button"
+                                                      id="extraIncrement1"><img src="{% static 'images/plus-circle.svg' %}"
+                                                      class="plusIcon"></button>
+                                                   <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                      id="extraDecrement1"><img
+                                                      src="{% static 'images/minusButton.svg' %}"></button>
+                                                </div>
                                              </div>
-                                          </div>
-                                          <div class="uploadBtn">
-                                             <input type="file" class="form-control-file disableIt" id="fileInput4"
-                                                style="display: none" name="hse_observation_file">
-                                             <label class="input-group-text uploadColor subForms" for="fileInput4"
-                                                id="fileInputLabel4" style='width: 107px;'>Upload File</label>
-                                          </div>
-                                       </div>
-                                       <div class='makeThemSeperate' style='display: flex;
-                                          justify-content: space-between;'>
-                                          <div id='formsLink1' style='margin-top: 5px;' class='formsLink' >
-                                             <img src="{% static 'images/Frame.png' %}">
-                                             <a id='observationLink' href="" class="linkForm">Fill the data</a>
-                                          </div>
-                                          <div class="fileDisplay" id="fileDisplay4"
-                                             style=" margin-right: 95px;
-                                             ; align-items: center;">
-                                             <input class="fileName" id="fileName4"
-                                                style='font-size: 12px;' disabled></input>
-                                          </div>
-                                       </div>
-                                    </div>
-                                    <div class="mb-3 " >
-                                       <label for="input10" class="form-label ">Number of STOP Work notice issued</label>
-                                       <div class="input-group">
-                                          <input type="number" class="form-control disableIt importantField" id="input10"
-                                             placeholder="Number of STOP Work notice issued" name="stop_work_notice"
-                                             required >
-                                          <div class=" btnMargin">
-                                             <button class="btn  valueButton disableBtn" type="button"
-                                                id="increment10"><img src="{% static 'images/plus-circle.svg' %}"
-                                                class="plusIcon"></button>
-                                             <button class="btn  valueButton decBtn disableBtn" type="button"
-                                                id="decrement10"><img src="{% static 'images/minusButton.svg' %}" </button>
-                                          </div>
-                                       </div>
-                                       <div id='formsLink2'  class='formsLink' >
-                                          <img src="{% static 'images/Frame.png' %}">
-                                          <a id="stopWorkLink" href="" class="linkForm">Fill the data</a>
-                                       </div>
-                                    </div>
-                                    <div class="mb-3 " >
-                                       <label for="input11" class="form-label ">Number of Violation Memo issued</label>
-                                       <div class="input-group">
-                                          <input type="number" class="form-control disableIt importantField "
-                                             id="input11" placeholder="Number of Violation Memo issued"
-                                             name="violation_memo_issued" required >
-                                          <div class=" btnMargin">
-                                             <button class="btn  valueButton disableBtn " type="button"
-                                                id="increment11"><img src="{% static 'images/plus-circle.svg' %}"
-                                                class="plusIcon"></button>
-                                             <button class="btn  valueButton decBtn disableBtn" type="button"
-                                                id="decrement11"><img src="{% static 'images/minusButton.svg' %}"
-                                             </button> 
-                                          </div>
-                                       </div>
-                                       <div id='formsLink3' class='formsLink' >
-                                          <img src="{% static 'images/Frame.png' %}">
-                                          <a id="violationLink" href="" class="linkForm">Fill the data</a>
-                                       </div>
-                                    </div>
-                                    <div class="mb-3">
-                                       <label for="input12" class="form-label ">Number of complaints from
-                                       customers</label>
-                                       <div class="input-group">
-                                          <input type="number" class="form-control disableIt importantField  "
-                                             id="input12" placeholder="Number of complaints from customers"
-                                             name="complaint_from_customer" required > 
-                                          <div class=" btnMargin">
-                                             <button class="btn  valueButton disableBtn " type="button"
-                                                id="increment12"><img src="{% static 'images/plus-circle.svg' %}"
-                                                class="plusIcon"></button>
-                                             <button class="btn  valueButton decBtn disableBtn" type="button"
-                                                id="decrement12"><img src="{% static 'images/minusButton.svg' %}"
-                                             </button> 
-                                          </div>
-                                       </div>
-                                    </div>
-                                    <div class="saveBtn" class=''>
-                                       <button type="submit" class="btn btn-success subForms" id="observationBtn" onclick="saveChanges()"
-                                          >Save & Next</button>
-                                    </div>
-                                 </form>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="accordion-item">
-                           <h2 class="accordion-header">
-                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                 data-bs-target="#collapse4" aria-expanded="true" aria-controls="collapse4">
-                                 <label class="custom-checkbox-container" style='margin-bottom:0px'>
-                                    <input type="checkbox" class="custom-checkbox" id ='chekbox4' >
-                                  </label>
-                              Management Visits
-                              </button>
-                           </h2>
-                           <div id="collapse4" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
-                              <div class="accordion-body">
-                                 <form method="POST" action="{% url 'Management Visits' %}" enctype="multipart/form-data"
-                                    id="form4">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="submittedDate" class="getDateFormat">
-                                    <input type="hidden" name="formSubmitDate" class="formSubmitDate">
-                                    <input type="hidden" name="plant_id" id="plant_id" class='plantcode'>
-                                    <input type="hidden" name="toBeUpdatedId" id="toBeUpdatedId4">
-                                    <input type="hidden" name="startRange" class="startRange">
-                                    <input type="hidden" name="endRange" class="endRange">
-                                    <input type="hidden" name="category" class="category">
-                                    <input type="hidden" name="categoryValue" class="categoryValue">
-
-                                    <div class="mb-3">
-                                       <label for="input13" class="form-label ">Number of Management HSE Visits</label>
-                                       <div class='seperateAllElement' style='display: flex'>
-                                          <div class="input-group" id="adjustWidth">
-                                             <input type="number" class="form-control disableIt" id="input13"
-                                                placeholder="Number of Management HSE Visits"
-                                                name="no_of_management_visit" required>
-                                             <div class=" btnMargin">
-                                                <button class="btn  valueButton disableBtn " type="button"
-                                                   id="increment13"><img src="{% static 'images/plus-circle.svg' %}"
-                                                   class="plusIcon"></button>
-                                                <button class="btn  valueButton decBtn disableBtn" type="button"
-                                                   id="decrement13"><img
-                                                   src="{% static 'images/minusButton.svg' %}"></button>
-                                             </div>
-                                          </div>
-                                          <div class="uploadBtn">
-                                             <input type="file" class="form-control-file disableIt" id="fileInput5"
-                                                style="display: none" name="no_of_management_visit_file">
-                                             <label class="input-group-text uploadColor subForms" for="fileInput5"
-                                                id="fileInputLabel5" style='width: 107px;'>Upload File</label>
-                                             <div class="fileDisplay" id="fileDisplay5"
-                                                style="align-items: center;">
-                                                <input class="fileName" id="fileName5"
-                                                   style='font-size: 12px;' disabled></input>
+                                             <div class="uploadBtn">
+                                                <input type="file" class="form-control-file disableIt disableBefore"
+                                                   id="extraFileInput1" style="display: none"
+                                                   name="toolbox_talk_manhours_file">
+                                                <label class="input-group-text uploadColor subForms" for="extraFileInput1"
+                                                   id="extrafileInputLabel1" style='width: 107px;'>Upload File</label>
+                                                <div class="fileDisplay" id="fileDisplay11"
+                                                   style=" align-items: center;">
+                                                   <input class="fileName" id="fileName11"
+                                                      style='font-size: 12px; ' disabled></input>
+                                                </div>
                                              </div>
                                           </div>
                                        </div>
-                                    </div>
-                                    <div class="mb-3">
-                                       <label for="input14" class="form-label ">Total Findings</label>
-                                       <div class='seperateAllElement' style='display: flex'>
-                                          <div class="input-group" id="adjustWidth">
-                                             <input type="number" class="form-control disableIt" id="input14"
-                                                placeholder="Total Findings" name="total_finding" required>
-                                             <div class=" btnMargin">
-                                                <button class="btn  valueButton disableBtn " type="button"
-                                                   id="increment14"><img src="{% static 'images/plus-circle.svg' %}"
-                                                   class="plusIcon"></button>
-                                                <button class="btn  valueButton decBtn disableBtn" type="button"
-                                                   id="decrement14"><img
-                                                   src="{% static 'images/minusButton.svg' %}"></button>
+                                       <div class="mb-3">
+                                          <label for="extraInput2" class="form-label ">Number of HSE promotional
+                                          activities</label>
+                                          <div class='seperateAllElement' style='display: flex'>
+                                             <div class="input-group" id="adjustWidth">
+                                                <input type="number" class="form-control disableIt disableBefore"
+                                                   id="extraInput2" placeholder="Number of HSE promotional activities"
+                                                   name="promotional_activities" required>
+                                                <div class=" btnMargin">
+                                                   <button class="btn  valueButton disableBtn  " type="button"
+                                                      id="extraIncrement2"><img src="{% static 'images/plus-circle.svg' %}"
+                                                      class="plusIcon"></button>
+                                                   <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                      id="extraDecrement2"><img
+                                                      src="{% static 'images/minusButton.svg' %}"></button>
+                                                </div>
                                              </div>
-                                          </div>
-                                          <div class="uploadBtn">
-                                             <input type="file" class="form-control-file disableIt" id="fileInput6"
-                                                style="display: none" name="total_finding_file">
-                                             <label class="input-group-text uploadColor subForms" for="fileInput6"
-                                                id="fileInputLabel6" style='width: 107px;'>Upload File</label>
-                                             <div class="fileDisplay" id="fileDisplay6"
-                                                style="align-items: center;">
-                                                <input class="fileName" id="fileName6"
-                                                   style='font-size: 12px;' disabled></input>
+                                             <div class="uploadBtn">
+                                                <input type="file" class="form-control-file disableIt disableBefore"
+                                                   id="extraFileInput2" style="display: none"
+                                                   name="promotional_activities_file">
+                                                <label class="input-group-text uploadColor subForms" for="extraFileInput2"
+                                                   id="extrafileInputLabel2" style='width: 107px;'>Upload File</label>
+                                                <div class="fileDisplay" id="fileDisplay22"
+                                                   style=" align-items: center;">
+                                                   <input class="fileName" id="fileName22"
+                                                      style='font-size: 12px;' disabled></input>
+                                                </div>
                                              </div>
                                           </div>
                                        </div>
-                                    </div>
-                                    <div class="mb-3">
-                                       <label for="input15" class="form-label ">Number of compilance done</label>
-                                       <div class='seperateAllElement' style='display: flex'>
-                                          <div class="input-group" id="adjustWidth">
-                                             <input type="number" class="form-control disableIt" id="input15"
-                                                placeholder="Number of compilance done" name="no_of_compilance_done"
+                                       <div class="mb-3 ">
+                                          <label for="extraInput3" class="form-label ">Number of HSE committee
+                                          meetings</label>
+                                          <div class="input-group">
+                                             <input type="number" class="form-control disableIt" id="extraInput3"
+                                                placeholder="Number of HSE committee meetings" name="committee_meetings"
                                                 required>
                                              <div class=" btnMargin">
                                                 <button class="btn  valueButton disableBtn" type="button"
-                                                   id="increment15"><img src="{% static 'images/plus-circle.svg' %}"
+                                                   id="extraIncrement3"><img src="{% static 'images/plus-circle.svg' %}"
                                                    class="plusIcon"></button>
                                                 <button class="btn  valueButton decBtn disableBtn" type="button"
-                                                   id="decrement15"><img
+                                                   id="extraDecrement3"><img
                                                    src="{% static 'images/minusButton.svg' %}"></button>
                                              </div>
                                           </div>
-                                          <div class="uploadBtn">
-                                             <input type="file" class="form-control-file disableIt" id="fileInput7"
-                                                style="display: none" name="no_of_compilance_done_file">
-                                             <label class="input-group-text uploadColor subForms" for="fileInput7"
-                                                id="fileInputLabel7" style='width: 107px;'>Upload File</label>
-                                             <div class="fileDisplay" id="fileDisplay7"
-                                                style="align-items: center;">
-                                                <input class="fileName" id="fileName7"
+                                       </div>
+                                       <div class="saveBtn">
+                                          <button type="submit" class="btn btn-success disableIt subForms"
+                                             id="SaveAndNext1" onclick="saveChanges()" >Save & Next</button>
+                                       </div>
+                                    </form>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="accordion-item">
+                              <h2 class="accordion-header" id="headingTwo2">
+                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
+                                    <label class="custom-checkbox-container" style='margin-bottom:0px'>
+                                       <input type="checkbox" class="custom-checkbox" id ='checkbox2' >
+                                    </label>
+                                 HSE Trainings
+                                 </button>
+                              </h2>
+                              <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                                 <div class="accordion-body">
+                                    <form method="POST" action="{% url 'HSE Trainings' %}" enctype="multipart/form-data"
+                                       id="form2">
+                                       {% csrf_token %}
+                                       <input type="hidden" name="submittedDate" class="getDateFormat">
+                                       <input type="hidden" name="formSubmitDate" class="formSubmitDate">
+                                       <input type="hidden" name="toBeUpdatedId" id="toBeUpdatedId2">
+                                       <input type="hidden" name="startRange" class="startRange">
+                                       <input type="hidden" name="endRange" class="endRange">
+                                       <input type="hidden" name="category" class="category">
+                                       <input type="hidden" name="categoryValue" class="categoryValue">
+
+
+                                       <div class="mb-3">
+                                          <label for="input5" class="form-label ">HSE Trainings (no. of attendees from
+                                          Amplus)</label>
+                                          <div class='seperateAllElement' style='display: flex'>
+                                             <div class="input-group" id="adjustWidth">
+                                                <input type="number" class="form-control disableIt disableBefore" id="input5"
+                                                   placeholder="HSE Trainings (no. of attendees from Amplus)"
+                                                   name="hse_training_attendees" required>
+                                                <div class=" btnMargin">
+                                                   <button class="btn  valueButton disableBtn  " type="button"
+                                                      id="increment5"><img src="{% static 'images/plus-circle.svg' %}"
+                                                      class="plusIcon"></button>
+                                                   <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                      id="decrement5"><img
+                                                      src="{% static 'images/minusButton.svg' %}"></button>
+                                                </div>
+                                             </div>
+                                             <div class="uploadBtn">
+                                                <input type="file" class="form-control-file disableIt" id="fileInput2"
+                                                   style="display: none" name="attendees_amplus_file">
+                                                <label class="input-group-text uploadColor subForms" for="fileInput2"
+                                                   id="fileInputLabel2" style='width: 107px;'>Upload File</label>
+                                                <div class="fileDisplay" id="fileDisplay2"
+                                                   style="align-items: center;">
+                                                   <input class="fileName" id="fileName2"
+                                                      style='font-size: 12px;' disabled></input>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class=" changingWidth">
+                                          <label for="input6" class="form-label ">Duration of training session (In
+                                          hours)</label>
+                                          <input type="number" step='any' class="form-control disableIt disableBefore incHeight "
+                                             id="input6" placeholder="Duration of training session (In hours)"
+                                             name="duration_of_trainee" min="1" required>
+                                       </div>
+                                       <span class="error-message" id="number-error1">Fill duration above 1hr</span>
+                                       <div class="mb-3">
+                                          <label for="input7" class="form-label ">HSE Trainings (no. of attendees from
+                                          Contractor)</label>
+                                          <div class='seperateAllElement' style='display: flex'>
+                                             <div class="input-group" id="adjustWidth">
+                                                <input type="number" class="form-control disableIt disableBefore" id="input7"
+                                                   placeholder="HSE Trainings (no. of attendees from Contractor)"
+                                                   name="hse_training_contractor" required>
+                                                <div class=" btnMargin">
+                                                   <button class="btn  valueButton disableBtn" type="button"
+                                                      id="increment7"><img src="{% static 'images/plus-circle.svg' %}"
+                                                      class="plusIcon"></button>
+                                                   <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                      id="decrement7"><img
+                                                      src="{% static 'images/minusButton.svg' %}"></button>
+                                                </div>
+                                             </div>
+                                             <div class="uploadBtn">
+                                                <input type="file" class="form-control-file disableIt disableBefore"
+                                                   id="fileInput3" style="display: none" name="attendees_contractor_file">
+                                                <label class="input-group-text uploadColor subForms" for="fileInput3"
+                                                   id="fileInputLabel3" style='width: 107px;'>Upload File</label>
+                                                <div class="fileDisplay" id="fileDisplay3"
+                                                   style="align-items: center;">
+                                                   <input class="fileName" id="fileName3"
+                                                      style='font-size: 12px;' disabled></input>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="changingWidth">
+                                          <label for="input8" class="form-label">Duration of training session (In
+                                          hours)</label>
+                                          <input type="number" step='any' class="form-control disableIt disableBefore incHeight"
+                                             id="input8" placeholder="Duration of training session (In hours)"
+                                             name="duration_of_contractor" min="1" required>
+                                       </div>
+                                       <span class="error-message" id="number-error2">Fill duration above 1hr</span>
+                                       <div class="mb-3 changingWidth">
+                                          <label for="extraInput4" class="form-label">Amplus HSE training (man-hours)</label>
+                                          <input type="number" step='any' class="form-control disableIt incHeight" id="extraInput4"
+                                             placeholder="Amplus HSE training" name="amplus_hse_trainings" min='0' required>
+                                       </div>
+                                       <div class="mb-3 changingWidth">
+                                          <label for="extraInput5" class="form-label">Contractor HSE training
+                                          (man-hours)</label>
+                                          <input type="number" step='any' class="form-control disableIt incHeight" id="extraInput5"
+                                             placeholder="Contractor HSE training" name="contractor_hse_trainings" min='0' required>
+                                       </div>
+                                       <div class="saveBtn">
+                                          <button type="submit" class="btn btn-success disableIt disableBefore subForms"
+                                             id="SaveAndNext2" onclick="saveChanges()">Save & Next</button>
+                                       </div>
+                                    </form>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="accordion-item">
+                              <h2 class="accordion-header">
+                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
+                                    <label class="custom-checkbox-container" style='margin-bottom:0px'>
+                                       <input type="checkbox" class="custom-checkbox" id ='checkbox3' >
+                                    </label>
+                                 HSE Observations
+                                 </button>
+                              </h2>
+                              <div id="collapse3" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                                 <div class="accordion-body">
+                                    <form method="POST" action="{% url 'HSE Observations' %}" enctype="multipart/form-data"
+                                       id="form3">
+                                       {% csrf_token %}
+                                       <input type="hidden" name="submittedDate" class="getDateFormat">
+                                       <input type="hidden" name="formSubmitDate" class="formSubmitDate" id='formSubmitDate'>
+                                       <input type="hidden" name="toBeUpdatedId" id="toBeUpdatedId3" value="">
+                                       <input type="hidden" name="plant_id" id="plant_id" class='plantcode'>
+                                       <input type="hidden" name="startRange" class="startRange">
+                                       <input type="hidden" name="endRange" class="endRange">
+                                       <input type="hidden" name="category" class="category">
+                                       <input type="hidden" name="categoryValue" class="categoryValue">
+
+                                       <div class="mb-3">
+                                          <label for="input9" class="form-label ">Number of daily HSE observations</label>
+                                          <div class='seperateAllElement' style='display: flex'>
+                                             <div class="input-group" id="adjustWidth">
+                                                <input type="number" class="form-control disableIt importantField "
+                                                   id="input9" placeholder="Number of daily HSE observations"
+                                                   name="daily_hse_observation" required>
+                                                <div class=" btnMargin">
+                                                   <button class="btn  valueButton disableBtn" type="button"
+                                                      id="increment9"><img src="{% static 'images/plus-circle.svg' %}"
+                                                      class="plusIcon"></button>
+                                                   <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                      id="decrement9"><img
+                                                      src="{% static 'images/minusButton.svg' %}"></button>
+                                                </div>
+                                             </div>
+                                             <div class="uploadBtn">
+                                                <input type="file" class="form-control-file disableIt" id="fileInput4"
+                                                   style="display: none" name="hse_observation_file">
+                                                <label class="input-group-text uploadColor subForms" for="fileInput4"
+                                                   id="fileInputLabel4" style='width: 107px;'>Upload File</label>
+                                             </div>
+                                          </div>
+                                          <div class='makeThemSeperate' style='display: flex;
+                                             justify-content: space-between;'>
+                                             <div id='formsLink1' style='margin-top: 5px;' class='formsLink' >
+                                                <img src="{% static 'images/Frame.png' %}">
+                                                <a id='observationLink' href="" class="linkForm">Fill the data</a>
+                                             </div>
+                                             <div class="fileDisplay" id="fileDisplay4"
+                                                style=" margin-right: 95px;
+                                                ; align-items: center;">
+                                                <input class="fileName" id="fileName4"
                                                    style='font-size: 12px;' disabled></input>
                                              </div>
                                           </div>
                                        </div>
-                                    </div>
-                                    <div class="mb-3 changingWidth">
-                                       <label for="input16" class="form-label">Number of observation pending (to be
-                                       compiled)</label>
-                                       <input type="number" class="form-control disableIt incHeight" id="input16"
-                                          placeholder="Number of observation pending (to be compiled)"
-                                          name="observation_pending" required>
-                                    </div>
-                                    <div class="saveBtn">
-                                       <button type="submit" class="btn btn-success disableIt subForms"
-                                          id="SaveAndNext4" onclick="saveChanges()">Save & Next</button>
-                                    </div>
-                                 </form>
+                                       <div class="mb-3 " >
+                                          <label for="input10" class="form-label ">Number of STOP Work notice issued</label>
+                                          <div class="input-group">
+                                             <input type="number" class="form-control disableIt importantField" id="input10"
+                                                placeholder="Number of STOP Work notice issued" name="stop_work_notice"
+                                                required >
+                                             <div class=" btnMargin">
+                                                <button class="btn  valueButton disableBtn" type="button"
+                                                   id="increment10"><img src="{% static 'images/plus-circle.svg' %}"
+                                                   class="plusIcon"></button>
+                                                <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                   id="decrement10"><img src="{% static 'images/minusButton.svg' %}" </button>
+                                             </div>
+                                          </div>
+                                          <div id='formsLink2'  class='formsLink' >
+                                             <img src="{% static 'images/Frame.png' %}">
+                                             <a id="stopWorkLink" href="" class="linkForm">Fill the data</a>
+                                          </div>
+                                       </div>
+                                       <div class="mb-3 " >
+                                          <label for="input11" class="form-label ">Number of Violation Memo issued</label>
+                                          <div class="input-group">
+                                             <input type="number" class="form-control disableIt importantField "
+                                                id="input11" placeholder="Number of Violation Memo issued"
+                                                name="violation_memo_issued" required >
+                                             <div class=" btnMargin">
+                                                <button class="btn  valueButton disableBtn " type="button"
+                                                   id="increment11"><img src="{% static 'images/plus-circle.svg' %}"
+                                                   class="plusIcon"></button>
+                                                <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                   id="decrement11"><img src="{% static 'images/minusButton.svg' %}"
+                                                </button> 
+                                             </div>
+                                          </div>
+                                          <div id='formsLink3' class='formsLink' >
+                                             <img src="{% static 'images/Frame.png' %}">
+                                             <a id="violationLink" href="" class="linkForm">Fill the data</a>
+                                          </div>
+                                       </div>
+                                       <div class="mb-3">
+                                          <label for="input12" class="form-label ">Number of complaints from
+                                          customers</label>
+                                          <div class="input-group">
+                                             <input type="number" class="form-control disableIt importantField  "
+                                                id="input12" placeholder="Number of complaints from customers"
+                                                name="complaint_from_customer" required > 
+                                             <div class=" btnMargin">
+                                                <button class="btn  valueButton disableBtn " type="button"
+                                                   id="increment12"><img src="{% static 'images/plus-circle.svg' %}"
+                                                   class="plusIcon"></button>
+                                                <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                   id="decrement12"><img src="{% static 'images/minusButton.svg' %}"
+                                                </button> 
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="saveBtn" class=''>
+                                          <button type="submit" class="btn btn-success subForms" id="observationBtn" onclick="saveChanges()"
+                                             >Save & Next</button>
+                                       </div>
+                                    </form>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="accordion-item">
+                              <h2 class="accordion-header">
+                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapse4" aria-expanded="true" aria-controls="collapse4">
+                                    <label class="custom-checkbox-container" style='margin-bottom:0px'>
+                                       <input type="checkbox" class="custom-checkbox" id ='checkbox4' >
+                                    </label>
+                                 Management Visits
+                                 </button>
+                              </h2>
+                              <div id="collapse4" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
+                                 <div class="accordion-body">
+                                    <form method="POST" action="{% url 'Management Visits' %}" enctype="multipart/form-data"
+                                       id="form4">
+                                       {% csrf_token %}
+                                       <input type="hidden" name="submittedDate" class="getDateFormat">
+                                       <input type="hidden" name="formSubmitDate" class="formSubmitDate">
+                                       <input type="hidden" name="plant_id" id="plant_id" class='plantcode'>
+                                       <input type="hidden" name="toBeUpdatedId" id="toBeUpdatedId4">
+                                       <input type="hidden" name="startRange" class="startRange">
+                                       <input type="hidden" name="endRange" class="endRange">
+                                       <input type="hidden" name="category" class="category">
+                                       <input type="hidden" name="categoryValue" class="categoryValue">
+
+                                       <div class="mb-3">
+                                          <label for="input13" class="form-label ">Number of Management HSE Visits</label>
+                                          <div class='seperateAllElement' style='display: flex'>
+                                             <div class="input-group" id="adjustWidth">
+                                                <input type="number" class="form-control disableIt" id="input13"
+                                                   placeholder="Number of Management HSE Visits"
+                                                   name="no_of_management_visit" required>
+                                                <div class=" btnMargin">
+                                                   <button class="btn  valueButton disableBtn " type="button"
+                                                      id="increment13"><img src="{% static 'images/plus-circle.svg' %}"
+                                                      class="plusIcon"></button>
+                                                   <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                      id="decrement13"><img
+                                                      src="{% static 'images/minusButton.svg' %}"></button>
+                                                </div>
+                                             </div>
+                                             <div class="uploadBtn">
+                                                <input type="file" class="form-control-file disableIt" id="fileInput5"
+                                                   style="display: none" name="no_of_management_visit_file">
+                                                <label class="input-group-text uploadColor subForms" for="fileInput5"
+                                                   id="fileInputLabel5" style='width: 107px;'>Upload File</label>
+                                                <div class="fileDisplay" id="fileDisplay5"
+                                                   style="align-items: center;">
+                                                   <input class="fileName" id="fileName5"
+                                                      style='font-size: 12px;' disabled></input>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="mb-3">
+                                          <label for="input14" class="form-label ">Total Findings</label>
+                                          <div class='seperateAllElement' style='display: flex'>
+                                             <div class="input-group" id="adjustWidth">
+                                                <input type="number" class="form-control disableIt" id="input14"
+                                                   placeholder="Total Findings" name="total_finding" required>
+                                                <div class=" btnMargin">
+                                                   <button class="btn  valueButton disableBtn " type="button"
+                                                      id="increment14"><img src="{% static 'images/plus-circle.svg' %}"
+                                                      class="plusIcon"></button>
+                                                   <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                      id="decrement14"><img
+                                                      src="{% static 'images/minusButton.svg' %}"></button>
+                                                </div>
+                                             </div>
+                                             <div class="uploadBtn">
+                                                <input type="file" class="form-control-file disableIt" id="fileInput6"
+                                                   style="display: none" name="total_finding_file">
+                                                <label class="input-group-text uploadColor subForms" for="fileInput6"
+                                                   id="fileInputLabel6" style='width: 107px;'>Upload File</label>
+                                                <div class="fileDisplay" id="fileDisplay6"
+                                                   style="align-items: center;">
+                                                   <input class="fileName" id="fileName6"
+                                                      style='font-size: 12px;' disabled></input>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="mb-3">
+                                          <label for="input15" class="form-label ">Number of compilance done</label>
+                                          <div class='seperateAllElement' style='display: flex'>
+                                             <div class="input-group" id="adjustWidth">
+                                                <input type="number" class="form-control disableIt" id="input15"
+                                                   placeholder="Number of compilance done" name="no_of_compilance_done"
+                                                   required>
+                                                <div class=" btnMargin">
+                                                   <button class="btn  valueButton disableBtn" type="button"
+                                                      id="increment15"><img src="{% static 'images/plus-circle.svg' %}"
+                                                      class="plusIcon"></button>
+                                                   <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                      id="decrement15"><img
+                                                      src="{% static 'images/minusButton.svg' %}"></button>
+                                                </div>
+                                             </div>
+                                             <div class="uploadBtn">
+                                                <input type="file" class="form-control-file disableIt" id="fileInput7"
+                                                   style="display: none" name="no_of_compilance_done_file">
+                                                <label class="input-group-text uploadColor subForms" for="fileInput7"
+                                                   id="fileInputLabel7" style='width: 107px;'>Upload File</label>
+                                                <div class="fileDisplay" id="fileDisplay7"
+                                                   style="align-items: center;">
+                                                   <input class="fileName" id="fileName7"
+                                                      style='font-size: 12px;' disabled></input>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="mb-3 changingWidth">
+                                          <label for="input16" class="form-label">Number of observation pending (to be
+                                          compiled)</label>
+                                          <input type="number" class="form-control disableIt incHeight" id="input16"
+                                             placeholder="Number of observation pending (to be compiled)"
+                                             name="observation_pending" required>
+                                       </div>
+                                       <div class="saveBtn">
+                                          <button type="submit" class="btn btn-success disableIt subForms"
+                                             id="SaveAndNext4" onclick="saveChanges()">Save & Next</button>
+                                       </div>
+                                    </form>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="accordion-item">
+                              <h2 class="accordion-header">
+                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapse5" aria-expanded="true" aria-controls="collapse5">
+                                    <label class="custom-checkbox-container" style='margin-bottom:0px'>
+                                       <input type="checkbox" class="custom-checkbox" id ='checkbox5' >
+                                    </label>
+                                 Incidents
+                                 </button>
+                              </h2>
+                              <div id="collapse5" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
+                                 <div class="accordion-body">
+                                    <form method="POST" action="{% url 'incidents' %}" enctype="multipart/form-data"
+                                       id="final-form">
+                                       {% csrf_token %}
+                                       <input type="hidden" name="submittedDate" class="getDateFormat">
+                                       <input type="hidden" name="formSubmitDate" class="formSubmitDate">
+                                       <input type="hidden" name="toBeUpdatedId" id="toBeUpdatedId5" value="">
+                                       <input type="hidden" name="startRange" class="startRange">
+                                       <input type="hidden" name="endRange" class="endRange">
+                                       <input type="hidden" name="category" class="category">
+                                       <input type="hidden" name="categoryValue" class="categoryValue">
+
+                                       <div class="mb-3">
+                                          <label for="input17" class="form-label ">Number of Incidents</label>
+                                          <div class="input-group">
+                                             <input type="number" class="form-control disableIt impField" id="input17"
+                                                placeholder="Number of Incidents" name="no_of_incident" required>
+                                             <div class=" btnMargin">
+                                                <button class="btn  valueButton disableBtn " type="button"
+                                                   id="increment17"><img src="{% static 'images/plus-circle.svg' %}"
+                                                   class="plusIcon"></button>
+                                                <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                   id="decrement17"><img src="{% static 'images/minusButton.svg' %}"></button>
+                                             </div>
+                                          </div>
+                                          <div id='formsLink4' class='formsLink'>
+                                             <img src="{% static 'images/Frame.png' %}">
+                                             <a id="incidentLink" href="" class="linkForm" id='incidentHref'>Fill the data</a>
+                                          </div>
+                                       </div>
+                                       <div class="mb-3">
+                                          <label for="input18" class="form-label ">Number of occupational illness</label>
+                                          <div class="input-group">
+                                             <input type="number" class="form-control disableIt impField" id="input18"
+                                                placeholder="Number of occupational illness" name="no_of_occupation_illness"
+                                                required>
+                                             <div class=" btnMargin">
+                                                <button class="btn  valueButton disableBtn" type="button"
+                                                   id="increment18"><img src="{% static 'images/plus-circle.svg' %}"
+                                                   class="plusIcon"></button>
+                                                <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                   id="decrement18"><img src="{% static 'images/minusButton.svg' %}"></button>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="mb-3">
+                                          <label for="input19" class="form-label ">Number of environmental illness</label>
+                                          <div class="input-group">
+                                             <input type="number" class="form-control disableIt impField" id="input19"
+                                                placeholder="Number of environmental illness" name="no_of_environment_illness"
+                                                required>
+                                             <div class=" btnMargin">
+                                                <button class="btn  valueButton disableBtn" type="button"
+                                                   id="increment19"><img src="{% static 'images/plus-circle.svg' %}"
+                                                   class="plusIcon"></button>
+                                                <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                   id="decrement19"><img src="{% static 'images/minusButton.svg' %}"></button>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="saveBtn" id='finalSubmitDiv'>
+                                          <button type="submit" class="btn btn-success disableIt lastButton subForms"
+                                             id="incidentBtn" style='width: 96px;' onclick="saveChanges()">Save</button>
+                                       </div>
+                                    </form>
+                                 </div>
                               </div>
                            </div>
                         </div>
-                        <div class="accordion-item">
-                           <h2 class="accordion-header">
-                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                 data-bs-target="#collapse5" aria-expanded="true" aria-controls="collapse5">
-                                 <label class="custom-checkbox-container" style='margin-bottom:0px'>
-                                    <input type="checkbox" class="custom-checkbox" id ='chekbox5' >
-                                  </label>
-                              Incidents
-                              </button>
-                           </h2>
-                           <div id="collapse5" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
-                              <div class="accordion-body">
-                                 <form method="POST" action="{% url 'incidents' %}" enctype="multipart/form-data"
-                                    id="final-form">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="submittedDate" class="getDateFormat">
-                                    <input type="hidden" name="formSubmitDate" class="formSubmitDate">
-                                    <input type="hidden" name="toBeUpdatedId" id="toBeUpdatedId5" value="">
-                                    <input type="hidden" name="startRange" class="startRange">
-                                    <input type="hidden" name="endRange" class="endRange">
-                                    <input type="hidden" name="category" class="category">
-                                    <input type="hidden" name="categoryValue" class="categoryValue">
+                        <div class="saveBtn">
+                           <form method="POST" action="{% url 'SubmitForm' %}" enctype="multipart/form-data" id='lastForm'>
+                              {% csrf_token %}
+                              <input type="hidden" name="formSubmitDate" class="formSubmitDate">
+                              <input type="hidden" name="startRange" class="startRange" id='startRange'> 
+                              <input type="hidden" name="endRange" class="endRange" id='endRange'>
+                              <input type="hidden" name="category" class="category">
+                              <input type="hidden" name="categoryValue" class="categoryValue">
 
-                                    <div class="mb-3">
-                                       <label for="input17" class="form-label ">Number of Incidents</label>
-                                       <div class="input-group">
-                                          <input type="number" class="form-control disableIt impField" id="input17"
-                                             placeholder="Number of Incidents" name="no_of_incident" required>
-                                          <div class=" btnMargin">
-                                             <button class="btn  valueButton disableBtn " type="button"
-                                                id="increment17"><img src="{% static 'images/plus-circle.svg' %}"
-                                                class="plusIcon"></button>
-                                             <button class="btn  valueButton decBtn disableBtn" type="button"
-                                                id="decrement17"><img src="{% static 'images/minusButton.svg' %}"></button>
-                                          </div>
-                                       </div>
-                                       <div id='formsLink4' class='formsLink'>
-                                          <img src="{% static 'images/Frame.png' %}">
-                                          <a id="incidentLink" href="" class="linkForm" id='incidentHref'>Fill the data</a>
-                                       </div>
-                                    </div>
-                                    <div class="mb-3">
-                                       <label for="input18" class="form-label ">Number of occupational illness</label>
-                                       <div class="input-group">
-                                          <input type="number" class="form-control disableIt impField" id="input18"
-                                             placeholder="Number of occupational illness" name="no_of_occupation_illness"
-                                             required>
-                                          <div class=" btnMargin">
-                                             <button class="btn  valueButton disableBtn" type="button"
-                                                id="increment18"><img src="{% static 'images/plus-circle.svg' %}"
-                                                class="plusIcon"></button>
-                                             <button class="btn  valueButton decBtn disableBtn" type="button"
-                                                id="decrement18"><img src="{% static 'images/minusButton.svg' %}"></button>
-                                          </div>
-                                       </div>
-                                    </div>
-                                    <div class="mb-3">
-                                       <label for="input19" class="form-label ">Number of environmental illness</label>
-                                       <div class="input-group">
-                                          <input type="number" class="form-control disableIt impField" id="input19"
-                                             placeholder="Number of environmental illness" name="no_of_environment_illness"
-                                             required>
-                                          <div class=" btnMargin">
-                                             <button class="btn  valueButton disableBtn" type="button"
-                                                id="increment19"><img src="{% static 'images/plus-circle.svg' %}"
-                                                class="plusIcon"></button>
-                                             <button class="btn  valueButton decBtn disableBtn" type="button"
-                                                id="decrement19"><img src="{% static 'images/minusButton.svg' %}"></button>
-                                          </div>
-                                       </div>
-                                    </div>
-                                    <div class="saveBtn" id='finalSubmitDiv'>
-                                       <button type="submit" class="btn btn-success disableIt lastButton subForms"
-                                          id="incidentBtn" style='width: 96px;' onclick="saveChanges()">Save</button>
-                                    </div>
-                                 </form>
-                              </div>
-                           </div>
+                              <button type="submit" class="btn" id="finalSubmit" disabled >Submit</button>
+                           </form>
                         </div>
                      </div>
-                     <div class="saveBtn">
-                        <form method="POST" action="{% url 'Parent' %}" enctype="multipart/form-data" id='lastForm'>
-                           {% csrf_token %}
-                           <input type="hidden" name="formSubmitDate" class="formSubmitDate">
-                           <input type="hidden" name="startRange" class="startRange" id='startRange'> 
-                           <input type="hidden" name="endRange" class="endRange" id='endRange'>
-                           <input type="hidden" name="category" class="category">
-                           <input type="hidden" name="categoryValue" class="categoryValue">
-
-                           <button type="submit" class="btn" id="finalSubmit" disabled >Submit</button>
-                        </form>
-                     </div>
-                  </div>
+                  <div>
                <!--main Acc-->
             <!--main container-->
             </div>
@@ -1245,6 +1247,7 @@
 
       let formChanged = false;
       let modifiedDate;
+
       const urlSearchParams = new URLSearchParams(window.location.search);
       const dateParameterValue = urlSearchParams.get('date');
 
@@ -1526,7 +1529,7 @@
 
                   selectCurrentWeek();
                   
-                  {% comment %} if(formChanged==true){
+                  if(formChanged==true){
                      Swal.fire({
                         title: 'You have some unsaved changes ',
                         confirmButtonColor: '#3085d6',
@@ -1536,7 +1539,7 @@
                         }
                     });
                      return;
-                  } {% endcomment %}
+                  } 
                         
                   const convertedDate = formatDateToDDMMYY(date);
                   //console.log(`converted Date is ${convertedDate}`)
@@ -1573,22 +1576,27 @@
                
                const segment = document.getElementById('segmentDropdown').value
                const segmentValue = document.getElementById('segmentName').value
+               if(segment && segmentValue){
+                  document.getElementById('content_container').style.display='block'
+                  
+
+               }
              
 
                let observationLink = document.getElementById('observationLink');
-               observationLink.href = `/api/observations/?category=${segment}&category_value=${segmentValue}&date=${dateFormatForAPI}`; 
+               observationLink.href = `/observations/?category=${segment}&category_value=${segmentValue}&date=${dateFormatForAPI}`; 
 
                let stopWorkLink=document.getElementById('stopWorkLink')
-               stopWorkLink.href=`/api/stopworks/?category=${segment}&category_value=${segmentValue}&date=${dateFormatForAPI}`
+               stopWorkLink.href=`/stopworks/?category=${segment}&category_value=${segmentValue}&date=${dateFormatForAPI}`
 
                let violationLink=document.getElementById('violationLink')
-               violationLink.href=`/api/violations/?category=${segment}&category_value=${segmentValue}&date=${dateFormatForAPI}`
+               violationLink.href=`/violations/?category=${segment}&category_value=${segmentValue}&date=${dateFormatForAPI}`
 
                let incidentLink=document.getElementById('incidentLink')
-               incidentLink.href=`/api/Incidents/?category=${segment}&category_value=${segmentValue}&date=${dateFormatForAPI}`
+               incidentLink.href=`/Incidents/?category=${segment}&category_value=${segmentValue}&date=${dateFormatForAPI}`
 
             
-               const apiURL = `/api/child-models/?category=${segment}&category_value=${segmentValue}&date=${dateFormatForAPI}`;
+               const apiURL = `/child-models/?category=${segment}&category_value=${segmentValue}&date=${dateFormatForAPI}`;
 
 
                   fetch(apiURL)
@@ -1597,16 +1605,12 @@
                         if (response.status === 404) {
                            const checkboxes = document.querySelectorAll('.custom-checkbox');
             
-                           // Loop through checkboxes and set their checked property to false
                            checkboxes.forEach(function (checkbox) {
                              checkbox.checked = false;
                            });
-                           // If status is 404, make all input fields empty
                            console.log(response.status);
-                           //document.getElementById('accordionImage').style.display = 'none';
             
                            clearInputFields();
-                           // Stop further execution by returning a rejected Promise
                           return Promise.reject(`HTTP error! Status: ${response.status}`);
                         } else {
                            throw new Error(`HTTP error! Status: ${response.status}`);
@@ -1615,20 +1619,23 @@
                      return response.json();
                   })
                   .then(data => {
-                     // Continue with the .then block even after handling 404
-                     //console.log(data);
-                     //console.log(data.hse_status);
+                    
                
                      if (data.hse_status && data.hse_status === 1) {
-                        // only view the data 
-                        // DisablingSmallerDate()
+                        //DisablingFields()
+                    
+                        //console.log("Cannot fill the form");
+                        //let disableFormsLink = document.querySelectorAll('.formsLink');
+                        //for (let i = 0; i < disableFormsLink.length; i++) {
+                        //   disableFormsLink[i].style.display = 'block';
+                        //}
                      }
                
-                     populateInputFields('General HSE', generalHSEFieldsID, generalHSEFields, 1, data,'chekbox1');
-                     populateInputFields('HSE Training', hseTrainingFieldsID, hseTrainingFields, 2, data,'chekbox2');
-                     populateInputFields('HSE Observation', hseObservationFieldsID, hseObservationFields, 3, data,'chekbox3');
-                     populateInputFields('Management Visits', managementVisitsFieldsID, managementVisitsFields, 4, data,'chekbox4');
-                     populateInputFields('Incidents', incidentsFieldsID, incidentsFields, 5, data,'chekbox5');
+                     populateInputFields('General HSE', generalHSEFieldsID, generalHSEFields, 1, data,'checkbox1');
+                     populateInputFields('HSE Training', hseTrainingFieldsID, hseTrainingFields, 2, data,'checkbox2');
+                     populateInputFields('HSE Observation', hseObservationFieldsID, hseObservationFields, 3, data,'checkbox3');
+                     populateInputFields('Management Visits', managementVisitsFieldsID, managementVisitsFields, 4, data,'checkbox4');
+                     populateInputFields('Incidents', incidentsFieldsID, incidentsFields, 5, data,'checkbox5');
                   })
                   .catch(error => {
                      console.error('API request failed:', error);
@@ -1698,10 +1705,7 @@
              onSelectFunction.call($('.week-picker').get(0), modifiedDate, { settings: $('.week-picker').datepicker('option') });
          }
      }
-     
-     
-      
-         
+        
       
    </script>
    <script>
@@ -1709,6 +1713,13 @@
       
       
       document.getElementById('segmentDropdown').addEventListener('change', function () {
+
+         let getCategoryValueInputs = document.querySelectorAll('.categoryValue');
+         for (let i = 0; i < getCategoryValueInputs.length; i++) {
+            getCategoryValueInputs[i].value = '';
+         }
+
+
          var selectedValue = this.value;
 
          let getCategoryInputs = document.querySelectorAll('.category');
@@ -1730,9 +1741,12 @@
 
      
          if(selectedValue=='hawkai'){
+            const segmentCodeText = "Select the plant code";
+            document.getElementById('segmentCodeValue').innerText = segmentCodeText;
+            
             segmentValues.innerHTML = "<option value='' disabled selected>Select the Plant</option>";
 
-                  fetch('/api/plant/')
+                  fetch('/plant/')
                   .then(response => response.json())
                   .then(data => {
                      console.log(data)   
@@ -1753,10 +1767,12 @@
             console.log(`selected value is hawkai`)
          }
          else if(selectedValue=='homescape'){
+            const segmentCodeText = "Select the Cluster Code";
+            document.getElementById('segmentCodeValue').innerText = segmentCodeText;
 
             segmentValues.innerHTML = "<option value='' disabled selected>Select the Cluster</option>";
 
-            fetch('/api/homescape/')
+            fetch('/homescape/')
             .then(response => response.json())
             .then(data => {
             console.log(data)   
@@ -1777,10 +1793,12 @@
 
          }
          else if(selectedValue=='warehouse'){
+            const segmentCodeText = "Select the Warehouse Code";
+            document.getElementById('segmentCodeValue').innerText = segmentCodeText;
 
             segmentValues.innerHTML = "<option value='' disabled selected>Select the Code</option>";
 
-            fetch('/api/warehouse/')
+            fetch('/warehouse/')
             .then(response => response.json())
             .then(data => {
             console.log(data)     
@@ -2059,7 +2077,6 @@
       function clearInputFields() {
          generalHSEFieldsID.concat(hseTrainingFieldsID, hseObservationFieldsID, incidentsFieldsID, managementVisitsFieldsID)
             .forEach(fieldId => {
-               console.log('hello fileds are empty')
                document.getElementById(fieldId).value = '';
                document.getElementById(`toBeUpdatedId1`).value = '';
                document.getElementById(`toBeUpdatedId2`).value = '';
@@ -2116,10 +2133,8 @@
              const formData = new FormData(this);
              console.log('FormData entries:', Array.from(formData.entries()));
       
-             // Create a new FormData object and append only non-null values
              const filteredFormData = new FormData();
              formData.forEach((value, key) => {
-               // Check if the value is a File and its size is greater than 0
                if (!(value instanceof File) || value.size > 0) {
                    filteredFormData.append(key, value);
                }
@@ -2151,6 +2166,9 @@
                   setTimeout(function () {
                      $('#successModal').modal('hide');
                   }, 1000);
+
+                  const checkbox = document.getElementById(checkBoxId);
+                 checkbox.checked=true;
                   
                 
             
@@ -2189,8 +2207,7 @@
              .then(data => {
                  const id = data.id;
                  document.getElementById(toUpdateId).value = id;
-                 const checkbox = document.getElementById(checkBoxId);
-                 checkbox.checked=true;
+                 
                
              })
              .catch(error => {
@@ -2307,6 +2324,6 @@
                });
          });
       }
-      FinalSubmitSubmission("lastForm","{% url 'Parent' %}")
+      FinalSubmitSubmission("lastForm","{% url 'SubmitForm' %}")
    </script>
 </html>

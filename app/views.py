@@ -46,27 +46,28 @@ def get_or_create_segment(category, category_value):
 
     return segment_instance
 
-def get_hse_instance(category, category_value, date):
+def get_hse_instance(category, segment_instance, date):
     hse_instance=None
 
+   
     if(category=='hawkai'):
         hse_instance=HSE.objects.filter(
             hse_segment__segment=category,
-            hse_segment__plant=category_value,
+            hse_segment__plant=segment_instance.plant,
             formSubmittedDate=date
 
         )
     elif(category=='homescape'):
          hse_instance=HSE.objects.filter(
             hse_segment__segment=category,
-            hse_segment__homescape=category_value,
+            hse_segment__homescape=segment_instance.homescape,
             formSubmittedDate=date
 
         )
     elif(category=='warehouse'):
          hse_instance=HSE.objects.filter(
             hse_segment__segment=category,
-            hse_segment__warehouse=category_value,
+            hse_segment__warehouse=segment_instance.warehouse,
             formSubmittedDate=date
 
         )
@@ -178,7 +179,10 @@ class GeneralHseAPI(APIView):
         category = data.get('category')
         category_value = data.get('categoryValue')
         general_hse_instance = None
-        print(category_value)
+
+        if(not category or not category_value ):
+            return Response({'Select the segment and the code'}, status=status.HTTP_400_BAD_REQUEST)
+
 
         try:
             hse_user = HSEUser.objects.get(user=request.user, hse_permission=True)
@@ -264,6 +268,10 @@ class HseTrainingAPI(APIView):
         category_value = data.get('categoryValue')
         hse_training_instance = None
 
+        
+        if(not category or not category_value ):
+            return Response({'Select the segment and the code'}, status=status.HTTP_400_BAD_REQUEST)
+
         try:
             hse_user = HSEUser.objects.get(user=request.user, hse_permission=True)
         except HSEUser.DoesNotExist:
@@ -348,6 +356,9 @@ class HseObservationAPI(APIView):
         category_value = data.get('categoryValue')
         hse_observation_instance = None
 
+        if(not category or not category_value ):
+            return Response({'Select the segment and the code'}, status=status.HTTP_400_BAD_REQUEST)
+
         try:
             hse_user = HSEUser.objects.get(user=request.user, hse_permission=True)
         except HSEUser.DoesNotExist:
@@ -368,7 +379,12 @@ class HseObservationAPI(APIView):
             if hse_instance.form_status == 1:
                 return Response({'error': 'Form already submitted'}, status=status.HTTP_400_BAD_REQUEST)
             
-            hse_observation_instance=HSEObservation(hse=hse_instance )
+            hse_observation_instance,created=HSEObservation.objects.get_or_create(
+                hse=hse_instance,
+                submittedDate=form_submit_date
+                
+            )
+            
             serializer = HSEObservationSerializer(hse_observation_instance, data=data)
 
             if serializer.is_valid():
@@ -433,6 +449,9 @@ class ManagementAPI(APIView):
         category = data.get('category')
         category_value = data.get('categoryValue')
         hse_management_instance = None
+
+        if(not category or not category_value ):
+            return Response({'Select the segment and the code'}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
             hse_user = HSEUser.objects.get(user=request.user, hse_permission=True)
@@ -506,15 +525,6 @@ class IncidentsAPI(APIView):
         obj = Incidents.objects.all()
         serializer = IncidentsSerializer(obj, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-    
-        # form_submit_date = datetime.strptime(data.get("formSubmitDate"), "%Y-%m-%d")
-        # start_range = datetime.strptime(data.get("startRange"), "%Y-%m-%d")
-        # end_range = datetime.strptime(data.get("endRange"), "%Y-%m-%d")
-        
-
-
-        # if form_submit_date < start_range or form_submit_date > end_range:
-        #    return Response({'Cannot submit the form for this date'}, status=status.HTTP_400_BAD_REQUEST)
 
     
     def post(self, request):
@@ -523,6 +533,9 @@ class IncidentsAPI(APIView):
         category = data.get('category')
         category_value = data.get('categoryValue')
         incident_instance = None
+
+        if(not category or not category_value ):
+            return Response({'Select the segment and the code'}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
             hse_user = HSEUser.objects.get(user=request.user, hse_permission=True)
@@ -542,8 +555,13 @@ class IncidentsAPI(APIView):
 
             if hse_instance.form_status == 1:
                 return Response({'error': 'Form already submitted'}, status=status.HTTP_400_BAD_REQUEST)
+            
+            incident_instance,created=Incidents.objects.get_or_create(
+                hse=hse_instance,
+                submittedDate=form_submit_date,
+                
+            )
 
-            incident_instance = Incidents(hse=hse_instance)
             serializer = IncidentsSerializer(incident_instance, data=data)
 
             if serializer.is_valid():
@@ -727,12 +745,19 @@ class SubObservationAPI(APIView):
         category = request.query_params.get('category', None)
         category_value = request.query_params.get('category_value', None)
 
-        hse_instance=get_hse_instance(category,category_value,date).first()
+        segment_instance=get_or_create_segment(category,category_value)
+        print(segment_instance)
+
+        
+        hse_instance=get_hse_instance(category,segment_instance,date).first()
+        print(hse_instance)
+
 
         hse_observation_forms = SubObservation.objects.filter(
             hse_observation__hse=hse_instance
 
         )
+        print(hse_observation_forms)
         
         if hse_observation_forms is not None:
             serializer = SubObservationSerializer(hse_observation_forms, many=True)
@@ -752,6 +777,10 @@ class SubObservationAPI(APIView):
 
         category = data.get('segment_category')
         category_value = data.get('categoryValue')
+        
+
+        if(not category or not category_value ):
+            return Response({'Select the segment and the code'}, status=status.HTTP_400_BAD_REQUEST)
      
         combined_datetime = datetime.strptime(f'{date_value} {time_value}', '%Y-%m-%d %H:%M')
 
@@ -762,8 +791,7 @@ class SubObservationAPI(APIView):
             hse_user = HSEUser.objects.get(user=request.user, hse_permission=True)
         except HSEUser.DoesNotExist:
             return Response({'error': 'User does not have permission'}, status=status.HTTP_403_FORBIDDEN)
-
-       
+ 
         try:
 
             segment_instance = get_or_create_segment(category, category_value)
@@ -778,15 +806,13 @@ class SubObservationAPI(APIView):
             if hse_instance.form_status == 1:
                 return Response({'error': 'Form already submitted'}, status=status.HTTP_400_BAD_REQUEST)
             
-            hse_observation = HSEObservation.objects.get_or_create(hse=hse_instance,submittedDate=form_Submit_date)
+            hse_observation,created= HSEObservation.objects.get_or_create(hse=hse_instance,submittedDate=form_Submit_date,created_by=request.user)
+            print(hse_observation)
 
-            if not hse_observation:
-                hse_observation = HSEObservation(hse=hse_instance,submittedDate=form_Submit_date)
-                hse_observation.save()
 
             data['observation_datetime']=datetime_format
             data['created_by']=request.user.id
-            data['hse_observation']=hse_observation[0].id
+            data['hse_observation']=hse_observation.id
 
             serializer = SubObservationSerializer(data=data)
 
@@ -807,7 +833,11 @@ class StopWorkAPI(APIView):
         category = request.query_params.get('category', None)
         category_value = request.query_params.get('category_value', None)
 
-        hse_instance=get_hse_instance(category,category_value,date).first()
+        segment_instance=get_or_create_segment(category,category_value)
+
+        
+        hse_instance=get_hse_instance(category,segment_instance,date).first()
+
 
         hse_observation_forms = StopWork.objects.filter(
             hse_observation__hse=hse_instance
@@ -820,7 +850,7 @@ class StopWorkAPI(APIView):
 
         
         else:
-            return Response({"detail": "HSEObservationForm not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"detail": "Stop Work Form not found"}, status=status.HTTP_404_NOT_FOUND)
 
     
   
@@ -832,6 +862,9 @@ class StopWorkAPI(APIView):
 
         category = data.get('segment_category')
         category_value = data.get('categoryValue')
+
+        if(not category or not category_value ):
+            return Response({'Select the segment and the code'}, status=status.HTTP_400_BAD_REQUEST)
      
         combined_datetime = datetime.strptime(f'{date_value} {time_value}', '%Y-%m-%d %H:%M')
 
@@ -857,15 +890,12 @@ class StopWorkAPI(APIView):
             if hse_instance.form_status == 1:
                 return Response({'error': 'Form already submitted'}, status=status.HTTP_400_BAD_REQUEST)
             
-            hse_observation = HSEObservation.objects.get_or_create(hse=hse_instance,submittedDate=form_Submit_date)
+            hse_observation,created = HSEObservation.objects.get_or_create(hse=hse_instance,submittedDate=form_Submit_date,created_by=request.user)
 
-            if not hse_observation:
-                hse_observation = HSEObservation(hse=hse_instance,submittedDate=form_Submit_date)
-                hse_observation.save()
 
             data['stopwork_datetime']=datetime_format
             data['created_by']=request.user.id
-            data['hse_observation']=hse_observation[0].id
+            data['hse_observation']=hse_observation.id
 
             serializer = StopWorkSerializer(data=data)
 
@@ -887,7 +917,10 @@ class ViolationMemoAPI(APIView):
         category = request.query_params.get('category', None)
         category_value = request.query_params.get('category_value', None)
 
-        hse_instance=get_hse_instance(category,category_value,date).first()
+        segment_instance=get_or_create_segment(category,category_value)
+
+        hse_instance=get_hse_instance(category,segment_instance,date).first()
+
 
         hse_observation_forms = ViolationMemo.objects.filter(
             hse_observation__hse=hse_instance
@@ -900,7 +933,7 @@ class ViolationMemoAPI(APIView):
 
         
         else:
-            return Response({"detail": "HSEObservationForm not found"}, status=status.HTTP_404_NOT_FOUND)  
+            return Response({"detail": "Violation Memo Form not found"}, status=status.HTTP_404_NOT_FOUND)
    
 
  
@@ -912,6 +945,9 @@ class ViolationMemoAPI(APIView):
 
         category = data.get('segment_category')
         category_value = data.get('categoryValue')
+
+        if(not category or not category_value ):
+            return Response({'Select the segment and the code'}, status=status.HTTP_400_BAD_REQUEST)
      
       
         try:
@@ -932,15 +968,12 @@ class ViolationMemoAPI(APIView):
             if hse_instance.form_status == 1:
                 return Response({'error': 'Form already submitted'}, status=status.HTTP_400_BAD_REQUEST)
             
-            hse_observation = HSEObservation.objects.get_or_create(hse=hse_instance,submittedDate=form_Submit_date)
+            hse_observation,created = HSEObservation.objects.get_or_create(hse=hse_instance,submittedDate=form_Submit_date,created_by=request.user)
 
-            if not hse_observation:
-                hse_observation = HSEObservation(hse=hse_instance,submittedDate=form_Submit_date)
-                hse_observation.save()
-
+       
             data['stopwork_date']=date_value
             data['created_by']=request.user.id
-            data['hse_observation']=hse_observation[0].id
+            data['hse_observation']=hse_observation.id
 
             serializer = ViolationMemoSerializer(data=data)
 
@@ -961,7 +994,11 @@ class IncidentAPI(APIView):
         category = request.query_params.get('category', None)
         category_value = request.query_params.get('category_value', None)
 
-        hse_instance=get_hse_instance(category,category_value,date).first()
+        segment_instance=get_or_create_segment(category,category_value)
+        print(segment_instance)
+
+        
+        hse_instance=get_hse_instance(category,segment_instance,date).first()
 
         hse_incident_form = SubIncident.objects.filter(
             incidents__hse=hse_instance
@@ -985,6 +1022,9 @@ class IncidentAPI(APIView):
 
         category = data.get('segment_category')
         category_value = data.get('categoryValue')
+
+        if(not category or not category_value ):
+            return Response({'Select the segment and the code'}, status=status.HTTP_400_BAD_REQUEST)
      
         combined_datetime = datetime.strptime(f'{date_value} {time_value}', '%Y-%m-%d %H:%M')
 
@@ -1012,15 +1052,12 @@ class IncidentAPI(APIView):
             if hse_instance.form_status == 1:
                 return Response({'error': 'Form already submitted'}, status=status.HTTP_400_BAD_REQUEST)
             
-            hse_incident = Incidents.objects.get_or_create(hse=hse_instance,submittedDate=form_Submit_date)
+            hse_incident,created = Incidents.objects.get_or_create(hse=hse_instance,submittedDate=form_Submit_date,created_by=request.user)
 
-            if not hse_incident:
-                hse_incident = Incidents(hse=hse_instance,submittedDate=form_Submit_date)
-                hse_incident.save()
 
             data['incident_datetime']=datetime_format
             data['created_by']=request.user.id
-            data['incidents']=hse_incident[0].id
+            data['incidents']=hse_incident.id
 
             serializer = SubIncidentSerializer(data=data)
 

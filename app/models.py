@@ -6,7 +6,6 @@ from base.models import *
 
 
 CATEGORY_CHOICES = [
-    ('Category', 'Category'),
     ('Legal Requirement', 'Legal Requirement'),
     ('Permit to Work', 'Permit to Work'),
     ('Electrical Work', 'Electrical Work'),
@@ -96,11 +95,8 @@ class HSESegment(models.Model):
             return f"{self.segment}"
 
 
-
-
 class HSE(models.Model):
-    hse_segment=models.ForeignKey(HSESegment, on_delete=models.CASCADE, null=True, blank=True) 
-       
+    hse_segment=models.ForeignKey(HSESegment, on_delete=models.CASCADE, null=True, blank=True)    
     created_at = models.DateTimeField(default=timezone.now, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE,related_name='created_by_hse_records',null=True,blank=True)
@@ -141,7 +137,7 @@ class GeneralHse(models.Model):
         verbose_name_plural = "General HSE"
 
     def __str__(self):
-        return f"General HSE - ID: {self.id}, Submitted Date: {self.submittedDate}"
+        return f"Submitted Date: {self.submittedDate}, {self.hse}"
 
 
 class HSETraining(models.Model):
@@ -167,7 +163,7 @@ class HSETraining(models.Model):
         verbose_name_plural = "HSE Training"
     
     def __str__(self):
-        return f"HSE Training - ID: {self.id}, Submitted Date: {self.submittedDate}"
+        return f"Submitted Date: {self.submittedDate}, {self.hse}"
 
    
 class HSEObservation(models.Model):
@@ -190,7 +186,7 @@ class HSEObservation(models.Model):
         verbose_name_plural = "HSE Observation"
     
     def __str__(self):
-        return f"HSE Observation - ID: {self.id}, Submitted Date: {self.submittedDate}"
+        return f"Submitted Date: {self.submittedDate}, {self.hse}"
 
 
 class ManagementVisit(models.Model):
@@ -215,7 +211,7 @@ class ManagementVisit(models.Model):
         verbose_name_plural = "Management Visits"
 
     def __str__(self):
-        return f"Management Visits - ID: {self.id}, Submitted Date: {self.submittedDate}"
+        return f"Submitted Date: {self.submittedDate}, {self.hse}"
 
 
 class Incidents(models.Model):
@@ -236,7 +232,7 @@ class Incidents(models.Model):
         verbose_name_plural = "Incidents"
 
     def __str__(self):
-        return f"Incidents - ID: {self.id}, Submitted Date: {self.submittedDate}"
+        return f"Submitted Date: {self.submittedDate} ,{self.hse}"
 
 
 class SubObservation(models.Model):
@@ -320,7 +316,7 @@ class ViolationMemo(models.Model):
 
     class Meta:
         verbose_name = "Violation Memo Form"
-        verbose_name_plural = "Violation Memo Forms"
+        verbose_name_plural = "Violation Memo Form"
 
     def __str__(self):
         return f"Violation Memo Form - ID: {self.id}"
