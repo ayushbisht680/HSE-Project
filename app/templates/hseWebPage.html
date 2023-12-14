@@ -1303,7 +1303,7 @@
          const date = new Date(inputDate);
       
          const day = String(date.getDate()).padStart(2, '0');
-         const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+         const month = String(date.getMonth() + 1).padStart(2, '0'); 
          const year = date.getFullYear();
       
          return `${day}/${month}/${year}`;
@@ -1312,11 +1312,11 @@
       function formatToCustomDate(inputDate) {
       const parts = inputDate.split('/');
       const day = parseInt(parts[0], 10);
-      const month = parseInt(parts[1], 10) - 1; // Months are zero-based
+      const month = parseInt(parts[1], 10) - 1; 
       const year = parseInt(parts[2], 10);
       
       initialDate = `${month}/${day}/${year}`
-      console.log('initialDate', initialDate)
+      //console.log('initialDate', initialDate)
       
       const dateObject = new Date(year, month, day);
       
@@ -1325,7 +1325,7 @@
       
       const dayOfWeek = daysOfWeek[dateObject.getDay()];
       const dayOfMonth = dateObject.getDate();
-      const ordinalSuffix = getOrdinalSuffix(dayOfMonth); // Function to get the ordinal suffix
+      const ordinalSuffix = getOrdinalSuffix(dayOfMonth); 
       const monthName = months[dateObject.getMonth()];
       
       return `${dayOfWeek}, ${dayOfMonth}${ordinalSuffix}, ${monthName}`;
@@ -1375,7 +1375,7 @@
       } else if (date1 > date2) {
           return 1;
       } else {
-          return 0; // Dates are equal
+          return 0; 
       }
       }
 
@@ -1479,10 +1479,8 @@
                   const endDatePlus2 = new Date(endDateRange);
                   endDatePlus2.setDate(endDatePlus2.getDate() + 2);
 
-               
 
-
-                  if ((todayDate <= endDatePlus2)|| (todayDate >= startDateRange && todayDate <= endDateRange)) {
+                  if ((todayDate >= endDateRange && todayDate <= endDatePlus2)|| (todayDate >= startDateRange && todayDate <= endDateRange)) {
                      // can fill the form
                      console.log("Can fill the form");
                
@@ -1505,7 +1503,7 @@
                            disableFormsLink[i].style.display = 'block';
                         }
 
-                        if(todayDate==endDateRange){
+                        if(todayDate >= endDateRange && todayDate <= endDatePlus2 ){
                            document.getElementById('finalSubmit').disabled=false;
                         }
       
@@ -2021,14 +2019,14 @@
 
                const categoryId = categoryData['id'];
 
-               const formSubmitted=categoryData['formSubmitted']
-               console.log(`form submitted is ${formSubmitted}`)
+               const form_submitted=categoryData['form_submitted']
+               console.log(`form submitted is ${form_submitted}`)
                const checkbox = document.getElementById(checkBoxId);
     
-               if (formSubmitted === true && checkbox) {
+               if (form_submitted === true && checkbox) {
                  checkbox.checked = true;
                }
-               else if(formSubmitted === false && checkbox){
+               else if(form_submitted === false && checkbox){
                   checkbox.checked = false;
 
                }

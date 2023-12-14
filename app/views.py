@@ -54,25 +54,24 @@ def get_hse_instance(category, segment_instance, date):
         hse_instance=HSE.objects.filter(
             hse_segment__segment=category,
             hse_segment__plant=segment_instance.plant,
-            formSubmittedDate=date
+            form_submitted_date=date
 
         )
     elif(category=='homescape'):
          hse_instance=HSE.objects.filter(
             hse_segment__segment=category,
             hse_segment__homescape=segment_instance.homescape,
-            formSubmittedDate=date
+            form_submitted_date=date
 
         )
     elif(category=='warehouse'):
          hse_instance=HSE.objects.filter(
             hse_segment__segment=category,
             hse_segment__warehouse=segment_instance.warehouse,
-            formSubmittedDate=date
+            form_submitted_date=date
 
         )
     return hse_instance
-
 
 
 class HSEHomePageView(APIView):
@@ -81,7 +80,7 @@ class HSEHomePageView(APIView):
         'segment_choices': SEGMENTS
 
         }
-        return TemplateResponse(request, "index.html",context)
+        return TemplateResponse(request, "hseWebPage.html",context)
     
 class SubObservationView(APIView):
     def get(self, request):
@@ -195,7 +194,7 @@ class GeneralHseAPI(APIView):
 
             hse_instance, created = HSE.objects.get_or_create(
                 hse_segment=segment_instance,
-                formSubmittedDate=form_submit_date,
+                form_submitted_date=form_submit_date,
                 defaults={"form_status": 0},
                 created_by=request.user
             )
@@ -208,10 +207,8 @@ class GeneralHseAPI(APIView):
             serializer = GeneralHSESerializer(general_hse_instance, data=data)
 
             if serializer.is_valid():
-                instance = serializer.save()
-                instance.created_by = request.user
-                instance.formSubmitted = True
-                instance.save()
+                instance = serializer.save(created_by=request.user, form_submitted=True)
+
 
                 return Response({'id': instance.id, 'data': serializer.data}, status=status.HTTP_201_CREATED)
             else:
@@ -245,10 +242,8 @@ class GeneralHseAPI(APIView):
         serializer = GeneralHSESerializer(existing_instance, data=data, partial=True)
 
         if serializer.is_valid():
-            instance = serializer.save()
-            instance.updated_at = timezone.now()
-            instance.save()
-
+            serializer.save(updated_at=timezone.now(), form_submitted=True)
+            
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -283,7 +278,7 @@ class HseTrainingAPI(APIView):
 
             hse_instance, created = HSE.objects.get_or_create(
                 hse_segment=segment_instance,
-                formSubmittedDate=form_submit_date,
+                form_submitted_date=form_submit_date,
                 defaults={"form_status": 0},
                 created_by=request.user
             )
@@ -295,10 +290,8 @@ class HseTrainingAPI(APIView):
             serializer = HSETrainingsSerializer(hse_training_instance, data=data)
 
             if serializer.is_valid():
-                instance = serializer.save()
-                instance.created_by = request.user
-                instance.formSubmitted = True
-                instance.save()
+                instance = serializer.save(created_by=request.user, form_submitted=True)
+
 
                 return Response({'id': instance.id, 'data': serializer.data}, status=status.HTTP_201_CREATED)
             else:
@@ -333,10 +326,8 @@ class HseTrainingAPI(APIView):
         serializer = HSETrainingsSerializer(existing_instance, data=data)
 
         if serializer.is_valid():
-            instance = serializer.save()
-            instance.updated_at = timezone.now()
-            instance.formSubmitted = True
-            instance.save()
+            serializer.save(updated_at=timezone.now(), form_submitted=True)
+
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -370,7 +361,7 @@ class HseObservationAPI(APIView):
 
             hse_instance, created= HSE.objects.get_or_create(
                 hse_segment=segment_instance,
-                formSubmittedDate=form_submit_date,
+                form_submitted_date=form_submit_date,
                 defaults={"form_status": 0},
                 created_by=request.user
             )
@@ -388,10 +379,8 @@ class HseObservationAPI(APIView):
             serializer = HSEObservationSerializer(hse_observation_instance, data=data)
 
             if serializer.is_valid():
-                instance = serializer.save()
-                instance.created_by = request.user
-                instance.formSubmitted = True
-                instance.save()
+                instance = serializer.save(created_by=request.user, form_submitted=True)
+
 
                 return Response({'id': instance.id, 'data': serializer.data}, status=status.HTTP_201_CREATED)
             else:
@@ -425,10 +414,7 @@ class HseObservationAPI(APIView):
         serializer = HSEObservationSerializer(existing_instance, data=data)
 
         if serializer.is_valid():
-            instance = serializer.save()
-            instance.updated_at = timezone.now()
-            instance.formSubmitted = True
-            instance.save()
+            serializer.save(updated_at=timezone.now(), form_submitted=True)
 
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
@@ -463,7 +449,7 @@ class ManagementAPI(APIView):
 
             hse_instance, created = HSE.objects.get_or_create(
                 hse_segment=segment_instance,
-                formSubmittedDate=form_submit_date,
+                form_submitted_date=form_submit_date,
                 defaults={"form_status": 0},
                 created_by=request.user
             )
@@ -475,10 +461,7 @@ class ManagementAPI(APIView):
             serializer = ManagementSerializer(hse_management_instance, data=data)
 
             if serializer.is_valid():
-                instance = serializer.save()
-                instance.created_by = request.user
-                instance.formSubmitted = True
-                instance.save()
+                instance = serializer.save(created_by=request.user, form_submitted=True)
 
                 return Response({'id': instance.id, 'data': serializer.data}, status=status.HTTP_201_CREATED)
             else:
@@ -510,10 +493,8 @@ class ManagementAPI(APIView):
         serializer = ManagementSerializer(existing_instance, data=data)
 
         if serializer.is_valid():
-            instance = serializer.save()
-            instance.updated_at = timezone.now()
-            instance.formSubmitted = True
-            instance.save()
+            serializer.save(updated_at=timezone.now(), form_submitted=True)
+
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -547,7 +528,7 @@ class IncidentsAPI(APIView):
 
             hse_instance, created = HSE.objects.get_or_create(
                 hse_segment=segment_instance,
-                formSubmittedDate=form_submit_date,
+                form_submitted_date=form_submit_date,
                 defaults={"form_status": 0},
                 created_by=request.user
             )
@@ -564,11 +545,8 @@ class IncidentsAPI(APIView):
 
             serializer = IncidentsSerializer(incident_instance, data=data)
 
-            if serializer.is_valid():
-                instance = serializer.save()
-                instance.created_by = request.user
-                instance.formSubmitted = True
-                instance.save()
+            if serializer.is_valid():    
+                instance = serializer.save(created_by=request.user, form_submitted=True)
 
                 return Response({'id': instance.id, 'data': serializer.data}, status=status.HTTP_201_CREATED)
             else:
@@ -603,10 +581,7 @@ class IncidentsAPI(APIView):
         serializer = IncidentsSerializer(existing_instance, data=data)
 
         if serializer.is_valid():
-            instance = serializer.save()
-            instance.updated_at = timezone.now()
-            instance.formSubmitted = True
-            instance.save()
+            serializer.save(updated_at=timezone.now(), form_submitted=True)
 
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
@@ -615,7 +590,6 @@ class IncidentsAPI(APIView):
 
 
 class HSEView(APIView):
-
 
     def get(self, request): 
         obj = HSE.objects.all()
@@ -645,14 +619,12 @@ class HSEView(APIView):
         
 
         hse_segment=get_or_create_segment(category,category_value)
-        print(hse_segment)
         
         hse_queryset = HSE.objects.filter(
-            Q(formSubmittedDate__gte=data['startRange']) &
-            Q(formSubmittedDate__lte=data['endRange']) &
+            Q(form_submitted_date__gte=data['startRange']) &
+            Q(form_submitted_date__lte=data['endRange']) &
             Q(hse_segment=hse_segment)
         )
-        print(hse_queryset)
         if len(hse_queryset) < 7:
             return Response("HSE Object is not created for some days in this week", status=status.HTTP_400_BAD_REQUEST)
 
@@ -663,7 +635,7 @@ class HSEView(APIView):
             if not hse_object.generalhse_set.exists():
                 return Response("Please fill all the forms for the HSE Object first", status=status.HTTP_400_BAD_REQUEST)
             
-            general_hse_statuses.extend(hse_object.generalhse_set.values_list('formSubmitted', flat=True))
+            general_hse_statuses.extend(hse_object.generalhse_set.values_list('form_submitted', flat=True))
      
         if False in general_hse_statuses:
             return Response("Form not submitted for all instances", status=status.HTTP_400_BAD_REQUEST)
@@ -680,7 +652,7 @@ class HSEView(APIView):
         return Response(response_data, status=status.HTTP_200_OK)
    
 
-class AllModelsListView(generics.ListAPIView):
+class SegmentDataAPI(generics.ListAPIView):
     def get(self, request):
         date = request.query_params.get('date', None)
         category = request.query_params.get('category', None)
@@ -705,31 +677,31 @@ class AllModelsListView(generics.ListAPIView):
         hse_segment_obj = hse_segment.first()
 
 
-        hse_instance=HSE.objects.filter(formSubmittedDate=date,hse_segment=hse_segment_obj)
+        hse_instance=HSE.objects.filter(form_submitted_date=date,hse_segment=hse_segment_obj)
         if  hse_instance.exists():
 
 
             hse_obj=hse_instance.first()
             
-            child1_data = hse_obj.generalhse_set.all()
-            child2_data = hse_obj.hsetraining_set.all()
-            child3_data = hse_obj.hseobservation_set.all()
-            child4_data = hse_obj.managementvisit_set.all()
-            child5_data = hse_obj.incidents_set.all()
+            general_hse = hse_obj.generalhse_set.all()
+            hse_training = hse_obj.hsetraining_set.all()
+            hse_observation= hse_obj.hseobservation_set.all()
+            management_visit = hse_obj.managementvisit_set.all()
+            incident = hse_obj.incidents_set.all()
 
-            child1_serializer = GeneralHSESerializer(child1_data, many=True)
-            child2_serializer = HSETrainingsSerializer(child2_data, many=True)
-            child3_serializer = HSEObservationSerializer(child3_data, many=True)
-            child4_serializer = ManagementSerializer(child4_data, many=True)
-            child5_serializer = IncidentsSerializer(child5_data, many=True)
+            general_hse_serializer = GeneralHSESerializer(general_hse, many=True)
+            hse_training_serializer = HSETrainingsSerializer(hse_training, many=True)
+            hse_observation_serializer = HSEObservationSerializer(hse_observation, many=True)
+            management_visit_serializer = ManagementSerializer(management_visit, many=True)
+            incident_serializer = IncidentsSerializer(incident, many=True)
         
             response_data = {
                 "hse_status": hse_obj.form_status,
-                "General HSE": child1_serializer.data,
-                "HSE Training": child2_serializer.data,
-                "HSE Observation": child3_serializer.data,
-                "Management Visits": child4_serializer.data,
-                "Incidents": child5_serializer.data,
+                "General HSE": general_hse_serializer.data,
+                "HSE Training": hse_training_serializer.data,
+                "HSE Observation": hse_observation_serializer.data,
+                "Management Visits": management_visit_serializer.data,
+                "Incidents": incident_serializer.data,
             }
 
             return Response(response_data, status=status.HTTP_200_OK)
@@ -798,7 +770,7 @@ class SubObservationAPI(APIView):
 
             hse_instance, created = HSE.objects.get_or_create(
                 hse_segment=segment_instance,
-                formSubmittedDate=form_Submit_date,
+                form_submitted_date=form_Submit_date,
                 defaults={"form_status": 0},
                 created_by=request.user
             )
@@ -881,7 +853,7 @@ class StopWorkAPI(APIView):
 
             hse_instance, created = HSE.objects.get_or_create(
                 hse_segment=segment_instance,
-                formSubmittedDate=form_Submit_date,
+                form_submitted_date=form_Submit_date,
                 defaults={"form_status": 0},
                 created_by=request.user
 
@@ -960,7 +932,7 @@ class ViolationMemoAPI(APIView):
 
             hse_instance, created = HSE.objects.get_or_create(
                 hse_segment=segment_instance,
-                formSubmittedDate=form_Submit_date,
+                form_submitted_date=form_Submit_date,
                 defaults={"form_status": 0},
                 created_by=request.user
             )
@@ -1043,7 +1015,7 @@ class IncidentAPI(APIView):
 
             hse_instance, created = HSE.objects.get_or_create(
                 hse_segment=segment_instance,
-                formSubmittedDate=form_Submit_date,
+                form_submitted_date=form_Submit_date,
                 defaults={"form_status": 0},
                 created_by=request.user
             )
