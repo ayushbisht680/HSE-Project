@@ -1,0 +1,2327 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>HSE Project</title>
+      <style>
+
+         .row>* {
+            padding-right: 0px !important;
+            padding-left: 0px !important;
+            }
+       
+         a{
+         text-decoration:none !important;
+         }
+       
+         .date-range {
+         color: white;
+         font-size: 12px;
+         font-weight: 500;
+         }
+         .menu {
+         color: white;
+         margin-top: 20px;
+         margin-left: 20px;
+         }
+         .mb-3 {
+         height: 88px;
+         margin-top: 32px;
+         }
+         .myNavi {
+         height: 38px;
+         margin-left: 20px;
+         margin-top: 17px;
+         margin-bottom: 0px !important;
+         }
+         .myTable {
+         width: 100%;
+         height: 100%;
+         }
+         .my-cont {
+         padding-right: 0px !important;
+         position: fixed !important;
+         background-color: black;
+         top: 0px;
+         bottom: 0px;
+         width: 16.6%;
+         }
+         .navbar {
+         background-color: white;
+         padding: 10px 0;
+         height: 57px;
+         }
+         .myNavbar {
+         width: 100%;
+         }
+         .big_container {
+         display: flex;
+         }
+         .cont {
+         display: flex;
+         justify-content: space-between;
+         text-align: left;
+         margin-top: 4px;
+         background-color: rgba(62, 159, 254, 0.1);
+         border-radius: 7px;
+         {% comment %} height: 11vw; {% endcomment %}
+         }
+         .date-cont {
+         display: flex;
+         align-items: center;
+         justify-content: left;
+         font-size: 18px;
+         padding: 10px;
+         margin-top: 10px;
+         }
+         .viewDate {
+         margin: 0 10px;
+         color: #3E9FFE;
+         font-size: 13px;
+         font-weight: 600;
+         margin-top: 11px;
+         width: 100px;
+         display: flex;
+         justify-content: center;
+         }
+         .arrow-cont {
+         display: flex;
+         align-items: center;
+         }
+         .theDate1 {
+         font-weight: 500;
+         color: grey;
+         font-size: 13px;
+         }
+         .arrow {
+         font-size: 24px;
+         cursor: pointer;
+         margin: 0 5px;
+         margin-top: 14px;
+         width: 9px;
+         }
+         .hello {
+         margin-left: 13px;
+         font-weight: 700;
+         margin-top: 15px;
+         }
+         .outer-container {
+         display: flex;
+         flex-direction: row;
+         margin-top: 9px;
+         height: 34px;
+         margin-left: 12px;
+         width: fit-content;
+         border: 1px solid #3E9FFE;
+         border-radius: 4px;
+         }
+         .showWeek {
+         font-size: 13px;
+         margin-top: 8px;
+         color: white;
+         }
+         .showDate {
+         font-size: 13px;
+         margin-top: 7px;
+         margin-bottom: 0px;
+         font-weight: 500;
+         margin-left:3px
+         }
+         .display-outer-container2 {
+         justify-content: center;
+         display: flex;   
+         align-items: center; 
+         }
+         .display-outer-container1 {
+         background-color: #3E9FFE;
+         width: 71px;
+         justify-content: center;
+         display: flex;   
+         }
+         .sideView {
+         display: flex;
+         justify-content: space-between;
+         }
+         .uploadBtn {
+         margin-top: 7px;
+         }
+         .toggle-container {
+         display: none;
+         padding: 29px;
+         margin-top: 10px;
+         }
+         .toggle-button {
+         cursor: pointer;
+         float: right;
+         }
+         label {
+         display: block;
+         margin-bottom: 5px;
+         }
+         .input-group {
+         margin-top: 5px;
+         width: 80% !important;
+         }
+         .input-group-text {
+         cursor: pointer;
+         margin: 15px
+         }
+         .form-control-file {
+         display: none;
+         margin: 15px;
+         }
+         .section-container {
+         border: 1px solid #cfc8c8;
+         padding: 20px;
+         margin-top: 20px;
+         border-radius: 5px;
+         }
+         .form-control {
+         font-size: 12px !important color: lightgrey !important width: 83% !important;
+         }
+         .form-control::placeholder {
+         font-size: 13px;
+         color: lightgrey
+         }
+       
+         .changeInput {
+         height: 39px !important;
+         margin-right: auto;
+         }
+         .changeLabel {
+         margin-top: 14px !important;
+         }
+         .input-group-text {
+         margin: 0px !important;
+         }
+         .btn {
+         float: right
+         }
+         .form-label {
+         margin-top: 13px;
+         font-weight: 600;
+         font-size: 14px;
+         }
+         .uploadColor {
+         border: 1px solid #2c8ff1 !important;
+         color: #2c8ff1 !important;
+         }
+         .colorH6 {
+         color: #7a7676;
+         }
+         .round-image {
+         width: 51px;
+         height: 43px;
+         border-radius: 48%;
+         margin-right: 9px;
+         overflow: hidden;
+         margin-left: 20px;
+         }
+         .round-image img {
+         width: 104%;
+         height: 104%;
+         object-fit: cover;
+         }
+         .horizontal-line {
+         height: 1px;
+         background-color: white;
+         width: 100%;
+         margin: 10px auto;
+         margin-bottom: 0px;
+         }
+         .imageAlign {
+         display: flex;
+         margin-left: 13px;
+         }
+         .hamburger {
+         margin-right: 10px;
+         }
+         .amplusLogo {
+         margin-left: 10px;
+         }
+         .valueButton {
+         width: 65px;
+         border: none !important;
+         }
+         .btnMargin {
+         border: 1px solid lightgrey;
+         margin-right: 35px;
+         }
+         .changeWidth {
+         width: 67%
+         }
+         .changingWidth {
+         width: 76%;
+         }
+         .inputAndButton {
+         display: flex;
+         }
+         .addingBtn {
+         display: flex;
+         justify-content: center;
+         width: 136px;
+         height: 38px;
+         align-items: center;
+         margin-top: 45px;
+         border: 1px solid lightgrey;
+         }
+         .plusIcon {
+         width: 39px;
+         height: 30px;
+         }
+         #adjustWidth {
+         width: 80% !important;
+         height: 35px;
+         }
+         .saveBtn {
+         height: 3vw !important
+         }
+         .centerDates {
+         display: flex;
+         justify-content: center;
+         }
+         .btn-success {
+         margin-right: 12px;
+         font-size: 13px !important;
+         background-color: #10B981 !important;
+         border: none !important;
+         }
+         .accordion-item {
+         margin-top: 10px;
+         border: 1px solid lightgrey !important;
+         }
+         .accordion-button:not(.collapsed) {
+         background-color: white !important;
+         box-shadow: none !important;
+         color: grey !important;
+         font-size: 16px;
+         font-weight: 500;
+         }
+         .accordion-header {
+         border: 1px solid #fbf7f7;
+         }
+         .accordion-button {
+         font-size: 14px !important;
+         color: grey !important;
+         font-weight: 500 !important;
+         }
+         .date-cont1 {
+         margin-right: 20px;
+         }
+         .decBtn {
+         padding-bottom: 10px !important;
+         }
+         input[type="number"]::-webkit-inner-spin-button,
+         input[type="number"]::-webkit-outer-spin-button {
+         -webkit-appearance: none;
+         appearance: none;
+         margin: 0;
+         }
+         .error-message {
+         color: #B3261E;
+         display: block;
+         font-size: 12px;
+         margin-left: 26px;
+         margin-top: 4px;
+         display: none;
+         }
+         .error-border {
+         border: 1.5px solid #B3261E !important;
+         }
+         .alertspan {
+         margin-left: 17px !important;
+         }
+         .small-popup {
+         max-width: 400px;
+         }
+         .messageDisplay {
+         color: #3E9FFE;
+         font-size: 14px;
+         font-weight: 490;
+         margin-top: 11px;
+         }
+         .linkForm {
+         color: #3E9FFE !important;
+         font-size: 13px !important;
+         font-weight: 400;
+         border-bottom: 1.5px solid #3E9FFE;
+         }
+         .lastButton {
+         margin-right: 12px;
+         margin-top: 15px;
+         }
+         .lastPreview {
+         margin-top: 15px;
+         margin-right: 12px;
+         }
+         .clickArrow {
+         display: flex;
+         justify-content: center;
+         margin-left: 3px;
+         }
+         #finalSubmit {
+         font-size: 12px;
+         margin-top: 20px;
+         background-color: #10B981 ;
+         color: white;
+         width:83px;
+         }
+         #finalSubmit:disabled {
+         background-color: grey;
+         color: white;
+         opacity: 0.6;         
+         }
+         #closeBtn {
+         font-size: 12px;
+         margin-right: 10px;
+         margin-top: 5px;
+         }
+         #removeButton1 {
+         height: 18px;
+         width: 18px;
+         }
+         .form-control:focus {
+         box-shadow: none !important;
+         }
+         .incHeight {
+         height: 44px;
+         }
+         #calendar{
+         height:23%;
+         }
+         .dateandpic{
+         display: flex;
+         align-items: center;
+         }
+         #segmentDropdown{
+         padding: 4px;
+         width: 200px;
+         height: 36px;
+         border: 1.5px solid #c9c4c4;
+         border-radius: 4px;
+         color: #867070;
+         font-size: 13px;
+         outline: none;
+         padding: 2px;
+         }
+         #segmentName{
+            padding: 4px;
+            width: 200px;
+            height: 36px;
+            border: 1.5px solid #c9c4c4;
+            border-radius: 4px;
+            color: #867070;
+            font-size: 13px;
+            outline: none;
+            padding: 2px;
+
+         }
+
+         .fileName{
+         border:none;
+         outline:none;
+         }
+         {% comment %} .accordion-button:not(.collapsed)::after {
+         background-image: url('/static/images/accordianImg.svg') !important;
+         }
+         .accordion-button::after {
+         background-image: url('/static/images/accordianImg.svg') !important;
+         } {% endcomment %}
+         .ui-datepicker .ui-datepicker-title {
+         margin: 0 !important;
+         line-height: 1.3em !important;
+         }
+         .ui-datepicker-month,.ui-datepicker-year{
+         font-size:12px;
+         }
+         .ui-datepicker th {
+         font-size: 11px;
+         }
+         .ui-widget-header {
+            border: none !important;
+            background: #cccccc4a !important;
+        }
+         .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+         background: white !important;
+         }
+         .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
+         background: #3e9ffe96 !important;
+         }
+         .ui-priority-secondary, .ui-widget-content .ui-priority-secondary, .ui-widget-header .ui-priority-secondary {
+         font-size: 12px !important;
+         }
+         .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+         font-size: 10px !important;
+         border:none !important;
+       
+
+         }
+         .week-picker{
+         margin-top:7px;
+         margin-bottom:7px;
+         margin-right:7px;
+         }
+     .ui-datepicker-current-select{
+      background-color:black !important;
+      color:white !important;
+     } 
+     .ui-datepicker td span, .ui-datepicker td a {
+      text-align: center !important;
+
+   }
+
+   .custom-checkbox-container {
+      display: inline-block;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .custom-checkbox {
+       appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      width: 12px;
+      height: 12px;
+      background-color: #fff;
+      border: 1px solid #4CAF50;
+      border-radius: 50%;
+      outline: none;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+
+    .custom-checkbox:checked {
+      background-color: #4CAF50; 
+      border: 2px solid #4CAF50; 
+       }
+
+    .swal2-popup.swal2-modal.small-popup.hello.swal2-show {
+      font-size: 11px !important;
+  }
+  .ui-widget-content{
+   border:none !important;
+  }
+  a.ui-state-default.ui-state-active {
+   color: white !important;
+}
+
+  
+     
+      </style>
+      <link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/base/jquery-ui.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+   </head>
+   <body>
+      <div class="container-fluid">
+         <div class="row">
+               <div class="modal fade" tabindex="-1" id="successModal" role="dialog">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                     <div class="modal-content">
+                        <div class="modal-body">
+                           <p class="text-center">Data Saved Successfully</p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+                  <div class="cont">
+                     <div >
+                        <div class="outer-container">
+                           <div class="display-outer-container1">
+                              <p class="showWeek" id="weekDisplay">Week</p>
+                           </div>
+                           <div class="display-outer-container2">
+                              <div style='margin-left: 8px; margin-right:4px; '><span class='showDate' id="startDate" ></span></div>
+                              -
+                              <div><span class='showDate' style='margin-left:4px ;margin-right:10px' id="endDate"></span> </div>
+                           </div>
+                        </div>
+                        <div class="sideView">
+                           <div class="date-cont">
+                              <div class="messageDisplay">The form is filled for :</div>
+                              <div class="viewDate" id="viewingDate"></div>
+                              <div class='clickArrow'>
+                                 <div onclick="changeDate(-1)" style="display: flex;" id='oneDateBack'>
+                                    <img src=" {% static 'images/left_date.svg' %} " class="arrow"> </img>
+                                 </div>
+                                 <div onclick="changeDate(1)" style="display: flex;" id='oneDateAhead'>
+                                    <img src=" {% static 'images/right_date.svg' %}" class="arrow"> </img>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+
+                        <div class='dropdownSection ' style='display: flex;'>
+
+                           
+                        <div class='dropDown'  style='margin-left: 12px; margin-top: 12px;margin-right: 12px;'>
+                           <div>
+                              <label for="segmentDropdown" style='font-size: 15px; font-weight: 500;'>Select the Segment</label>
+                           </div>
+                           <div>
+                              <select id="segmentDropdown" class='segmentDropdown'>
+                                 <option value="" selected>Select the segment</option>
+                                 {% for choice in segment_choices %}
+                                 <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                {% endfor %}
+                              </select>
+                           </div>
+                        </div>
+
+                        <div class='dropDown' id='segmentDiv' style='margin-left: 20px; margin-top: 12px ; display:none;' >
+                           <div>
+                              <label for="segmentName" style='font-size: 15px; font-weight: 500;' id='segmentCodeValue'></label>
+                           </div>
+                           <div>
+                              <select id="segmentName" class='segmentName'>
+
+                              </select>
+                           </div>
+                        </div>
+
+                        </div>
+
+
+
+                     </div>
+                     <div class='mainCalendar'>
+                        <div class="week-picker"></div>
+                     </div>
+                  </div>
+                  <div class="maincontainer">
+                     <div class='content_container' style='display:none' id='content_container'>
+                        <div class="accordion" id="accordionExample">
+                           <div class="accordion-item">
+                              <h2 class="accordion-header">
+                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                 data-bs-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+                                 <label class="custom-checkbox-container" style='margin-bottom:0px'>
+                                    <input type="checkbox" class="custom-checkbox" id ='checkbox1' >
+                                 </label>
+                                 General HSE
+                                 </button>
+                              </h2>
+                              <div id="collapse1" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
+                                 <div class="accordion-body">
+                                    <form method="POST" action="{% url 'General HSE' %}" enctype="multipart/form-data"
+                                       id="form1">
+                                       {% csrf_token %}
+                                       <input type="hidden" name="toBeUpdatedId" id="toBeUpdatedId1">
+                                       <input type="hidden" name="formSubmitDate" class="formSubmitDate">
+                                       <input type="hidden" name="submittedDate" class="getDateFormat">
+                                       <input type="hidden" name="startRange" class="startRange">
+                                       <input type="hidden" name="endRange" class="endRange">
+                                       <input type="hidden" name="category" class="category">
+                                       <input type="hidden" name="categoryValue" class="categoryValue">
+
+
+                                       <div class="mb-3">
+                                          <label for="input1" class="form-label ">Total man days worked</label>
+                                          <div class='seperateAllElement' style='display: flex' >
+                                             <div class="input-group" id="adjustWidth">
+                                                <input type="number"  class="form-control disableIt" id="input1"
+                                                   placeholder="Total man days worked" name="total_man_days_worked"  required>
+                                                <div class=" btnMargin"  >
+                                                   <button class="btn  valueButton disableBtn" type="button"
+                                                      id="increment1"><img src="{% static 'images/plus-circle.svg' %}"
+                                                      class="plusIcon"></button>
+                                                   <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                      id="decrement1"><img
+                                                      src="{% static 'images/minusButton.svg' %}"></button>
+                                                </div>
+                                             </div>
+                                             <div class="uploadBtn">
+                                                <input type="file" class="form-control-file disableIt" id="fileInput1"
+                                                   style='display:none' name="today_day_worked_file">
+                                                <label class="input-group-text uploadColor subForms" for="fileInput1"
+                                                   id="fileInputLabel1" style='width: 107px;'>Upload File</label>
+                                                <div class="fileDisplay" id="fileDisplay1"
+                                                   style=" align-items: center;">
+                                                   <input class="fileName" id="fileName1"
+                                                      style='font-size: 12px;' disabled></input>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="mb-3 changingWidth">
+                                          <label for="input2" class="form-label  ">Total safe man hours worked</label>
+                                          <input type="number" step='any' class="form-control disableIt incHeight" id="input2"
+                                             placeholder="Total safe man hours worked" name="total_safe_man_hours" min='0' required>
+                                       </div>
+                                       <div class="mb-3 ">
+                                          <label for="input3" class="form-label ">Number of persons inducted in the
+                                          site</label>
+                                          <div class="input-group">
+                                             <input type="number" class="form-control disableIt " id="input3"
+                                                placeholder="Number of persons inducted in the site"
+                                                name="no_of_person_inducted_site" required>
+                                             <div class=" btnMargin">
+                                                <button class="btn  valueButton disableBtn" type="button" id="increment3"><img
+                                                   src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
+                                                <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                   id="decrement3"><img src="{% static 'images/minusButton.svg' %}"></button>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="mb-3 ">
+                                          <label for="input4" class="form-label ">Total number of toolbox talk
+                                          attendees</label>
+                                          <div class="input-group">
+                                             <input type="number" class="form-control disableIt" id="input4"
+                                                placeholder="Total number of toolbox talk attendees"
+                                                name="no_of_toolbox_attendees" required>
+                                             <div class=" btnMargin">
+                                                <button class="btn  valueButton disableBtn" type="button" id="increment4"><img
+                                                   src="{% static 'images/plus-circle.svg' %}" class="plusIcon"></button>
+                                                <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                   id="decrement4"><img src="{% static 'images/minusButton.svg' %}"></button>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="mb-3">
+                                          <label for="extraInput1" class="form-label ">Tool box talk (man-hours)</label>
+                                          <div class='seperateAllElement' style='display: flex'>
+                                             <div class="input-group" id="adjustWidth">
+                                                <input type="number" step='any' class="form-control disableIt disableBefore"
+                                                   id="extraInput1" placeholder="Tool box talk (man-hours)"
+                                                   name="toolbox_talk_manhours" min='0' required>
+                                                <div class=" btnMargin">
+                                                   <button class="btn  valueButton disableBtn  " type="button"
+                                                      id="extraIncrement1"><img src="{% static 'images/plus-circle.svg' %}"
+                                                      class="plusIcon"></button>
+                                                   <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                      id="extraDecrement1"><img
+                                                      src="{% static 'images/minusButton.svg' %}"></button>
+                                                </div>
+                                             </div>
+                                             <div class="uploadBtn">
+                                                <input type="file" class="form-control-file disableIt disableBefore"
+                                                   id="extraFileInput1" style="display: none"
+                                                   name="toolbox_talk_manhours_file">
+                                                <label class="input-group-text uploadColor subForms" for="extraFileInput1"
+                                                   id="extrafileInputLabel1" style='width: 107px;'>Upload File</label>
+                                                <div class="fileDisplay" id="fileDisplay11"
+                                                   style=" align-items: center;">
+                                                   <input class="fileName" id="fileName11"
+                                                      style='font-size: 12px; ' disabled></input>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="mb-3">
+                                          <label for="extraInput2" class="form-label ">Number of HSE promotional
+                                          activities</label>
+                                          <div class='seperateAllElement' style='display: flex'>
+                                             <div class="input-group" id="adjustWidth">
+                                                <input type="number" class="form-control disableIt disableBefore"
+                                                   id="extraInput2" placeholder="Number of HSE promotional activities"
+                                                   name="promotional_activities" required>
+                                                <div class=" btnMargin">
+                                                   <button class="btn  valueButton disableBtn  " type="button"
+                                                      id="extraIncrement2"><img src="{% static 'images/plus-circle.svg' %}"
+                                                      class="plusIcon"></button>
+                                                   <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                      id="extraDecrement2"><img
+                                                      src="{% static 'images/minusButton.svg' %}"></button>
+                                                </div>
+                                             </div>
+                                             <div class="uploadBtn">
+                                                <input type="file" class="form-control-file disableIt disableBefore"
+                                                   id="extraFileInput2" style="display: none"
+                                                   name="promotional_activities_file">
+                                                <label class="input-group-text uploadColor subForms" for="extraFileInput2"
+                                                   id="extrafileInputLabel2" style='width: 107px;'>Upload File</label>
+                                                <div class="fileDisplay" id="fileDisplay22"
+                                                   style=" align-items: center;">
+                                                   <input class="fileName" id="fileName22"
+                                                      style='font-size: 12px;' disabled></input>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="mb-3 ">
+                                          <label for="extraInput3" class="form-label ">Number of HSE committee
+                                          meetings</label>
+                                          <div class="input-group">
+                                             <input type="number" class="form-control disableIt" id="extraInput3"
+                                                placeholder="Number of HSE committee meetings" name="committee_meetings"
+                                                required>
+                                             <div class=" btnMargin">
+                                                <button class="btn  valueButton disableBtn" type="button"
+                                                   id="extraIncrement3"><img src="{% static 'images/plus-circle.svg' %}"
+                                                   class="plusIcon"></button>
+                                                <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                   id="extraDecrement3"><img
+                                                   src="{% static 'images/minusButton.svg' %}"></button>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="saveBtn">
+                                          <button type="submit" class="btn btn-success disableIt subForms"
+                                             id="SaveAndNext1" onclick="saveChanges()" >Save & Next</button>
+                                       </div>
+                                    </form>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="accordion-item">
+                              <h2 class="accordion-header" id="headingTwo2">
+                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
+                                    <label class="custom-checkbox-container" style='margin-bottom:0px'>
+                                       <input type="checkbox" class="custom-checkbox" id ='checkbox2' >
+                                    </label>
+                                 HSE Trainings
+                                 </button>
+                              </h2>
+                              <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                                 <div class="accordion-body">
+                                    <form method="POST" action="{% url 'HSE Trainings' %}" enctype="multipart/form-data"
+                                       id="form2">
+                                       {% csrf_token %}
+                                       <input type="hidden" name="submittedDate" class="getDateFormat">
+                                       <input type="hidden" name="formSubmitDate" class="formSubmitDate">
+                                       <input type="hidden" name="toBeUpdatedId" id="toBeUpdatedId2">
+                                       <input type="hidden" name="startRange" class="startRange">
+                                       <input type="hidden" name="endRange" class="endRange">
+                                       <input type="hidden" name="category" class="category">
+                                       <input type="hidden" name="categoryValue" class="categoryValue">
+
+
+                                       <div class="mb-3">
+                                          <label for="input5" class="form-label ">HSE Trainings (no. of attendees from
+                                          Amplus)</label>
+                                          <div class='seperateAllElement' style='display: flex'>
+                                             <div class="input-group" id="adjustWidth">
+                                                <input type="number" class="form-control disableIt disableBefore" id="input5"
+                                                   placeholder="HSE Trainings (no. of attendees from Amplus)"
+                                                   name="hse_training_attendees" required>
+                                                <div class=" btnMargin">
+                                                   <button class="btn  valueButton disableBtn  " type="button"
+                                                      id="increment5"><img src="{% static 'images/plus-circle.svg' %}"
+                                                      class="plusIcon"></button>
+                                                   <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                      id="decrement5"><img
+                                                      src="{% static 'images/minusButton.svg' %}"></button>
+                                                </div>
+                                             </div>
+                                             <div class="uploadBtn">
+                                                <input type="file" class="form-control-file disableIt" id="fileInput2"
+                                                   style="display: none" name="attendees_amplus_file">
+                                                <label class="input-group-text uploadColor subForms" for="fileInput2"
+                                                   id="fileInputLabel2" style='width: 107px;'>Upload File</label>
+                                                <div class="fileDisplay" id="fileDisplay2"
+                                                   style="align-items: center;">
+                                                   <input class="fileName" id="fileName2"
+                                                      style='font-size: 12px;' disabled></input>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class=" changingWidth">
+                                          <label for="input6" class="form-label ">Duration of training session (In
+                                          hours)</label>
+                                          <input type="number" step='any' class="form-control disableIt disableBefore incHeight "
+                                             id="input6" placeholder="Duration of training session (In hours)"
+                                             name="duration_of_trainee" min="1" required>
+                                       </div>
+                                       <span class="error-message" id="number-error1">Fill duration above 1hr</span>
+                                       <div class="mb-3">
+                                          <label for="input7" class="form-label ">HSE Trainings (no. of attendees from
+                                          Contractor)</label>
+                                          <div class='seperateAllElement' style='display: flex'>
+                                             <div class="input-group" id="adjustWidth">
+                                                <input type="number" class="form-control disableIt disableBefore" id="input7"
+                                                   placeholder="HSE Trainings (no. of attendees from Contractor)"
+                                                   name="hse_training_contractor" required>
+                                                <div class=" btnMargin">
+                                                   <button class="btn  valueButton disableBtn" type="button"
+                                                      id="increment7"><img src="{% static 'images/plus-circle.svg' %}"
+                                                      class="plusIcon"></button>
+                                                   <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                      id="decrement7"><img
+                                                      src="{% static 'images/minusButton.svg' %}"></button>
+                                                </div>
+                                             </div>
+                                             <div class="uploadBtn">
+                                                <input type="file" class="form-control-file disableIt disableBefore"
+                                                   id="fileInput3" style="display: none" name="attendees_contractor_file">
+                                                <label class="input-group-text uploadColor subForms" for="fileInput3"
+                                                   id="fileInputLabel3" style='width: 107px;'>Upload File</label>
+                                                <div class="fileDisplay" id="fileDisplay3"
+                                                   style="align-items: center;">
+                                                   <input class="fileName" id="fileName3"
+                                                      style='font-size: 12px;' disabled></input>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="changingWidth">
+                                          <label for="input8" class="form-label">Duration of training session (In
+                                          hours)</label>
+                                          <input type="number" step='any' class="form-control disableIt disableBefore incHeight"
+                                             id="input8" placeholder="Duration of training session (In hours)"
+                                             name="duration_of_contractor" min="1" required>
+                                       </div>
+                                       <span class="error-message" id="number-error2">Fill duration above 1hr</span>
+                                       <div class="mb-3 changingWidth">
+                                          <label for="extraInput4" class="form-label">Amplus HSE training (man-hours)</label>
+                                          <input type="number" step='any' class="form-control disableIt incHeight" id="extraInput4"
+                                             placeholder="Amplus HSE training" name="amplus_hse_trainings" min='0' required>
+                                       </div>
+                                       <div class="mb-3 changingWidth">
+                                          <label for="extraInput5" class="form-label">Contractor HSE training
+                                          (man-hours)</label>
+                                          <input type="number" step='any' class="form-control disableIt incHeight" id="extraInput5"
+                                             placeholder="Contractor HSE training" name="contractor_hse_trainings" min='0' required>
+                                       </div>
+                                       <div class="saveBtn">
+                                          <button type="submit" class="btn btn-success disableIt disableBefore subForms"
+                                             id="SaveAndNext2" onclick="saveChanges()">Save & Next</button>
+                                       </div>
+                                    </form>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="accordion-item">
+                              <h2 class="accordion-header">
+                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
+                                    <label class="custom-checkbox-container" style='margin-bottom:0px'>
+                                       <input type="checkbox" class="custom-checkbox" id ='checkbox3' >
+                                    </label>
+                                 HSE Observations
+                                 </button>
+                              </h2>
+                              <div id="collapse3" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                                 <div class="accordion-body">
+                                    <form method="POST" action="{% url 'HSE Observations' %}" enctype="multipart/form-data"
+                                       id="form3">
+                                       {% csrf_token %}
+                                       <input type="hidden" name="submittedDate" class="getDateFormat">
+                                       <input type="hidden" name="formSubmitDate" class="formSubmitDate" id='formSubmitDate'>
+                                       <input type="hidden" name="toBeUpdatedId" id="toBeUpdatedId3" value="">
+                                       <input type="hidden" name="plant_id" id="plant_id" class='plantcode'>
+                                       <input type="hidden" name="startRange" class="startRange">
+                                       <input type="hidden" name="endRange" class="endRange">
+                                       <input type="hidden" name="category" class="category">
+                                       <input type="hidden" name="categoryValue" class="categoryValue">
+
+                                       <div class="mb-3">
+                                          <label for="input9" class="form-label ">Number of daily HSE observations</label>
+                                          <div class='seperateAllElement' style='display: flex'>
+                                             <div class="input-group" id="adjustWidth">
+                                                <input type="number" class="form-control disableIt importantField "
+                                                   id="input9" placeholder="Number of daily HSE observations"
+                                                   name="daily_hse_observation" required>
+                                                <div class=" btnMargin">
+                                                   <button class="btn  valueButton disableBtn" type="button"
+                                                      id="increment9"><img src="{% static 'images/plus-circle.svg' %}"
+                                                      class="plusIcon"></button>
+                                                   <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                      id="decrement9"><img
+                                                      src="{% static 'images/minusButton.svg' %}"></button>
+                                                </div>
+                                             </div>
+                                             <div class="uploadBtn">
+                                                <input type="file" class="form-control-file disableIt" id="fileInput4"
+                                                   style="display: none" name="hse_observation_file">
+                                                <label class="input-group-text uploadColor subForms" for="fileInput4"
+                                                   id="fileInputLabel4" style='width: 107px;'>Upload File</label>
+                                             </div>
+                                          </div>
+                                          <div class='makeThemSeperate' style='display: flex;
+                                             justify-content: space-between;'>
+                                             <div id='formsLink1' style='margin-top: 5px;' class='formsLink' >
+                                                <img src="{% static 'images/Frame.png' %}">
+                                                <a id='observationLink' href="" class="linkForm">Fill the data</a>
+                                             </div>
+                                             <div class="fileDisplay" id="fileDisplay4"
+                                                style=" margin-right: 95px;
+                                                ; align-items: center;">
+                                                <input class="fileName" id="fileName4"
+                                                   style='font-size: 12px;' disabled></input>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="mb-3 " >
+                                          <label for="input10" class="form-label ">Number of STOP Work notice issued</label>
+                                          <div class="input-group">
+                                             <input type="number" class="form-control disableIt importantField" id="input10"
+                                                placeholder="Number of STOP Work notice issued" name="stop_work_notice"
+                                                required >
+                                             <div class=" btnMargin">
+                                                <button class="btn  valueButton disableBtn" type="button"
+                                                   id="increment10"><img src="{% static 'images/plus-circle.svg' %}"
+                                                   class="plusIcon"></button>
+                                                <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                   id="decrement10"><img src="{% static 'images/minusButton.svg' %}" </button>
+                                             </div>
+                                          </div>
+                                          <div id='formsLink2'  class='formsLink' >
+                                             <img src="{% static 'images/Frame.png' %}">
+                                             <a id="stopWorkLink" href="" class="linkForm">Fill the data</a>
+                                          </div>
+                                       </div>
+                                       <div class="mb-3 " >
+                                          <label for="input11" class="form-label ">Number of Violation Memo issued</label>
+                                          <div class="input-group">
+                                             <input type="number" class="form-control disableIt importantField "
+                                                id="input11" placeholder="Number of Violation Memo issued"
+                                                name="violation_memo_issued" required >
+                                             <div class=" btnMargin">
+                                                <button class="btn  valueButton disableBtn " type="button"
+                                                   id="increment11"><img src="{% static 'images/plus-circle.svg' %}"
+                                                   class="plusIcon"></button>
+                                                <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                   id="decrement11"><img src="{% static 'images/minusButton.svg' %}"
+                                                </button> 
+                                             </div>
+                                          </div>
+                                          <div id='formsLink3' class='formsLink' >
+                                             <img src="{% static 'images/Frame.png' %}">
+                                             <a id="violationLink" href="" class="linkForm">Fill the data</a>
+                                          </div>
+                                       </div>
+                                       <div class="mb-3">
+                                          <label for="input12" class="form-label ">Number of complaints from
+                                          customers</label>
+                                          <div class="input-group">
+                                             <input type="number" class="form-control disableIt importantField  "
+                                                id="input12" placeholder="Number of complaints from customers"
+                                                name="complaint_from_customer" required > 
+                                             <div class=" btnMargin">
+                                                <button class="btn  valueButton disableBtn " type="button"
+                                                   id="increment12"><img src="{% static 'images/plus-circle.svg' %}"
+                                                   class="plusIcon"></button>
+                                                <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                   id="decrement12"><img src="{% static 'images/minusButton.svg' %}"
+                                                </button> 
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="saveBtn" class=''>
+                                          <button type="submit" class="btn btn-success subForms" id="observationBtn" onclick="saveChanges()"
+                                             >Save & Next</button>
+                                       </div>
+                                    </form>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="accordion-item">
+                              <h2 class="accordion-header">
+                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapse4" aria-expanded="true" aria-controls="collapse4">
+                                    <label class="custom-checkbox-container" style='margin-bottom:0px'>
+                                       <input type="checkbox" class="custom-checkbox" id ='checkbox4' >
+                                    </label>
+                                 Management Visits
+                                 </button>
+                              </h2>
+                              <div id="collapse4" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
+                                 <div class="accordion-body">
+                                    <form method="POST" action="{% url 'Management Visits' %}" enctype="multipart/form-data"
+                                       id="form4">
+                                       {% csrf_token %}
+                                       <input type="hidden" name="submittedDate" class="getDateFormat">
+                                       <input type="hidden" name="formSubmitDate" class="formSubmitDate">
+                                       <input type="hidden" name="plant_id" id="plant_id" class='plantcode'>
+                                       <input type="hidden" name="toBeUpdatedId" id="toBeUpdatedId4">
+                                       <input type="hidden" name="startRange" class="startRange">
+                                       <input type="hidden" name="endRange" class="endRange">
+                                       <input type="hidden" name="category" class="category">
+                                       <input type="hidden" name="categoryValue" class="categoryValue">
+
+                                       <div class="mb-3">
+                                          <label for="input13" class="form-label ">Number of Management HSE Visits</label>
+                                          <div class='seperateAllElement' style='display: flex'>
+                                             <div class="input-group" id="adjustWidth">
+                                                <input type="number" class="form-control disableIt" id="input13"
+                                                   placeholder="Number of Management HSE Visits"
+                                                   name="no_of_management_visit" required>
+                                                <div class=" btnMargin">
+                                                   <button class="btn  valueButton disableBtn " type="button"
+                                                      id="increment13"><img src="{% static 'images/plus-circle.svg' %}"
+                                                      class="plusIcon"></button>
+                                                   <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                      id="decrement13"><img
+                                                      src="{% static 'images/minusButton.svg' %}"></button>
+                                                </div>
+                                             </div>
+                                             <div class="uploadBtn">
+                                                <input type="file" class="form-control-file disableIt" id="fileInput5"
+                                                   style="display: none" name="no_of_management_visit_file">
+                                                <label class="input-group-text uploadColor subForms" for="fileInput5"
+                                                   id="fileInputLabel5" style='width: 107px;'>Upload File</label>
+                                                <div class="fileDisplay" id="fileDisplay5"
+                                                   style="align-items: center;">
+                                                   <input class="fileName" id="fileName5"
+                                                      style='font-size: 12px;' disabled></input>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="mb-3">
+                                          <label for="input14" class="form-label ">Total Findings</label>
+                                          <div class='seperateAllElement' style='display: flex'>
+                                             <div class="input-group" id="adjustWidth">
+                                                <input type="number" class="form-control disableIt" id="input14"
+                                                   placeholder="Total Findings" name="total_finding" required>
+                                                <div class=" btnMargin">
+                                                   <button class="btn  valueButton disableBtn " type="button"
+                                                      id="increment14"><img src="{% static 'images/plus-circle.svg' %}"
+                                                      class="plusIcon"></button>
+                                                   <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                      id="decrement14"><img
+                                                      src="{% static 'images/minusButton.svg' %}"></button>
+                                                </div>
+                                             </div>
+                                             <div class="uploadBtn">
+                                                <input type="file" class="form-control-file disableIt" id="fileInput6"
+                                                   style="display: none" name="total_finding_file">
+                                                <label class="input-group-text uploadColor subForms" for="fileInput6"
+                                                   id="fileInputLabel6" style='width: 107px;'>Upload File</label>
+                                                <div class="fileDisplay" id="fileDisplay6"
+                                                   style="align-items: center;">
+                                                   <input class="fileName" id="fileName6"
+                                                      style='font-size: 12px;' disabled></input>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="mb-3">
+                                          <label for="input15" class="form-label ">Number of compilance done</label>
+                                          <div class='seperateAllElement' style='display: flex'>
+                                             <div class="input-group" id="adjustWidth">
+                                                <input type="number" class="form-control disableIt" id="input15"
+                                                   placeholder="Number of compilance done" name="no_of_compilance_done"
+                                                   required>
+                                                <div class=" btnMargin">
+                                                   <button class="btn  valueButton disableBtn" type="button"
+                                                      id="increment15"><img src="{% static 'images/plus-circle.svg' %}"
+                                                      class="plusIcon"></button>
+                                                   <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                      id="decrement15"><img
+                                                      src="{% static 'images/minusButton.svg' %}"></button>
+                                                </div>
+                                             </div>
+                                             <div class="uploadBtn">
+                                                <input type="file" class="form-control-file disableIt" id="fileInput7"
+                                                   style="display: none" name="no_of_compilance_done_file">
+                                                <label class="input-group-text uploadColor subForms" for="fileInput7"
+                                                   id="fileInputLabel7" style='width: 107px;'>Upload File</label>
+                                                <div class="fileDisplay" id="fileDisplay7"
+                                                   style="align-items: center;">
+                                                   <input class="fileName" id="fileName7"
+                                                      style='font-size: 12px;' disabled></input>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="mb-3 changingWidth">
+                                          <label for="input16" class="form-label">Number of observation pending (to be
+                                          compiled)</label>
+                                          <input type="number" class="form-control disableIt incHeight" id="input16"
+                                             placeholder="Number of observation pending (to be compiled)"
+                                             name="observation_pending" required>
+                                       </div>
+                                       <div class="saveBtn">
+                                          <button type="submit" class="btn btn-success disableIt subForms"
+                                             id="SaveAndNext4" onclick="saveChanges()">Save & Next</button>
+                                       </div>
+                                    </form>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="accordion-item">
+                              <h2 class="accordion-header">
+                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapse5" aria-expanded="true" aria-controls="collapse5">
+                                    <label class="custom-checkbox-container" style='margin-bottom:0px'>
+                                       <input type="checkbox" class="custom-checkbox" id ='checkbox5' >
+                                    </label>
+                                 Incidents
+                                 </button>
+                              </h2>
+                              <div id="collapse5" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
+                                 <div class="accordion-body">
+                                    <form method="POST" action="{% url 'incidents' %}" enctype="multipart/form-data"
+                                       id="final-form">
+                                       {% csrf_token %}
+                                       <input type="hidden" name="submittedDate" class="getDateFormat">
+                                       <input type="hidden" name="formSubmitDate" class="formSubmitDate">
+                                       <input type="hidden" name="toBeUpdatedId" id="toBeUpdatedId5" value="">
+                                       <input type="hidden" name="startRange" class="startRange">
+                                       <input type="hidden" name="endRange" class="endRange">
+                                       <input type="hidden" name="category" class="category">
+                                       <input type="hidden" name="categoryValue" class="categoryValue">
+
+                                       <div class="mb-3">
+                                          <label for="input17" class="form-label ">Number of Incidents</label>
+                                          <div class="input-group">
+                                             <input type="number" class="form-control disableIt impField" id="input17"
+                                                placeholder="Number of Incidents" name="no_of_incident" required>
+                                             <div class=" btnMargin">
+                                                <button class="btn  valueButton disableBtn " type="button"
+                                                   id="increment17"><img src="{% static 'images/plus-circle.svg' %}"
+                                                   class="plusIcon"></button>
+                                                <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                   id="decrement17"><img src="{% static 'images/minusButton.svg' %}"></button>
+                                             </div>
+                                          </div>
+                                          <div id='formsLink4' class='formsLink'>
+                                             <img src="{% static 'images/Frame.png' %}">
+                                             <a id="incidentLink" href="" class="linkForm" id='incidentHref'>Fill the data</a>
+                                          </div>
+                                       </div>
+                                       <div class="mb-3">
+                                          <label for="input18" class="form-label ">Number of occupational illness</label>
+                                          <div class="input-group">
+                                             <input type="number" class="form-control disableIt impField" id="input18"
+                                                placeholder="Number of occupational illness" name="no_of_occupation_illness"
+                                                required>
+                                             <div class=" btnMargin">
+                                                <button class="btn  valueButton disableBtn" type="button"
+                                                   id="increment18"><img src="{% static 'images/plus-circle.svg' %}"
+                                                   class="plusIcon"></button>
+                                                <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                   id="decrement18"><img src="{% static 'images/minusButton.svg' %}"></button>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="mb-3">
+                                          <label for="input19" class="form-label ">Number of environmental illness</label>
+                                          <div class="input-group">
+                                             <input type="number" class="form-control disableIt impField" id="input19"
+                                                placeholder="Number of environmental illness" name="no_of_environment_illness"
+                                                required>
+                                             <div class=" btnMargin">
+                                                <button class="btn  valueButton disableBtn" type="button"
+                                                   id="increment19"><img src="{% static 'images/plus-circle.svg' %}"
+                                                   class="plusIcon"></button>
+                                                <button class="btn  valueButton decBtn disableBtn" type="button"
+                                                   id="decrement19"><img src="{% static 'images/minusButton.svg' %}"></button>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="saveBtn" id='finalSubmitDiv'>
+                                          <button type="submit" class="btn btn-success disableIt lastButton subForms"
+                                             id="incidentBtn" style='width: 96px;' onclick="saveChanges()">Save</button>
+                                       </div>
+                                    </form>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="saveBtn">
+                           <form method="POST" action="{% url 'SubmitForm' %}" enctype="multipart/form-data" id='lastForm'>
+                              {% csrf_token %}
+                              <input type="hidden" name="formSubmitDate" class="formSubmitDate">
+                              <input type="hidden" name="startRange" class="startRange" id='startRange'> 
+                              <input type="hidden" name="endRange" class="endRange" id='endRange'>
+                              <input type="hidden" name="category" class="category">
+                              <input type="hidden" name="categoryValue" class="categoryValue">
+
+                              <button type="submit" class="btn" id="finalSubmit" disabled >Submit</button>
+                           </form>
+                        </div>
+                     </div>
+                  <div>
+               <!--main Acc-->
+            <!--main container-->
+            </div>
+         <!--mynavbar-->
+      </div>
+    
+   
+   </body>
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.js"></script>
+   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+   <script type="text/javascript">
+
+      let formChanged = false;
+      let modifiedDate;
+
+      const urlSearchParams = new URLSearchParams(window.location.search);
+      const dateParameterValue = urlSearchParams.get('date');
+
+      // Convert the date format if it exists
+      if (dateParameterValue) {
+         const parts = dateParameterValue.split('/');
+         if (parts.length === 3) {
+            // Rearrange the parts to mm/dd/yyyy format
+            modifiedDate = `${parts[1]}/${parts[0]}/${parts[2]}`;
+         }
+      }
+
+
+      
+      document.getElementById('form1').addEventListener('input', function () {
+          formChanged = true;
+      });
+      
+      document.getElementById('form2').addEventListener('input', function () {
+         formChanged = true;
+      });
+      
+      document.getElementById('form3').addEventListener('input', function () {
+      formChanged = true;
+      });
+      
+      document.getElementById('form4').addEventListener('input', function () {
+      formChanged = true;
+      });
+      
+      document.getElementById('final-form').addEventListener('input', function () {
+      formChanged = true;
+      });
+      
+      
+      function saveChanges() {
+      
+          formChanged = false;
+      }
+      
+  
+      function getFormattedTodayDate() {
+         const today = new Date();
+         const day = String(today.getDate()).padStart(2, '0');
+         const month = String(today.getMonth() + 1).padStart(2, '0'); 
+         const year = today.getFullYear();
+       
+         return `${day}/${month}/${year}`;
+       }
+      
+      
+      function formatDateToDDMMYY(inputDate) {
+         const date = new Date(inputDate);
+      
+         const day = String(date.getDate()).padStart(2, '0');
+         const month = String(date.getMonth() + 1).padStart(2, '0'); 
+         const year = date.getFullYear();
+      
+         return `${day}/${month}/${year}`;
+      }
+      
+      function formatToCustomDate(inputDate) {
+      const parts = inputDate.split('/');
+      const day = parseInt(parts[0], 10);
+      const month = parseInt(parts[1], 10) - 1; 
+      const year = parseInt(parts[2], 10);
+      
+      initialDate = `${month}/${day}/${year}`
+      //console.log('initialDate', initialDate)
+      
+      const dateObject = new Date(year, month, day);
+      
+      const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      
+      const dayOfWeek = daysOfWeek[dateObject.getDay()];
+      const dayOfMonth = dateObject.getDate();
+      const ordinalSuffix = getOrdinalSuffix(dayOfMonth); 
+      const monthName = months[dateObject.getMonth()];
+      
+      return `${dayOfWeek}, ${dayOfMonth}${ordinalSuffix}, ${monthName}`;
+      }
+      
+      function getOrdinalSuffix(day) {
+         if (day >= 11 && day <= 13) {
+            return 'th';
+         }
+         switch (day % 10) {
+            case 1:
+               return 'st';
+            case 2:
+               return 'nd';
+            case 3:
+               return 'rd';
+            default:
+               return 'th';
+         }
+      }
+      function convertDateFormatToDDMMYY(dateString) {
+         const parts = dateString.split('/');
+         const month = parts[0];
+         const day = parts[1];
+         const year = parts[2];
+         return `${day}/${month}/${year}`;
+      }
+
+      function getTodayDate() {
+         const today = new Date();
+         const dd = String(today.getDate()).padStart(2, '0');
+         const mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+         const yyyy = today.getFullYear();
+     
+         return `${dd}/${mm}/${yyyy}`;
+     }
+
+     function compareDates(dateString1, dateString2) {
+      const date1Parts = dateString1.split('/');
+      const date2Parts = dateString2.split('/');
+      
+      const date1 = new Date(date1Parts[2], date1Parts[1] - 1, date1Parts[0]); // Month is zero-based
+      const date2 = new Date(date2Parts[2], date2Parts[1] - 1, date2Parts[0]);
+  
+      if (date1 < date2) {
+          return -1;
+      } else if (date1 > date2) {
+          return 1;
+      } else {
+          return 0; 
+      }
+      }
+
+       $(function() {
+         
+         var startDate;
+         var endDate;
+         var selectedDate;
+
+         const urlSearchParams = new URLSearchParams(window.location.search);
+         const hasDateParameter = urlSearchParams.has('date');
+            
+         if (hasDateParameter) {
+      
+            const dateParameterValue = urlSearchParams.get('date');
+            //console.log('Date parameter is present. Value:', dateParameterValue);
+      
+            const parts = dateParameterValue.split('/');
+            const day = parseInt(parts[0], 10);
+            const month = parseInt(parts[1], 10) - 1; 
+            const year = parseInt(parts[2], 10);
+      
+            initialDate = new Date(year, month, day)
+            //console.log('initialDate', initialDate)
+   
+            selectedDate=new Date(year,month,day)
+            startDate = new Date(year, month, day);  
+            endDate = new Date(year, month, day);  
+         }
+         else{
+            initialDate = new Date()
+            selectedDate=new Date()
+            startDate=new Date()
+            endDate=new Date()
+         }
+           selectedDate=new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate())
+           startDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() - (startDate.getDay() + 1) % 7 + 0);
+           endDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() - (startDate.getDay() + 1) % 7 + 6);
+      
+           $('#startDate').text($.datepicker.formatDate('mm/dd/yy', startDate));
+           $('#endDate').text($.datepicker.formatDate('mm/dd/yy', endDate));
+      
+      
+          var selectCurrentWeek = function() {
+              window.setTimeout(function() {
+                  $('.week-picker').find('.ui-datepicker-current-day a').addClass('ui-state-active');
+              }, 1);
+          };
+      
+
+          $('.week-picker').datepicker({
+      
+              showOtherMonths: true,
+              selectOtherMonths: true,
+              defaultDate: startDate,
+              dateFormat: 'mm/dd/yy',
+              changedFormat: 'dd/mm/yy',
+      
+      
+              onSelect: function(dateText, inst) {
+               modifiedDate=dateText
+               
+               const parts = dateText.split('/');
+               const month = parts[0];
+               const day = parts[1];
+               const year = parts[2];
+      
+               const dateFormatChanged = `${day}/${month}/${year}`;
+               const dateFormatForAPI= `${year}-${month}-${day}`
+
+
+               // console.log(`selected date is ${selectedDate}`)
+
+               var date = $(this).datepicker('getDate');
+               startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - (date.getDay() + 1) % 7 + 0);
+               endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - (date.getDay() + 1) % 7 + 6);
+               var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
+
+            
+               const formattedStartDate = $.datepicker.formatDate(dateFormat, startDate, inst.settings);
+               const formattedEndDate = $.datepicker.formatDate(dateFormat, endDate, inst.settings);
+
+                 
+                  // Store values in variables
+                  const startDateText = convertDateFormatToDDMMYY(formattedStartDate);
+                  const endDateText = convertDateFormatToDDMMYY(formattedEndDate);
+
+
+                  const todayDate = new Date(); 
+
+                  const startDateRange = new Date(`${startDateText.split("/")[2]}-${startDateText.split("/")[1]}-${startDateText.split("/")[0]}`);
+                  const endDateRange = new Date(`${endDateText.split("/")[2]}-${endDateText.split("/")[1]}-${endDateText.split("/")[0]}`);
+
+                  console.log(`todays date is ${todayDate}`)
+                  console.log(`the statdateRange is ${startDateRange}`)
+                  console.log(`the enddateRange is ${endDateRange}`)
+
+                  const endDatePlus1 = new Date(endDateRange);
+                  endDatePlus1.setDate(endDatePlus1.getDate() + 1);
+
+                  const endDatePlus2 = new Date(endDateRange);
+                  endDatePlus2.setDate(endDatePlus2.getDate() + 2);
+
+
+                  if ((todayDate >= endDateRange && todayDate <= endDatePlus2)|| (todayDate >= startDateRange && todayDate <= endDateRange)) {
+                     // can fill the form
+                     console.log("Can fill the form");
+               
+                     const getTheTodayDate = getTodayDate();
+                     const result = compareDates(dateFormatChanged, getTheTodayDate);
+                     if(result==1){
+                        console.log(`the date is greater`)
+                        DisablingFields()
+            
+                        let disableFormsLink = document.querySelectorAll('.formsLink');
+                        for (let i = 0; i < disableFormsLink.length; i++) {
+                           disableFormsLink[i].style.display = 'none';
+                        }
+                     }
+                     else{
+                        EnablingFields()
+                       
+                        let disableFormsLink = document.querySelectorAll('.formsLink');
+                        for (let i = 0; i < disableFormsLink.length; i++) {
+                           disableFormsLink[i].style.display = 'block';
+                        }
+
+                        if(todayDate >= endDateRange && todayDate <= endDatePlus2 ){
+                           document.getElementById('finalSubmit').disabled=false;
+                        }
+      
+                     }
+
+                  }
+                  
+                   else {
+                     // can only view the form 
+                     DisablingFields()
+                    
+                     console.log("Cannot fill the form");
+                     let disableFormsLink = document.querySelectorAll('.formsLink');
+                     for (let i = 0; i < disableFormsLink.length; i++) {
+                        disableFormsLink[i].style.display = 'block';
+                     }
+                  }
+             
+                  $('#startDate').text(startDateText);
+                  $('#endDate').text(endDateText);
+
+                  selectCurrentWeek();
+                  
+                  if(formChanged==true){
+                     Swal.fire({
+                        title: 'You have some unsaved changes ',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Cancel',
+                        customClass: {
+                            popup: 'small-popup hello'
+                        }
+                    });
+                     return;
+                  } 
+                        
+                  const convertedDate = formatDateToDDMMYY(date);
+                  //console.log(`converted Date is ${convertedDate}`)
+      
+                  var formattedDate = formatToCustomDate(convertedDate);
+                  $('#viewingDate').text(formattedDate);
+
+      
+                  const newUrl = `${window.location.origin}${window.location.pathname}?date=${dateFormatChanged}`;
+                  window.history.pushState({}, '', newUrl);
+      
+                 
+                  let getStartRangeInputs = document.querySelectorAll('.startRange');
+                  for (let i = 0; i < getStartRangeInputs.length; i++) {
+                     getStartRangeInputs[i].value = startDateText;
+                  }
+               
+                  let getEndRangeInputs = document.querySelectorAll('.endRange');
+                  for (let i = 0; i < getEndRangeInputs.length; i++) {
+                     getEndRangeInputs[i].value = endDateText;
+                  }
+               
+                  let getDateFormatInputs = document.querySelectorAll('.getDateFormat');
+                  for (let i = 0; i < getDateFormatInputs.length; i++) {
+                     getDateFormatInputs[i].value = dateFormatForAPI;
+                  }
+               
+                  let getDateSubmitttedInputs = document.querySelectorAll('.formSubmitDate');
+                  for (let i = 0; i < getDateSubmitttedInputs.length; i++) {
+                     getDateSubmitttedInputs[i].value = dateFormatForAPI;
+                  }
+
+
+               
+               const segment = document.getElementById('segmentDropdown').value
+               const segmentValue = document.getElementById('segmentName').value
+               if(segment && segmentValue){
+                  document.getElementById('content_container').style.display='block'
+                  
+
+               }
+             
+
+               let observationLink = document.getElementById('observationLink');
+               observationLink.href = `/observations/?category=${segment}&category_value=${segmentValue}&date=${dateFormatForAPI}`; 
+
+               let stopWorkLink=document.getElementById('stopWorkLink')
+               stopWorkLink.href=`/stopworks/?category=${segment}&category_value=${segmentValue}&date=${dateFormatForAPI}`
+
+               let violationLink=document.getElementById('violationLink')
+               violationLink.href=`/violations/?category=${segment}&category_value=${segmentValue}&date=${dateFormatForAPI}`
+
+               let incidentLink=document.getElementById('incidentLink')
+               incidentLink.href=`/Incidents/?category=${segment}&category_value=${segmentValue}&date=${dateFormatForAPI}`
+
+            
+               const apiURL = `/child-models/?category=${segment}&category_value=${segmentValue}&date=${dateFormatForAPI}`;
+
+
+                  fetch(apiURL)
+                  .then(response => {
+                     if (!response.ok) {
+                        if (response.status === 404) {
+                           const checkboxes = document.querySelectorAll('.custom-checkbox');
+            
+                           checkboxes.forEach(function (checkbox) {
+                             checkbox.checked = false;
+                           });
+                           console.log(response.status);
+            
+                           clearInputFields();
+                          return Promise.reject(`HTTP error! Status: ${response.status}`);
+                        } else {
+                           throw new Error(`HTTP error! Status: ${response.status}`);
+                        }
+                     }
+                     return response.json();
+                  })
+                  .then(data => {
+                    
+               
+                     if (data.hse_status && data.hse_status === 1) {
+                        //DisablingFields()
+                    
+                        //console.log("Cannot fill the form");
+                        //let disableFormsLink = document.querySelectorAll('.formsLink');
+                        //for (let i = 0; i < disableFormsLink.length; i++) {
+                        //   disableFormsLink[i].style.display = 'block';
+                        //}
+                     }
+               
+                     populateInputFields('General HSE', generalHSEFieldsID, generalHSEFields, 1, data,'checkbox1');
+                     populateInputFields('HSE Training', hseTrainingFieldsID, hseTrainingFields, 2, data,'checkbox2');
+                     populateInputFields('HSE Observation', hseObservationFieldsID, hseObservationFields, 3, data,'checkbox3');
+                     populateInputFields('Management Visits', managementVisitsFieldsID, managementVisitsFields, 4, data,'checkbox4');
+                     populateInputFields('Incidents', incidentsFieldsID, incidentsFields, 5, data,'checkbox5');
+                  })
+                  .catch(error => {
+                     console.error('API request failed:', error);
+                  });
+         
+      
+              },
+              beforeShowDay: function(date) {
+               const formattedDate = $.datepicker.formatDate('mm/dd/yy', date);
+
+               var cssClass = '';
+
+               if (date >= startDate && date <= endDate) {
+                 cssClass += ' ui-datepicker-current-day';
+               }
+
+               if(modifiedDate==formattedDate){
+                  cssClass += ' ui-datepicker-current-select';
+               }
+
+             
+               return [true, cssClass];
+             },
+             
+           onChangeMonthYear: function(year, month, inst) {
+                  selectCurrentWeek();
+              },
+           
+
+          });
+      
+          $('.week-picker').datepicker('setDate',initialDate );
+          $('.week-picker').datepicker('option', 'onSelect').call($('.week-picker').get(0), $.datepicker.formatDate('mm/dd/yy', initialDate), { settings: $('.week-picker').datepicker('option') });
+      
+      });
+
+      function changeDate(day) {
+         const urlSearchParams = new URLSearchParams(window.location.search);
+         const hasDateParameter = urlSearchParams.has('date');
+     
+         if (hasDateParameter) {
+             const dateParameterValue = urlSearchParams.get('date');
+     
+             const parts = dateParameterValue.split('/');
+             const originalDay = parseInt(parts[0], 10);
+             const month = parseInt(parts[1], 10) - 1;
+             const year = parseInt(parts[2], 10);
+     
+             const originalDate = new Date(year, month, originalDay);
+     
+             if (day === -1) {
+                 // Decrement the date by 1 day
+                 originalDate.setDate(originalDate.getDate() - 1);
+             } else if (day === 1) {
+                 // Increment the date by 1 day
+                 originalDate.setDate(originalDate.getDate() + 1);
+             }
+     
+             modifiedDate = `${String(originalDate.getMonth() + 1).padStart(2, '0')}/${String(originalDate.getDate()).padStart(2, '0')}/${originalDate.getFullYear()}`;
+             console.log(`modified date is ${modifiedDate}`);
+     
+             // Set the date and call onSelect directly
+             $('.week-picker').datepicker('setDate', modifiedDate);
+             
+             // Call onSelect with the modified date
+             const onSelectFunction = $('.week-picker').datepicker('option', 'onSelect');
+             onSelectFunction.call($('.week-picker').get(0), modifiedDate, { settings: $('.week-picker').datepicker('option') });
+         }
+     }
+        
+      
+   </script>
+   <script>
+     
+      
+      
+      document.getElementById('segmentDropdown').addEventListener('change', function () {
+
+         let getCategoryValueInputs = document.querySelectorAll('.categoryValue');
+         for (let i = 0; i < getCategoryValueInputs.length; i++) {
+            getCategoryValueInputs[i].value = '';
+         }
+
+
+         var selectedValue = this.value;
+
+         let getCategoryInputs = document.querySelectorAll('.category');
+         for (let i = 0; i < getCategoryInputs.length; i++) {
+            getCategoryInputs[i].value = selectedValue;
+         }
+
+     
+         var segmentNameDropdown = document.getElementById('segmentDiv');
+         var segmentValues = document.getElementById('segmentName');
+
+
+         if (selectedValue !== "") {
+
+             segmentNameDropdown.style.display = 'block'; 
+         } else {
+             segmentNameDropdown.style.display = 'none';
+         }
+
+     
+         if(selectedValue=='hawkai'){
+            const segmentCodeText = "Select the plant code";
+            document.getElementById('segmentCodeValue').innerText = segmentCodeText;
+            
+            segmentValues.innerHTML = "<option value='' disabled selected>Select the Plant</option>";
+
+                  fetch('/plant/')
+                  .then(response => response.json())
+                  .then(data => {
+                     console.log(data)   
+                     data.forEach(plantCode => {
+                      
+                        const option = document.createElement('option');
+                        option.value = plantCode.id;
+                        console.log(option.value)
+                        option.text = `Plant ${plantCode.id}`;
+                      
+                        segmentValues.appendChild(option);
+                      });
+                     })
+                     .catch(error => console.error('Error fetching data:', error));
+
+         
+
+            console.log(`selected value is hawkai`)
+         }
+         else if(selectedValue=='homescape'){
+            const segmentCodeText = "Select the Cluster Code";
+            document.getElementById('segmentCodeValue').innerText = segmentCodeText;
+
+            segmentValues.innerHTML = "<option value='' disabled selected>Select the Cluster</option>";
+
+            fetch('/homescape/')
+            .then(response => response.json())
+            .then(data => {
+            console.log(data)   
+            data.forEach(homeScapeCode => {
+             
+               const option = document.createElement('option');
+               option.value = homeScapeCode.cluster;
+               console.log(option.value)
+               option.text = `${homeScapeCode.cluster}`;
+             
+               segmentValues.appendChild(option);
+             });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+         
+
+            console.log(`selected value is homescape`)
+
+         }
+         else if(selectedValue=='warehouse'){
+            const segmentCodeText = "Select the Warehouse Code";
+            document.getElementById('segmentCodeValue').innerText = segmentCodeText;
+
+            segmentValues.innerHTML = "<option value='' disabled selected>Select the Code</option>";
+
+            fetch('/warehouse/')
+            .then(response => response.json())
+            .then(data => {
+            console.log(data)     
+            data.forEach(warehouseCode => {
+             
+               const option = document.createElement('option');
+               option.value = warehouseCode.code;
+               console.log(option.value)
+               option.text = `Code ${warehouseCode.code}`;
+             
+               segmentValues.appendChild(option);
+             });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+
+            console.log(`selected value is warehouse`)
+
+         }  
+         
+         document.getElementById('segmentName').addEventListener('change',function(){
+            var codeValue=this.value;
+            console.log(`codevalue is ${codeValue}`)
+
+            let getCategoryValueInputs = document.querySelectorAll('.categoryValue');
+            for (let i = 0; i < getCategoryValueInputs.length; i++) {
+               getCategoryValueInputs[i].value = codeValue;
+            }
+            changeDate(0);
+
+
+         })
+
+   
+     });
+     
+     
+      
+      
+       function initializeUploadButton(inputId, labelId, displayId, fileNameId) {
+         const fileInput = document.getElementById(inputId);
+         const uploadLabel = document.getElementById(labelId);
+         const fileDisplay = document.getElementById(displayId);
+         const fileName = document.getElementById(fileNameId);
+      
+         fileInput.addEventListener("change", function () {
+            const file = fileInput.files[0];
+            if (file) {
+               fileName.value = file.name;
+               fileDisplay.style.display = "flex";
+            }
+         });
+      }
+      
+      // Usage example:
+      initializeUploadButton("fileInput1", "fileInputLabel1", "fileDisplay1", "fileName1");
+      initializeUploadButton("fileInput2", "fileInputLabel2", "fileDisplay2", "fileName2");
+      initializeUploadButton("fileInput3", "fileInputLabel3", "fileDisplay3", "fileName3");
+      initializeUploadButton("fileInput4", "fileInputLabel4", "fileDisplay4", "fileName4");
+      initializeUploadButton("fileInput5", "fileInputLabel5", "fileDisplay5", "fileName5");
+      initializeUploadButton("fileInput6", "fileInputLabel6", "fileDisplay6", "fileName6");
+      initializeUploadButton("fileInput7", "fileInputLabel7", "fileDisplay7", "fileName7");
+      initializeUploadButton("extraFileInput1", "extrafileInputLabel1", "fileDisplay11", "fileName11");
+      initializeUploadButton("extraFileInput2", "extrafileInputLabel2", "fileDisplay22", "fileName22"); 
+      
+      
+      
+      
+      $(document).ready(function() {
+         var input9 = document.getElementById('input9');
+         var input10 = document.getElementById('input10');
+         var input11 = document.getElementById('input11');
+         var input17 = document.getElementById('input17');
+      
+         function toggleFormsLinksAndInputs() {
+             if (input9.value === '0') {
+               document.getElementById('formsLink1').style.display='none';
+               
+             }
+             else if(input9.value === ''){
+               document.getElementById('formsLink1').style.display='block';
+      
+             }
+           
+             if (input10.value === '0') {
+               document.getElementById('formsLink2').style.display='none';
+             }
+             else if(input10.value === ''){
+               document.getElementById('formsLink2').style.display='block';
+      
+             }
+               
+             if (input11.value === '0') {
+               document.getElementById('formsLink3').style.display='none';
+             }
+             else if(input11.value === ''){
+               document.getElementById('formsLink3').style.display='block';
+      
+             }
+             if (input17.value === '0') {
+               document.getElementById('formsLink4').style.display='none';
+             }
+             else if(input17.value === ''){
+               document.getElementById('formsLink4').style.display='block';
+      
+             }
+            
+         }
+      
+         // Initially, call the function to set the initial visibility and enable/disable inputs
+         toggleFormsLinksAndInputs();
+      
+         // Attach event listeners to the input fields to detect changes
+         input9.addEventListener('input', toggleFormsLinksAndInputs);
+         input10.addEventListener('input', toggleFormsLinksAndInputs);
+         input11.addEventListener('input', toggleFormsLinksAndInputs);
+         input17.addEventListener('input', toggleFormsLinksAndInputs);
+      }); 
+      
+
+      function setupIncrementDecrementButtons(decrementButtonId, incrementButtonId, inputFieldId) {
+         const decrementButton = document.getElementById(decrementButtonId);
+         const incrementButton = document.getElementById(incrementButtonId);
+         const inputField = document.getElementById(inputFieldId);
+      
+         decrementButton.addEventListener("click", () => {
+             const currentValue = parseFloat(inputField.value);
+             if (!isNaN(currentValue)) {
+                 const incrementAmount = currentValue % 1 === 0 ? 1 : 0.1;
+                 const newValue = Math.max(currentValue - incrementAmount, 1);
+                 inputField.value = formatValue(newValue);
+             }
+         });
+      
+         incrementButton.addEventListener("click", () => {
+             const currentValue = parseFloat(inputField.value);
+             if (!isNaN(currentValue)) {
+                 const incrementAmount = currentValue % 1 === 0 ? 1 : 0.1;
+                 const newValue = currentValue + incrementAmount;
+                 inputField.value = formatValue(newValue);
+             }
+         });
+      
+         function formatValue(value) {
+             // Remove ".0" for integer values
+             return value % 1 === 0 ? String(value) : value.toFixed(1);
+         }
+      }
+      
+      
+      
+      // Example usage:
+      setupIncrementDecrementButtons("decrement1", "increment1", "input1");
+      setupIncrementDecrementButtons("decrement3", "increment3", "input3");
+      setupIncrementDecrementButtons("decrement4", "increment4", "input4");
+      setupIncrementDecrementButtons("decrement5", "increment5", "input5");
+      setupIncrementDecrementButtons("decrement7", "increment7", "input7");
+      setupIncrementDecrementButtons("decrement9", "increment9", "input9");
+      setupIncrementDecrementButtons("decrement10", "increment10", "input10");
+      setupIncrementDecrementButtons("decrement11", "increment11", "input11");
+      setupIncrementDecrementButtons("decrement12", "increment12", "input12");
+      setupIncrementDecrementButtons("decrement13", "increment13", "input13");
+      setupIncrementDecrementButtons("decrement14", "increment14", "input14");
+      setupIncrementDecrementButtons("decrement15", "increment15", "input15");
+      setupIncrementDecrementButtons("decrement17", "increment17", "input17");
+      setupIncrementDecrementButtons("decrement18", "increment18", "input18");
+      setupIncrementDecrementButtons("decrement19", "increment19", "input19");
+      setupIncrementDecrementButtons("extraDecrement1", "extraIncrement1", "extraInput1");
+      setupIncrementDecrementButtons("extraDecrement2", "extraIncrement2", "extraInput2");
+      setupIncrementDecrementButtons("extraDecrement3", "extraIncrement3", "extraInput3");
+      
+      const numberInput1 = document.getElementById("input6");
+      const numberInput2 = document.getElementById("input8");
+      const numberError1 = document.getElementById("number-error1");
+      const numberError2 = document.getElementById("number-error2");
+      
+      
+      numberInput1.addEventListener("input", function () {
+         if (parseInt(numberInput1.value) <= 1) {
+            numberError1.style.display = "block";
+            numberInput1.classList.add("error-border");
+         } else {
+            numberError1.style.display = "none";
+            numberInput1.classList.remove("error-border");
+         }
+      });
+      
+      
+      numberInput2.addEventListener("input", function () {
+         if (parseInt(numberInput2.value) <= 1) {
+            numberError2.style.display = "block";
+            numberInput2.classList.add("error-border");
+         } else {
+            numberError2.style.display = "none";
+            numberInput2.classList.remove("error-border");
+         }
+      });
+      
+      
+      
+      function populateInputFields(category, fieldIds, fieldNames, oldId, data,checkBoxId) {
+         if (data) {
+            //console.log(data)
+            const categoryData = data[category][data[category].length - 1];
+            console.log('cateogry data is undefined')
+      
+            if (categoryData === undefined) {
+               fieldIds.forEach((fieldId) => {
+                  document.getElementById(fieldId).value = '';
+                  
+               });
+               document.getElementById(`toBeUpdatedId${oldId}`).value = '';
+               const checkbox = document.getElementById(checkBoxId);
+    
+               if (checkbox) {
+                  console.log('hello inside the checkbox')
+                 checkbox.checked = false;
+               }
+
+            } else {
+
+               const categoryId = categoryData['id'];
+
+               const form_submitted=categoryData['form_submitted']
+               console.log(`form submitted is ${form_submitted}`)
+               const checkbox = document.getElementById(checkBoxId);
+    
+               if (form_submitted === true && checkbox) {
+                 checkbox.checked = true;
+               }
+               else if(form_submitted === false && checkbox){
+                  checkbox.checked = false;
+
+               }
+               
+               document.getElementById(`toBeUpdatedId${oldId}`).value = categoryId;
+      
+               fieldIds.forEach((fieldId, index) => {
+                  const fieldName = fieldNames[index];
+                  let fieldData = categoryData[fieldName];
+                  //console.log(fieldData)
+      
+              
+                  // Check if fieldData is a string and contains the "media/uploads/" prefix
+                  if (typeof fieldData === 'string') {
+                     // Remove the "media/uploads/" prefix
+                     fieldData = fieldData.substring('/media/uploads/'.length);
+                  }
+              
+                  document.getElementById(fieldId).value = fieldData;
+              });
+            }
+         }
+      }
+      
+      
+      const generalHSEFieldsID = ['input1', 'input2', 'input3', 'input4', 'extraInput1', 'extraInput2', 'extraInput3','fileName1','fileName11','fileName22'];
+      const generalHSEFields = ['total_man_days_worked', 'total_safe_man_hours', 'no_of_person_inducted_site',
+         'no_of_toolbox_attendees', 'toolbox_talk_manhours', 'promotional_activities', 'committee_meetings','today_day_worked_file','toolbox_talk_manhours_file','promotional_activities_file'
+      ];
+      const hseTrainingFieldsID = ['input5', 'input6', 'input7', 'input8', 'extraInput4', 'extraInput5','fileName2','fileName3'];
+      const hseTrainingFields = ['hse_training_attendees', 'duration_of_trainee', 'hse_training_contractor',
+         'duration_of_contractor', 'amplus_hse_trainings', 'contractor_hse_trainings','attendees_amplus_file','attendees_contractor_file'
+      ];
+      const hseObservationFieldsID = ['input9', 'input10', 'input11', 'input12','fileName4'];
+      const hseObservationFields = ['daily_hse_observation', 'stop_work_notice', 'violation_memo_issued',
+         'complaint_from_customer','hse_observation_file'
+      ];
+      const managementVisitsFieldsID = ['input13', 'input14', 'input15', 'input16','fileName5','fileName6','fileName7'];
+      const managementVisitsFields = ['no_of_management_visit', 'total_finding', 'no_of_compilance_done',
+         'observation_pending','no_of_management_visit_file','total_finding_file','no_of_compilance_done_file'
+      ];
+      const incidentsFieldsID = ['input17', 'input18', 'input19'];
+      const incidentsFields = ['no_of_incident', 'no_of_occupation_illness', 'no_of_environment_illness'];
+      
+      
+      function clearInputFields() {
+         generalHSEFieldsID.concat(hseTrainingFieldsID, hseObservationFieldsID, incidentsFieldsID, managementVisitsFieldsID)
+            .forEach(fieldId => {
+               document.getElementById(fieldId).value = '';
+               document.getElementById(`toBeUpdatedId1`).value = '';
+               document.getElementById(`toBeUpdatedId2`).value = '';
+               document.getElementById(`toBeUpdatedId3`).value = '';
+               document.getElementById(`toBeUpdatedId4`).value = '';
+               document.getElementById(`toBeUpdatedId5`).value = '';
+      
+      
+            });
+      
+      }
+      
+      
+      function disableInputFields(className) {
+         const elements = document.getElementsByClassName(className);
+         for (let i = 0; i < elements.length; i++) {
+            elements[i].disabled = true;
+         }
+      }
+      
+      function disableButtonFields(className) {
+         const elements = document.getElementsByClassName(className);
+         for (let i = 0; i < elements.length; i++) {
+            elements[i].disabled = true;
+            elements[i].style.border = '1px solid white';
+      
+      
+         }
+      }
+      
+      function enableInputFields(className) {
+         const elements = document.getElementsByClassName(className);
+         for (let i = 0; i < elements.length; i++) {
+            elements[i].disabled = false;
+         }
+      }
+      
+      function enableButtonFields(className) {
+         const elements = document.getElementsByClassName(className);
+         for (let i = 0; i < elements.length; i++) {
+            elements[i].disabled = false;
+      
+      
+         }
+      }
+      
+      
+      
+      function handleFormSubmission(formId, url, toUpdateId,checkBoxId) {
+         const form = document.getElementById(formId);
+         form.addEventListener("submit", function (event) {
+             event.preventDefault();
+      
+             const formData = new FormData(this);
+             console.log('FormData entries:', Array.from(formData.entries()));
+      
+             const filteredFormData = new FormData();
+             formData.forEach((value, key) => {
+               if (!(value instanceof File) || value.size > 0) {
+                   filteredFormData.append(key, value);
+               }
+           });
+             
+             console.log('Filtered FormData entries:', Array.from(filteredFormData.entries()));
+      
+             const csrftoken = getCookie('csrftoken');
+             const existingID = formData.get("toBeUpdatedId");
+      
+             const methodValue = existingID ? "PUT" : "POST";
+      
+             fetch(url, {
+                 method: methodValue,
+                 body: filteredFormData,
+                 headers: {
+                     "X-CSRFToken": csrftoken,
+                 },
+             })
+             .then(response => {
+                 console.log(response);
+                 if (response.status === 201 || response.status === 200) {
+
+               
+            
+                     // Success handling
+                  $('#successModal').modal('show');
+                
+                  setTimeout(function () {
+                     $('#successModal').modal('hide');
+                  }, 1000);
+
+                  const checkbox = document.getElementById(checkBoxId);
+                 checkbox.checked=true;
+                  
+                
+            
+                 } else if (response.status === 400) {
+                     console.log('Plant does not exist');
+                     Swal.fire({
+                         icon: 'error',
+                         title: 'Cannot Submit the form ',
+                         confirmButtonColor: '#3085d6',
+                         confirmButtonText: 'Cancel',
+                         customClass: {
+                             popup: 'small-popup'
+                         }
+                     });
+                     return Promise.reject(`HTTP error! Status: ${response.status}`);
+                 } else if (response.status === 500) {
+                     Swal.fire({
+                         icon: 'error',
+                         title: 'Select the plant code ',
+                         confirmButtonColor: '#3085d6',
+                         confirmButtonText: 'Cancel',
+                         customClass: {
+                             popup: 'small-popup'
+                         }
+                     });
+                     return Promise.reject(`HTTP error! Status: ${response.status}`);
+                 }
+
+             
+
+                  else {
+                     throw new Error("Network error during form submission");
+                 }
+                 return response.json();
+             })
+             .then(data => {
+                 const id = data.id;
+                 document.getElementById(toUpdateId).value = id;
+                 
+               
+             })
+             .catch(error => {
+                 console.error("Error:", error);
+             });
+         });
+      }
+      
+      
+      function getCookie(name) {
+         const value = `; ${document.cookie}`;
+         const parts = value.split(`; ${name}=`);
+         if (parts.length === 2) return parts.pop().split(';').shift();
+      }
+      
+      
+      handleFormSubmission("form1", "{% url 'General HSE' %}", "toBeUpdatedId1",'checkbox1');
+      handleFormSubmission("form2", "{% url 'HSE Trainings' %}", "toBeUpdatedId2",'checkbox2');
+      handleFormSubmission("form3", "{% url 'HSE Observations' %}", "toBeUpdatedId3",'checkbox3');
+      handleFormSubmission("form4", "{% url 'Management Visits' %}", "toBeUpdatedId4",'checkbox4');
+      handleFormSubmission("final-form", "{% url 'incidents' %}", "toBeUpdatedId5",'checkbox5');
+      
+      
+      function DisablingFields() {
+         disableInputFields("disableIt");
+         disableButtonFields("disableBtn");
+         //document.querySelector('.lastPreview').style.display = 'none';
+      
+         const subForms = document.querySelectorAll('.subForms');
+      
+         subForms.forEach(subForm => {
+            subForm.style.display = 'none';
+         });
+      }
+
+      function EnablingFields() {
+         enableInputFields("disableIt");
+         enableButtonFields("disableBtn");
+         //document.querySelector('.lastPreview').style.display = 'none';
+         const subForms = document.querySelectorAll('.subForms');
+      
+         subForms.forEach(subForm => {
+            subForm.style.display = 'block';
+         });
+      
+      }
+      
+      function DisablingSmallerDate() {
+         disableInputFields("disableIt");
+         disableButtonFields("disableBtn");
+         //document.querySelector('.lastPreview').style.display = 'none';
+         const subForms = document.querySelectorAll('.subForms');
+      
+         subForms.forEach(subForm => {
+            subForm.style.display = 'none';
+         });
+      
+      }
+      
+      function FinalSubmitSubmission(formId, url) {
+         const form = document.getElementById(formId);
+         form.addEventListener("submit", function (event) {
+            event.preventDefault();
+      
+            const formData = new FormData(this);
+            const csrftoken = getCookie('csrftoken');
+            const existingID = formData.get("toBeUpdatedId");
+      
+            const methodValue = "POST";
+      
+            fetch(url, {
+                  method: methodValue,
+                  body: formData,
+                  headers: {
+                     "X-CSRFToken": csrftoken,
+                  },
+               })
+      
+               .then(response => {
+                  console.log(response)
+                  if (response.status === 200 ) {
+                     Swal.fire({
+                        icon: 'success',
+                        title: 'Form for this week is Submitted',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'OK',
+                        customClass: {
+                           popup: 'small-popup'
+                        }
+                     });
+      
+                  } else if(response.status === 400) {
+                     Swal.fire({
+                        icon: 'error',
+                        title: 'Please fill all the forms for this week ',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Cancel',
+                        customClass: {
+                           popup: 'small-popup'
+                        }
+                     });
+      
+                     console.error("Form submission failed. Status:", res.status);
+                  }
+                  return response.json()
+               })
+      
+               .then(res => {
+                  console.log(res)
+      
+               })
+               .catch(error => {
+                  console.error("Error:", error);
+               });
+         });
+      }
+      FinalSubmitSubmission("lastForm","{% url 'SubmitForm' %}")
+   </script>
+</html>
