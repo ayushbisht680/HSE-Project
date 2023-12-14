@@ -17,7 +17,7 @@ class Plant(models.Model):
 
 
     def __str__(self):
-        return f" Plant- ID: {self.id}"
+        return f' Plant- ID: {self.id}'
     
 
 class HomeScape(models.Model):
@@ -41,6 +41,8 @@ class Warehouse(models.Model):
   
     def __str__(self):
         return f" Warehouse {self.code}"
+    
+
 
  
 

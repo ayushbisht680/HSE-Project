@@ -72,7 +72,6 @@ class HSEUser(models.Model):
     def __str__(self):
         return self.user.username
 
- 
     
 class HSESegment(models.Model):
     segment = models.CharField(max_length=20)

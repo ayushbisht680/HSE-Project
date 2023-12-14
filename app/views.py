@@ -5,13 +5,12 @@ from .serializers import *
 from rest_framework import status
 from django.template.response import TemplateResponse  
 from rest_framework import generics
-from django.shortcuts import render
-from django.shortcuts import redirect
 from django.utils import timezone
 from datetime import datetime
 from django.db.models import Q
 from datetime import datetime
 from .models import CATEGORY_CHOICES,STATUS_CHOICES,INCIDENT_TYPE_CHOICES,CATEOGRIES
+
 
 SEGMENTS=[
     ('hawkai','RT(Construction)/RT(O&M)/GM(Construction)/GM(O&M)/OA(Construction)/OA(O&M)'),
@@ -19,25 +18,26 @@ SEGMENTS=[
     ('warehouse','Warehouse')
 ]
 
+
 def get_or_create_segment(category, category_value):
     segment_instance = None
 
     if category == 'hawkai':
-        plant_instance = Plant.objects.filter(id=category_value)
+        plant_instance = Plant.objects.get(id=category_value)
         hawkai_obj = plant_instance.first()
         segment_instance, _ = HSESegment.objects.get_or_create(
             segment=category,
             plant=hawkai_obj
         )
     elif category == 'homescape':
-        homescape_instance = HomeScape.objects.filter(cluster=category_value)
+        homescape_instance = HomeScape.objects.get(cluster=category_value)
         homescape_obj = homescape_instance.first()
         segment_instance, _ = HSESegment.objects.get_or_create(
             segment=category,
             homescape=homescape_obj
         )
     elif category == 'warehouse':
-        warehouse_instance = Warehouse.objects.filter(code=category_value)
+        warehouse_instance = Warehouse.objects.get(code=category_value)
         warehouse_obj = warehouse_instance.first()
         segment_instance, _ = HSESegment.objects.get_or_create(
             segment=category,
@@ -46,10 +46,10 @@ def get_or_create_segment(category, category_value):
 
     return segment_instance
 
+
 def get_hse_instance(category, segment_instance, date):
     hse_instance=None
 
-   
     if(category=='hawkai'):
         hse_instance=HSE.objects.filter(
             hse_segment__segment=category,
@@ -82,6 +82,7 @@ class HSEHomePageView(APIView):
         }
         return TemplateResponse(request, "hseWebPage.html",context)
     
+
 class SubObservationView(APIView):
     def get(self, request):
 
@@ -94,6 +95,7 @@ class SubObservationView(APIView):
         }
         return TemplateResponse(request, "observation.html",context)
     
+
 class StopWorkView(APIView):
     def get(self, request):
 
@@ -107,6 +109,7 @@ class StopWorkView(APIView):
 
         return TemplateResponse(request, "stopwork.html",context)
 
+
 class ViolationMemoView(APIView):
     def get(self, request):
 
@@ -116,6 +119,7 @@ class ViolationMemoView(APIView):
         }
 
         return TemplateResponse(request, "violationForm.html",context)
+
 
 class IncidentView(APIView):
     def get(self, request):
@@ -182,14 +186,12 @@ class GeneralHseAPI(APIView):
         if(not category or not category_value ):
             return Response({'Select the segment and the code'}, status=status.HTTP_400_BAD_REQUEST)
 
-
         try:
             hse_user = HSEUser.objects.get(user=request.user, hse_permission=True)
         except HSEUser.DoesNotExist:
             return Response({'error': 'User does not have permission'}, status=status.HTTP_403_FORBIDDEN)
 
         try:
-
             segment_instance = get_or_create_segment(category, category_value)
 
             hse_instance, created = HSE.objects.get_or_create(
@@ -199,7 +201,6 @@ class GeneralHseAPI(APIView):
                 created_by=request.user
             )
 
-          
             if hse_instance.form_status == 1:
                 return Response({'error': 'Form already submitted'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -208,7 +209,6 @@ class GeneralHseAPI(APIView):
 
             if serializer.is_valid():
                 instance = serializer.save(created_by=request.user, form_submitted=True)
-
 
                 return Response({'id': instance.id, 'data': serializer.data}, status=status.HTTP_201_CREATED)
             else:
@@ -238,17 +238,15 @@ class GeneralHseAPI(APIView):
         except GeneralHse.DoesNotExist:
             return Response('GeneralHse instance does not exist', status=status.HTTP_400_BAD_REQUEST)
 
-
         serializer = GeneralHSESerializer(existing_instance, data=data, partial=True)
 
         if serializer.is_valid():
             serializer.save(updated_at=timezone.now(), form_submitted=True)
-            
+
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-
        
 class HseTrainingAPI(APIView):
     def get(self, request):
@@ -331,7 +329,6 @@ class HseTrainingAPI(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 
 class HseObservationAPI(APIView):
@@ -421,7 +418,6 @@ class HseObservationAPI(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-
 class ManagementAPI(APIView):
     def get(self, request):
         obj = ManagementVisit.objects.all()
@@ -498,7 +494,6 @@ class ManagementAPI(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 
 class IncidentsAPI(APIView):
@@ -586,7 +581,6 @@ class IncidentsAPI(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 
 class HSEView(APIView):
@@ -708,7 +702,6 @@ class SegmentDataAPI(generics.ListAPIView):
         else:
             return Response('Data does not exists ', status=status.HTTP_404_NOT_FOUND)
 
-
                               
 class SubObservationAPI(APIView):
 
@@ -746,12 +739,11 @@ class SubObservationAPI(APIView):
         form_Submit_date=data.get("formSubmitDate")
         date_value=data.get('date')
         time_value=data.get('time')
-
         category = data.get('segment_category')
         category_value = data.get('categoryValue')
         
 
-        if(not category or not category_value ):
+        if (not category or not category_value ) :
             return Response({'Select the segment and the code'}, status=status.HTTP_400_BAD_REQUEST)
      
         combined_datetime = datetime.strptime(f'{date_value} {time_value}', '%Y-%m-%d %H:%M')
@@ -991,11 +983,11 @@ class IncidentAPI(APIView):
         form_Submit_date=data.get("formSubmitDate")
         date_value=data.get('incident_date')
         time_value=data.get('incident_time')
-
         category = data.get('segment_category')
         category_value = data.get('categoryValue')
 
-        if(not category or not category_value ):
+
+        if not category or not category_value :
             return Response({'Select the segment and the code'}, status=status.HTTP_400_BAD_REQUEST)
      
         combined_datetime = datetime.strptime(f'{date_value} {time_value}', '%Y-%m-%d %H:%M')

@@ -5,10 +5,6 @@
       <title>HSE Project</title>
       <style>
 
-         .row>* {
-            padding-right: 0px !important;
-            padding-left: 0px !important;
-            }
        
          a{
          text-decoration:none !important;
@@ -64,8 +60,8 @@
          margin-top: 4px;
          background-color: rgba(62, 159, 254, 0.1);
          border-radius: 7px;
-         {% comment %} height: 11vw; {% endcomment %}
          }
+
          .date-cont {
          display: flex;
          align-items: center;
@@ -426,7 +422,8 @@
          }
          .accordion-button::after {
          background-image: url('/static/images/accordianImg.svg') !important;
-         } {% endcomment %}
+         }  {% endcomment %}
+
          .ui-datepicker .ui-datepicker-title {
          margin: 0 !important;
          line-height: 1.3em !important;
@@ -477,7 +474,7 @@
     }
 
     .custom-checkbox {
-       appearance: none;
+      appearance: none;
       -webkit-appearance: none;
       -moz-appearance: none;
       width: 12px;
@@ -514,7 +511,6 @@
          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
    </head>
    <body>
-      <div class="container-fluid">
          <div class="row">
                <div class="modal fade" tabindex="-1" id="successModal" role="dialog">
                   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -525,6 +521,7 @@
                      </div>
                   </div>
                </div>
+
                   <div class="cont">
                      <div >
                         <div class="outer-container">
@@ -554,7 +551,6 @@
 
                         <div class='dropdownSection ' style='display: flex;'>
 
-                           
                         <div class='dropDown'  style='margin-left: 12px; margin-top: 12px;margin-right: 12px;'>
                            <div>
                               <label for="segmentDropdown" style='font-size: 15px; font-weight: 500;'>Select the Segment</label>
@@ -582,13 +578,12 @@
 
                         </div>
 
-
-
                      </div>
                      <div class='mainCalendar'>
                         <div class="week-picker"></div>
                      </div>
                   </div>
+
                   <div class="maincontainer">
                      <div class='content_container' style='display:none' id='content_container'>
                         <div class="accordion" id="accordionExample">
@@ -1228,11 +1223,8 @@
                         </div>
                      </div>
                   <div>
-               <!--main Acc-->
-            <!--main container-->
             </div>
-         <!--mynavbar-->
-      </div>
+         </div>
     
    
    </body>
@@ -1446,7 +1438,6 @@
                const dateFormatChanged = `${day}/${month}/${year}`;
                const dateFormatForAPI= `${year}-${month}-${day}`
 
-
                // console.log(`selected date is ${selectedDate}`)
 
                var date = $(this).datepicker('getDate');
@@ -1458,7 +1449,6 @@
                const formattedStartDate = $.datepicker.formatDate(dateFormat, startDate, inst.settings);
                const formattedEndDate = $.datepicker.formatDate(dateFormat, endDate, inst.settings);
 
-                 
                   // Store values in variables
                   const startDateText = convertDateFormatToDDMMYY(formattedStartDate);
                   const endDateText = convertDateFormatToDDMMYY(formattedEndDate);
@@ -1469,9 +1459,9 @@
                   const startDateRange = new Date(`${startDateText.split("/")[2]}-${startDateText.split("/")[1]}-${startDateText.split("/")[0]}`);
                   const endDateRange = new Date(`${endDateText.split("/")[2]}-${endDateText.split("/")[1]}-${endDateText.split("/")[0]}`);
 
-                  console.log(`todays date is ${todayDate}`)
-                  console.log(`the statdateRange is ${startDateRange}`)
-                  console.log(`the enddateRange is ${endDateRange}`)
+                  //console.log(`todays date is ${todayDate}`)
+                  //console.log(`the statdateRange is ${startDateRange}`)
+                  //console.log(`the enddateRange is ${endDateRange}`)
 
                   const endDatePlus1 = new Date(endDateRange);
                   endDatePlus1.setDate(endDatePlus1.getDate() + 1);
@@ -1482,12 +1472,12 @@
 
                   if ((todayDate >= endDateRange && todayDate <= endDatePlus2)|| (todayDate >= startDateRange && todayDate <= endDateRange)) {
                      // can fill the form
-                     console.log("Can fill the form");
+                     //console.log("Can fill the form");
                
                      const getTheTodayDate = getTodayDate();
                      const result = compareDates(dateFormatChanged, getTheTodayDate);
                      if(result==1){
-                        console.log(`the date is greater`)
+                        //console.log(`the date is greater`)
                         DisablingFields()
             
                         let disableFormsLink = document.querySelectorAll('.formsLink');
@@ -1545,10 +1535,8 @@
                   var formattedDate = formatToCustomDate(convertedDate);
                   $('#viewingDate').text(formattedDate);
 
-      
                   const newUrl = `${window.location.origin}${window.location.pathname}?date=${dateFormatChanged}`;
                   window.history.pushState({}, '', newUrl);
-      
                  
                   let getStartRangeInputs = document.querySelectorAll('.startRange');
                   for (let i = 0; i < getStartRangeInputs.length; i++) {
@@ -1570,17 +1558,13 @@
                      getDateSubmitttedInputs[i].value = dateFormatForAPI;
                   }
 
-
-               
                const segment = document.getElementById('segmentDropdown').value
                const segmentValue = document.getElementById('segmentName').value
                if(segment && segmentValue){
                   document.getElementById('content_container').style.display='block'
                   
-
                }
              
-
                let observationLink = document.getElementById('observationLink');
                observationLink.href = `/observations/?category=${segment}&category_value=${segmentValue}&date=${dateFormatForAPI}`; 
 
@@ -1593,9 +1577,7 @@
                let incidentLink=document.getElementById('incidentLink')
                incidentLink.href=`/Incidents/?category=${segment}&category_value=${segmentValue}&date=${dateFormatForAPI}`
 
-            
-               const apiURL = `/child-models/?category=${segment}&category_value=${segmentValue}&date=${dateFormatForAPI}`;
-
+               const apiURL = `/forms_detail/?category=${segment}&category_value=${segmentValue}&date=${dateFormatForAPI}`;
 
                   fetch(apiURL)
                   .then(response => {
@@ -1617,8 +1599,6 @@
                      return response.json();
                   })
                   .then(data => {
-                    
-               
                      if (data.hse_status && data.hse_status === 1) {
                         //DisablingFields()
                     
@@ -1660,8 +1640,7 @@
              
            onChangeMonthYear: function(year, month, inst) {
                   selectCurrentWeek();
-              },
-           
+              }, 
 
           });
       
@@ -1704,19 +1683,15 @@
          }
      }
         
-      
    </script>
    <script>
-     
-      
-      
+        
       document.getElementById('segmentDropdown').addEventListener('change', function () {
 
          let getCategoryValueInputs = document.querySelectorAll('.categoryValue');
          for (let i = 0; i < getCategoryValueInputs.length; i++) {
             getCategoryValueInputs[i].value = '';
          }
-
 
          var selectedValue = this.value;
 
@@ -1725,10 +1700,8 @@
             getCategoryInputs[i].value = selectedValue;
          }
 
-     
          var segmentNameDropdown = document.getElementById('segmentDiv');
          var segmentValues = document.getElementById('segmentName');
-
 
          if (selectedValue !== "") {
 
@@ -1737,7 +1710,6 @@
              segmentNameDropdown.style.display = 'none';
          }
 
-     
          if(selectedValue=='hawkai'){
             const segmentCodeText = "Select the plant code";
             document.getElementById('segmentCodeValue').innerText = segmentCodeText;
@@ -1762,7 +1734,7 @@
 
          
 
-            console.log(`selected value is hawkai`)
+            //console.log(`selected value is hawkai`)
          }
          else if(selectedValue=='homescape'){
             const segmentCodeText = "Select the Cluster Code";
@@ -1787,7 +1759,7 @@
             .catch(error => console.error('Error fetching data:', error));
          
 
-            console.log(`selected value is homescape`)
+            //console.log(`selected value is homescape`)
 
          }
          else if(selectedValue=='warehouse'){
@@ -1812,7 +1784,7 @@
             })
             .catch(error => console.error('Error fetching data:', error));
 
-            console.log(`selected value is warehouse`)
+            //console.log(`selected value is warehouse`)
 
          }  
          
@@ -1826,14 +1798,10 @@
             }
             changeDate(0);
 
-
          })
 
-   
      });
      
-     
-      
       
        function initializeUploadButton(inputId, labelId, displayId, fileNameId) {
          const fileInput = document.getElementById(inputId);
@@ -1945,9 +1913,6 @@
          }
       }
       
-      
-      
-      // Example usage:
       setupIncrementDecrementButtons("decrement1", "increment1", "input1");
       setupIncrementDecrementButtons("decrement3", "increment3", "input3");
       setupIncrementDecrementButtons("decrement4", "increment4", "input4");
@@ -2018,7 +1983,6 @@
             } else {
 
                const categoryId = categoryData['id'];
-
                const form_submitted=categoryData['form_submitted']
                console.log(`form submitted is ${form_submitted}`)
                const checkbox = document.getElementById(checkBoxId);
@@ -2037,11 +2001,8 @@
                   const fieldName = fieldNames[index];
                   let fieldData = categoryData[fieldName];
                   //console.log(fieldData)
-      
-              
-                  // Check if fieldData is a string and contains the "media/uploads/" prefix
+   
                   if (typeof fieldData === 'string') {
-                     // Remove the "media/uploads/" prefix
                      fieldData = fieldData.substring('/media/uploads/'.length);
                   }
               
@@ -2083,8 +2044,7 @@
                document.getElementById(`toBeUpdatedId5`).value = '';
       
       
-            });
-      
+            }); 
       }
       
       
@@ -2116,7 +2076,6 @@
          const elements = document.getElementsByClassName(className);
          for (let i = 0; i < elements.length; i++) {
             elements[i].disabled = false;
-      
       
          }
       }
@@ -2232,7 +2191,6 @@
       function DisablingFields() {
          disableInputFields("disableIt");
          disableButtonFields("disableBtn");
-         //document.querySelector('.lastPreview').style.display = 'none';
       
          const subForms = document.querySelectorAll('.subForms');
       
@@ -2244,7 +2202,6 @@
       function EnablingFields() {
          enableInputFields("disableIt");
          enableButtonFields("disableBtn");
-         //document.querySelector('.lastPreview').style.display = 'none';
          const subForms = document.querySelectorAll('.subForms');
       
          subForms.forEach(subForm => {
@@ -2256,7 +2213,6 @@
       function DisablingSmallerDate() {
          disableInputFields("disableIt");
          disableButtonFields("disableBtn");
-         //document.querySelector('.lastPreview').style.display = 'none';
          const subForms = document.querySelectorAll('.subForms');
       
          subForms.forEach(subForm => {
