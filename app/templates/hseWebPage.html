@@ -502,6 +502,20 @@
    color: white !important;
 }
 
+.form-check-input{
+   border: 1px solid #4CAF50 !important;
+   border-radius: 7px !important;
+}
+
+.form-check-input:checked {
+   background-color: #4CAF50 !important;
+}
+.form-check-input:disabled { 
+   opacity: 1 !important;
+}
+.form-check {
+   margin-bottom: 0 !important;
+}
   
      
       </style>
@@ -585,15 +599,15 @@
                   </div>
 
                   <div class="maincontainer">
-                     <div class='content_container' style='display:none' id='content_container'>
+                     <div class='content_container'  id='content_container'>
                         <div class="accordion" id="accordionExample">
                            <div class="accordion-item">
                               <h2 class="accordion-header">
                                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                  data-bs-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
-                                 <label class="custom-checkbox-container" style='margin-bottom:0px'>
-                                    <input type="checkbox" class="custom-checkbox" id ='checkbox1' >
-                                 </label>
+                                  <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id ='checkbox1' disabled >
+                                  </div>
                                  General HSE
                                  </button>
                               </h2>
@@ -764,9 +778,11 @@
                               <h2 class="accordion-header" id="headingTwo2">
                                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
-                                    <label class="custom-checkbox-container" style='margin-bottom:0px'>
-                                       <input type="checkbox" class="custom-checkbox" id ='checkbox2' >
-                                    </label>
+                                    <div class="form-check">
+                                       <input type="checkbox" class="form-check-input" id ='checkbox2' disabled >
+                                     </div>
+
+
                                  HSE Trainings
                                  </button>
                               </h2>
@@ -883,9 +899,9 @@
                               <h2 class="accordion-header">
                                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
-                                    <label class="custom-checkbox-container" style='margin-bottom:0px'>
-                                       <input type="checkbox" class="custom-checkbox" id ='checkbox3' >
-                                    </label>
+                                    <div class="form-check">
+                                       <input type="checkbox" class="form-check-input" id ='checkbox3' disabled >
+                                     </div>
                                  HSE Observations
                                  </button>
                               </h2>
@@ -1008,9 +1024,9 @@
                               <h2 class="accordion-header">
                                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapse4" aria-expanded="true" aria-controls="collapse4">
-                                    <label class="custom-checkbox-container" style='margin-bottom:0px'>
-                                       <input type="checkbox" class="custom-checkbox" id ='checkbox4' >
-                                    </label>
+                                    <div class="form-check">
+                                       <input type="checkbox" class="form-check-input" id ='checkbox4' disabled >
+                                     </div>
                                  Management Visits
                                  </button>
                               </h2>
@@ -1133,9 +1149,9 @@
                               <h2 class="accordion-header">
                                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapse5" aria-expanded="true" aria-controls="collapse5">
-                                    <label class="custom-checkbox-container" style='margin-bottom:0px'>
-                                       <input type="checkbox" class="custom-checkbox" id ='checkbox5' >
-                                    </label>
+                                    <div class="form-check">
+                                       <input type="checkbox" class="form-check-input" id ='checkbox5' disabled >
+                                     </div>
                                  Incidents
                                  </button>
                               </h2>
@@ -1583,7 +1599,7 @@
                   .then(response => {
                      if (!response.ok) {
                         if (response.status === 404) {
-                           const checkboxes = document.querySelectorAll('.custom-checkbox');
+                           const checkboxes = document.querySelectorAll('.form-check-input');
             
                            checkboxes.forEach(function (checkbox) {
                              checkbox.checked = false;
